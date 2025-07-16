@@ -411,7 +411,7 @@ fn main() {
 
 #### Memory Layout Rules
 
-To see a comprehensive breakdown of what goes where please check [this](https://amritsingh183.github.io/rust/concepts/2025/10/01/rust-mem-ref.html).
+To see a comprehensive breakdown of what goes where please check [this](https://amritsingh183.github.io/rust/concepts/2025/05/01/rust-mem-ref.html).
 
 ```rust
 fn main() {
