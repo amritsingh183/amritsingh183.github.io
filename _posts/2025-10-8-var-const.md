@@ -101,13 +101,14 @@ const SECONDS_IN_HOUR: u32 = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
 
 ### Constants vs Variables
 
-| Feature | Constant (`const`) | Variable (`let`) |
-| :-- | :-- | :-- |
-| Can change? | No | Yes, if `mut` is used |
-| Type required? | Yes | No (optional) |
-| Memory location | No fixed address (inlined) | Compiler-chosen storage (not guaranteed to be on the stack) |
-| Scope | Any scope, including global | Block scope |
-| Runtime computation | No - compile-time only | Yes |
+| Feature               | Constant (`const`)                                  | Variable (`let`)                                                  |
+| :-------------------- | :-------------------------------------------------- | :---------------------------------------------------------------- |
+| Can change?           | No                                                  | Yes, if `mut` is used                                             |
+| Type required?        | Yes                                                 | No (optional)                                                     |
+| Memory location       | No fixed address (inlined)                           | Compiler-chosen storage (not guaranteed to be on the stack)       |
+| Scope                 | Any scope, including global                         | Block scope                                                       |
+| Runtime computation   | No - compile-time only                              | Yes                                                               |
+
 
 ## Static Variables
 
@@ -184,7 +185,7 @@ static mut COUNTER: u32 = 0;
 
 fn main() {
     unsafe {
-        // Using &raw mut avoids creating a reference (which would be UB)
+        // Using &raw mut avoids creating a reference (which would be undefined behavior)
         let ptr = &raw mut COUNTER;
         *ptr += 1;
     }
