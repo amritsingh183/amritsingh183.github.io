@@ -3,4 +3,10 @@ layout: home
 title: Rust
 ---
 
-Welcome to my bog. Here you can learn all about Rust. This blog is written from my experince with Rust. A series on machine learning concepts is also in progress. Stay tuned!
+# Welcome to my blog
+
+This blog which is written from my experince with Rust. The blog aims at building up concepts required to understand Rust. Each post builds up the concepts in an intuitive way.
+
+# A series on machine learning concepts is also in progress.
+
+Stay tuned!
