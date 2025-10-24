@@ -183,13 +183,13 @@ fn find_first_positive(numbers: &[i32]) -> Option<i32> {
 }
 
 fn main() {
-let list = vec![-1, -5, 3, -2, 7];
+    let list = vec![-1, -5, 3, -2, 7];
 
     match find_first_positive(&list) {
         Some(num) => println!("First positive: {}", num),
         None => println!("No positive numbers found"),
     }
-    }
+}
 
 ```
 
@@ -842,7 +842,54 @@ fn check_length(opt: &Option<String>) -> bool {
 
 ```
 
-***
+#### Converting to Slices: `as_slice` and `as_mut_slice`
+
+The `as_slice` and `as_mut_slice` methods convert an `Option<T>` into a slice with zero or one element, simplifying iteration and interop with slice-based APIs:
+
+```rust
+let some_value: Option<i32> = Some(42);
+let slice: &[i32] = some_value.as_slice();
+assert_eq!(slice, &[^42]);
+
+let none_value: Option<i32> = None;
+let empty: &[i32] = none_value.as_slice();
+assert_eq!(empty, &[]);
+```
+
+**Mutable variant:**
+
+```rust
+let mut opt = Some(5);
+if let [value] = opt.as_mut_slice() {
+    *value += 10;
+}
+assert_eq!(opt, Some(15));
+```
+
+**Real-world use case - Avoiding special-case logic:**
+
+```rust
+// Before: handling Option and slice separately
+fn process_numbers(numbers: &[i32], extra: Option<i32>) {
+    for n in numbers {
+        println!("{}", n);
+    }
+    if let Some(e) = extra {
+        println!("{}", e);
+    }
+}
+
+// After: uniform slice handling
+fn process_numbers(numbers: &[i32], extra: Option<i32>) {
+    for n in numbers.iter().chain(extra.as_slice()) {
+        println!("{}", n);
+    }
+}
+```
+
+**Why this matters:**
+
+These methods allow functions that accept slices to work seamlessly with optional values, eliminating the need for separate `Option` and slice parameters or manual conversion logic.
 
 ## Converting Between Option and Result
 
@@ -1162,58 +1209,131 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 
 - `ok_or()` / `ok_or_else()` → Convert Option to Result when you need error context
 - `ok()` → Convert Result to Option when you don't care about error details
-
+- **`flatten`**: Collapse nested `Result<Result<T, E>, E>` when validation or transformation chains produce double-wrapped results
+- **`as_slice`/`as_mut_slice`**: Convert `Option<T>` to slices for uniform iteration with slice-based APIs
 ***
+
+
+#### Flattening Nested Results: `flatten`
+
+When you have a `Result<Result<T, E>, E>` (a nested Result with the same error type), the `flatten` method collapses it into a single `Result<T, E>`:
+
+```rust
+let nested_ok: Result<Result<i32, &str>, &str> = Ok(Ok(42));
+let flat: Result<i32, &str> = nested_ok.flatten();
+assert_eq!(flat, Ok(42));
+
+let nested_inner_err: Result<Result<i32, &str>, &str> = Ok(Err("inner error"));
+let flat2 = nested_inner_err.flatten();
+assert_eq!(flat2, Err("inner error"));
+
+let nested_outer_err: Result<Result<i32, &str>, &str> = Err("outer error");
+let flat3 = nested_outer_err.flatten();
+assert_eq!(flat3, Err("outer error"));
+```
+
+**Real-world example - Chained validation:**
+
+```rust
+fn parse_and_validate(input: &str) -> Result<i32, String> {
+    input
+        .parse::<i32>()
+        .map_err(|e| format!("Parse error: {}", e))
+        .map(|n| {
+            if n > 0 && n < 100 {
+                Ok(n)
+            } else {
+                Err(String::from("Number out of range"))
+            }
+        })
+        .flatten()  // Result<Result<i32, String>, String> → Result<i32, String>
+}
+```
+
+**Alternative for code that needs to work before 1.89:**
+
+`and_then` can achieve the same result on older Rust versions:
+
+```rust
+// Equivalent to flatten() for backwards compatibility
+let nested: Result<Result<i32, &str>, &str> = Ok(Ok(42));
+let flat: Result<i32, &str> = nested.and_then(|inner| inner);
+```
+
+**Why this matters:**
+
+`flatten` complements `transpose` for nested type manipulation. While `transpose` swaps layers between `Option` and `Result`, `flatten` removes one layer of nesting when both layers are `Result` with the same error type. This is common in validation pipelines where each step can fail with the same error type.
+
+**Note:** `Result::flatten` requires both the inner and outer error types to be the same (`E`). If they differ, use `and_then` with explicit error conversion instead.
 
 ## Quick Reference
 
 ### Option<T> Methods
 
-|Method|Signature|Purpose|
-|--|--|--|
-|`unwrap()`|`Option<T> -> T`|Get value or panic|
-|`expect(msg)`|`Option<T> -> T`|Get value or panic with message|
-|`unwrap_or(default)`|`Option<T> -> T`|Get value or return default|
-|`unwrap_or_else(f)`|`Option<T> -> T`|Get value or compute default|
-|`unwrap_or_default()`|`Option<T> -> T`|Get value or type's default|
-|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None). unwrap_unchecked() is an unsafe operation that produces **undefined behavior** if called on a None or Err variant. The caller must guarantee that the value is Some/Ok. This method exists primarily for performance-critical code where you can prove the value is valid through prior checks or invariants.|
-|`map(f)`|`Option<T> -> Option<U>`|Transform contained value|
-|`and_then(f)`|`Option<T> -> Option<U>`|Chain fallible transformations|
-|`inspect(f)`|`Option<T> -> Option<T>`|Observe value without consuming|
-|`as_ref()`|`Option<T> -> Option<&T>`|Borrow the contained value|
-|`as_mut()`|`Option<T> -> Option<&mut T>`|Mutably borrow the contained value|
-|`as_deref()`|`Option<T> -> Option<&T::Target>`|Deref and borrow|
-|`copied()`|`Option<&T> -> Option<T>`|Copy out of reference (T: Copy)|
-|`cloned()`|`Option<&T> -> Option<T>`|Clone out of reference (T: Clone)|
-|`ok_or(err)`|`Option<T> -> Result<T, E>`|Convert to Result|
-|`ok_or_else(f)`|`Option<T> -> Result<T, E>`|Convert to Result (lazy error)|
-|`transpose()`|`Option<Result<T,E>> -> Result<Option<T>,E>`|Swap nesting layers|
+| Category | Method | Signature | Purpose |
+| :-- | :-- | :-- | :-- |
+| **Extraction** | `unwrap()` | `Option<T> -> T` | Get value or panic |
+|  | `expect(msg)` | `Option<T> -> T` | Get value or panic with message |
+|  | `unwrap_or(default)` | `Option<T> -> T` | Get value or return default |
+|  | `unwrap_or_else(f)` | `Option<T> -> T` | Get value or compute default lazily |
+|  | `unwrap_or_default()` | `Option<T> -> T` | Get value or use type's Default |
+|  | `unwrap_unchecked()` ⚠️ | `Option<T> -> T` | Get value without checking (unsafe) |
+| **Querying** | `is_some()` | `&Option<T> -> bool` | Returns true if Some |
+|  | `is_none()` | `&Option<T> -> bool` | Returns true if None |
+|  | `is_some_and(f)` | `Option<T> -> bool` | Returns true if Some and predicate holds |
+| **Transformation** | `map(f)` | `Option<T> -> Option<U>` | Transform contained value |
+|  | `and_then(f)` | `Option<T> -> Option<U>` | Chain fallible transformations |
+|  | `inspect(f)` | `Option<T> -> Option<T>` | Observe value without consuming |
+| **Borrowing** | `as_ref()` | `&Option<T> -> Option<&T>` | Borrow the contained value |
+|  | `as_mut()` | `&mut Option<T> -> Option<&mut T>` | Mutably borrow the contained value |
+|  | `as_deref()` | `&Option<T> -> Option<&T::Target>` | Deref and borrow (for smart pointers) |
+|  | `as_deref_mut()` | `&mut Option<T> -> Option<&mut T::Target>` | Mutably deref and borrow |
+|  | `as_slice()` | `&Option<T> -> &[T]` | View as slice (0 or 1 elements) |
+|  | `as_mut_slice()` | `&mut Option<T> -> &mut [T]` | Mutably view as slice |
+| **Materializing** | `copied()` | `Option<&T> -> Option<T>` | Copy out of reference (T: Copy) |
+|  | `cloned()` | `Option<&T> -> Option<T>` | Clone out of reference (T: Clone) |
+| **Boolean Logic** | `and(opt)` | `Option<T> -> Option<U>` | Returns None if None, else returns opt |
+|  | `or(opt)` | `Option<T> -> Option<T>` | Returns Some if Some, else returns opt |
+|  | `or_else(f)` | `Option<T> -> Option<T>` | Returns Some if Some, else computes opt |
+| **Conversion** | `ok_or(err)` | `Option<T> -> Result<T, E>` | Convert to Result with static error |
+|  | `ok_or_else(f)` | `Option<T> -> Result<T, E>` | Convert to Result with computed error |
+|  | `transpose()` | `Option<Result<T,E>> -> Result<Option<T>,E>` | Swap nesting layers |
 
 ### Result<T, E> Methods
 
-| Method | Signature | Purpose |
-| :-- | :-- | :-- |
-| `unwrap()` | `Result<T, E> -> T` | Get value or panic |
-| `expect(msg)` | `Result<T, E> -> T` | Get value or panic with message |
-| `unwrap_or(default)` | `Result<T, E> -> T` | Get value or return default |
-| `unwrap_or_else(f)` | `Result<T, E> -> T` | Get value or compute default |
-| `unwrap_or_default()` | `Result<T, E> -> T` | Get value or type's default |
-| `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | **UNSAFE**: Get value without checking (undefined behavior if Err). unwrap_unchecked() is an unsafe operation that produces **undefined behavior** if called on a None or Err variant. The caller must guarantee that the value is Some/Ok. This method exists primarily for performance-critical code where you can prove the value is valid through prior checks or invariants. |
-| `map(f)` | `Result<T, E> -> Result<U, E>` | Transform success value |
-| `map_err(f)` | `Result<T, E> -> Result<T, F>` | Transform error value |
-| `and_then(f)` | `Result<T, E> -> Result<U, E>` | Chain fallible operations |
-| `inspect(f)` | `Result<T, E> -> Result<T, E>` | Observe success value |
-| `inspect_err(f)` | `Result<T, E> -> Result<T, E>` | Observe error value |
-| `as_ref()` | `Result<T, E> -> Result<&T, &E>` | Borrow both Ok and Err values |
-| `as_mut()` | `Result<T, E> -> Result<&mut T, &mut E>` | Mutably borrow both values |
-| `as_deref()` | `Result<T, E> -> Result<&T::Target, &E>` | Deref Ok value and borrow |
-| `copied()` | `Result<&T, E> -> Result<T, E>` | Copy Ok value (T: Copy) |
-| `cloned()` | `Result<&T, E> -> Result<T, E>` | Clone Ok value (T: Clone) |
-| `ok()` | `Result<T, E> -> Option<T>` | Convert to Option (discard error) |
-| `err()` | `Result<T, E> -> Option<E>` | Extract error as Option |
-| `transpose()` | `Result<Option<T>, E> -> Option<Result<T, E>>` | Swap nesting layers |
+| Category | Method | Signature | Purpose |
+| :-- | :-- | :-- | :-- |
+| **Extraction** | `unwrap()` | `Result<T, E> -> T` | Get value or panic |
+|  | `expect(msg)` | `Result<T, E> -> T` | Get value or panic with message |
+|  | `unwrap_or(default)` | `Result<T, E> -> T` | Get value or return default |
+|  | `unwrap_or_else(f)` | `Result<T, E> -> T` | Get value or compute default lazily |
+|  | `unwrap_or_default()` | `Result<T, E> -> T` | Get value or use type's Default |
+|  | `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | Get value without checking (unsafe) |
+| **Querying** | `is_ok()` | `&Result<T, E> -> bool` | Returns true if Ok |
+|  | `is_err()` | `&Result<T, E> -> bool` | Returns true if Err |
+|  | `is_ok_and(f)` | `Result<T, E> -> bool` | Returns true if Ok and predicate holds |
+|  | `is_err_and(f)` | `Result<T, E> -> bool` | Returns true if Err and predicate holds |
+| **Transformation** | `map(f)` | `Result<T, E> -> Result<U, E>` | Transform success value |
+|  | `map_err(f)` | `Result<T, E> -> Result<T, F>` | Transform error value |
+|  | `and_then(f)` | `Result<T, E> -> Result<U, E>` | Chain fallible operations |
+|  | `flatten()` | `Result<Result<T, E>, E> -> Result<T, E>` | Collapse nested Results (stable 1.89.0) |
+|  | `inspect(f)` | `Result<T, E> -> Result<T, E>` | Observe success value |
+|  | `inspect_err(f)` | `Result<T, E> -> Result<T, E>` | Observe error value |
+| **Borrowing** | `as_ref()` | `&Result<T, E> -> Result<&T, &E>` | Borrow both Ok and Err values |
+|  | `as_mut()` | `&mut Result<T, E> -> Result<&mut T, &mut E>` | Mutably borrow both values |
+|  | `as_deref()` | `&Result<T, E> -> Result<&T::Target, &E>` | Deref Ok value and borrow |
+|  | `as_deref_mut()` | `&mut Result<T, E> -> Result<&mut T::Target, &mut E>` | Mutably deref Ok value |
+| **Materializing** | `copied()` | `Result<&T, E> -> Result<T, E>` | Copy Ok value (T: Copy) |
+|  | `cloned()` | `Result<&T, E> -> Result<T, E>` | Clone Ok value (T: Clone) |
+| **Boolean Logic** | `and(res)` | `Result<T, E> -> Result<U, E>` | Returns Err if Err, else returns res |
+|  | `or(res)` | `Result<T, E> -> Result<T, F>` | Returns Ok if Ok, else returns res |
+|  | `or_else(f)` | `Result<T, E> -> Result<T, F>` | Returns Ok if Ok, else computes res |
+| **Conversion** | `ok()` | `Result<T, E> -> Option<T>` | Convert to Option (discard error) |
+|  | `err()` | `Result<T, E> -> Option<E>` | Extract error as Option |
+|  | `transpose()` | `Result<Option<T>, E> -> Option<Result<T, E>>` | Swap nesting layers |
 
-⚠️ **Safety Note**: `unwrap_unchecked()` is an unsafe operation that produces undefined behavior if called on a `None` or `Err` variant. Only use in performance-critical code where you can guarantee the value is Some/Ok.
+**⚠️ Safety Note**: `unwrap_unchecked()` produces undefined behavior if called on `None` or `Err`. Only use in performance-critical code where you can guarantee the value is `Some`/`Ok`.
+
 
 
 
