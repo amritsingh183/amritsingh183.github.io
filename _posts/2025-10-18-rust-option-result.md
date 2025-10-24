@@ -25,7 +25,8 @@ This guide assumes you understand Rust's ownership, borrowing, and type safety f
     - Pointers are just addresses without safety or lifetime guarantees, requiring explicit unsafe code to dereference.
     - They are simple memory addresses without lifetimes or borrowing rules.
     - They can be null, dangling, or invalid.
-    - You can perform arithmetic on raw pointers.
+    - You can perform arithmetic on raw pointers using methods like `add()`, `offset()`, or by casting to `usize` and back.
+    - Creating references to uninitialized, improperly aligned, or invalid memory through raw pointers is undefined behavior.
     - Accessing the memory they point to requires unsafe blocks.
     - They provide low-level control but without safety guarantees enforced by Rust.
 
@@ -395,7 +396,7 @@ let value = result.unwrap();           // value = 10
 
 ```
 
-**Use case:** Prototyping or when you're absolutely certain the value exists.
+**Use case:** Prototyping, tests, or when you're absolutely certain the value exists. Warning: In production code, prefer using the ? operator or explicit error handling (match, if let) over unwrap()/expect(), as these methods will panic and crash your program if called on None/Err.
 
 #### expect() - Panics with Custom Message
 
@@ -1110,10 +1111,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 You may have noticed that `main` can return a `Result`, which enables the `?` operator to work at the top level. This works because of the `std::process::Termination` trait.
 
-For a type to be a valid return type for `main`, it must implement `Termination`. The standard library provides an implementation for `Result<(), E>` where `E` implements `std::fmt::Debug`. This implementation:
-
-- Returns exit code 0 (success) when the result is `Ok(())`
-- Prints the error's `Debug` representation to stderr and the standard runtime prints the error's Debug and returns a non-zero exit(failure) status when the result is `Err(e)
+For a type to be a valid return type for `main`, it must implement `Termination`. The standard library provides an implementation for `Result<(), E>` where `E` implements `std::fmt::Debug`. When the result is `Err(e)`, the `Termination` implementation prints the error's `Debug` representation to stderr via the standard runtime and returns a non-zero exit code (typically 1) to indicate failure. When the result is `Ok(())`, it returns exit code 0 to indicate success.
 **Example:**
 
 ```rust
