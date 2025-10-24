@@ -7,8 +7,6 @@ categories: rust concepts
 
 # Variables and Constants in Rust
 
-> **Note:** This document reflects Rust as of October 2025, including features from the Rust 2024 Edition (released February 2025 with Rust 1.85.0).
-
 ## Variables
 
 ### Immutability by Default
