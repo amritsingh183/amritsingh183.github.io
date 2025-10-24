@@ -17,7 +17,7 @@ This guide assumes you understand Rust's ownership, borrowing, and type safety f
 
 - References (&T or &mut T) are safe pointers with strict rules enforced by the compiler.
     - References have extra semantic rules and safety enforced by the compiler, making them safe to use for borrowing data.
-    - They always point to valid memory.
+    - In safe Rust, references are guaranteed to be non-null, properly aligned, and valid for the duration of their lifetimes; the borrow checker enforces aliasing rules (many `&T` or exactly one `&mut T`) so dereferencing is always safe.
     - They have associated lifetimes ensuring they do not outlive the data they reference.
     - Mutable references enforce exclusive access (no aliasing).
     - You cannot perform pointer arithmetic or raw memory access with references.
@@ -41,12 +41,14 @@ Before diving into `Option` and `Result`, you need to understand Rust's enum pat
 Enums in Rust can hold data within their variants:
 
 ```rust
+
 enum Message {
     Quit,                       // No data
     Move { x: i32, y: i32 },   // Named fields
     Write(String),              // Single value
     Color(u8, u8, u8),         // Multiple values
 }
+
 ```
 
 
@@ -55,6 +57,7 @@ enum Message {
 The `match` expression destructures enums and handles all possible variants:
 
 ```rust
+
 let msg = Message::Write(String::from("hello"));
 
 match msg {
@@ -63,6 +66,7 @@ match msg {
     Message::Write(text) => println!("Text: {}", text),
     Message::Color(r, g, b) => println!("RGB: {}, {}, {}", r, g, b),
 }
+
 ```
 
 The compiler enforces **exhaustiveness**: you must handle every possible variant. This guarantee is what makes Rust's error handling so robust.
@@ -72,6 +76,7 @@ The compiler enforces **exhaustiveness**: you must handle every possible variant
 **Match guards** add conditions to patterns:
 
 ```rust
+
 let some_number = 42;
 
 match some_number {
@@ -79,27 +84,32 @@ match some_number {
     x if x > 100 => println!("Large: {}", x),
     x => println!("Normal: {}", x),
 }
+
 ```
 
 **Destructuring with `if let`** handles a single pattern:
 
 ```rust
+
 let msg = Message::Write(String::from("hello"));
 if let Message::Write(text) = msg {
     println!("Got text: {}", text);
 }
 // Other variants are ignored
+
 ```
 
 **The `let...else` pattern** handles one case and exits for others:
 
 ```rust
+
 let msg = Message::Write(String::from("hello"));
 let Message::Write(text) = msg else {
     println!("Not a write message!");
     return;
 };
 // text is now available here
+
 ```
 
 
@@ -112,10 +122,12 @@ let Message::Write(text) = msg else {
 The `Option` type represents a value that might not exist. It's defined as:
 
 ```rust
+
 enum Option<T> {
-    Some(T),  // Contains a value of type T
-    None,     // Represents absence of a value
+    None,
+    Some(T),
 }
+
 ```
 
 This replaces the concept of "null" found in other languages, but **with type safety**. You cannot use an `Option<T>` as if it were a `T`—you must explicitly handle both cases.
@@ -127,6 +139,7 @@ This replaces the concept of "null" found in other languages, but **with type sa
 **None** represents the absence of a value—it's Rust's type-safe replacement for null. Unlike null in other languages, you cannot accidentally use `None` as if it were a value; the compiler forces you to handle it explicitly.
 
 ```rust
+
 let some_number: Option<i32> = Some(42);  // Wraps the value 42
 let no_number: Option<i32> = None;        // No value present
 
@@ -134,6 +147,7 @@ let no_number: Option<i32> = None;        // No value present
 // The compiler resolves the enum through type inference
 let x = Some(5);
 let y: Option<i32> = None;
+
 ```
 
 **Key insight:** `Some()` and `None` aren't magic—they're just enum variants, similar to `Message::Write()` or `Message::Quit` from earlier examples. The difference is that `Some` wraps any type `T`, making `Option` generic and reusable for any situation where a value might be absent.
@@ -141,6 +155,7 @@ let y: Option<i32> = None;
 ### Creating Option Values
 
 ```rust
+
 // Explicit type annotation
 let some_number: Option<i32> = Some(42);
 let no_number: Option<i32> = None;
@@ -151,12 +166,13 @@ let name = Some(String::from("Alice"));  // Option<String>
 
 // None requires type annotation (Rust can't infer the type)
 let y: Option<i32> = None;
-```
 
+```
 
 ### Real-World Example: Finding Elements
 
 ```rust
+
 fn find_first_positive(numbers: &[i32]) -> Option<i32> {
     for &num in numbers {
         if num > 0 {
@@ -167,13 +183,14 @@ fn find_first_positive(numbers: &[i32]) -> Option<i32> {
 }
 
 fn main() {
-    let list = vec![-1, -5, 3, -2, 7];
+let list = vec![-1, -5, 3, -2, 7];
 
     match find_first_positive(&list) {
         Some(num) => println!("First positive: {}", num),
         None => println!("No positive numbers found"),
     }
-}
+    }
+
 ```
 
 
@@ -182,25 +199,30 @@ fn main() {
 **Using pattern matching:**
 
 ```rust
+
 let value = Some(5);
 
 match value {
     Some(x) => println!("Value is {}", x),
     None => println!("No value"),
 }
+
 ```
 
 **Using `if let` for the success case only:**
 
 ```rust
+
 if let Some(x) = value {
     println!("Value is {}", x);
 }
+
 ```
 
 **Using `let...else` to handle None and exit:**
 
 ```rust
+
 fn process_value(opt: Option<i32>) {
     let Some(x) = opt else {
         println!("No value provided!");
@@ -209,7 +231,8 @@ fn process_value(opt: Option<i32>) {
 
     // Use x here - we know it exists
     println!("Processing: {}", x);
-}
+    }
+
 ```
 
 
@@ -222,10 +245,12 @@ fn process_value(opt: Option<i32>) {
 The `Result` type represents an operation that can succeed or fail:
 
 ```rust
+
 enum Result<T, E> {
     Ok(T),   // Success: contains value of type T
     Err(E),  // Failure: contains error of type E
 }
+
 ```
 
 Unlike `Option`, which only indicates presence or absence, `Result` carries **meaningful error information** when operations fail.
@@ -237,6 +262,7 @@ Unlike `Option`, which only indicates presence or absence, `Result` carries **me
 **Err(error)** wraps an error value, indicating that an operation failed and providing information about **why** it failed. The error can be any type—a string, a custom error struct, or any type implementing the `Error` trait.
 
 ```rust
+
 // Success case
 let success: Result<i32, String> = Ok(42);
 
@@ -246,6 +272,7 @@ let failure: Result<i32, String> = Err(String::from("Something went wrong"));
 // Different error types
 let parse_error: Result<i32, std::num::ParseIntError> = "abc".parse();  // Err
 let io_error: Result<String, std::io::Error> = std::fs::read_to_string("missing.txt");  // Err
+
 ```
 
 **Key insight:** Like `Some` and `None` for `Option`, `Ok` and `Err` are enum variants. But `Result` has **two** type parameters: `T` for the success type and `E` for the error type. This allows you to specify exactly what kind of error information your function provides when it fails.
@@ -253,6 +280,7 @@ let io_error: Result<String, std::io::Error> = std::fs::read_to_string("missing.
 ### Creating Result Values
 
 ```rust
+
 fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
     if denominator == 0.0 {
         Err(String::from("Cannot divide by zero"))
@@ -260,12 +288,13 @@ fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
         Ok(numerator / denominator)
     }
 }
-```
 
+```
 
 ### Real-World Example: Input Validation
 
 ```rust
+
 fn validate_age(age: i32) -> Result<String, String> {
     if age < 0 {
         return Err(String::from("Age cannot be negative"));
@@ -293,6 +322,8 @@ fn main() {
         Err(error) => eprintln!("Error: {}", error),
     }
 }
+
+
 ```
 
 
@@ -301,35 +332,42 @@ fn main() {
 **Using pattern matching:**
 
 ```rust
+
 let result = divide(10.0, 2.0);
 
 match result {
     Ok(value) => println!("Result: {}", value),
     Err(error) => eprintln!("Error: {}", error),
 }
+
 ```
 
 **Pattern matching with guards:**
 
 ```rust
+
 match divide(100.0, 5.0) {
     Ok(value) if value > 10.0 => println!("Large result: {}", value),
     Ok(value) => println!("Small result: {}", value),
     Err(e) => eprintln!("Error: {}", e),
 }
+
 ```
 
 **Using `if let` for one case:**
 
 ```rust
+
 if let Ok(value) = divide(10.0, 2.0) {
     println!("Success: {}", value);
 }
+
 ```
 
 **Using `let...else` to handle errors and exit:**
 
 ```rust
+
 fn process_result(input: &str) {
     let Ok(number) = input.parse::<i32>() else {
         eprintln!("Failed to parse: {}", input);
@@ -339,6 +377,8 @@ fn process_result(input: &str) {
     // Use number here
     println!("Parsed number: {}", number);
 }
+
+
 ```
 
 
@@ -355,12 +395,14 @@ These methods extract values but behave differently when encountering `None` or 
 #### unwrap() - Panics on Failure
 
 ```rust
+
 let x = Some(5).unwrap();              // x = 5
 let y: Option<i32> = None;
 // let z = y.unwrap();                 // Panics: "called `Option::unwrap()` on a `None` value"
 
 let result: Result<i32, &str> = Ok(10);
 let value = result.unwrap();           // value = 10
+
 ```
 
 **Use case:** Prototyping or when you're absolutely certain the value exists.
@@ -368,8 +410,10 @@ let value = result.unwrap();           // value = 10
 #### expect() - Panics with Custom Message
 
 ```rust
+
 let config = load_config()
-    .expect("Config file must exist for application to run");
+.expect("Config file must exist for application to run");
+
 ```
 
 **Use case:** When failure is unrecoverable and you want a meaningful error message.
@@ -377,12 +421,14 @@ let config = load_config()
 #### unwrap_or() - Provide a Default Value
 
 ```rust
+
 let x = Some(5).unwrap_or(10);         // x = 5
 let y: Option<i32> = None;
 let z = y.unwrap_or(10);               // z = 10
 
 let result: Result<i32, &str> = Err("failed");
 let value = result.unwrap_or(0);       // value = 0
+
 ```
 
 **Use case:** When you have a sensible default value.
@@ -390,6 +436,7 @@ let value = result.unwrap_or(0);       // value = 0
 #### unwrap_or_else() - Compute Default Lazily
 
 ```rust
+
 let x: Option<String> = None;
 let y = x.unwrap_or_else(|| {
     expensive_computation()            // Only runs if None
@@ -400,6 +447,7 @@ let value = result.unwrap_or_else(|err| {
     log_error(&err);
     0  // Fallback value
 });
+
 ```
 
 **Use case:** When computing the default is expensive or has side effects. This is more efficient than `unwrap_or()` because the fallback value is only computed when needed.
@@ -407,11 +455,13 @@ let value = result.unwrap_or_else(|err| {
 #### unwrap_or_default() - Use Type's Default
 
 ```rust
+
 let x: Option<String> = None;
 let y = x.unwrap_or_default();         // y = "" (empty string)
 
 let z: Option<Vec<i32>> = None;
 let v = z.unwrap_or_default();         // v = [] (empty vector)
+
 ```
 
 **Use case:** When the type implements the `Default` trait and its default makes sense.
@@ -425,25 +475,29 @@ These methods transform values while keeping them wrapped in `Option` or `Result
 The `map` method applies a function to the contained value. The key characteristic: **the function returns a plain value**, not an `Option` or `Result`.
 
 ```rust
+
 let x = Some(5).map(|n| n * 2);        // Some(10)
 let y: Option<i32> = None;
 let z = y.map(|n| n * 2);              // None
 
 let result: Result<i32, String> = Ok(5);
 let doubled = result.map(|n| n * 2);   // Ok(10)
+
 ```
 
 **Real-world example:**
 
 ```rust
+
 fn parse_and_square(input: &str) -> Option<i32> {
     input.parse::<i32>()
-        .ok()
-        .map(|n| n * n)
+    .ok()
+    .map(|n| n * n)
 }
 
 // "5" -> Some(25)
 // "abc" -> None
+
 ```
 
 
@@ -452,34 +506,38 @@ fn parse_and_square(input: &str) -> Option<i32> {
 The `and_then` method is used when your transformation **can itself fail**. Unlike `map`, the function must return an `Option<U>` or `Result<U, E>` (not just `U`).
 
 ```rust
+
 fn parse_positive(s: &str) -> Option<i32> {
     s.parse::<i32>().ok()
-        .and_then(|n| if n > 0 { Some(n) } else { None })
+    .and_then(|n| if n > 0 { Some(n) } else { None })
 }
 
 // "5" -> Some(5)
 // "-3" -> None
 // "abc" -> None
+
 ```
 
 **The key difference between `map` and `and_then`:**
 
 ```rust
+
 // map: function returns plain value (auto-wrapped)
 Some(5).map(|x| x * 2)              // Some(10)
 
 // and_then: function returns Option (not wrapped again)
 Some(5).and_then(|x| Some(x * 2))   // Some(10)
 Some(5).and_then(|x| None)          // None - transformation can fail
+
 ```
 
 **Real-world chaining example:**
-
 ```rust
+
 fn process_input(input: &str) -> Option<i32> {
     parse_number(input)
-        .and_then(validate_positive)
-        .and_then(compute_result)
+    .and_then(validate_positive)
+    .and_then(compute_result)
 }
 
 fn parse_number(s: &str) -> Option<i32> {
@@ -487,12 +545,13 @@ fn parse_number(s: &str) -> Option<i32> {
 }
 
 fn validate_positive(n: i32) -> Option<i32> {
-    if n > 0 { Some(n) } else { None }
+i   f n > 0 { Some(n) } else { None }
 }
 
 fn compute_result(n: i32) -> Option<i32> {
     if n < 1000 { Some(n * 2) } else { None }
 }
+
 ```
 
 
@@ -501,10 +560,12 @@ fn compute_result(n: i32) -> Option<i32> {
 For `Result`, you can transform the error type while leaving success values unchanged:
 
 ```rust
+
 fn parse_number(s: &str) -> Result<i32, String> {
     s.parse::<i32>()
-        .map_err(|e| format!("Failed to parse '{}': {}", s, e))
+    .map_err(|e| format!("Failed to parse '{}': {}", s, e))
 }
+
 ```
 
 
@@ -518,15 +579,17 @@ In the code below:
 - The container is returned (not a copy)
 
 ```rust
+
 let result = Some(5)
-    .inspect(|x| println!("Got value: {}", x))
-    .map(|x| x * 2);
+.inspect(|x| println!("Got value: {}", x))
+.map(|x| x * 2);
 // Prints: "Got value: 5"
 // result = Some(10)
 
 let parsed: Result<i32, _> = "123".parse()
-    .inspect(|x| println!("Parsed successfully: {}", x))
-    .inspect_err(|e| eprintln!("Parse error: {}", e));
+.inspect(|x| println!("Parsed successfully: {}", x))
+.inspect_err(|e| eprintln!("Parse error: {}", e));
+
 ```
 
 **Use case:** Debugging, logging, or metrics collection without modifying the data flow. The `inspect()` methods consume `self` by value, pass a reference to the contained value to the closure (allowing temporary observation), and return the original `Option` or `Result` unchanged, enabling method chaining.
@@ -539,7 +602,6 @@ The `and` and `or` methods provide boolean-like logic for combining `Option` and
 
 Returns the second value if the first is `Some`/`Ok`, otherwise returns the first (`None`/`Err`):
 
-
 | First | Second | Result |
 | :-- | :-- | :-- |
 | `Some(x)` | `Some(y)` | `Some(y)` |
@@ -548,6 +610,7 @@ Returns the second value if the first is `Some`/`Ok`, otherwise returns the firs
 | `None` | `None` | `None` |
 
 ```rust
+
 // Option
 Some(2).and(Some(100))              // Some(100)
 Some(2).and(None)                   // None
@@ -557,6 +620,7 @@ None.and(Some(100))                 // None
 Ok(2).and(Ok(100))                  // Ok(100)
 Ok(2).and(Err("error"))             // Err("error")
 Err("early").and(Ok(100))           // Err("early")
+
 ```
 
 
@@ -573,6 +637,7 @@ Returns the first value if it's `Ok`/`Some`, otherwise returns the second:
 | `None` | `None` | `None` |
 
 ```rust
+
 // Option
 Some(2).or(Some(100))               // Some(2)
 None.or(Some(100))                  // Some(100)
@@ -582,18 +647,141 @@ None.or(None)                       // None
 Ok(2).or(Ok(100))                   // Ok(2)
 Err("error").or(Ok(100))            // Ok(100)
 Err("error1").or(Err("error2"))     // Err("error2")
+
 ```
 
 **Use case - fallback chains:**
 
 ```rust
+
 fn get_config() -> Option<Config> {
     load_from_file()
-        .or(load_from_env())
-        .or(default_config())
+    .or(load_from_env())
+    .or(default_config())
 }
+
 ```
 
+
+***
+
+## Working with Borrowed Data: as_ref, as_deref, and Friends
+
+When working with `Option` and `Result`, you often need to access inner values without taking ownership. Rust provides methods to borrow references through these wrappers.
+
+### Borrowing Without Moving: as_ref and as_mut
+
+The `as_ref()` method converts `Option<T>` → `Option<&T>` and `Result<T, E>` → `Result<&T, &E>`, allowing you to work with references instead of consuming owned values:
+
+```rust
+
+let name: Option<String> = Some("Alice".to_string());
+
+// Borrow to compute length without moving the String
+let len: Option<usize> = name.as_ref().map(|s| s.len());
+// name is still usable here
+println!("Name: {:?}", name);  // Still owns the String
+
+```
+
+For mutable access, use `as_mut()`:
+
+```rust
+
+let mut count: Option<i32> = Some(1);
+if let Some(v) = count.as_mut() {
+    *v += 1;  // Mutate in place
+}
+// count = Some(2)
+
+```
+
+**With Result:**
+
+```rust
+
+let result: Result<String, std::io::Error> = Ok("success".into());
+let borrowed: Result<&str, &std::io::Error> = result.as_ref();
+// result still owns the String
+
+```
+
+### Working with Smart Pointers: as_deref and as_deref_mut
+
+For types like `String`, `Vec<T>`, `Box<T>`, and others that implement `Deref`, use `as_deref()` to get a reference to the dereferenced type:
+
+```rust
+
+// Option<String> -> Option<&str>
+let owned: Option<String> = Some("hello".into());
+let borrowed: Option<&str> = owned.as_deref();
+// No allocation, just borrows
+
+// Option<Vec<i32>> -> Option<&[i32]>
+let vec: Option<Vec<i32>> = Some(vec![1, 2, 3]);
+let slice: Option<&[i32]> = vec.as_deref();
+
+```
+
+**With Result:**
+
+```rust
+
+// Result<String, E> -> Result<&str, &E>
+let result: Result<String, std::io::Error> = Ok("data".into());
+let deref: Result<&str, &std::io::Error> = result.as_deref();
+
+// Mutable deref
+let mut s: Result<String, String> = Ok("hello".into());
+if let Ok(text) = s.as_deref_mut() {
+    text.make_ascii_uppercase();
+}
+// s = Ok("HELLO")
+
+```
+
+### Materializing Values: copied and cloned
+
+When you have `Option<&T>` or `Result<&T, E>` and need owned values, use `copied()` for `Copy` types or `cloned()` for `Clone` types:
+
+```rust
+
+let x = 42;
+let reference: Option<&i32> = Some(&x);
+let owned: Option<i32> = reference.copied();  // i32 is Copy
+
+// With Clone
+let s = String::from("hello");
+let reference: Option<&String> = Some(&s);
+let owned: Option<String> = reference.cloned();
+
+```
+
+**With Result:**
+
+```rust
+
+let x = 42;
+let r: Result<&i32, &str> = Ok(&x);
+let owned: Result<i32, &str> = r.copied();
+
+```
+
+**Why this matters:** These methods prevent unnecessary clones and moves, making your code more efficient:
+
+```rust
+
+// ❌ Inefficient: clones every time
+fn check_length(opt: Option<String>) -> bool {
+    opt.clone().map(|s| s.len() > 5).unwrap_or(false)
+}
+
+// ✅ Efficient: only borrows
+fn check_length(opt: &Option<String>) -> bool {
+    opt.as_ref().map(|s| s.len() > 5).unwrap_or(false)
+}
+
+```
 
 ***
 
@@ -608,6 +796,7 @@ Sometimes you need to convert between these types. Rust provides methods for bot
 Converts `Option<T>` to `Result<T, E>` by providing an error value for the `None` case:
 
 ```rust
+
 let some_value: Option<i32> = Some(5);
 let result: Result<i32, &str> = some_value.ok_or("Value not found");
 // result = Ok(5)
@@ -615,6 +804,7 @@ let result: Result<i32, &str> = some_value.ok_or("Value not found");
 let no_value: Option<i32> = None;
 let result2 = no_value.ok_or("Value not found");
 // result2 = Err("Value not found")
+
 ```
 
 **Use case:** When you need to treat `None` as an error with a specific error message.
@@ -624,6 +814,7 @@ let result2 = no_value.ok_or("Value not found");
 Use a closure to compute the error value lazily (only if `None`):
 
 ```rust
+
 fn find_user(id: u32) -> Option<User> {
     // search logic
 }
@@ -633,6 +824,7 @@ fn get_user(id: u32) -> Result<User, String> {
         format!("User with id {} not found", id)
     })
 }
+
 ```
 
 **When to use `ok_or_else`:** When creating the error value is expensive or involves computation.
@@ -644,11 +836,13 @@ fn get_user(id: u32) -> Result<User, String> {
 Converts `Result<T, E>` to `Option<T>`, discarding error information:
 
 ```rust
+
 let result: Result<i32, String> = Ok(42);
 let option: Option<i32> = result.ok();     // Some(42)
 
 let error: Result<i32, String> = Err(String::from("failed"));
 let option2 = error.ok();                  // None
+
 ```
 
 **Use case:** When you only care about success and want to ignore error details.
@@ -658,14 +852,48 @@ let option2 = error.ok();                  // None
 Converts `Result<T, E>` to `Option<E>`, keeping only the error:
 
 ```rust
+
 let result: Result<i32, String> = Err(String::from("failed"));
 let error_option: Option<String> = result.err();  // Some("failed")
 
 let success: Result<i32, String> = Ok(42);
 let error_option2 = success.err();                // None
+
 ```
 
 **Use case:** When you want to examine or log only errors.
+
+### Interconverting Nested Types: transpose
+
+The `transpose()` method swaps the layers between `Option<Result<T, E>>` and `Result<Option<T>, E>`:
+
+```rust
+
+// Option<Result<T, E>> -> Result<Option<T>, E>
+let nested: Option<Result<i32, &str>> = Some(Ok(5));
+let swapped: Result<Option<i32>, &str> = nested.transpose();
+// Ok(Some(5))
+
+let error_case: Option<Result<i32, &str>> = Some(Err("failed"));
+let swapped2 = error_case.transpose();
+// Err("failed")
+
+// Result<Option<T>, E> -> Option<Result<T, E>>
+let result: Result<Option<i32>, &str> = Ok(Some(10));
+let option: Option<Result<i32, &str>> = result.transpose();
+// Some(Ok(10))
+
+```
+
+**Use case:** When parsing optional fields that can fail, or combining optional and fallible operations:
+
+```rust
+
+fn parse_optional_field(s: Option<&str>) -> Result<Option<i32>, ParseError> {
+    s.map(|s| s.parse()).transpose()
+}
+
+```
 
 ***
 
@@ -674,8 +902,9 @@ let error_option2 = success.err();                // None
 The `?` operator is Rust's most powerful tool for error handling. It provides concise error propagation without sacrificing type safety.
 
 ```rust
-use std::num::ParseIntError;
+
 use std::io;
+use std::num::ParseIntError;
 
 #[derive(Debug)]
 enum MyError {
@@ -696,11 +925,14 @@ impl From<io::Error> for MyError {
 }
 
 fn read_number() -> Result<i32, MyError> {
-    let s = std::fs::read_to_string("number.txt")?;  // io::Error -> MyError
-    let n = s.trim().parse()?;                        // ParseIntError -> MyError
+    let s = std::fs::read_to_string("number.txt")?; // io::Error -> MyError
+    let n = s.trim().parse()?; // ParseIntError -> MyError
     Ok(n)
 }
+
+
 ```
+
 ### How ? Works
 
 When applied to a `Result` or `Option`:
@@ -711,6 +943,7 @@ When applied to a `Result` or `Option`:
 The `?` operator also performs automatic type conversion using the `From` trait, allowing different error types to be automatically converted when propagating errors up the call stack.
 
 ```rust
+
 use std::fs::File;
 use std::io::{self, Read};
 
@@ -720,12 +953,14 @@ fn read_file_to_string(path: &str) -> Result<String, io::Error> {
     file.read_to_string(&mut contents)?;  // Returns Err if read fails
     Ok(contents)
 }
+
 ```
 
 
 ### Without ? (Verbose)
 
 ```rust
+
 fn read_file_verbose(path: &str) -> Result<String, io::Error> {
     let mut file = match File::open(path) {
         Ok(f) => f,
@@ -737,7 +972,8 @@ fn read_file_verbose(path: &str) -> Result<String, io::Error> {
         Ok(_) => Ok(contents),
         Err(e) => Err(e),
     }
-}
+    }
+
 ```
 
 
@@ -746,11 +982,13 @@ fn read_file_verbose(path: &str) -> Result<String, io::Error> {
 The `?` operator also works with `Option`, where `None` causes an early return:
 
 ```rust
+
 fn add_last_numbers(list1: &[i32], list2: &[i32]) -> Option<i32> {
-    let a = list1.last()?;  // Returns None if list is empty
-    let b = list2.last()?;  // Returns None if list is empty
-    Some(a + b)
+    let a = list1.last()?;  // Option<&i32>
+    let b = list2.last()?;  // Option<&i32>
+    Some(*a + *b)  // Dereference to get i32 values
 }
+
 ```
 
 
@@ -759,6 +997,7 @@ fn add_last_numbers(list1: &[i32], list2: &[i32]) -> Option<i32> {
 The `?` operator makes complex error handling readable:
 
 ```rust
+
 use std::fs;
 
 fn process_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
@@ -767,14 +1006,16 @@ fn process_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
     let validated = validate_config(parsed)?;
     Ok(validated)
 }
+
 ```
 
 
 ### Constraints on Using ?
 
-The `?` operator can only be used in functions that return `Result` or `Option`:
+On stable Rust, the `?` operator works ergonomically with `Result` and `Option` return types (including `main() -> Result<...>`). Generic integration via the `Try` and `FromResidual` traits remains nightly-only:
 
 ```rust
+
 // ✓ Valid
 fn foo() -> Result<i32, String> {
     let x = some_result?;
@@ -791,6 +1032,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let x = some_result?;
     Ok(())
 }
+
 ```
 
 
@@ -807,6 +1049,7 @@ Use `Option<T>` when:
 - Examples: finding an element in a collection, optional configuration fields, nullable database columns
 
 ```rust
+
 fn find_user_by_email(email: &str) -> Option<User> {
     // Not finding a user isn't an error - they might not exist
 }
@@ -815,6 +1058,7 @@ struct Config {
     required_field: String,
     optional_field: Option<String>,  // May or may not be present
 }
+
 ```
 
 
@@ -828,6 +1072,7 @@ Use `Result<T, E>` when:
 - Examples: file I/O, parsing, network requests, validation
 
 ```rust
+
 fn parse_json(data: &str) -> Result<JsonValue, ParseError> {
     // Parsing can fail - need to know why
 }
@@ -835,8 +1080,8 @@ fn parse_json(data: &str) -> Result<JsonValue, ParseError> {
 fn open_database(url: &str) -> Result<Connection, DbError> {
     // Connection might fail - caller needs error details
 }
-```
 
+```
 
 ### Choosing Between Methods
 
@@ -872,12 +1117,18 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 |`unwrap_or(default)`|`Option<T> -> T`|Get value or return default|
 |`unwrap_or_else(f)`|`Option<T> -> T`|Get value or compute default|
 |`unwrap_or_default()`|`Option<T> -> T`|Get value or type's default|
-|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None)|
+|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None). unwrap_unchecked() is marked unsafe and requires the caller to guarantee the invariant (the value must be Some/Ok). This method exists primarily for performance-critical code where runtime checks have already been performed|
 |`map(f)`|`Option<T> -> Option<U>`|Transform contained value|
-| `and_then(f)` | `Option<T> -> Option<U>` | Chain fallible transformations |
-| `inspect(f)` | `Option<T> -> Option<T>` | Observe value without consuming |
-| `ok_or(err)` | `Option<T> -> Result<T, E>` | Convert to Result |
-| `ok_or_else(f)` | `Option<T> -> Result<T, E>` | Convert to Result (lazy error) |
+|`and_then(f)`|`Option<T> -> Option<U>`|Chain fallible transformations|
+|`inspect(f)`|`Option<T> -> Option<T>`|Observe value without consuming|
+|`as_ref()`|`Option<T> -> Option<&T>`|Borrow the contained value|
+|`as_mut()`|`Option<T> -> Option<&mut T>`|Mutably borrow the contained value|
+|`as_deref()`|`Option<T> -> Option<&T::Target>`|Deref and borrow|
+|`copied()`|`Option<&T> -> Option<T>`|Copy out of reference (T: Copy)|
+|`cloned()`|`Option<&T> -> Option<T>`|Clone out of reference (T: Clone)|
+|`ok_or(err)`|`Option<T> -> Result<T, E>`|Convert to Result|
+|`ok_or_else(f)`|`Option<T> -> Result<T, E>`|Convert to Result (lazy error)|
+|`transpose()`|`Option<Result<T,E>> -> Result<Option<T>,E>`|Swap nesting layers|
 
 ### Result<T, E> Methods
 
@@ -888,20 +1139,27 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 | `unwrap_or(default)` | `Result<T, E> -> T` | Get value or return default |
 | `unwrap_or_else(f)` | `Result<T, E> -> T` | Get value or compute default |
 | `unwrap_or_default()` | `Result<T, E> -> T` | Get value or type's default |
-| `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | **UNSAFE**: Get value without checking (undefined behavior if Err) |
+| `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | **UNSAFE**: Get value without checking (undefined behavior if Err). unwrap_unchecked() is marked unsafe and requires the caller to guarantee the invariant (the value must be Some/Ok). This method exists primarily for performance-critical code where runtime checks have already been performed |
 | `map(f)` | `Result<T, E> -> Result<U, E>` | Transform success value |
 | `map_err(f)` | `Result<T, E> -> Result<T, F>` | Transform error value |
 | `and_then(f)` | `Result<T, E> -> Result<U, E>` | Chain fallible operations |
 | `inspect(f)` | `Result<T, E> -> Result<T, E>` | Observe success value |
 | `inspect_err(f)` | `Result<T, E> -> Result<T, E>` | Observe error value |
+| `as_ref()` | `Result<T, E> -> Result<&T, &E>` | Borrow both Ok and Err values |
+| `as_mut()` | `Result<T, E> -> Result<&mut T, &mut E>` | Mutably borrow both values |
+| `as_deref()` | `Result<T, E> -> Result<&T::Target, &E>` | Deref Ok value and borrow |
+| `copied()` | `Result<&T, E> -> Result<T, E>` | Copy Ok value (T: Copy) |
+| `cloned()` | `Result<&T, E> -> Result<T, E>` | Clone Ok value (T: Clone) |
 | `ok()` | `Result<T, E> -> Option<T>` | Convert to Option (discard error) |
 | `err()` | `Result<T, E> -> Option<E>` | Extract error as Option |
+| `transpose()` | `Result<Option<T>, E> -> Option<Result<T, E>>` | Swap nesting layers |
 
-⚠️ **Safety Note**: `unwrap_unchecked()` is an unsafe operation that produces undefined behavior if called on an `Err` variant. Only use in performance-critical code where you can guarantee the Result is Ok.
+⚠️ **Safety Note**: `unwrap_unchecked()` is an unsafe operation that produces undefined behavior if called on a `None` or `Err` variant. Only use in performance-critical code where you can guarantee the value is Some/Ok.
 
 ### Pattern Matching Syntax
 
 ```rust
+
 // Full match
 match result {
     Ok(value) => { /* handle success */ },
@@ -919,6 +1177,7 @@ let Ok(value) = result else {
     return;
 };
 // use value here
+
 ```
 
 
@@ -936,6 +1195,7 @@ Rust's `Option` and `Result` types eliminate entire categories of bugs by forcin
 - `Option<T>` represents optional values; use when absence isn't an error
 - `Result<T, E>` represents fallible operations; use when you need error information
 - The `?` operator provides concise error propagation with automatic type conversion via the `From` trait
+- Use `as_ref()`, `as_deref()`, and related methods to work with borrowed data efficiently
 - Choose methods based on your needs: safe defaults, transformations, or explicit handling
 - Use `inspect()` methods for debugging and logging—they observe values via references and return the container unchanged for method chaining
 
