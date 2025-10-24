@@ -84,6 +84,7 @@ match some_number {
 **Destructuring with `if let`** handles a single pattern:
 
 ```rust
+let msg = Message::Write(String::from("hello"));
 if let Message::Write(text) = msg {
     println!("Got text: {}", text);
 }
@@ -93,6 +94,7 @@ if let Message::Write(text) = msg {
 **The `let...else` pattern** handles one case and exits for others:
 
 ```rust
+let msg = Message::Write(String::from("hello"));
 let Message::Write(text) = msg else {
     println!("Not a write message!");
     return;
@@ -128,8 +130,8 @@ This replaces the concept of "null" found in other languages, but **with type sa
 let some_number: Option<i32> = Some(42);  // Wraps the value 42
 let no_number: Option<i32> = None;        // No value present
 
-// Option is so common it's in the prelude
-// You can omit the Option:: prefix
+// Some and None can be written without Option::
+// The compiler resolves the enum through type inference
 let x = Some(5);
 let y: Option<i32> = None;
 ```
@@ -447,7 +449,7 @@ fn parse_and_square(input: &str) -> Option<i32> {
 
 #### and_then() - Chain Fallible Operations
 
-The `and_then` method is used when your transformation **can itself fail**. The function must return an `Option` or `Result`.
+The `and_then` method is used when your transformation **can itself fail**. Unlike `map`, the function must return an `Option<U>` or `Result<U, E>` (not just `U`).
 
 ```rust
 fn parse_positive(s: &str) -> Option<i32> {
@@ -508,7 +510,12 @@ fn parse_number(s: &str) -> Result<i32, String> {
 
 #### inspect() - Observe Values Without Consuming
 
-The `inspect()` methods allow you to perform side effects (like logging) while temporarily borrowing the value. The value is then passed through unchanged, enabling method chaining:
+The `inspect()` methods consume `self` by value, pass a reference (`&T`) to the contained value to the closure (allowing temporary observation), and return the original `Option` or `Result` unchanged, enabling method chaining.
+
+In the code below:
+- The container is moved (consumed)
+- The closure receives a reference
+- The container is returned (not a copy)
 
 ```rust
 let result = Some(5)
@@ -522,7 +529,7 @@ let parsed: Result<i32, _> = "123".parse()
     .inspect_err(|e| eprintln!("Parse error: {}", e));
 ```
 
-**Use case:** Debugging, logging, or metrics collection without modifying the data flow. The `inspect()` methods borrow the value temporarily for the closure but return the original `Option` or `Result` unchanged.
+**Use case:** Debugging, logging, or metrics collection without modifying the data flow. The `inspect()` methods consume `self` by value, pass a reference to the contained value to the closure (allowing temporary observation), and return the original `Option` or `Result` unchanged, enabling method chaining.
 
 ### Boolean Combinators
 
@@ -530,7 +537,7 @@ The `and` and `or` methods provide boolean-like logic for combining `Option` and
 
 #### The and Method
 
-Returns the second value if the first is `Ok`/`Some`, otherwise returns the first:
+Returns the second value if the first is `Some`/`Ok`, otherwise returns the first (`None`/`Err`):
 
 
 | First | Second | Result |
@@ -666,6 +673,34 @@ let error_option2 = success.err();                // None
 
 The `?` operator is Rust's most powerful tool for error handling. It provides concise error propagation without sacrificing type safety.
 
+```rust
+use std::num::ParseIntError;
+use std::io;
+
+#[derive(Debug)]
+enum MyError {
+    Parse(ParseIntError),
+    Io(io::Error),
+}
+
+impl From<ParseIntError> for MyError {
+    fn from(err: ParseIntError) -> Self {
+        MyError::Parse(err)
+    }
+}
+
+impl From<io::Error> for MyError {
+    fn from(err: io::Error) -> Self {
+        MyError::Io(err)
+    }
+}
+
+fn read_number() -> Result<i32, MyError> {
+    let s = std::fs::read_to_string("number.txt")?;  // io::Error -> MyError
+    let n = s.trim().parse()?;                        // ParseIntError -> MyError
+    Ok(n)
+}
+```
 ### How ? Works
 
 When applied to a `Result` or `Option`:
@@ -725,9 +760,8 @@ The `?` operator makes complex error handling readable:
 
 ```rust
 use std::fs;
-use std::io;
 
-fn process_config(path: &str) -> Result<Config, io::Error> {
+fn process_config(path: &str) -> Result<Config, Box<dyn std::error::Error>> {
     let content = fs::read_to_string(path)?;
     let parsed = parse_toml(&content)?;
     let validated = validate_config(parsed)?;
@@ -831,14 +865,15 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 
 ### Option<T> Methods
 
-| Method | Signature | Purpose |
-| :-- | :-- | :-- |
-| `unwrap()` | `Option<T> -> T` | Get value or panic |
-| `expect(msg)` | `Option<T> -> T` | Get value or panic with message |
-| `unwrap_or(default)` | `Option<T> -> T` | Get value or return default |
-| `unwrap_or_else(f)` | `Option<T> -> T` | Get value or compute default |
-| `unwrap_or_default()` | `Option<T> -> T` | Get value or type's default |
-| `map(f)` | `Option<T> -> Option<U>` | Transform contained value |
+|Method|Signature|Purpose|
+|--|--|--|
+|`unwrap()`|`Option<T> -> T`|Get value or panic|
+|`expect(msg)`|`Option<T> -> T`|Get value or panic with message|
+|`unwrap_or(default)`|`Option<T> -> T`|Get value or return default|
+|`unwrap_or_else(f)`|`Option<T> -> T`|Get value or compute default|
+|`unwrap_or_default()`|`Option<T> -> T`|Get value or type's default|
+|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None)|
+|`map(f)`|`Option<T> -> Option<U>`|Transform contained value|
 | `and_then(f)` | `Option<T> -> Option<U>` | Chain fallible transformations |
 | `inspect(f)` | `Option<T> -> Option<T>` | Observe value without consuming |
 | `ok_or(err)` | `Option<T> -> Result<T, E>` | Convert to Result |
@@ -902,8 +937,7 @@ Rust's `Option` and `Result` types eliminate entire categories of bugs by forcin
 - `Result<T, E>` represents fallible operations; use when you need error information
 - The `?` operator provides concise error propagation with automatic type conversion via the `From` trait
 - Choose methods based on your needs: safe defaults, transformations, or explicit handling
-- Use `inspect()` methods for debugging and logging—they borrow values temporarily and return them unchanged for method chaining
-- Follow Rust naming conventions: use snake_case for functions and variables
+- Use `inspect()` methods for debugging and logging—they observe values via references and return the container unchanged for method chaining
 
 This approach trades a bit of verbosity for complete elimination of null pointer exceptions and unhandled errors—a trade-off that makes Rust's reputation for reliability well-deserved.
 
