@@ -545,7 +545,7 @@ fn parse_number(s: &str) -> Option<i32> {
 }
 
 fn validate_positive(n: i32) -> Option<i32> {
-i   f n > 0 { Some(n) } else { None }
+    if n > 0 { Some(n) } else { None }
 }
 
 fn compute_result(n: i32) -> Option<i32> {
@@ -592,7 +592,7 @@ let parsed: Result<i32, _> = "123".parse()
 
 ```
 
-**Use case:** Debugging, logging, or metrics collection without modifying the data flow. The `inspect()` methods consume `self` by value, pass a reference to the contained value to the closure (allowing temporary observation), and return the original `Option` or `Result` unchanged, enabling method chaining.
+**Use case:** Debugging, logging, or metrics collection without modifying the data flow.
 
 ### Boolean Combinators
 
@@ -701,7 +701,10 @@ if let Some(v) = count.as_mut() {
 ```rust
 
 let result: Result<String, std::io::Error> = Ok("success".into());
-let borrowed: Result<&str, &std::io::Error> = result.as_ref();
+// Option A: borrow the owned String
+let borrowed: Result<&String, &std::io::Error> = result.as_ref();
+// Option B: borrow the deref target (&str)
+let borrowed_str: Result<&str, &std::io::Error> = result.as_deref();
 // result still owns the String
 
 ```
@@ -1117,7 +1120,7 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 |`unwrap_or(default)`|`Option<T> -> T`|Get value or return default|
 |`unwrap_or_else(f)`|`Option<T> -> T`|Get value or compute default|
 |`unwrap_or_default()`|`Option<T> -> T`|Get value or type's default|
-|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None). unwrap_unchecked() is marked unsafe and requires the caller to guarantee the invariant (the value must be Some/Ok). This method exists primarily for performance-critical code where runtime checks have already been performed|
+|`unwrap_unchecked()` ⚠️|`Option<T> -> T`|UNSAFE: Get value without checking (undefined behavior if None). unwrap_unchecked() is an unsafe operation that produces **undefined behavior** if called on a None or Err variant. The caller must guarantee that the value is Some/Ok. This method exists primarily for performance-critical code where you can prove the value is valid through prior checks or invariants.|
 |`map(f)`|`Option<T> -> Option<U>`|Transform contained value|
 |`and_then(f)`|`Option<T> -> Option<U>`|Chain fallible transformations|
 |`inspect(f)`|`Option<T> -> Option<T>`|Observe value without consuming|
@@ -1139,7 +1142,7 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 | `unwrap_or(default)` | `Result<T, E> -> T` | Get value or return default |
 | `unwrap_or_else(f)` | `Result<T, E> -> T` | Get value or compute default |
 | `unwrap_or_default()` | `Result<T, E> -> T` | Get value or type's default |
-| `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | **UNSAFE**: Get value without checking (undefined behavior if Err). unwrap_unchecked() is marked unsafe and requires the caller to guarantee the invariant (the value must be Some/Ok). This method exists primarily for performance-critical code where runtime checks have already been performed |
+| `unwrap_unchecked()` ⚠️ | `Result<T, E> -> T` | **UNSAFE**: Get value without checking (undefined behavior if Err). unwrap_unchecked() is an unsafe operation that produces **undefined behavior** if called on a None or Err variant. The caller must guarantee that the value is Some/Ok. This method exists primarily for performance-critical code where you can prove the value is valid through prior checks or invariants. |
 | `map(f)` | `Result<T, E> -> Result<U, E>` | Transform success value |
 | `map_err(f)` | `Result<T, E> -> Result<T, F>` | Transform error value |
 | `and_then(f)` | `Result<T, E> -> Result<U, E>` | Chain fallible operations |
@@ -1155,6 +1158,8 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 | `transpose()` | `Result<Option<T>, E> -> Option<Result<T, E>>` | Swap nesting layers |
 
 ⚠️ **Safety Note**: `unwrap_unchecked()` is an unsafe operation that produces undefined behavior if called on a `None` or `Err` variant. Only use in performance-critical code where you can guarantee the value is Some/Ok.
+
+
 
 ### Pattern Matching Syntax
 
