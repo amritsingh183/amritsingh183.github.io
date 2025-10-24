@@ -849,7 +849,7 @@ The `as_slice` and `as_mut_slice` methods convert an `Option<T>` into a slice wi
 ```rust
 let some_value: Option<i32> = Some(42);
 let slice: &[i32] = some_value.as_slice();
-assert_eq!(slice, &[^42]);
+assert_eq!(slice, &[42]);
 
 let none_value: Option<i32> = None;
 let empty: &[i32] = none_value.as_slice();
