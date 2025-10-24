@@ -87,6 +87,7 @@ Constants have several important properties:
 3. **No fixed memory address** - they are inlined at compile time wherever used
 4. **Can be declared in any scope**, including global scope
 5. **Naming convention**: Use `UPPER_SNAKE_CASE`
+
 ```rust
 // Valid constant expressions
 const SECONDS_IN_MINUTE: u32 = 60;
