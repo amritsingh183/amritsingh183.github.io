@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Understanding Enums in Rust: A Comprehensive Guide"
-date: 2025-10-24 13:23:00 +0530
-categories: rust programming tutorial
+title: "Mastering Rust's Enum type: A Complete Guide"
+date: 2025-10-21 23:23:00 +0530
+categories: rust concepts
 ---
 
 # Comprehensive Guide: Enums and Pattern Matching in Rust
