@@ -85,7 +85,7 @@ const PI: f64 = 3.14159265359;
 Constants have several important properties:
 
 1. **Type annotation is mandatory** - the compiler cannot infer the type
-2. **Must be set to a constant expression** - cannot be the result of a function call or any value computed at runtime
+2. **Must evaluate to a compile-time constant expression** - (may call `const fn`, but cannot call **non**-`const` functions or compute values at runtime)
 3. **No fixed memory address** - they are inlined at compile time wherever used
 4. **Can be declared in any scope**, including global scope
 5. **Naming convention**: Use `UPPER_SNAKE_CASE`
@@ -106,7 +106,7 @@ const SECONDS_IN_HOUR: u32 = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
 | :-- | :-- | :-- |
 | Can change? | No | Yes, if `mut` is used |
 | Type required? | Yes | No (optional) |
-| Memory location | No fixed address (inlined) | Has a stack location |
+| Memory location | No fixed address (inlined) | Compiler-chosen storage (not guaranteed to be on the stack) |
 | Scope | Any scope, including global | Block scope |
 | Runtime computation | No - compile-time only | Yes |
 
@@ -128,12 +128,13 @@ fn main() {
 
 ### Static vs Const
 
-| Feature | `static` | `const` |
-| :-- | :-- | :-- |
-| Memory location | Fixed address | Inlined (no fixed address) |
-| Performance | Slightly slower (load from address) | Faster (inlined) |
-| Binary size | Smaller (when used frequently) | Larger (multiple copies) |
-| Use case | Global state, FFI | Compile-time constants |
+| Feature              | `static`                              | `const`                                |
+| -------------------- | ------------------------------------- | -------------------------------------- |
+| Memory location      | Fixed address in memory               | Inlined (no fixed address)             |
+| Addressability       | Has a stable memory address           | No guaranteed address                   |
+| Use case             | Global state, FFI, mutable globals    | Compile-time constants                 |
+| Lifetime             | `'static` (entire program duration)   | N/A (inlined at use sites)             |
+
 
 ### Mutable Static Variables
 
@@ -184,7 +185,8 @@ static mut COUNTER: u32 = 0;
 
 fn main() {
     unsafe {
-        let ptr = &raw mut COUNTER;  // OK: raw pointer, not reference
+        // Using &raw mut avoids creating a reference (which would be UB)
+        let ptr = &raw mut COUNTER;
         *ptr += 1;
     }
 }
@@ -234,7 +236,7 @@ static MESSAGE: &'static str = "This exists for the entire program";
 Rust's ownership system manages memory through three core rules:
 
 1. Each value has one owner
-2. When the owner goes out of scope, the value is deleted
+2. When the owner goes out of scope, the value is dropped ("Dropped" is the standard Rust terminology for when destructors run at the end of scope)
 3. There can only be one owner at a time; borrowing creates references, not additional owners.
 
 ### Move Semantics
@@ -353,7 +355,7 @@ fn main() {
 
 ### Borrow Contagion
 
-When you borrow a field of a struct, you indirectly borrow the entire struct. This is known as **borrow contagion**:
+The borrow checker is field-sensitive for disjoint struct fields. However, when you create a mutable borrow through a variable, it prevents other borrows through the same variable while the mutable borrow is active:
 
 ```rust
 struct Car {
@@ -367,15 +369,17 @@ fn main() {
         wheels: vec![String::from("wheel1"), String::from("wheel2")],
     };
 
-    let engine_ref = &mut car.engine; // Borrows the entire car mutably
+    let engine_ref = &mut car.engine; // Mutable borrow of car.engine
 
-    // let wheel_ref = &car.wheels[0]; // ERROR: cannot borrow car as immutable
-                                       // because it's already borrowed as mutable
+    // let wheel_ref = &car.wheels; // ERROR: cannot borrow car.wheels
+                                     // while car.engine is mutably borrowed
+                                     // through the same 'car' binding
 
     engine_ref.push_str(" Turbo");
 } // Mutable borrow ends here
 ```
 
+The error occurs because both `car.engine` and `car.wheels` are accessed through the `car` binding, and the compiler conservatively prevents potential aliasing during the lifetime of the mutable borrow to `car.engine`.
 
 ## Lifetimes
 
@@ -450,13 +454,14 @@ The lifetime annotation `'a` ensures that the `ImportantExcerpt` instance cannot
 
 ## Best Practices
 
-1. **Prefer `const` over `static`** when possible for better optimization
+1. **Prefer `const` over `static`** when you don't need a fixed memory address and the value is a compile-time constant.
 2. **Use immutable variables by default** and add `mut` only when necessary
 3. **Leverage shadowing** for type transformations instead of multiple variable names
 4. **Borrow instead of moving** ownership when possible to avoid unnecessary copies
 5. **Use immutable references** unless mutation is required to allow multiple readers
-6. **Avoid mutable static variables**. In Rust 2024 Edition, references to static mut are denied by default. Use interior mutability patterns (AtomicT, Mutex<T>, LazyLock<T>) instead.
+6. Avoid mutable static variables. In Rust 2024 Edition, creating references to `static mut` is denied by default (and is undefined behavior). Use raw pointers (`&raw mut`) or prefer interior mutability patterns (`Atomic*`, `Mutex<T>`, `OnceLock<T>`, `LazyLock<T>`) or `thread_local!` for thread-local state
+
 
 ## Summary
 
-Rust's variable and borrowing system provides memory safety guarantees at compile time. Variables are immutable by default, encouraging safe concurrent programming. The ownership system, combined with borrowing rules, eliminates entire classes of bugs such as null pointer dereferences, use-after-free, and data races. Constants and static variables offer different performance characteristics for compile-time and global values. Understanding these concepts is fundamental to writing safe, efficient Rust code.
+Rust's variable and borrowing system provides memory safety guarantees at compile time. Variables are immutable by default, encouraging safe concurrent programming. The ownership system, combined with borrowing rules, eliminates entire classes of bugs such as null pointer dereferences, use-after-free, and data races. Constants and static variables serve different semantic purposes: `const` for compile-time constants and `static` for addressable globals. Understanding these concepts is fundamental to writing safe, efficient Rust code.
