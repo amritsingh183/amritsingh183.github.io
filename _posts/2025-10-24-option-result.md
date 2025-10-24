@@ -15,7 +15,7 @@ This guide assumes you understand Rust's ownership, borrowing, and type safety f
 
 **References and pointers in Rust refer to related but distinct concepts**
 
-- References (\&T or \&mut T) are safe pointers with strict rules enforced by the compiler.
+- References (&T or &mut T) are safe pointers with strict rules enforced by the compiler.
     - References have extra semantic rules and safety enforced by the compiler, making them safe to use for borrowing data.
     - They always point to valid memory.
     - They have associated lifetimes ensuring they do not outlive the data they reference.
