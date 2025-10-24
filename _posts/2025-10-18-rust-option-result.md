@@ -1113,8 +1113,7 @@ You may have noticed that `main` can return a `Result`, which enables the `?` op
 For a type to be a valid return type for `main`, it must implement `Termination`. The standard library provides an implementation for `Result<(), E>` where `E` implements `std::fmt::Debug`. This implementation:
 
 - Returns exit code 0 (success) when the result is `Ok(())`
-- Prints the error's `Debug` representation to stderr and returns exit code 1 (failure) when the result is `Err(e)`
-
+- Prints the error's `Debug` representation to stderr and the standard runtime prints the error's Debug and returns a non-zero exit(failure) status when the result is `Err(e)
 **Example:**
 
 ```rust
