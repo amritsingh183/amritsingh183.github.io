@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Mastering `Copy` and `Clone` in Rust: A Complete Guide"
+title: "Mastering `Copy` and `Clone` traits in Rust: A Complete Guide"
 date: 2025-10-9 10:23:00 +0530
 categories: rust concepts
 ---
 
-# Mastering `Copy` and `Clone` in Rust
+# Mastering `Copy` and `Clone` traits in Rust
 
 ## Introduction
 
