@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Variables and Constants in Rust: A Complete Guide"
+title: "Mastering Variables and Constants in Rust: A Complete Guide"
 date: 2025-10-8 11:23:00 +0530
 categories: rust concepts
 ---
