@@ -594,11 +594,67 @@ let parsed: Result<i32, _> = "123".parse()
 
 **Use case:** Debugging, logging, or metrics collection without modifying the data flow.
 
+#### Predicate Methods
+
+These methods provide concise ways to test conditions on contained values without explicitly pattern matching.
+
+**`is_some_and` - Test Option with a Predicate**
+
+Returns `true` if the option is `Some` and the value satisfies the predicate:
+
+```rust
+
+let x: Option<u32> = Some(42);
+assert!(x.is_some_and(|n| n > 40));  // true
+
+let y: Option<u32> = Some(5);
+assert!(!y.is_some_and(|n| n > 40)); // false - predicate fails
+
+let z: Option<u32> = None;
+assert!(!z.is_some_and(|n| n > 40)); // false - is None
+
+```
+
+**`is_ok_and` - Test Result with a Predicate**
+
+Returns `true` if the result is `Ok` and the value satisfies the predicate:
+
+```rust
+
+let result: Result<i32, &str> = Ok(42);
+assert!(result.is_ok_and(|n| n > 40));  // true
+
+let error: Result<i32, &str> = Err("failed");
+assert!(!error.is_ok_and(|n| n > 40));  // false - is Err
+
+```
+
+*Use case:* Replacing verbose patterns like `if let Some(x) = opt { x > 5 } else { false }` with the more concise `opt.is_some_and(|x| x > 5)`.
+
+**Why these methods matter:**
+
+```rust
+
+// Before: verbose pattern matching
+fn is_valid_age(age: Option<i32>) -> bool {
+    match age {
+        Some(a) if a >= 18 && a <= 120 => true,
+        _ => false,
+    }
+}
+
+// After: concise predicate
+fn is_valid_age(age: Option<i32>) -> bool {
+    age.is_some_and(|a| a >= 18 && a <= 120)
+}
+
+```
+
 ### Boolean Combinators
 
 The `and` and `or` methods provide boolean-like logic for combining `Option` and `Result` values.
 
-#### The and Method
+#### The `and` Method
 
 Returns the second value if the first is `Some`/`Ok`, otherwise returns the first (`None`/`Err`):
 
@@ -624,7 +680,7 @@ Err("early").and(Ok(100))           // Err("early")
 ```
 
 
-#### The or Method
+#### The `or` Method
 
 Returns the first value if it's `Ok`/`Some`, otherwise returns the second:
 

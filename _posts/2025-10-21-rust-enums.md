@@ -112,6 +112,47 @@ fn process_message(msg: Message) {
 
 ***
 
+
+### Using `if let` for Single Pattern Matching
+
+The `if let` syntax provides a concise way to match a single enum pattern and extract its data when you don't need exhaustive matching.
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::Write(String::from("hello"));
+
+    // Pattern matching with if let
+    if let Message::Write(text) = msg {
+        println!("Got text: {}", text);
+    }
+}
+```
+
+**How it works:**
+- `Message::Write(text)` is a **destructuring pattern** that matches the `Write` variant and binds its inner `String` to the variable `text`
+- If `msg` matches the `Write` variant, the code block executes with `text` containing the extracted string
+- If `msg` is a different variant (like `Quit` or `Move`), the pattern doesn't match and the block is skipped
+
+This is equivalent to a `match` expression but more concise when you only care about one specific variant:
+
+```rust
+match msg {
+    Message::Write(text) => println!("Got text: {}", text),
+    _ => {} // Ignore all other variants
+}
+```
+
+The `if let` approach is cleaner when you don't need exhaustive matching.
+
+***
+
 ## 6. **Exhaustiveness and Wildcards**
 
 - Pattern matching with enums must be *exhaustive*: you must cover every variant.
