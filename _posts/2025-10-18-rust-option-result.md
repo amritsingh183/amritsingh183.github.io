@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mastering Rust's Option and Result Types: A Complete Guide"
-date: 2025-10-24 13:23:00 +0530
+date: 2025-10-18 13:23:00 +0530
 categories: rust concepts
 ---
 
