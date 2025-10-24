@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Mastering Variables and Constants in Rust: A Complete Guide"
+title: "Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide"
 date: 2025-10-8 11:23:00 +0530
 categories: rust concepts
 ---
 
-# Variables and Constants in Rust
+# Variables, Constants and Lifetimes in Rust
 
 ## Variables
 
