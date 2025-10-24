@@ -147,29 +147,3 @@ match msg {
 
 
 ***
-
-## 9. **Further Exploration**
-
-- Rust's powerful enums underpin many core patterns, especially for safe handling of "optional" and "error" values using the built-in `Option` and `Result` enums.
-- For deeper study: [The Rust Programming Language Book, Ch. 6], [Serokell's Enums and Pattern Matching].
-
-- https://doc.rust-lang.org/book/ch06-00-enums.html
-
-- https://rustjobs.dev/blog/enums-and-pattern-matching-in-rust/
-
-- https://serokell.io/blog/enums-and-pattern-matching
-
-- https://blog.logrocket.com/rust-enums-and-pattern-matching/
-
-- https://users.rust-lang.org/t/best-practices-to-use-pattern-match-with-enum/76135
-
-- https://codesignal.com/learn/courses/fundamental-rust-concepts-for-design-patterns/lessons/enums-and-pattern-matching-in-rust
-
-- https://dev.to/fadygrab/learning-rust-14-option-enum-an-enum-and-pattern-matching-use-case-1dgf
-
-- https://www.reddit.com/r/rust/comments/x1g57p/i_cannot_understand_option_enum_and_match_from/
-
-- https://www.youtube.com/watch?v=DSZqIJhkNCM
-
-- https://www.reddit.com/r/rust/comments/yuj7xg/learn_about_the_generated_assembly_code_for_an/
-

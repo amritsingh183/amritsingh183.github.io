@@ -908,26 +908,3 @@ Rust's `Option` and `Result` types eliminate entire categories of bugs by forcin
 This approach trades a bit of verbosity for complete elimination of null pointer exceptions and unhandled errors—a trade-off that makes Rust's reputation for reliability well-deserved.
 
 ***
-
-- https://users.rust-lang.org/t/rust-generic-return-type/79816
-
-- https://stackoverflow.com/questions/59097840/understanding-rusts-function-return-type
-
-- https://rust-lang.github.io/rfcs/3654-return-type-notation.html
-
-- https://doc.rust-lang.org/std/keyword.return.html
-
-- https://doc.rust-lang.org/std/result/
-
-- https://loige.co/rust-shenanigans-return-type-polymorphism/
-
-- https://www.reddit.com/r/rust/comments/wy9sk1/can_you_have_a_function_return_different_types/
-
-- https://www.ncameron.org/blog/abstract-return-types-aka--impl-trait-/
-
-- https://doc.rust-lang.org/stable/releases.html
-
-- https://doc.rust-lang.org/rust-by-example/fn.html
-
-- https://doc.rust-lang.org/std/convert/trait.From.html
-
