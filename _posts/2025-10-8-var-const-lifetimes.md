@@ -1261,36 +1261,38 @@ use std::sync::Mutex;
 static NAMES: Mutex<Vec<String>> = Mutex::new(Vec::new());
 
 fn main() {
-    {
-        let mut names = NAMES.lock().unwrap();
-        names.push(String::from("Alice"));
-        names.push(String::from("Bob"));
-    } // lock is released here
-    
+    let mut names = NAMES.lock().unwrap();
+    names.push(String::from("Alice"));
+    names.push(String::from("Bob"));
+    // lock is released here
+
     let names = NAMES.lock().unwrap();
     println!("Names: {:?}", names);
 }
 ```
 
-`Mutex` ensures only one thread can access the data at a time.  `RwLock` allows multiple readers or one writer, similar to Rust's borrowing rules.
+Mutex ensures only one thread can access the data at a time. RwLock allows multiple readers or one writer, similar to Rust's borrowing rules.
+
+For types that don't have const-stable constructors like `HashMap`, use `LazyLock` for lazy initialization:
 
 ```rust
-use std::sync::RwLock;
+use std::sync::{LazyLock, RwLock};
 use std::collections::HashMap;
 
-static CACHE: RwLock<HashMap<String, String>> = RwLock::new(HashMap::new());
+static CACHE: LazyLock<RwLock<HashMap<String, String>>> = LazyLock::new(|| {
+    RwLock::new(HashMap::new())
+});
 
 fn main() {
     {
         let mut cache = CACHE.write().unwrap();
         cache.insert(String::from("key"), String::from("value"));
     }
-    
+
     let cache = CACHE.read().unwrap();
     println!("{:?}", cache.get("key"));
 }
 ```
-
 
 ### OnceLock and LazyLock
 
