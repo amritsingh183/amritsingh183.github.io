@@ -240,9 +240,7 @@ When `s` goes out of scope, Rust calls the `drop` function automatically, freein
 
 ### Stack vs Heap: Where Does a Struct Live?
 
-```
 **By default, Rust allocates all structs on the stack**, just like in C++. To store a struct on the heap, you must explicitly use heap-allocating types like `Box<T>`, `Rc<T>`, or `Arc<T>`.
-```
 
 
 #### Stack Allocation (Default)
