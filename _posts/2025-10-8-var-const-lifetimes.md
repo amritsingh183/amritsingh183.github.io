@@ -3,6 +3,7 @@ layout: post
 title: "Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide"
 date: 2025-10-8 11:23:00 +0530
 categories: rust concepts
+last_updated: 2025-10-25
 ---
 
 # A Complete Guide to Rust Ownership, Lifetimes, and Memory Management
@@ -1185,9 +1186,7 @@ Types like `Cell` and `RefCell` are not `Sync`, so you cannot use them in a `sta
 
 ### The static_mut_refs lint
 
-In the Rust 2024 Edition, creating any reference to a `static mut` (either `&` or `&mut`) is forbidden by default through the `static_mut_refs` lint.
-
-This is because creating such references can lead to undefined behavior, even if you never use them.  The compiler cannot guarantee safety when references to mutable statics exist.
+The `static_mut_refs` lint is **deny-by-default**. This is because creating such references can lead to undefined behavior, even if you never use them. The compiler cannot guarantee safety when references to mutable statics exist.
 
 Old code that worked in previous editions:
 
@@ -1272,6 +1271,14 @@ For types that don't have const-stable constructors like `HashMap`, use `LazyLoc
 use std::sync::{LazyLock, RwLock};
 use std::collections::HashMap;
 
+/*
+`HashMap::new()` is not a `const fn`, 
+so it cannot be used directly in a `static` initializer. 
+We use `LazyLock` to defer initialization until first access. 
+However, `Mutex::new()` and `RwLock::new()` are `const fn` and
+can be used with types that have const constructors (like `Vec::new()`).
+*/
+
 static CACHE: LazyLock<RwLock<HashMap<String, String>>> = LazyLock::new(|| {
     RwLock::new(HashMap::new())
 });
@@ -1287,7 +1294,7 @@ fn main() {
 }
 ```
 
-### OnceLock and LazyLock
+### OnceLock and LazyLock (efficient alternatives to the external `lazy_static` crate.)
 
 `OnceLock` and `LazyLock` are for one-time initialization:
 
