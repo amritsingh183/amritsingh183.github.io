@@ -180,5 +180,3 @@ COUNTER.fetch_add(1, Ordering::SeqCst);
 ### Suggested syllabus order for a course
 
 - Ownership and moves → Copy vs non‑Copy → Shared vs mutable borrows and NLL → Two‑phase borrows → Reborrowing → Partial moves → Lifetime elision and explicit annotations → 'static, const/static, and 2024 static_mut_refs with safer patterns.
-
-This structure corrects the earlier interleaving of variables/constants with ownership and adds the missing rules and edge cases so learners progress from mental models to expert‑level patterns confidently.
