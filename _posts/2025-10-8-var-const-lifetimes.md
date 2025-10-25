@@ -598,9 +598,7 @@ Heap-allocated types do **not** implement `Copy` because copying them would crea
 
 #### Characteristics of Move Types
 
-```
 Types that allocate heap memory (like `String`, `Vec<T>`, `Box<T>`, and custom structs containing heap data) cannot implement `Copy`. When assigned or passed to functions, ownership moves from the source to the destination. The compiler prevents you from using the moved variable, guaranteeing memory safety.
-```
 
 
 #### Common Move Types
