@@ -296,9 +296,7 @@ fn main() {
 
 #### The Hybrid Case: Structs with Heap-Allocated Fields
 
-```
 Some structs are allocated on the stack but contain fields that point to heap memory. This is the case for types like `String`, `Vec<T>`, `HashMap<K, V>`, `Arc<T>`, and `Rc<T>`:
-```
 
 ```rust
 struct Person {
@@ -340,11 +338,7 @@ Here's a comprehensive breakdown of what goes where:
     - Function parameters and local variables
     - The fixed-size portions of heap-allocating types (e.g., the pointer/length/capacity metadata of `String` and `Vec`)
 2. **Heap (explicit allocation):**
-
-```
-- Values wrapped in `Box<T>`, `Rc<T>`, `Arc<T>`
-```
-
+    - Values wrapped in `Box<T>`, `Rc<T>`, `Arc<T>`
     - The contents of `String` (the actual character bytes)
     - The contents of `Vec<T>` (the actual elements)
     - The contents of `HashMap<K, V>`, `BTreeMap<K, V>`, etc.
@@ -352,6 +346,7 @@ Here's a comprehensive breakdown of what goes where:
 3. **Static memory:**
     - Static variables declared with `static`
     - String literals: `"hello"`
+
 ```rust
 fn main() {
     // Stack-only struct
