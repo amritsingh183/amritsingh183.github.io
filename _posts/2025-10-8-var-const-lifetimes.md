@@ -332,7 +332,9 @@ fn main() {
 Here's a comprehensive breakdown of what goes where:
 
 ***
-**Simplified View [Legend**: ✓ = fully lives here, → = points to another location]**
+
+**Simplified View [Legend: ✓ = fully lives here, → = points to another location]**
+
 ***
 
 | Type / Structure                 | Stack | Heap | Static | Notes                                      |
@@ -351,7 +353,9 @@ Here's a comprehensive breakdown of what goes where:
 
 
 ***
+
 **Detailed Breakdown: Stack-Only Types**
+
 ***
 
 |Type           |  Size                          |  Characteristics|
@@ -364,7 +368,9 @@ Here's a comprehensive breakdown of what goes where:
 |Struct/Enum    |  Sum of field sizes + padding  |  All fields stored directly in stack frame, with padding added to ensure field alignment|
 
 ***
+
 **Detailed Breakdown: Stack + Heap Types (Smart Pointers & Collections)**
+
 ***
 
 |Type           |  Stack Size  |  Heap Contains               |  Use Case|
@@ -378,8 +384,11 @@ Here's a comprehensive breakdown of what goes where:
 |LinkedList<T>  |  24 bytes    |  Node chain                  |  Frequent insertions|
 
 ***
+
 **Detailed Breakdown: Static Memory**
+
 ***
+
 Type                  |  Stack Reference  |  Static Content         |  Lifetime |
 | :------------------ | :---------------- | :---------------------- | :-------- |
 String literal"text"  |  16-byte&str      |  Bytes in binary        |  'static
