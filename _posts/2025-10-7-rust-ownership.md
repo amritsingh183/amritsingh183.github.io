@@ -3039,7 +3039,7 @@ $ cargo +nightly miri run
 
 ### RPIT Capture Rules and use<>
 
-Rust 2024 changes how lifetimes are captured in return position impl Trait:[^11][^12][^13]
+Rust 2024 changes how lifetimes are captured in return position impl Trait:
 
 **New Capture Behavior**:
 
@@ -3102,7 +3102,7 @@ fn main() {
 
 ### Async Closures and Ownership
 
-Rust 2024 stabilizes async closures with proper ownership semantics:[^13][^11]
+Rust 2024 stabilizes async closures with proper ownership semantics:
 
 ```rust
 
@@ -3132,7 +3132,7 @@ async fn main() {
 
 ### Tail Expression Temporary Scope (Breaking Change)
 
-**What Changed**: In Rust 2024, temporaries in tail expressions (block return values) now drop **before** local variables, not after. This fixes a class of borrow checker limitations.[^12][^14]
+**What Changed**: In Rust 2024, temporaries in tail expressions (block return values) now drop **before** local variables, not after. This fixes a class of borrow checker limitations.
 
 **The Classic RefCell Example**:
 
@@ -3209,7 +3209,7 @@ fn main() {
 
 ### if let Temporary Scope (Breaking Change)
 
-**What Changed**: In Rust 2024, temporaries created in the `if let` scrutinee drop **before** the `else` block executes, not after.[^12][^14]
+**What Changed**: In Rust 2024, temporaries created in the `if let` scrutinee drop **before** the `else` block executes, not after.
 
 **The Deadlock Fix**:
 
@@ -3293,12 +3293,12 @@ fn main() {
 
 ```
 
-**Migration Lints**: Enable `rust_2024_temporary_if_let_scope` to detect code affected by this change.[^14]
+**Migration Lints**: Enable `rust_2024_temporary_if_let_scope` to detect code affected by this change.
 
 
 ### Prelude Additions
 
-Rust 2024 adds new items to the prelude that may cause method ambiguity:[^12][^13]
+Rust 2024 adds new items to the prelude that may cause method ambiguity:
 
 **New Prelude Items**:
 - `Future` trait
@@ -3306,34 +3306,34 @@ Rust 2024 adds new items to the prelude that may cause method ambiguity:[^12][^1
 
 **Potential Conflict**:
 
-```
+```rust
 
 // Custom type with poll method
 struct MyType;
 
 impl MyType {
-fn poll(self) -> bool {
-true
-}
+    fn poll(self) -> bool {
+        true
+    }
 }
 
 fn main() {
-let obj = MyType;
+    let obj = MyType;
 
     // Rust 2021: calls MyType::poll
     // Rust 2024: may conflict with Future::poll if type inference unclear
     // Use explicit UFCS to disambiguate:
     MyType::poll(&obj);
-    }
+}
 
 ```
 
 
 ### Reserved Keywords
 
-Rust 2024 reserves `gen` as a keyword for future generator syntax:[^12][^13]
+Rust 2024 reserves `gen` as a keyword for future generator syntax:
 
-```
+```rust
 
 // ❌ Rust 2024: ERROR - 'gen' is a reserved keyword
 // fn create_gen() {
@@ -3342,12 +3342,12 @@ Rust 2024 reserves `gen` as a keyword for future generator syntax:[^12][^13]
 
 // ✅ Rename to something else
 fn create_generator() {
-let generator = 42;
-println!("{}", generator);
+    let generator = 42;
+    println!("{}", generator);
 }
 
 fn main() {
-create_generator();
+    create_generator();
 }
 
 ```
@@ -3355,37 +3355,36 @@ create_generator();
 
 ### Future Ownership Directions
 
-**Polonius Borrow Checker**:[^4]
+**Polonius Borrow Checker**:
 
 The next-generation borrow checker with more precise analysis:
 
-```
+```rust
 
 // Currently requires workarounds
 fn current_limitation() {
-let mut data = vec!;[^1][^2][^3]
-let first = data;
+    let mut data = vec!;
+    let first = data;
 
     if *first > 0 {
         // Currently: ERROR even though first not used after
         // data.push(4);
     }
-    
+
     // Polonius will understand first isn't used here
-    }
+}
 
 // With Polonius: More flexible borrowing
 fn polonius_enables() {
-let mut map = std::collections::HashMap::new();
-map.insert("key", vec!);[^2][^3][^1]
-
+    let mut map = std::collections::HashMap::new();
+    map.insert("key", vec!);
     // Will work with Polonius
     let value = map.get_mut("key").unwrap();
     value.push(4);
-    }
+}
 
 fn main() {
-polonius_enables();
+    polonius_enables();
 }
 
 ```
