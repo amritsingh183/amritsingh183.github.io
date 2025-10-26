@@ -3,13 +3,14 @@ layout: post
 title: "Mastering Ownership, Moves, Borrowing, and Lifetimes in Rust"
 date: 2025-10-7 10:23:00 +0530
 categories: rust concepts
+last_updated: 2025-10-26
 ---
 
 # Mastering Rust Ownership: Advanced Patterns, Performance, and Real-World Applications
 
 **A comprehensive deep-dive into Rust's ownership model for developers ready to move beyond the fundamentals.**
 
-> **Prerequisites**: This guide builds on the foundational concepts covered in [Mastering Variables, Constants and Lifetimes in Rust](https://amritsingh183.github.io/rust/concepts/2025/10/08/var-const-lifetimes.html). You should be comfortable with basic ownership rules, borrowing, move vs. copy semantics, and lifetime annotations before proceeding.
+> **Prerequisites**: This guide builds on the foundational concepts covered in [Mastering Variables, Constants and Lifetimes in Rust](https://amritsingh183.github.io/rust/concepts/2025/10/08/rust-var-const-lifetimes.html). You should be comfortable with basic ownership rules, borrowing, move vs. copy semantics, and lifetime annotations before proceeding.
 
 ## Table of Contents
 
