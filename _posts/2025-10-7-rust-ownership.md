@@ -392,6 +392,8 @@ async fn main() {
 }
 ```
 
+> **Cross-Reference:** The `move` keyword's behavior with closures has important nuances, especially for types that are `Copy`. While ownership is fully transferred for non-`Copy` types, `Copy` types are duplicated. See the detailed note in the *Closure Ownership* section for a full explanation.
+
 
 ### Zero-Sized Types and Phantom Data
 
@@ -679,6 +681,16 @@ FnMut (can be called multiple times with mutable access)
   ↑
 Fn (can be called multiple times with shared access)
 ```
+
+> \#\#\#\# Note: Unexpected `move` Closure Behavior with `Copy` Types
+>
+> A subtle but critical behavior exists in the Rust 2021 and 2024 editions (notably with `rustc 1.90.0`) regarding `move` closures and types that implement the `Copy` trait.
+>
+> *   **For `Copy` types (e.g., `i32`, `bool`, simple structs with `#[derive(Copy)]`)**: When a `move` closure captures a `Copy` type, it captures a *bitwise copy* of the value. The original variable is not moved and remains fully accessible in its scope. The compiler will not issue a "use of moved value" error, which can be misleading.
+>
+> *   **For non-`Copy` types (e.g., `String`, `Vec<T>`)**: The `move` keyword works as expected, transferring ownership to the closure and making the original variable inaccessible.
+>
+> This behavior is intentional, stemming from the semantics of the `Copy` trait itself, but it is a known point of confusion. While no compiler error is generated, be aware that modifications inside the closure will only affect the copy, not the original variable. There is ongoing community discussion about adding a compiler lint to warn about this potentially surprising behavior in the future.
 
 
 ### Iterator Ownership Patterns
