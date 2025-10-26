@@ -1,0 +1,258 @@
+--- 2025-10-10-rust-static.md
++++ 2025-10-10-rust-static.md
+@@ -55,13 +55,13 @@
+ 
+
+
+-static PERIODIC_TABLE: [(u32, str); 118] = [
++static PERIODIC_TABLE: [(u32, \&'static str); 118] = [
+(1, "Hydrogen"),
+(2, "Helium"),
+// ... 116 more elements
+];
+
+-fn get_element_name(atomic_number: u32) -> Option<'static str> {
++fn get_element_name(atomic_number: u32) -> Option<\&'static str> {
+PERIODIC_TABLE.iter()
+.find(|(num, _)| *num == atomic_number)
+.map(|(_, name)| *name)
+@@ -75,7 +75,7 @@
+
+
+
+-static ERROR_MESSAGE: str = "An error occurred";
++static ERROR_MESSAGE: &'static str = "An error occurred";
+
+// FFI function expecting a stable pointer
+extern "C" {
+@@ -96,9 +96,9 @@
+
+
+
+-use std::sync::Mutex;
+-
+-static GLOBAL_CONFIG: Mutex<Config> = Mutex::new(Config::new());
++use std::sync::{LazyLock, Mutex};
++
++static GLOBAL_CONFIG: LazyLock<Mutex<Config>> = LazyLock::new(|| Mutex::new(Config::new()));
+
+struct Config {
+debug_mode: bool,
+@@ -149,7 +149,7 @@
+static mut TEMP_BUFFER: Vec<u8> = Vec::new();
+
+// Good: Pass ownership or use proper lifetimes
+-fn process_data(buffer: mut Vec<u8>) {
++fn process_data(buffer: \&mut Vec<u8>) {
+// Work with borrowed data
+}
+
+@@ -191,7 +191,7 @@
+
+
+
+-static NAME: str = "Rust";  // This is a static item
++static NAME: &'static str = "Rust";  // This is a static item
+
+
+
+@@ -234,7 +234,7 @@
+
+
+
+// 'static str - actual static reference
+-static STATIC_STR: 'static str = "I'm in the binary";
++static STATIC_STR: &'static str = "I'm in the binary";
+
+fn example() {
+// T: 'static - owned type, satisfies the bound
+@@ -267,8 +267,8 @@
+i32, u64, bool, etc.
+
+// ✅ References with 'static lifetime
+-'static str
+-'static [u8]
++&'static str
++&'static [u8]
+
+// ✅ Owned types containing 'static references
+struct Config {
+@@ -352,9 +352,9 @@
+
+fn examples() {
+// ✅ Promoted to 'static - literals are compile-time constants
+-let x: 'static i32 = 42;
+-let s: 'static str = "hello";
+-let b: 'static [u8] = b"bytes";
++let x: &'static i32 = &42;
++let s: &'static str = "hello";
++let b: &'static [u8] = b"bytes";
+
+    // ✅ Promoted - const expression
+    const MAX: i32 = 100;
+@@ -376,7 +376,7 @@
+
+
+// This is why string literals "just work"
+-fn takes_static_str(s: 'static str) {
++fn takes_static_str(s: \&'static str) {
+println!("{}", s);
+}
+
+@@ -402,10 +402,10 @@
+
+
+
+-use std::sync::Mutex;
++use std::sync::{LazyLock, Mutex};
+
+// OK: Mutex<T> implements Sync when T: Send
+-static SHARED_DATA: Mutex<Vec<i32>> = Mutex::new(Vec::new());
++static SHARED_DATA: LazyLock<Mutex<Vec<i32>>> = LazyLock::new(|| Mutex::new(Vec::new()));
+
+// Error: Cell is not Sync
+// static BAD: std::cell::Cell<i32> = std::cell::Cell::new(0);
+@@ -423,10 +423,10 @@
+
+// ✅ OK: Mutex<T> is Sync when T: Send
+// Mutex provides interior mutability with thread-safe access
+-static DATA: std::sync::Mutex<Vec<i32>> = std::sync::Mutex::new(Vec::new());
++static DATA: std::sync::LazyLock<std::sync::Mutex<Vec<i32>>> = std::sync::LazyLock::new(|| std::sync::Mutex::new(Vec::new()));
+
+// ✅ OK: String is Sync (immutable access only)
+-static TEXT: String = String::new();
++static TEXT: std::sync::LazyLock<String> = std::sync::LazyLock::new(String::new);
+
+// ❌ ERROR: Rc is NOT Sync (not thread-safe reference counting)
+// static BAD: std::rc::Rc<i32> = std::rc::Rc::new(42); // Won't compile
+@@ -446,14 +446,14 @@
+
+
+
+-use std::sync::{Arc, Mutex};
++use std::sync::{Arc, LazyLock, Mutex};
+use std::sync::atomic::{AtomicU32, Ordering};
+
+// ✅ Thread-safe reference counting
+static COUNTER_REF: std::sync::OnceLock<Arc<AtomicU32>> = std::sync::OnceLock::new();
+
+// ✅ Thread-safe interior mutability
+-static CONFIG: Mutex<Option<String>> = Mutex::new(None);
++static CONFIG: LazyLock<Mutex<Option<String>>> = LazyLock::new(|| Mutex::new(None));
+
+fn main() {
+COUNTER_REF.get_or_init(|| Arc::new(AtomicU32::new(0)));
+@@ -508,7 +508,7 @@
+
+// OK: Compile-time evaluable
+static COUNT: u32 = 42;
+-static NAME: str = "Rust";
++static NAME: \&'static str = "Rust";
+
+// Error: Runtime computation not allowed
+// static RANDOM: u32 = rand::random();
+@@ -521,10 +521,10 @@
+
+
+
+-use std::sync::Mutex;
+use std::fs::File;
+-
+-static FILE_HANDLE: Mutex<Option<File>> = Mutex::new(None);
++use std::sync::{LazyLock, Mutex};
++
++static FILE_HANDLE: LazyLock<Mutex<Option<File>>> = LazyLock::new(|| Mutex::new(None));
+
+fn main() {
+// File's Drop implementation will NEVER run
+@@ -549,10 +549,11 @@
+
+
+
+-use std::io::Write;
+-use std::sync::Mutex;
+-
+-static LOG: Mutex<Option[std::io::BufWriter[std::fs::File](std::fs::File)](std::io::BufWriter%5Bstd::fs::File%5D(std::fs::File))> = Mutex::new(None);
++use std::fs::File;
++use std::io::{BufWriter, Write};
++use std::sync::{LazyLock, Mutex};
++
++static LOG: LazyLock<Mutex<Option<BufWriter<File>>>> = LazyLock::new(|| Mutex::new(None));
+
+fn main() {
+// ... write to LOG ...
+@@ -580,7 +581,7 @@
+
+static EXPENSIVE_DATA: OnceLock<Vec<u64>> = OnceLock::new();
+
+-fn get_data() -> 'static Vec<u64> {
++fn get_data() -> \&'static Vec<u64> {
+EXPENSIVE_DATA.get_or_init(|| {
+// Computed only once, on first access
+(0..1_000_000).map(|x| x * x).collect()
+@@ -672,7 +673,7 @@
+}
+
+fn get_request_count() -> u64 {
+-REQUEST_COUNT.load(Ordering::Relaxed);
++REQUEST_COUNT.load(Ordering::Relaxed)
+}
+
+
+@@ -683,12 +684,12 @@
+
+
+
+-use std::sync::RwLock;
++use std::sync::{LazyLock, RwLock};
+use std::collections::HashMap;
+
+-static CACHE: RwLock<HashMap<String, String>> = RwLock::new(HashMap::new());
+-
+-fn get_cached(key: str) -> Option<String> {
++static CACHE: LazyLock<RwLock<HashMap<String, String>>> = LazyLock::new(|| RwLock::new(HashMap::new()));
++
++fn get_cached(key: \&str) -> Option<String> {
+let cache = CACHE.read().unwrap();
+cache.get(key).cloned()
+}
+@@ -760,10 +761,10 @@
+
+
+
+-use std::sync::RwLock;
++use std::sync::{LazyLock, RwLock};
+use std::collections::HashMap;
+
+-static CONFIG: RwLock<HashMap<'static str, String>> = RwLock::new(HashMap::new());
++static CONFIG: LazyLock<RwLock<HashMap<&'static str, String>>> = LazyLock::new(|| RwLock::new(HashMap::new()));
+
+fn init_config() {
+let mut config = CONFIG.write().unwrap();
+@@ -771,7 +772,7 @@
+config.insert("version", "1.0.0".to_string());
+}
+
+-fn get_config(key: str) -> Option<String> {
++fn get_config(key: &str) -> Option<String> {
+let config = CONFIG.read().unwrap();
+config.get(key).cloned()
+}
+@@ -782,7 +783,7 @@
+
+
+
+-static HTTP_STATUS_MESSAGES: [(u16, str); 5] = [
++static HTTP_STATUS_MESSAGES: [(u16, \&'static str); 5] = [
+(200, "OK"),
+(404, "Not Found"),
+(500, "Internal Server Error"),
+@@ -790,7 +791,7 @@
+(401, "Unauthorized"),
+];
+
+-fn get_status_message(code: u16) -> 'static str {
++fn get_status_message(code: u16) -> \&'static str {
+HTTP_STATUS_MESSAGES.iter()
+.find(|(status, _)| *status == code)
+.map(|(_, msg)| *msg)
