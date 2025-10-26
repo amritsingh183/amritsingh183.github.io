@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Rust
+title: Rust as of 1.90.0
 ---
 
 # Welcome to my blog
