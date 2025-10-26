@@ -279,6 +279,16 @@ fn main() {
 To allocate a struct on the heap, wrap it in `Box<T>` or similar smart pointers:
 
 ```rust
+struct Point {
+    x: f64,
+    y: f64,
+}
+
+struct Rectangle {
+    top_left: Point,
+    bottom_right: Point,
+}
+
 fn main() {
     // Heap-allocated structs
     let boxed_point: Box<Point> = Box::new(Point { x: 3.0, y: 4.0 });
@@ -1130,11 +1140,26 @@ The `'a` annotation says that the struct `Book` cannot outlive the references it
 When implementing methods on a struct with lifetimes, you need to declare the lifetime in the `impl` block:
 
 ```rust
+struct Book<'a> {
+    title: &'a str,
+    author: &'a str,
+}
+
 impl<'a> Book<'a> {
     fn get_title(&self) -> &str {
         self.title
     }
 }
+
+fn main() {
+    let title = String::from("Rust Book");
+    let book = Book {
+        title: &title,
+        author: "Steve Klabnik",
+    };
+    println!("Title: {}", book.get_title());
+}
+
 ```
 
 Here, lifetime elision rule 3 applies: since `get_title` takes `&self`, the returned reference has the same lifetime as `self`.
@@ -1144,7 +1169,28 @@ Here, lifetime elision rule 3 applies: since `get_title` takes `&self`, the retu
 The `'static` lifetime is special: it means the reference is valid for the entire program duration.  All string literals have the `'static` lifetime:
 
 ```rust
-let s: &'static str = "I have a static lifetime";
+fn main() {
+    // String literals have 'static lifetime because they're stored in the program binary
+    let s: &'static str = "I have a static lifetime";
+    println!("Static string: {}", s);
+    
+    // You can also use string literals without explicit type annotation
+    let literal = "This also has 'static lifetime";
+    println!("{}", literal);
+    
+    // Static lifetime means the reference is valid for the entire program duration
+    let result = returns_static_str();
+    println!("Returned: {}", result);
+}
+
+fn returns_static_str() -> &'static str {
+    "This string literal is always valid"
+}
+
+// Static string: I have a static lifetime
+// This also has 'static lifetime
+// Returned: This string literal is always valid
+
 ```
 
 The text of string literals is stored directly in the program's binary, so it is always available.
@@ -1281,6 +1327,71 @@ fn main() {
 Better yet, use safe alternatives like atomics, `Mutex`, or `OnceLock` instead of `static mut`.
 
 ***
+
+
+### New `impl Trait` Lifetime Capture Rules
+
+The Rust 2024 Edition makes lifetime capture rules for functions returning `impl Trait` (also known as Return Position Impl Trait or RPIT) more consistent and intuitive.
+
+**The Change**: In Rust 2024, a function that returns an `impl Trait` will **implicitly capture all in-scope lifetimes**. In previous editions, the compiler would only capture lifetimes that appeared syntactically in the bounds. This change resolves subtle compilation errors and makes the compiler's behavior more predictable [web:8].
+
+**Example: Rust 2024 vs. Older Editions**
+
+```rust
+
+fn get_iterator<'a>(data: 'a [u8]) -> impl Iterator<Item = 'a u8> {
+    let reference_with_a = data;
+
+    // In Rust 2021: This fails because 'a is not explicitly captured
+    // In Rust 2024: This compiles - 'a is automatically captured
+    (0..1).map(move |_| reference_with_a)
+}
+
+```
+
+This improvement simplifies API design, especially when working with complex iterator chains and `async` functions that return `impl Future` [web:8].
+
+### Tail Expression Temporary Scope
+
+Rust 2024 changes when temporary values in tail expressions (the final expression in a block or function) are dropped, fixing a long-standing source of confusion [web:28].
+
+**The Change**: Before Rust 2024, temporaries created in tail expressions were dropped **after** local variables, which often caused unexpected borrow checker errors. In Rust 2024, these temporaries are dropped **before** local variables, making the drop order more intuitive [web:28].
+
+**Example: The Classic RefCell Problem**
+
+```rust
+
+use std::cell::RefCell;
+
+fn f() -> usize {
+    let c = RefCell::new("..");
+    c.borrow().len()
+    // Rust 2021: Error! The temporary Ref<'_, str> from c.borrow()
+    //            is dropped AFTER `c`, causing a borrow error
+    // Rust 2024: Works! The temporary is dropped BEFORE `c`
+}
+
+```
+
+**Important Note on Narrowed Scopes**: In Rust 2024, temporaries from tail expressions may also have their scope narrowed. They are no longer automatically extended to the next statement [web:28].
+
+```rust
+
+// Works in Rust 2021, fails in Rust 2024
+fn main() {
+    let x = { String::from("1234") }.len();
+    //        ^^^^^^^^^^^^^^^^^^^ temporary String dropped too early
+    }
+
+    // Solution: Lift the temporary to a variable
+    fn main() {
+    let s = { String::from("1234") };  // temporary extended via reference
+    let x = s.len();
+}
+
+```
+
+This change makes destructor timing more predictable and prevents resources from being held longer than necessary
 
 ## 11. Safe Global State Patterns
 
