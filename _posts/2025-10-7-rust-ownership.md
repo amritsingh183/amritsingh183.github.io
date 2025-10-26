@@ -561,7 +561,7 @@ fn main() {
     // mem::take uses Default
     let mut data3 = vec![1, 2, 3];
     let taken = mem::take(&mut data3);
-    println!("Taken: {:?}, Remaining: {:?}", taken, data3); // [], []
+    println!("Taken: {:?}, Remaining: {:?}", taken, data3); "Taken: [1, 2, 3], Remaining: []"
 }
 ```
 
@@ -584,22 +584,29 @@ impl Drop for Resource {
 fn main() {
     let data = (Resource("first"), Resource("second"));
     
-    let result = std::panic::catch_unwind(|| {
+    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         let first = data.0; // Partial move
         panic!("Oops!");
-        drop(first);
-    });
+        drop(first); // Never reached
+    }));
     
-    // Output: "Dropping second"
-    // first was moved but dropped during unwind
-    // second never moved, dropped when data drops
+    // Output during unwinding:
+    // "Dropping first"  - first was moved to local, dropped during unwind
+    //  Caught panic
+    // "Dropping second" - second remains in partially-moved data, dropped during unwind
+    
+    match result {
+        Ok(_) => println!("No panic"),
+        Err(_) => println!("Caught panic"),
+    }
 }
+
 ```
 
 **Panic Safety with Moves**:
 
 ```rust
-fn risky_operation(mut vec: Vec<String>) {
+fn risky_operation(mut vec: Vec<String>) -> Vec<String>{
     // Take ownership
     let item = vec.pop().unwrap();
     
@@ -753,8 +760,8 @@ fn main() {
     // split_at_mut creates two non-overlapping mutable slices
     let (left, right) = data.split_at_mut(3);
     
-    left = 10;
-    right = 40;
+    left[0] = 10;
+    right[0] = 40;
     
     println!("{:?}", data); // [10, 2, 3, 40, 5, 6]
 }
@@ -906,8 +913,7 @@ impl<T> MyCell<T> {
     }
 }
 
-// SAFETY: This is simplified - real implementation needs
-// proper synchronization for thread safety
+// SAFETY: This is a simplified example. Real implementation needs proper synchronization
 ```
 
 
@@ -2207,7 +2213,7 @@ fn main() {
     
     // Prevent automatic drop
     {
-        let r = ManuallyDrop::new(Resource { id: 2 });
+        let mut r = ManuallyDrop::new(Resource { id: 2 });
         // Must manually drop
         unsafe {
             ManuallyDrop::drop(&mut r);
@@ -2433,16 +2439,20 @@ Structured concurrency patterns:
 use tokio;
 
 async fn parallel_processing(items: &[String]) -> Vec<usize> {
-    let mut results = Vec::with_capacity(items.len());
+    let mut handles = Vec::with_capacity(items.len());
     
-    tokio::task::scope(|scope| {
-        for item in items {
-            scope.spawn(async move {
-                // Can borrow item directly
-                item.len()
-            });
-        }
-    }).await;
+    for item in items {
+        let item = item.clone(); // Clone to avoid lifetime issues
+        let handle = tokio::spawn(async move {
+            item.len()
+        });
+        handles.push(handle);
+    }
+    
+    let mut results = Vec::with_capacity(items.len());
+    for handle in handles {
+        results.push(handle.await.unwrap());
+    }
     
     results
 }
@@ -2457,10 +2467,9 @@ async fn main() {
     
     let results = parallel_processing(&items).await;
     println!("Results: {:?}", results);
-    
-    // items still valid
     println!("Items: {:?}", items);
 }
+
 ```
 
 
@@ -3017,19 +3026,20 @@ $ cargo +nightly miri run
 
 ### RPIT Capture Rules and use<>
 
-Rust 2024 changes how lifetimes are captured in return position impl Trait:
+Rust 2024 changes how lifetimes are captured in return position impl Trait:[^11][^12][^13]
 
 **New Capture Behavior**:
 
 ```rust
+
 // Rust 2021: Captures all lifetimes in scope
-fn old_behavior<'a, 'b>(x: &'a str, y: &'b str) -> impl Iterator<Item = char> {
+fn old_behavior<'a, 'b>(x: 'a str, y: 'b str) -> impl Iterator<Item = char> {
     // Implicitly captures both 'a and 'b
     x.chars()
 }
 
 // Rust 2024: Explicit capture with use<>
-fn new_behavior<'a, 'b>(x: &'a str, y: &'b str) -> impl Iterator<Item = char> + use<'a> {
+fn new_behavior<'a, 'b>(x: 'a str, y: 'b str) -> impl Iterator<Item = char> + use<'a> {
     // Explicitly captures only 'a
     x.chars()
 }
@@ -3037,7 +3047,7 @@ fn new_behavior<'a, 'b>(x: &'a str, y: &'b str) -> impl Iterator<Item = char> + 
 fn main() {
     let x = String::from("hello");
     let y = String::from("world");
-    
+
     let iter = new_behavior(&x, &y);
     drop(y); // OK: y not captured
     
@@ -3045,19 +3055,21 @@ fn main() {
         print!("{}", ch);
     }
 }
+
 ```
 
 **Precise Lifetime Control**:
 
 ```rust
+
 trait Process {
-    fn process<'a>(&'a self, input: &'a str) -> impl Iterator<Item = char> + use<'a>;
+    fn process<'a>('a self, input: 'a str) -> impl Iterator<Item = char> + use<'a>;
 }
 
 struct Processor;
 
 impl Process for Processor {
-    fn process<'a>(&'a self, input: &'a str) -> impl Iterator<Item = char> + use<'a> {
+    fn process<'a>('a self, input: 'a str) -> impl Iterator<Item = char> + use<'a> {
         input.chars()
     }
 }
@@ -3065,98 +3077,302 @@ impl Process for Processor {
 fn main() {
     let processor = Processor;
     let input = String::from("test");
-    let iter = processor.process(&input);
-    
+    let iter = processor.process(input);
+
     for ch in iter {
         print!("{}", ch);
     }
 }
+
 ```
 
 
 ### Async Closures and Ownership
 
-Rust 2024 stabilizes async closures with proper ownership semantics:
+Rust 2024 stabilizes async closures with proper ownership semantics:[^13][^11]
 
 ```rust
+
 use tokio;
 
 async fn process_async<F, Fut>(f: F)
 where
-    F: Fn(String) -> Fut,
-    Fut: std::future::Future<Output = usize>,
+F: Fn(String) -> Fut,
+Fut: std::future::Future<Output = usize>,
 {
     let result = f(String::from("test")).await;
     println!("Result: {}", result);
 }
 
-#[tokio::main]
+\#[tokio::main]
 async fn main() {
     // Async closure (Rust 2024)
     let closure = async |s: String| {
         s.len()
     };
-    
+
     process_async(closure).await;
 }
+
 ```
 
 
-### Advanced Temporary Scopes
+### Tail Expression Temporary Scope (Breaking Change)
 
-Rust 2024 refines temporary lifetime extension rules:
+**What Changed**: In Rust 2024, temporaries in tail expressions (block return values) now drop **before** local variables, not after. This fixes a class of borrow checker limitations.[^12][^14]
+
+**The Classic RefCell Example**:
 
 ```rust
-fn main() {
-    // Rust 2024: More precise temporary lifetimes
-    let data = String::from("hello");
-    
-    // Temporary string slice lives only for match expression
-    match data.as_str() {
-        "hello" => println!("Match"),
-        _ => println!("No match"),
-    }
-    
-    // Can still use data
-    println!("{}", data);
+
+use std::cell::RefCell;
+
+// ❌ Rust 2021: ERROR - borrow doesn't live long enough
+// ✅ Rust 2024: Compiles successfully
+fn get_length_2021_breaks() -> usize {
+    let c = RefCell::new(String::from("hello"));
+    c.borrow().len()
+    // Rust 2021: temporary Ref<String> from borrow() lives until after c drops
+    // Rust 2024: temporary drops BEFORE c, so no conflict
 }
+
+fn main() {
+    println!("Length: {}", get_length_2021_breaks()); // Works in 2024!
+}
+
+```
+
+**Why This Matters**:
+
+```rust
+
+use std::cell::RefCell;
+
+fn tail_expression_example() -> String {
+    let data = RefCell::new(vec![String::from("a"), String::from("b")]);
+
+    // Rust 2024: temporary borrow drops before data
+    data.borrow().clone() // ✅ Works in 2024
+    }
+
+// Contrast with non-tail position (works in both editions)
+fn non_tail_example() -> String {
+    let data = RefCell::new(vec![String::from("a"), String::from("b")]);
+
+    let result = data.borrow().clone(); // Not a tail expression
+    result // ✅ Works in both 2021 and 2024
+}
+
+fn main() {
+    println!("{}", tail_expression_example());
+    println!("{}", non_tail_example());
+}
+
+```
+
+**Migration Note**: If code relied on temporaries living longer (e.g., RAII guards protecting a return value), explicitly bind them:
+
+```rust
+
+use std::sync::Mutex;
+
+fn needs_guard_lifetime() -> i32 {
+    let data = Mutex::new(42);
+    
+    // Rust 2021: guard lives until after return (implicit)
+    // Rust 2024: guard drops immediately, need explicit binding
+    let guard = data.lock().unwrap(); // Explicit binding
+    *guard
+}
+
+fn main() {
+    let result = needs_guard_lifetime();
+    println!("Result: {}", result);
+}
+
+
+```
+
+
+### if let Temporary Scope (Breaking Change)
+
+**What Changed**: In Rust 2024, temporaries created in the `if let` scrutinee drop **before** the `else` block executes, not after.[^12][^14]
+
+**The Deadlock Fix**:
+
+```rust
+
+use std::sync::RwLock;
+
+// ❌ Rust 2021: DEADLOCK
+// ✅ Rust 2024: Works correctly
+fn check_and_update(value: &RwLock<Option<bool>>) {
+    if let Some(x) = *value.read().unwrap() {
+        println!("Value is {}", x);
+    }
+    // <-- Rust 2024: read lock drops HERE
+    else {
+        // Rust 2021: read lock still held, this deadlocks
+        // Rust 2024: read lock already dropped, this succeeds
+        let mut v = value.write().unwrap(); // ✅ No deadlock in 2024!
+        if v.is_none() {
+            *v = Some(true);
+        }
+    }
+}
+
+fn main() {
+    let data = RwLock::new(None);
+    check_and_update(data);
+    println!("Final value: {:?}", *data.read().unwrap());
+}
+
+```
+
+**Another Example with RefCell**:
+
+```rust
+
+use std::cell::RefCell;
+
+fn process_option(data: &RefCell<Vec<i32>>) {
+    if let Some(first) = data.borrow().first() {
+        println!("First element: {}", first);
+    } // <-- Rust 2024: borrow drops HERE
+    else {
+        // Rust 2021: immutable borrow still held, this panics
+        // Rust 2024: borrow already dropped, this succeeds
+        data.borrow_mut().push(42); // ✅ Works in 2024!
+    }
+}
+
+fn main() {
+    let data = RefCell::new(vec![]);
+    process_option(data); // Empty vec, enters else branch
+    println!("{:?}", data.borrow()); //
+}
+
+```
+
+**if let Chains Also Affected**:
+
+```rust
+
+use std::sync::Mutex;
+
+fn if_let_chain_example(a: &Mutex<Option<i32>>, b: &Mutex<Option<i32>>) {
+    // Rust 2024: Both locks drop before else
+    if let Some(x) = *a.lock().unwrap() && 
+       let Some(y) = *b.lock().unwrap() {
+        println!("Both values: {}, {}", x, y);
+    } else {
+        // Can safely acquire locks again in 2024
+        let mut guard_a = a.lock().unwrap();
+        *guard_a = Some(100);
+    }
+}
+
+fn main() {
+    let a = Mutex::new(Some(1));
+    let b = Mutex::new(None);
+    if_let_chain_example(&a, &b);
+}
+
+```
+
+**Migration Lints**: Enable `rust_2024_temporary_if_let_scope` to detect code affected by this change.[^14]
+
+
+### Prelude Additions
+
+Rust 2024 adds new items to the prelude that may cause method ambiguity:[^12][^13]
+
+**New Prelude Items**:
+- `Future` trait
+- `IntoFuture` trait
+
+**Potential Conflict**:
+
+```
+
+// Custom type with poll method
+struct MyType;
+
+impl MyType {
+fn poll(self) -> bool {
+true
+}
+}
+
+fn main() {
+let obj = MyType;
+
+    // Rust 2021: calls MyType::poll
+    // Rust 2024: may conflict with Future::poll if type inference unclear
+    // Use explicit UFCS to disambiguate:
+    MyType::poll(&obj);
+    }
+
+```
+
+
+### Reserved Keywords
+
+Rust 2024 reserves `gen` as a keyword for future generator syntax:[^12][^13]
+
+```
+
+// ❌ Rust 2024: ERROR - 'gen' is a reserved keyword
+// fn create_gen() {
+//     let gen = 42;
+// }
+
+// ✅ Rename to something else
+fn create_generator() {
+let generator = 42;
+println!("{}", generator);
+}
+
+fn main() {
+create_generator();
+}
+
 ```
 
 
 ### Future Ownership Directions
 
-**Polonius Borrow Checker**:
+**Polonius Borrow Checker**:[^4]
 
 The next-generation borrow checker with more precise analysis:
 
-```rust
+```
+
 // Currently requires workarounds
 fn current_limitation() {
-    let mut data = vec![1, 2, 3];
-    let first = &data;
-    
+let mut data = vec!;[^1][^2][^3]
+let first = data;
+
     if *first > 0 {
         // Currently: ERROR even though first not used after
         // data.push(4);
     }
     
     // Polonius will understand first isn't used here
-}
+    }
 
 // With Polonius: More flexible borrowing
 fn polonius_enables() {
-    let mut map = std::collections::HashMap::new();
-    map.insert("key", vec![1, 2, 3]);
-    
+let mut map = std::collections::HashMap::new();
+map.insert("key", vec!);[^2][^3][^1]
+
     // Will work with Polonius
     let value = map.get_mut("key").unwrap();
     value.push(4);
-}
+    }
 
 fn main() {
-    polonius_enables();
+polonius_enables();
 }
+
 ```
-
-
-***
