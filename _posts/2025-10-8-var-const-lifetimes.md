@@ -335,54 +335,53 @@ Here's a comprehensive breakdown of what goes where:
 **Simplified View [Legend**: ✓ = fully lives here, → = points to another location]**
 ***
 
-Type / Structure                 |  Stack  |  Heap  |  Static  |  Notes
-| :-- | :-- | :-- | :-- |:-- |
-Primitives(i32,f64,bool,char)    |  ✓      |        |          |  1-16 bytes, fixed size
-Structs/Enums(structure itself)  |  ✓      |        |          |  All fields stored contiguously
-Fixed arrays[T; N]               |  ✓      |        |          |  Full array stored in place
-Tuples                           |  ✓      |        |          |  Fixed size composite
-Box<T>                           |  →      |  ✓     |          |  Stack: 8-byte pointer, Heap: actual value
-Rc<T>/Arc<T>                     |  →      |  ✓     |          |  Stack: 8-byte pointer, Heap: value + ref count
-String                           |  →      |  ✓     |          |  Stack: 24 bytes metadata, Heap: UTF-8 bytes
-Vec<T>                           |  →      |  ✓     |          |  Stack: 24 bytes metadata, Heap: elements
-HashMap/BTreeMap                 |  →      |  ✓     |          |  Stack: metadata, Heap: all entries/nodes
-String literals"text"            |  →      |        |  ✓       |  Stack: 16-byte&str, Binary: actual bytes
-staticvariables                  |         |        |  ✓       |  Lives in binary's data segment
-
+| Type / Structure                 | Stack | Heap | Static | Notes                                      |
+| :------------------------------- | :---- | :--- | :----- | :---------------------------------------- |
+| Primitives(i32,f64,bool,char)    | ✓     |      |        | 1-16 bytes, fixed size                    |
+| Structs/Enums(structure itself)  | ✓     |      |        | All fields stored contiguously            |
+| Fixed arrays[T; N]               | ✓     |      |        | Full array stored in place                |
+| Tuples                           | ✓     |      |        | Fixed size composite                      |
+| Box<T>                           | →     | ✓    |        | Stack: 8-byte pointer, Heap: actual value |
+| Rc<T>/Arc<T>                     | →     | ✓    |        | Stack: 8-byte pointer, Heap: value + ref count |
+| String                           | →     | ✓    |        | Stack: 24 bytes metadata, Heap: UTF-8 bytes |
+| Vec<T>                           | →     | ✓    |        | Stack: 24 bytes metadata, Heap: elements  |
+| HashMap/BTreeMap                 | →     | ✓    |        | Stack: metadata, Heap: all entries/nodes  |
+| String literals"text"            | →     |      | ✓      | Stack: 16-byte &str, Binary: actual bytes |
+| staticvariables                  |       |      | ✓      | Lives in binary's data segment            |
 
 
 ***
 **Detailed Breakdown: Stack-Only Types**
 ***
 
-Type           |  Size                          |  Characteristics
-| :-- | :-- |:-- |
-i8throughi128  |  1-16 bytes                    |  Integers, unsigned variants
-f32,f64        |  4-8 bytes                     |  Floating point
-bool           |  1 byte                        |  Boolean
-char           |  4 bytes                       |  Unicode scalar
-[T; N]         |  N × size_of::<T>()            |  Fixed-size array, no indirection
-Struct/Enum    |  Sum of field sizes + padding  |  All fields stored directly in stack frame, with padding added to ensure field alignment
+|Type           |  Size                          |  Characteristics|
+| :------------ | :----------------------------- |:--------------- |
+|i8throughi128  |  1-16 bytes                    |  Integers, unsigned variants|
+|f32,f64        |  4-8 bytes                     |  Floating point|
+|bool           |  1 byte                        |  Boolean|
+|char           |  4 bytes                       |  Unicode scalar|
+|[T; N]         |  N × size_of::<T>()            |  Fixed-size array, no indirection|
+|Struct/Enum    |  Sum of field sizes + padding  |  All fields stored directly in stack frame, with padding added to ensure field alignment|
 
 ***
 **Detailed Breakdown: Stack + Heap Types (Smart Pointers & Collections)**
 ***
 
-Type           |  Stack Size  |  Heap Contains               |  Use Case
-| :-- | :-- | :-- | :-- |
-Box<T>         |  8 bytes     |  The valueT                  |  Single ownership, avoid stack overflow
-Rc<T>          |  8 bytes     |  Value + strong/weak counts  |  Multiple ownership, single-threaded
-Arc<T>         |  8 bytes     |  Value + atomic counts       |  Multiple ownership, thread-safe
-String         |  24 bytes    |  UTF-8 bytes                 |  Growable text
-Vec<T>         |  24 bytes    |  Elements array              |  Growable array
-HashMap<K,V>   |  48 bytes    |  Buckets + entries           |  Key-value lookup
-LinkedList<T>  |  24 bytes    |  Node chain                  |  Frequent insertions
+|Type           |  Stack Size  |  Heap Contains               |  Use Case|
+| :------------ | :----------- | :--------------------------- | :------- |
+|Box<T>         |  8 bytes     |  The valueT                  |  Single ownership, avoid stack overflow|
+|Rc<T>          |  8 bytes     |  Value + strong/weak counts  |  Multiple ownership, single-threaded|
+|Arc<T>         |  8 bytes     |  Value + atomic counts       |  Multiple ownership, thread-safe|
+|String         |  24 bytes    |  UTF-8 bytes                 |  Growable text|
+|Vec<T>         |  24 bytes    |  Elements array              |  Growable array|
+|HashMap<K,V>   |  48 bytes    |  Buckets + entries           |  Key-value lookup|
+|LinkedList<T>  |  24 bytes    |  Node chain                  |  Frequent insertions|
 
 ***
 **Detailed Breakdown: Static Memory**
 ***
-Type                  |  Stack Reference  |  Static Content         |  Lifetime
-| :-- | :-- | :-- | :-- |
+Type                  |  Stack Reference  |  Static Content         |  Lifetime |
+| :------------------ | :---------------- | :---------------------- | :-------- |
 String literal"text"  |  16-byte&str      |  Bytes in binary        |  'static
 static VAR: T         |  None             |  Value in data segment  |  Entire program
 const ITEM: T         |  Inlined at use   |  No storage             |  Compile-time only
