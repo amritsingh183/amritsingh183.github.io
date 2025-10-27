@@ -12,10 +12,6 @@ last_updated: 2025-10-26
 
 Linked lists represent one of the most challenging data structures to implement correctly in Rust due to the language's strict ownership and borrowing rules. This document provides a complete technical reference for understanding and implementing various types of linked lists in safe Rust, with unsafe alternatives presented only at the end.
 
-## Rust 1.90.0 Context
-
-Rust 1.90.0 was released on September 18, 2025, introducing several compiler improvements including the use of `lld` by default on `x86_64-unknown-linux-gnu` and refinements to diagnostic attributes. While these changes don't directly affect linked list implementations, they improve the overall development experience and compilation performance.
-
 ## Why Linked Lists Are Challenging in Rust
 
 ### The Ownership Dilemma
