@@ -344,7 +344,7 @@ linter-settings:
     check-blank: true  # Catch _ = assignments
 ```
 
-**The key insight here**: errcheck with strict enforcement is as effective as Rust's compiler-level enforcement. The difference is only *when* the check happens—at build time (both cases) rather than compile time. In practice, both prevent ignored errors from reaching production. Go's just one stage later in the pipeline.
+**The key insight here**: errcheck with strict enforcement in CI/CD is *nearly as effective* as Rust's compiler-level enforcement for preventing ignored errors in production. The difference is psychological momentum: Rust makes invalid code non-compilable (impossible to override); Go makes invalid code fail the build (developers must choose to override). In practice, well-disciplined teams prevent ignored errors equally well. The real difference is that Rust's compiler never gets tired, while Go's depends on tooling discipline.
 
 Major Go companies at scale—Uber, Stripe, Google—use exactly this pattern. And they achieve production reliability equivalent to systems with compile-time enforcement. The safety guarantee is identical; only the implementation location differs.
 
@@ -353,6 +353,7 @@ Major Go companies at scale—Uber, Stripe, Google—use exactly this pattern. A
 **Risk 3: Data Races (The Concurrency Problem That's Shared)**
 
 ```go
+
 func raceCondition(laser *DeathStarLaser) {
 	go func() {
 		if laser.GetState() == stateArmed {   // Check
@@ -365,9 +366,17 @@ func raceCondition(laser *DeathStarLaser) {
 }
 ```
 
-This is a logical race condition, not a data race. The mutex prevents simultaneous memory access, but it doesn't prevent your assumptions about state from becoming stale between check and use. Time passes. Things change.
+This is a logical race condition, not a data race. The mutex prevents simultaneous memory access,
+but it doesn't prevent your assumptions about state from becoming stale between check and use. Time
+passes. Things change.
 
-Here's the thing nobody talks about: **Rust has the same problem** if you're not careful with channels or concurrent patterns. This is an application-level issue, not a language issue.
+**Important note on Go's race detector**: The `-race` flag only detects actual data races that
+manifest during test execution. If concurrent code paths don't execute during testing, races remain
+undetected. Rust's ownership model prevents this category of bugs entirely at compile time.
+
+Here's the thing nobody talks about: **Rust has the same logical race condition problem** if you're
+not careful with channels or concurrent patterns. This is an application-level issue, not a language
+issue. However, Rust prevents the underlying data race category that can cause such issues.
 
 **Mitigation**: Structure your code to avoid TOCTOU (time-of-check-to-time-of-use) patterns. The application, not the language, must ensure correct concurrency semantics.
 
@@ -646,19 +655,21 @@ What does this actually mean? Every developer, every day, must:
 
 ### Rust's Effort Distribution
 
-Rust requires **concentrated, upfront effort**:
+Rust requires **concentrated, upfront effort** over 5-6 months to genuine proficiency:
 
 ```
                 Effort (per developer, per project)
 Day 1           ████████ (Steep learning)
 Week 1          ██████░░ (Fighting borrow checker)
-Month 1         ██████░░ (Understanding ownership)
-Month 2         ████░░░░ (Getting productive)
+Weeks 2-4       ████████ (Peak frustration, core concepts)
+Month 2         ████░░░░ (Starting to be productive)
 Month 3         ███░░░░░ (Writing idiomatic code)
+Months 4-6      ██░░░░░░ (Comfortable development)
 Year 1          █░░░░░░░ (Maintenance is smooth)
 Year 3          █░░░░░░░ (Guarantees still hold)
 Year 5          █░░░░░░░ (No surprise production bugs)
 Year 10         █░░░░░░░ (Decades-old code still safe)
+
 ```
 
 **Rust's contract**: "The compiler will be strict. Then it will be consistent."
@@ -676,12 +687,12 @@ The benefit? Once code compiles, data races, use-after-free, and invalid state t
 | **Runtime validation** | Developer-written (your responsibility) | Type system enforces (automatic) |
 | **Error handling** | Caller can ignore (needs tooling to enforce) | Type system forces handling |
 | **State safety** | Enforced via design + discipline | Enforced via type system |
-| **Concurrency data races** | Mutex prevents simultaneous access | Ownership prevents entirely |
+| **Concurrency data races** | Mutex prevents simultaneous access; `-race` flag catches during testing | Ownership prevents entirely at compile time |
 | **Logical race conditions** | Possible (TOCTOU patterns) | Possible (same issue) |
 | **Package-internal safety** | Requires discipline | No internal access possible |
 | **Unsafe/Reflection bypass** | Possible (language features) | Possible but requires explicit `unsafe` |
 | **Maintenance burden** | Constant (forever) | Decreasing over time |
-| **Production success** | 95%+ if best practices maintained (errcheck, linters, testing); 70-80% if shortcuts taken | 95%+ regardless of how developer implements (compiler enforces) |
+| **Production success** | 95%+ IF best practices maintained (errcheck, linters, `-race` testing, discipline); 60-75% if shortcuts taken | 95%+ regardless of developer discipline; safety guaranteed by compiler |
 
 
 ***
@@ -699,13 +710,17 @@ Here's something important: We've been talking about philosophy and design, but 
 - Google (internal systems, though not their only language)
 - Grab, Booking.com, Shopify (distributed systems, millions of users)
 
-These systems collectively process **trillions of transactions annually** without the widespread safety incidents you'd expect if Go's discipline-based approach were fundamentally fragile.
+These systems collectively process **trillions of transactions annually**—often for decades—demonstrating that Go's discipline-based approach produces highly reliable systems.
 
-**This is not theoretical.** Go's approach works reliably at distributed scale when discipline + tooling + culture are maintained. This isn't "90% works, 10% fails." These systems are among the most reliable infrastructure components in existence.
+**Important caveat**: This success depends critically on implementing documented best practices: errcheck linting in CI/CD, `-race` flag in testing, comprehensive code review, and strong architectural discipline. Teams that skip these practices see significantly lower reliability.
 
-So here's the fairness correction: Go's risk profile isn't "works most of the time if you're lucky." Go's risk profile is "works reliably at scale IF you implement the documented best practices." When done correctly, the probability is closer to 95%+ rather than 70-90%.
+**This is not theoretical.** Go's approach works reliably at distributed scale when discipline + tooling + culture are maintained. This isn't "luck." These systems are among the most reliable infrastructure components in existence precisely because organizations treat Go's safety model seriously.
+
+So here's the fairness correction: Go's risk profile isn't "works most of the time if you're lucky." Go's risk profile is "works reliably at scale WHEN you implement the documented best practices." When done correctly, production reliability is 95%+ and equivalent to compiled-language guarantees.
 
 That matters. That's worth saying clearly.
+
+**Recent Trend**: Major infrastructure companies (Cloudflare, Fastly, Mozilla) are increasingly adopting Rust for performance-critical layers, not because Go failed, but because they want compile-time safety guarantees for system-level code. This isn't "Go is broken"—it's "we want additional guarantees at this layer." Both approaches succeed; they optimize for different priorities.
 
 ***
 
@@ -746,7 +761,7 @@ That matters. That's worth saying clearly.
 
 ✅ **Go's concurrency is beautiful** – Goroutines and channels elegantly solve common patterns. Once you get it, it feels natural.
 
-✅ **Go is proven production-safe at distributed scale** – Go powers critical infrastructure (Kubernetes, Docker, financial systems) where billions of operations are processed safely daily. "Flawlessly for years" understates this—Go systems run flawlessly for *decades* at global scale. The discipline, tooling, and culture required is real, but it's a proven, reproducible pattern that major organizations implement successfully.
+✅ **Go is proven production-safe at distributed scale** – Go powers critical infrastructure (Kubernetes, Docker, financial systems) where billions of operations are processed safely daily. Go systems run reliably for *decades* at global scale when built with sustained discipline, tooling, and cultural commitment. This is a proven, reproducible pattern, but requires treating safety as ongoing responsibility, not one-time effort.
 
 ### What Go Gets Wrong
 
