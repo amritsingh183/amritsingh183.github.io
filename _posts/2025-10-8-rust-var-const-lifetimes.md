@@ -206,7 +206,7 @@ fn main() {
 | Mutability | Always immutable; `mut` cannot be used. | Immutable by default, but can be made mutable with the `mut` keyword. |
 | Type Annotation | Mandatory. The type must be explicitly declared. | Optional. The compiler can infer the type if not specified. |
 | Value Assignment | Must be a constant expression evaluated at compile time. | Can be a value computed at runtime. |
-| Memory Address | Does not have a fixed address; the value is inlined by the compiler where it is used. | Has a specific memory location, which the compiler manages. |
+| Memory Address | Does not have a fixed address; **the value is inlined by the compiler where it is used.** | Has a specific memory location, which the compiler manages. |
 | Scope | Can be declared in any scope, including globally. | Restricted to the block in which it is declared. |
 
 
@@ -1575,7 +1575,3 @@ Moving small values (like integers) is as cheap as copying.  Moving large struct
 Borrowing also has zero cost: a reference is just a pointer under the hood.
 
 The only potential performance impact comes from excessive cloning or locking.  Design your APIs to minimize both.
-
-***
-
-This guide has covered all the fundamental concepts of Rust's ownership, borrowing, lifetimes, and memory management systems.  With this knowledge, you can write safe, efficient Rust code and understand how to debug borrow checker errors when they occur.
