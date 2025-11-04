@@ -8,6 +8,9 @@ last_updated: 2025-10-11
 
 # A Complete Guide to Rust Ownership, Lifetimes, and Memory Management
 
+> **Please note that memory layout is covered very briefly in this article. After reading this article you can later [check this](https://amritsingh183.github.io/rust/concepts/2025/01/05/rust-mem-ref.html) about memory layout used by Rust**
+
+
 ## Index
 
 1. [Foundation: Mental Model](#1-foundation-mental-model)
@@ -411,7 +414,9 @@ fn main() {
 
 #### Memory Layout Rules
 
-To see a comprehensive breakdown of what goes where please check [this](https://amritsingh183.github.io/rust/concepts/2025/05/01/rust-mem-ref.html).
+***
+To see a comprehensive breakdown of what goes where please check [this](https://amritsingh183.github.io/rust/concepts/2025/01/05/rust-mem-ref.html).
+***
 
 ```rust
 fn main() {
