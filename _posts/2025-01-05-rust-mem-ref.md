@@ -24,82 +24,64 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 1: Stack-Only Types (No Indirection)
 
-| Type | Stack Size | Data Location | Ownership Semantics | Copy/Move | Example |
-| :------- | :------- | :------- | :------- | :------- | :------- |
-| `i8`, `i16`, `i32`, `i64`, `i128` | 1–16 bytes | Stack (value) | Owns; exclusive | Copy duplicated | `let x = -42i32;` → 4 bytes |
-| `u8`, `u16`, `u32`, `u64`, `u128` | 1–16 bytes | Stack (value) | Owns; exclusive | Copy duplicated | `let x = 42u64;` → 8 bytes |
-| `isize`, `usize` | 8 bytes (64-bit) | Stack (value) | Owns; exclusive | Copy duplicated | Platform-dependent; typically 8 bytes |
-| `f32` | 4 bytes | Stack (value) | Owns; exclusive | Copy duplicated | `let pi = 3.14f32;` → 4 bytes |
-| `f64` | 8 bytes | Stack (value) | Owns; exclusive | Copy duplicated | `let pi = 3.14;` → 8 bytes (default) |
-| `bool` | 1 byte | Stack (value) | Owns; exclusive | Copy duplicated | `let b = true;` → 1 byte |
-| `char` | 4 bytes | Stack (value) | Owns Unicode scalar | Copy duplicated | `let c = 'A';` → 4 bytes (UTF-32) |
-| `[T; N]` fixed array | N×sizeof(T) | Stack (container); Heap (if T contains heap data) | Owns all N elements | Copies if `T: Copy`; moves if `T: !Copy` | `let arr = [1, 2, 3];` → 12 bytes (container); elements may contain heap data |
-| `[&str; N]` | N × 16 bytes (fat ptrs) | Stack (container & refs); Binary/Heap (string data) | Owns references; borrows string data | Copy (refs are Copy) | `["hello", "world"]` → 32 bytes (container); data in binary or heap |
-| `(T, U, V)` tuple | Sum+padding | Stack (container); Heap (if any field contains heap data) | Owns all elements | Copies if all fields `Copy`; moves otherwise | `(1i32, 2.0f64, 'a')` → 16+pad bytes (container); fields may contain heap data |
-| Struct (inline fields) | Sum+padding | Stack (container); Heap (if any field contains heap data) | Owns all fields | Copies if all fields `Copy`; moves otherwise | `Point { x: 0, y: 0 }` → 8+pad bytes (container); fields may contain heap data |
-
+| Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
+| :------- | :------- | :------- | :------- | :------- | :------- | :------- |
+| `i8`, `i16`, `i32`, `i64`, `i128` | 1–16 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let x = -42i32;` → 4 bytes |
+| `u8`, `u16`, `u32`, `u64`, `u128` | 1–16 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let x = 42u64;` → 8 bytes |
+| `isize`, `usize` | 8 bytes (64-bit) | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | Platform-dependent; typically 8 bytes |
+| `f32` | 4 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let pi = 3.14f32;` → 4 bytes |
+| `f64` | 8 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let pi = 3.14;` → 8 bytes (default) |
+| `bool` | 1 byte | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let b = true;` → 1 byte |
+| `char` | 4 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let c = 'A';` → 4 bytes (UTF-32) |
+| `[T; N]` fixed array | N×sizeof(T) | Stack | Stack (inline); Heap (if T owns heap data) | Owns all N elements | Copies if `T: Copy`; moves if `T: !Copy` | `let arr = [1, 2, 3];` → 12 bytes; each element may own heap data |
+| `[&str; N]` | N × 16 bytes (fat ptrs) | Stack | Stack (fat pointers); Data in Binary/Heap (referenced) | Owns references; borrows string data | Copy (refs are Copy) | `["hello", "world"]` → 32 bytes container; data elsewhere |
+| `(T, U, V)` tuple | Sum+padding | Stack | Stack (inline); Heap (if any field owns heap data) | Owns all elements | Copies if all fields `Copy`; moves otherwise | `(1i32, 2.0f64, 'a')` → 16+pad bytes; fields may own heap data |
+| Struct (inline fields) | Sum+padding | Stack | Stack (inline); Heap (if any field owns heap data) | Owns all fields | Copies if all fields `Copy`; moves otherwise | `Point { x: 0, y: 0 }` → 8+pad bytes; fields may own heap data |
 
 **Key Notes:**
-- **"Stack-Only (No Indirection)"** means the **container structure itself** 
-  is allocated on the stack without using Box, Rc, Arc, or other pointer types 
-  to store its elements/fields. Elements/fields are embedded directly into the 
-  container's memory layout.
-  
-- **Critical distinction**: The container structure has no indirection, but its 
-  elements/fields **may contain** heap data:
-  - `[String; 3]`: Container on stack (48 bytes); each String owns heap data
-  - `[&str; N]`: Container on stack (N×16 bytes); references point to data 
-    elsewhere (heap or binary section)
-  - `(i32, String)`: Container on stack; the String field owns heap data
-  
-- **Not "all data on stack"**: Use this table for types whose container 
-  structure is stack-allocated with no indirection, regardless of whether 
-  elements own heap data or are references.
-  
-- Stack size may exceed listed values due to struct field alignment padding.
+
+- **"Stack-Only (No Indirection)"** means the **container structure itself** is allocated on the stack without using Box, Rc, Arc, or other pointer types to store its elements/fields. Elements/fields are embedded directly into the container's memory layout.
+
+- **Container Location**: Where the container metadata/structure resides (always stack for this table). For `[&str; N]`, the fat pointers themselves are stack-allocated.
+
+- **Value(s) Location**: Where the actual data lives. Primitives are inline in the container. For types owning heap-allocated data (like String) or references (like &str), actual data may reside on the heap or in the binary's data section. Fat pointers point to this data but are not themselves the data.
+
+- **Critical distinction**: The container structure has no indirection, but its elements/fields **may own** heap data:
+  - `[String; 3]`: Container on stack (48 bytes); the array **owns** each of the three String elements, which in turn own heap data
+  - `[&str; N]`: Container on stack (N×16 bytes of fat pointers); **owns** the references themselves, which reference data elsewhere (heap or binary section)
+  - `(i32, String)`: Container on stack; **owns** all fields, including the String which owns heap data
+
+- **Not "all data on stack"**: Use this table for types whose container structure is stack-allocated with no indirection, regardless of whether elements own heap data or are references.
+
+- Stack size may vary due to struct field alignment padding. For tuples and structs, actual size = sum of field sizes + alignment padding.
 
 ***
 
 ## Table 2: Heap-Backed Types (Owned Smart Pointers)
 
-| Type | Stack Size | Heap Allocation | Total Memory | Ownership Semantics | Example |
-| :-- | :-- | :-- | :-- | :-- | :-- |
-| String | 24 bytes (ptr+len+cap) | UTF-8 on heap | 24+text length | Single owner; exclusive | `String::from("hello")` = 24+5 = 29 bytes total |
-| `Vec<T>` | 24 bytes (ptr+len+cap) | Elements on heap | 24+(count×sizeof(T)) | Single owner; exclusive | `vec![1][2][3]` = 24+12 = 36 bytes total |
-| `Box<T>` | 8 bytes (pointer) | Value T on heap | 8+sizeof(T) | Single owner; exclusive | `Box::new(42i32)` = 8+4 = 12 bytes |
-| `Rc<T>` | 8 bytes/clone (pointer) | Shared control block (16B) + value T | 8 per clone + (16+sizeof(T)) shared | Shared ownership; ref-counted | Multiple clones share 1 control block |
-| `Arc<T>` | 8 bytes/clone (pointer) | Shared control block (16B) + value T | 8 per clone + (16+sizeof(T)) shared | Thread-safe shared; atomic ref-counted | Atomic reference counter for thread safety |
-| `HashMap<K,V>` | 48–56 bytes (metadata) | Hash buckets + entries on heap | 48+(2–3× entries) | Single owner; exclusive | Empty: ~48 bytes; 3×(i32:i32): ~72 bytes |
-| `BTreeMap<K,V>` | 48 bytes (metadata) | Tree nodes + entries on heap | 48+(entries×node overhead) | Single owner; exclusive | Ordered; efficient for sequential scans |
-
+| Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| String | 24 bytes (ptr+len+cap) | Stack | Heap (UTF-8 bytes) | Single owner; exclusive | Move | `String::from("hello")` |
+| `Vec<T>` | 24 bytes (ptr+len+cap) | Stack | Heap (elements) | Single owner; exclusive | Move | `vec![1, 2, 3]` |
+| `Box<T>` | 8 bytes (pointer) | Stack | Heap (value T) | Single owner; exclusive | Move | `Box::new(42i32)` |
+| `Rc<T>` | 8 bytes/clone (pointer) | Stack (pointer only) | Heap (16B control block + value T) | Shared ownership; ref-counted | Clone only | `Rc::new(value)` with multiple clones |
+| `Arc<T>` | 8 bytes/clone (pointer) | Stack (pointer only) | Heap (16B control block + value T) | Thread-safe shared; atomic ref-counted | Clone only | `Arc::new(value)` for thread safety |
+| `HashMap<K,V>` | 48–56 bytes (metadata) | Stack | Heap (hash buckets + entries) | Single owner; exclusive | Move | Empty: ~48 bytes; 3 entries: ~72–96 bytes |
+| `BTreeMap<K,V>` | 48 bytes (metadata) | Stack | Heap (tree nodes + entries) | Single owner; exclusive | Move | Ordered keys; efficient iteration |
 
 **Key Notes:**
-- **"Heap-Backed Types (Owned Smart Pointers)"** means the container uses 
-  **indirection**—it stores pointers on the stack that point to heap-allocated 
-  data. This differs from Table 1 where elements are embedded inline.
-  
+
+- **"Heap-Backed Types (Owned Smart Pointers)"** means the container uses **indirection**—it stores pointers on the stack that point to heap-allocated data. This differs from Table 1 where elements are embedded inline.
 - **Memory split**:
-  - **Stack portion**: Container metadata (pointer, length, capacity for String/Vec; 
-    hash table metadata for HashMap/BTreeMap)
-  - **Heap portion**: Actual data (string bytes, vector elements, key-value entries) 
-    freed when owner drops
-  
-- **All are Move types by default**—ownership transferred on assignment unless 
-  explicitly cloned. Cloning increases reference count (for Rc/Arc) or duplicates 
-  data (for Box).
-  
+    - **Stack portion**: Container metadata (pointer, length, capacity for String/Vec; hash table metadata for HashMap/BTreeMap)
+    - **Heap portion**: Actual data (string bytes, vector elements, key-value entries) freed when owner drops
+- **All are Move types by default**—ownership transferred on assignment unless explicitly cloned. Cloning increases reference count (for Rc/Arc) or duplicates data (for Box).
 - **Reference-counted types** (`Rc<T>`, `Arc<T>`):
-  - Control block (allocated once on heap): 8-byte strong count + 8-byte weak count 
-    = 16 bytes total
-  - Control block is **shared** across all clones; each clone holds only an 8-byte 
-    pointer
+  - Control block (allocated once on heap): 8-byte strong count + 8-byte weak count = 16 bytes total
+  - Control block is **shared** across all clones; each clone holds only an 8-byte pointer
   - Strong count tracks ownership; when it reaches 0, data is freed
-  
-- **HashMap/BTreeMap difference**: These allocate both a control structure (hash 
-  buckets or tree nodes) AND individual entries on the heap, making their memory 
-  overhead less predictable than String/Vec.
-
-
+- **HashMap/BTreeMap difference**: These allocate both a control structure (hash buckets or tree nodes) AND individual entries on the heap, making their memory overhead less predictable than String/Vec.
+- **Version specificity**: All sizes and details assume 64-bit systems with Rust 1.90.0. Control block sizes and metadata may vary across Rust versions; verify using `std::mem::size_of()` on your platform.
 
 ***
 
