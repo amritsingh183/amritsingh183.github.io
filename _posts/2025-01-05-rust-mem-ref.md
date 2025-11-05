@@ -6,7 +6,7 @@ categories: rust concepts
 last_updated: 2025-10-14
 ---
 
-# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1-90-0-" class="header-link">🔗</a>
+# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900-" class="header-link">🔗</a>
 
 This guide is assumes that you have gone through [basics of Rust](https://amritsingh183.github.io/rust/concepts/2025/01/01/rust-var-const-lifetimes.html)
 
@@ -85,7 +85,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 3: Borrowed References & Slices (Non-Owning) <a href="#table-3-borrowed-references-slices-non-owning-" class="header-link">🔗</a>
+## Table 3: Borrowed References & Slices (Non-Owning) <a href="#table-3-borrowed-references--slices-non-owning-" class="header-link">🔗</a>
 
 | Type | Stack Size | Points To | Lifetime | Mutability | Allocation Responsibility | Example |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -101,7 +101,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 4: Semantics & Dispatch Matrix <a href="#table-4-semantics-dispatch-matrix-" class="header-link">🔗</a>
+## Table 4: Semantics & Dispatch Matrix <a href="#table-4-semantics--dispatch-matrix-" class="header-link">🔗</a>
 
 | Trait | Stack-Only | Heap-Backed | References | Notes |
 | :-- | :-- | :-- | :-- | :-- |
@@ -114,7 +114,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 5: Generic Wrappers, Enums & Special Types <a href="#table-5-generic-wrappers-enums-special-types-" class="header-link">🔗</a>
+## Table 5: Generic Wrappers, Enums & Special Types <a href="#table-5-generic-wrappers-enums--special-types-" class="header-link">🔗</a>
 
 | Type | Stack Size | Heap Allocation | Data Location | Semantics | Example & Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -139,7 +139,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 6: Function Pointers & Closures <a href="#table-6-function-pointers-closures-" class="header-link">🔗</a>
+## Table 6: Function Pointers & Closures <a href="#table-6-function-pointers--closures-" class="header-link">🔗</a>
 
 | Type | Stack Size | Heap Allocation | Semantics | Example | Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -173,9 +173,9 @@ Total: 48 bytes stack + 14 bytes read-only section
 
 ***
 
-## Alignment & Padding Rules <a href="#alignment-padding-rules-" class="header-link">🔗</a>
+## Alignment & Padding Rules <a href="#alignment--padding-rules-" class="header-link">🔗</a>
 
-### Default Representation (`repr(Rust)`) <a href="#default-representation-repr-rust-" class="header-link">🔗</a>
+### Default Representation (`repr(Rust)`) <a href="#default-representation-reprrust-" class="header-link">🔗</a>
 
 Rust applies compiler optimizations to field ordering, minimizing padding and improving cache locality.
 
@@ -185,7 +185,7 @@ struct Example { a: u32, b: u8, c: u16 }  // 8 bytes (not 7)
 ```
 
 
-### Fixed Representation (`repr(C)`) <a href="#fixed-representation-repr-c-" class="header-link">🔗</a>
+### Fixed Representation (`repr(C)`) <a href="#fixed-representation-reprc-" class="header-link">🔗</a>
 
 Fields maintain declaration order; ensures FFI compatibility with C.
 
@@ -195,7 +195,7 @@ struct CCompatible { a: u32, b: u8, c: u16 }  // 8 bytes with guaranteed layout
 ```
 
 
-### Packed Representation (`repr(packed)`) <a href="#packed-representation-repr-packed-" class="header-link">🔗</a>
+### Packed Representation (`repr(packed)`) <a href="#packed-representation-reprpacked-" class="header-link">🔗</a>
 
 Removes padding; trades speed for size. Unaligned access can harm performance.
 
@@ -222,7 +222,7 @@ struct Compact { a: u32, b: u8, c: u16 }  // 7 bytes, potentially slower access
 
 ***
 
-## Thread Safety & Send + Sync Traits <a href="#thread-safety-send-sync-traits-" class="header-link">🔗</a>
+## Thread Safety & Send + Sync Traits <a href="#thread-safety--send--sync-traits-" class="header-link">🔗</a>
 
 | Type Category | Send | Sync | Notes |
 | :-- | :-- | :-- | :-- |
