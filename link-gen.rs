@@ -5,7 +5,8 @@ use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
     // Read the input file
-    let input_path = "2025-10-8-rust-var-const-lifetimes.md";
+    let input_path =
+        "/Users/amritsingh/work/amritsingh183.github.io/_posts/2025-02-09-rust-ownership.md";
     let output_path = "output.md";
 
     let content = fs::read_to_string(input_path)?;
@@ -37,7 +38,10 @@ fn process_markdown_headings(content: &str) -> String {
                 let anchor = generate_anchor(heading_text);
 
                 // Construct the new line with the chain link appended
-                format!("{} {} [chain](#{})", hashes, heading_text, anchor)
+                format!(
+                    "{} {} <a href=\"#{}-\" class=\"header-link\">🔗</a>",
+                    hashes, heading_text, anchor,
+                )
             } else {
                 line.to_string()
             }
@@ -47,32 +51,19 @@ fn process_markdown_headings(content: &str) -> String {
 }
 
 fn generate_anchor(heading_text: &str) -> String {
-    // Convert heading text to a GitHub/Markdown-style anchor
-    // 1. Convert to lowercase
-    // 2. Replace spaces with hyphens
-    // 3. Remove special characters except hyphens
-    // 4. Append "-chain" at the end
-
     heading_text
         .to_lowercase()
         .chars()
-        .map(|c| {
-            if c.is_alphanumeric() {
-                c
-            } else if c.is_whitespace() {
-                '-'
-            } else if c == ':' || c == '.' {
-                // Remove colons and periods
-                '\0'
-            } else {
-                // Keep other characters as hyphens or remove them
-                '-'
-            }
+        .map(|c| match c {
+            // Keep alphanumeric and hyphens
+            'a'..='z' | '0'..='9' | '-' => c,
+            // Convert spaces to hyphens
+            ' ' => '-',
+            // Remove all other characters (punctuation, symbols)
+            _ => '\0',
         })
         .filter(|&c| c != '\0')
         .collect::<String>()
-        .split('-')
-        .filter(|s| !s.is_empty())
-        .collect::<Vec<&str>>()
-        .join("-")
+        .trim_matches('-')
+        .to_string()
 }
