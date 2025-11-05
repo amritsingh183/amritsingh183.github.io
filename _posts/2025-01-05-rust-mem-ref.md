@@ -5,12 +5,6 @@ date: 2025-01-05 23:11:00 +0530
 categories: rust concepts
 last_updated: 2025-10-14
 ---
-<style>
-    table {
-        width: 100%;
-    }
-</style>
-
 # Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900-" class="header-link">🔗</a>
 
 ## Index <a href="#index-" class="header-link">🔗</a>
@@ -49,8 +43,8 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 1: Stack-Only Types (No Indirection) <a href="#table-1-stack-only-types-no-indirection-" class="header-link">🔗</a>
 
-| Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
-| :------- | :------- | :------- | :------- | :------- | :------- | :------- |
+| Type<svg width="100" height="1"></svg>  | Stack Size | Container Location | Value(s) Location<svg width="100" height="1"></svg>  | Ownership Semantics | Copy/Move<svg width="100" height="1"></svg> | Example<svg width="350" height="1"></svg> |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | `i8`, `i16`, `i32`, `i64`, `i128` | 1–16 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let x = -42i32;` → 4 bytes |
 | `u8`, `u16`, `u32`, `u64`, `u128` | 1–16 bytes | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | `let x = 42u64;` → 8 bytes |
 | `isize`, `usize` | 8 bytes (64-bit) | Stack | Stack (inline) | Owns; exclusive | Copy duplicated | Platform-dependent; typically 8 bytes |
@@ -84,7 +78,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 2: Heap-Backed Types (Owned Smart Pointers) <a href="#table-2-heap-backed-types-owned-smart-pointers-" class="header-link">🔗</a>
 
-| Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
+| Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example<svg width="350" height="1"></svg> |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | String | 24 bytes (ptr+len+cap) | Stack | Heap (UTF-8 bytes) | Single owner; exclusive | Move | `String::from("hello")` |
 | `Vec<T>` | 24 bytes (ptr+len+cap) | Stack | Heap (elements) | Single owner; exclusive | Move | `vec![1, 2, 3]` |
@@ -112,7 +106,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 3: Borrowed References & Slices (Non-Owning) <a href="#table-3-borrowed-references--slices-non-owning-" class="header-link">🔗</a>
 
-| Type | Stack Size | Points To | Lifetime | Mutability | Allocation Responsibility | Example |
+| Type | Stack Size | Points To | Lifetime | Mutability | Allocation Responsibility | Example<svg width="350" height="1"></svg>  |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | `&T` immutable reference | 8 bytes (pointer) | Stack/heap/static value | Cannot outlive referent | Read-only | Referent owner responsible | `&x` (x: i32) |
 | `&mut T` mutable reference | 8 bytes (pointer) | Stack/heap mutable; exclusive | Cannot outlive referent; exclusive | Read+write; exclusive | Referent owner responsible | `&mut s` (s: String) |
@@ -141,7 +135,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 5: Generic Wrappers, Enums & Special Types <a href="#table-5-generic-wrappers-enums--special-types-" class="header-link">🔗</a>
 
-| Type | Stack Size | Heap Allocation | Data Location | Semantics | Example & Notes |
+| Type<svg width="250" height="1"></svg> | Stack Size | Heap Allocation | Data Location | Semantics | Example & Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | `()` unit type | 0 bytes (ZST) | None | N/A | Empty value; single instance | `let x: () = ();` used in `Result<(), Error>` |
 | `!` never type | 0 bytes (diverges) | None | N/A | Never returns; unreachable code | `fn panic() -> ! { ... }` indicates divergence |
@@ -166,7 +160,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ## Table 6: Function Pointers & Closures <a href="#table-6-function-pointers--closures-" class="header-link">🔗</a>
 
-| Type | Stack Size | Heap Allocation | Semantics | Example | Notes |
+| Type <svg width="250" height="1"></svg>| Stack Size | Heap Allocation | Semantics | Example<svg width="300" height="1"></svg> | Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | `fn(i32) -> i32` function pointer | 8 bytes | None | Copy; function code in binary | `let f: fn(i32) -> i32 = add;` | Points to machine code address |
 | `fn() -> !` diverging function pointer | 8 bytes | None | Copy; never returns | `let f: fn() -> ! = panic;` | Type-safe divergence |
