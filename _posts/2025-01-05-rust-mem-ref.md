@@ -5,6 +5,11 @@ date: 2025-01-05 23:11:00 +0530
 categories: rust concepts
 last_updated: 2025-10-14
 ---
+<style>
+    table {
+        width: 100%;
+    }
+</style>
 
 # Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900-" class="header-link">🔗</a>
 
