@@ -38,10 +38,7 @@ fn process_markdown_headings(content: &str) -> String {
                 let anchor = generate_anchor(heading_text);
 
                 // Construct the new line with the chain link appended
-                format!(
-                    "{} {} <a href=\"#{}\" class=\"header-link\">🔗</a>",
-                    hashes, heading_text, anchor
-                )
+                format!("{} {} [chain](#{}-)", hashes, heading_text, anchor)
             } else {
                 line.to_string()
             }

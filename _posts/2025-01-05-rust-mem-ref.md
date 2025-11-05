@@ -6,15 +6,15 @@ categories: rust concepts
 last_updated: 2025-10-14
 ---
 
-# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900" class="header-link">🔗</a>
+# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) [chain](#comprehensive-rust-memory-layout-reference-rust-1900-)
 
 This guide is assumes that you have gone through [basics of Rust](https://amritsingh183.github.io/rust/concepts/2025/01/01/rust-var-const-lifetimes.html)
 
-## Overview <a href="#overview" class="header-link">🔗</a>
+## Overview [chain](#overview-)
 
 This document provides complete coverage of Rust's memory layout, addressing all primitive, heap-backed, borrowed, and special types as of Rust 1.90.0.
 
-### Assumptions <a href="#assumptions" class="header-link">🔗</a>
+### Assumptions [chain](#assumptions-)
 
 - **Architecture**: 64-bit target (typical: x86_64, ARM64)
 - **Pointer/reference size**: 8 bytes
@@ -22,7 +22,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 1: Stack-Only Types (No Indirection) <a href="#table-1-stack-only-types-no-indirection" class="header-link">🔗</a>
+## Table 1: Stack-Only Types (No Indirection) [chain](#table-1-stack-only-types-no-indirection-)
 
 | Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
 | :------- | :------- | :------- | :------- | :------- | :------- | :------- |
@@ -57,7 +57,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 2: Heap-Backed Types (Owned Smart Pointers) <a href="#table-2-heap-backed-types-owned-smart-pointers" class="header-link">🔗</a>
+## Table 2: Heap-Backed Types (Owned Smart Pointers) [chain](#table-2-heap-backed-types-owned-smart-pointers-)
 
 | Type | Stack Size | Container Location | Value(s) Location | Ownership Semantics | Copy/Move | Example |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -85,7 +85,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 3: Borrowed References & Slices (Non-Owning) <a href="#table-3-borrowed-references-slices-non-owning" class="header-link">🔗</a>
+## Table 3: Borrowed References & Slices (Non-Owning) [chain](#table-3-borrowed-references-slices-non-owning-)
 
 | Type | Stack Size | Points To | Lifetime | Mutability | Allocation Responsibility | Example |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -101,7 +101,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 4: Semantics & Dispatch Matrix <a href="#table-4-semantics-dispatch-matrix" class="header-link">🔗</a>
+## Table 4: Semantics & Dispatch Matrix [chain](#table-4-semantics-dispatch-matrix-)
 
 | Trait | Stack-Only | Heap-Backed | References | Notes |
 | :-- | :-- | :-- | :-- | :-- |
@@ -114,7 +114,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 5: Generic Wrappers, Enums & Special Types <a href="#table-5-generic-wrappers-enums-special-types" class="header-link">🔗</a>
+## Table 5: Generic Wrappers, Enums & Special Types [chain](#table-5-generic-wrappers-enums-special-types-)
 
 | Type | Stack Size | Heap Allocation | Data Location | Semantics | Example & Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -139,7 +139,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Table 6: Function Pointers & Closures <a href="#table-6-function-pointers-closures" class="header-link">🔗</a>
+## Table 6: Function Pointers & Closures [chain](#table-6-function-pointers-closures-)
 
 | Type | Stack Size | Heap Allocation | Semantics | Example | Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- |
@@ -154,7 +154,7 @@ This document provides complete coverage of Rust's memory layout, addressing all
 
 ***
 
-## Memory Breakdown Example: Fixed Array of String Slices <a href="#memory-breakdown-example-fixed-array-of-string-slices" class="header-link">🔗</a>
+## Memory Breakdown Example: Fixed Array of String Slices [chain](#memory-breakdown-example-fixed-array-of-string-slices-)
 
 ```
 Stack (48 bytes total):
@@ -173,9 +173,9 @@ Total: 48 bytes stack + 14 bytes read-only section
 
 ***
 
-## Alignment & Padding Rules <a href="#alignment-padding-rules" class="header-link">🔗</a>
+## Alignment & Padding Rules [chain](#alignment-padding-rules-)
 
-### Default Representation (`repr(Rust)`) <a href="#default-representation-repr-rust" class="header-link">🔗</a>
+### Default Representation (`repr(Rust)`) [chain](#default-representation-repr-rust-)
 
 Rust applies compiler optimizations to field ordering, minimizing padding and improving cache locality.
 
@@ -185,7 +185,7 @@ struct Example { a: u32, b: u8, c: u16 }  // 8 bytes (not 7)
 ```
 
 
-### Fixed Representation (`repr(C)`) <a href="#fixed-representation-repr-c" class="header-link">🔗</a>
+### Fixed Representation (`repr(C)`) [chain](#fixed-representation-repr-c-)
 
 Fields maintain declaration order; ensures FFI compatibility with C.
 
@@ -195,7 +195,7 @@ struct CCompatible { a: u32, b: u8, c: u16 }  // 8 bytes with guaranteed layout
 ```
 
 
-### Packed Representation (`repr(packed)`) <a href="#packed-representation-repr-packed" class="header-link">🔗</a>
+### Packed Representation (`repr(packed)`) [chain](#packed-representation-repr-packed-)
 
 Removes padding; trades speed for size. Unaligned access can harm performance.
 
@@ -207,7 +207,7 @@ struct Compact { a: u32, b: u8, c: u16 }  // 7 bytes, potentially slower access
 
 ***
 
-## Copy Trait Behavior <a href="#copy-trait-behavior" class="header-link">🔗</a>
+## Copy Trait Behavior [chain](#copy-trait-behavior-)
 
 **Copy types** (numeric, bool, char, arrays/tuples of Copy types):
 
@@ -222,7 +222,7 @@ struct Compact { a: u32, b: u8, c: u16 }  // 7 bytes, potentially slower access
 
 ***
 
-## Thread Safety & Send + Sync Traits <a href="#thread-safety-send-sync-traits" class="header-link">🔗</a>
+## Thread Safety & Send + Sync Traits [chain](#thread-safety-send-sync-traits-)
 
 | Type Category | Send | Sync | Notes |
 | :-- | :-- | :-- | :-- |
@@ -237,7 +237,7 @@ struct Compact { a: u32, b: u8, c: u16 }  // 7 bytes, potentially slower access
 ***
 
 
-## Example to demo as many as we can <a href="#example-to-demo-as-many-as-we-can" class="header-link">🔗</a>
+## Example to demo as many as we can [chain](#example-to-demo-as-many-as-we-can-)
 
 ```rust
 use std::collections::HashMap;
