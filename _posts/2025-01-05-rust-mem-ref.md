@@ -6,7 +6,7 @@ categories: rust concepts
 last_updated: 2025-10-14
 ---
 
-# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900-" class="header-link">🔗</a>
+# Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1-90-0-" class="header-link">🔗</a>
 
 This guide is assumes that you have gone through [basics of Rust](https://amritsingh183.github.io/rust/concepts/2025/01/01/rust-var-const-lifetimes.html)
 
