@@ -8,6 +8,26 @@ last_updated: 2025-10-14
 
 # Comprehensive Rust Memory Layout Reference (Rust 1.90.0) <a href="#comprehensive-rust-memory-layout-reference-rust-1900-" class="header-link">🔗</a>
 
+## Index <a href="#index-" class="header-link">🔗</a>
+
+- [Comprehensive Rust Memory Layout Reference (Rust 1.90.0)](#comprehensive-rust-memory-layout-reference-rust-1900-)
+  - [Overview](#overview-)
+    - [Assumptions](#assumptions-)
+  - [Table 1: Stack-Only Types (No Indirection)](#table-1-stack-only-types-no-indirection-)
+  - [Table 2: Heap-Backed Types (Owned Smart Pointers)](#table-2-heap-backed-types-owned-smart-pointers-)
+  - [Table 3: Borrowed References & Slices (Non-Owning)](#table-3-borrowed-references--slices-non-owning-)
+  - [Table 4: Semantics & Dispatch Matrix](#table-4-semantics--dispatch-matrix-)
+  - [Table 5: Generic Wrappers, Enums & Special Types](#table-5-generic-wrappers-enums--special-types-)
+  - [Table 6: Function Pointers & Closures](#table-6-function-pointers--closures-)
+  - [Memory Breakdown Example: Fixed Array of String Slices](#memory-breakdown-example-fixed-array-of-string-slices-)
+  - [Alignment & Padding Rules](#alignment--padding-rules-)
+    - [Default Representation (`repr(Rust)`)](#default-representation-reprrust-)
+    - [Fixed Representation (`repr(C)`)](#fixed-representation-reprc-)
+    - [Packed Representation (`repr(packed)`)](#packed-representation-reprpacked-)
+  - [Copy Trait Behavior](#copy-trait-behavior-)
+  - [Thread Safety & Send + Sync Traits](#thread-safety--send--sync-traits-)
+  - [Example to demo as many as we can](#example-to-demo-as-many-as-we-can-)
+
 This guide is assumes that you have gone through [basics of Rust](https://amritsingh183.github.io/rust/concepts/2025/01/01/rust-var-const-lifetimes.html)
 
 ## Overview <a href="#overview-" class="header-link">🔗</a>
