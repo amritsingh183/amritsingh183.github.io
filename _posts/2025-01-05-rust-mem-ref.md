@@ -145,10 +145,10 @@ This document provides complete coverage of Rust's memory layout, addressing all
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | `fn(i32) -> i32` function pointer | 8 bytes | None | Copy; function code in binary | `let f: fn(i32) -> i32 = add;` | Points to machine code address |
 | `fn() -> !` diverging function pointer | 8 bytes | None | Copy; never returns | `let f: fn() -> ! = panic;` | Type-safe divergence |
-| Closure `\|x\| x+1` (no captures) | 0 bytes (ZST) | None | Copy; statically known | `let add = \|x\| x+1;` if all captured vars are Copy | Captures nothing or only Copy values |
-| Closure `\|x: i32\| x+1` (FnOnce) | Captured vars size | None (stack) | Move semantics; consumes env | `move \|\| x` where x is moved | Consumes captured variables |
-| Closure `\|\| &x` (Fn) | Size of `&x` | None (stack) | Shared reference to env | `\|\| &x` where x is borrowed | Multiple calls; shared borrow |
-| Closure `\|\| &mut x` (FnMut) | Size of `&mut x` | None (stack) | Mutable reference to env | `\|\| &mut x` where x is exclusive | Multiple calls; exclusive borrow |
+| Closure `|x| x+1` (no captures) | 0 bytes (ZST) | None | Copy; statically known | `let add = |x| x+1;` if all captured vars are Copy | Captures nothing or only Copy values |
+| Closure `|x: i32| x+1` (FnOnce) | Captured vars size | None (stack) | Move semantics; consumes env | `move || x` where x is moved | Consumes captured variables |
+| Closure `|| &x` (Fn) | Size of `&x` | None (stack) | Shared reference to env | `|| &x` where x is borrowed | Multiple calls; shared borrow |
+| Closure `|| &mut x` (FnMut) | Size of `&mut x` | None (stack) | Mutable reference to env | `|| &mut x` where x is exclusive | Multiple calls; exclusive borrow |
 
 **Key Notes:** Function pointers are Copy types. Closures capturing no values or only Copy values are themselves Copy. Closures that capture mutable references cannot be Copy. Closure trait (`Fn`, `FnMut`, `FnOnce`) is determined at compile-time.
 
