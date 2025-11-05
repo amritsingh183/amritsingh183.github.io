@@ -5,7 +5,7 @@ use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
     // Read the input file
-    let input_path = "2025-10-8-rust-var-const-lifetimes.md";
+    let input_path = "/Users/amritsingh/work/amritsingh183.github.io/_posts/2025-01-01-rust-var-const-lifetimes.md";
     let output_path = "output.md";
 
     let content = fs::read_to_string(input_path)?;
@@ -37,7 +37,10 @@ fn process_markdown_headings(content: &str) -> String {
                 let anchor = generate_anchor(heading_text);
 
                 // Construct the new line with the chain link appended
-                format!("{} {} [chain](#{})", hashes, heading_text, anchor)
+                format!(
+                    "{} {} <a href=\"#{}-\" class=\"header-link\">🔗</a>",
+                    hashes, heading_text, anchor,
+                )
             } else {
                 line.to_string()
             }
