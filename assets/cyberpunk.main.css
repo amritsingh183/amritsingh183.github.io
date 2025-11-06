@@ -39,38 +39,25 @@ body {
     flex-direction: column;
     position: relative;
     overflow-x: hidden;
-    background-image:
-        linear-gradient(rgba(0, 240, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
-    background-size: 3rem 3rem;
 }
 
-/* Animated scanline effect */
-body::before {
+body::after {
     content: ' ';
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 200%;
-    background: repeating-linear-gradient(
-        transparent 0,
-        rgba(255, 0, 255, 0.1) 1px,
-        rgba(0, 240, 255, 0.1) 2px,
-        transparent 4px
-    );
+    height: 100%;
+    background-image: repeating-linear-gradient(transparent 0,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 3px);
     z-index: -1;
     pointer-events: none;
-    animation: scanline 8s linear infinite;
-}
-
-@keyframes scanline {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
 }
 
 @keyframes flicker {
+
     0%,
     100% {
         opacity: 1;
@@ -81,23 +68,6 @@ body::before {
         opacity: 0.8;
         text-shadow: 0 0 3px var(--primary);
     }
-}
-
-/* ===== Glitch Animation for H1 ===== */
-@keyframes glitch-flicker {
-    0%, 100% { opacity: 1; text-shadow: var(--glow-primary); }
-    50.2% { opacity: 0.7; text-shadow: none; }
-    50.5% { opacity: 1; text-shadow: var(--glow-primary); }
-}
-
-@keyframes glitch-anim-1 {
-    0%, 100% { clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%); }
-    50% { clip-path: polygon(0 20%, 100% 20%, 100% 80%, 0 80%); }
-}
-
-@keyframes glitch-anim-2 {
-    0%, 100% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
-    50% { clip-path: polygon(0 35%, 100% 35%, 100% 90%, 0 90%); }
 }
 
 /* ===== Vertical Rhythm ===== */
@@ -163,33 +133,7 @@ h6 {
 
 h1 {
     font-size: 3rem;
-    position: relative;
-    animation: glitch-flicker 4s infinite;
-}
-
-h1::before,
-h1::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bg-primary);
-}
-
-h1::before {
-    left: 2px;
-    text-shadow: -2px 0 var(--secondary);
-    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
-    animation: glitch-anim-1 4s infinite ease-in-out alternate-reverse;
-}
-
-h1::after {
-    left: -2px;
-    text-shadow: -2px 0 var(--accent), 2px 2px var(--primary);
-    clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
-    animation: glitch-anim-2 4s infinite ease-in-out alternate-reverse;
+    animation: flicker 3s infinite;
 }
 
 h2 {
@@ -322,7 +266,6 @@ pre {
     margin: 1.5rem 0;
     box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
     line-height: 1.6;
-    border-radius: 4px;
 }
 
 pre>code {
@@ -338,47 +281,58 @@ pre>code {
 .highlight {
     background: var(--bg-secondary);
     padding: 1rem;
-    border-radius: 4px;
-}
-
-.highlight pre {
-    margin: 0;
-    background: none;
-    box-shadow: none;
-    border: none;
 }
 
 .highlighter-rouge .highlight {
     background: var(--bg-secondary);
 }
 
-/* General */
-.highlight .h, .highlight .n { color: var(--text-primary); }
-.highlight .p { color: var(--text-secondary); }
+.highlight .k {
+    color: var(--secondary);
+    font-weight: bold;
+}
 
 /* Keywords */
-.highlight .k, .highlight .kd, .highlight .kc { color: var(--secondary); font-weight: bold; }
-.highlight .kr { color: #FF9D00; font-weight: bold; }
+.highlight .s {
+    color: var(--success);
+}
 
-/* Literals */
-.highlight .s, .highlight .s1, .highlight .s2, .highlight .sh { color: var(--success); }
-.highlight .m, .highlight .mi, .highlight .mf { color: var(--primary); }
-.highlight .nb, .highlight .bp { color: #00F0FF; }
-.highlight .kc { color: #FF00FF; }
-
-/* Types & Declarations */
-.highlight .kt, .highlight .nc { color: var(--accent); }
-.highlight .nf, .highlight .fm { color: #39FF14; }
-.highlight .na { color: #FFFF00; }
+/* Strings */
+.highlight .c,
+.highlight .c1 {
+    color: #8080a0;
+    font-style: italic;
+}
 
 /* Comments */
-.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color: #8080a0; font-style: italic; }
+.highlight .kt {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* Types */
+.highlight .m {
+    color: var(--primary);
+}
+
+/* Numbers */
+.highlight .o {
+    color: var(--secondary);
+    font-weight: bold;
+}
 
 /* Operators */
-.highlight .o { color: var(--secondary); font-weight: bold; }
+.highlight .nf {
+    color: var(--accent);
+}
 
-/* Errors */
-.highlight .err { color: var(--danger); background: rgba(255, 59, 59, 0.1); }
+/* Function names */
+.highlight .nb {
+    color: var(--primary);
+}
+
+/* Built-ins */
+
 
 /* ===== Wrapper & Layout ===== */
 .wrapper {
@@ -398,6 +352,7 @@ pre>code {
     display: table;
     clear: both;
 }
+
 
 /* ===== Tables ===== */
 table {
@@ -431,22 +386,17 @@ table tr:hover {
     color: var(--accent);
 }
 
-/* ===== Site Header (Flexbox-based) ===== */
+/* ===== Site Header ===== */
 .site-header {
     border-bottom: 1px solid var(--primary);
-    background: rgba(10, 10, 26, 0.8);
+    background: var(--bg-primary);
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
     backdrop-filter: blur(5px);
+    background-color: rgba(10, 10, 26, 0.8);
     box-shadow: 0 2px 15px rgba(0, 240, 255, 0.1);
-}
-
-.site-header .wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .site-title {
@@ -454,14 +404,15 @@ table tr:hover {
     font-size: 1.75rem;
     letter-spacing: 2px;
     margin: 0;
+    float: left;
     color: var(--primary);
     text-shadow: var(--glow-primary);
     animation: flicker 4s infinite reverse;
 }
 
 .site-nav {
-    display: flex;
-    gap: 2rem;
+    float: right;
+    line-height: 2.5rem;
 }
 
 .site-nav .menu-icon,
@@ -474,7 +425,6 @@ table tr:hover {
     color: var(--primary);
     text-shadow: var(--glow-primary);
     transition: var(--transition);
-    white-space: nowrap;
 }
 
 .site-nav .page-link:hover {
@@ -482,7 +432,11 @@ table tr:hover {
     text-shadow: var(--glow-secondary);
 }
 
-/* Mobile Nav styles */
+.site-nav .page-link:not(:last-child) {
+    margin-right: 2rem;
+}
+
+/* Mobile Nav styles adapted for Cyberpunk */
 @media screen and (max-width: 600px) {
     .site-nav {
         position: absolute;
@@ -490,46 +444,46 @@ table tr:hover {
         right: 1rem;
         background-color: var(--bg-secondary);
         border: 1px solid var(--secondary);
-        padding: 1rem;
-        flex-direction: column;
-        gap: 1rem;
+        text-align: right;
     }
 
     .site-nav .menu-icon svg {
         fill: var(--secondary);
     }
+
+    /* ... other mobile styles from before, adapted with new colors ... */
 }
 
-/* ===== Site Footer ===== */
+/* ===== REVISED Site Footer ===== */
 .site-footer {
-    font-family: var(--font-mono);
-    margin-top: auto;
-    background: transparent;
-    padding: 3rem 0 2rem;
-    position: relative;
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -5px 20px -5px rgba(0, 240, 255, 0.25);
-    clip-path: polygon(0 15px, 20px 0, 100% 0, 100% 100%, 0 100%);
-    background:
-        linear-gradient(rgba(10, 10, 26, 0.95), rgba(10, 10, 26, 0.95)),
-        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 240, 255, 0.04) 10px, rgba(0, 240, 255, 0.04) 11px),
-        repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255, 0, 255, 0.03) 10px, rgba(255, 0, 255, 0.03) 11px);
+  font-family: var(--font-mono);
+  margin-top: auto; /* Pushes footer to the bottom */
+  background: transparent;
+  padding: 3rem 0 2rem;
+  position: relative;
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -5px 20px -5px rgba(0, 240, 255, 0.25);
+  clip-path: polygon(0 15px, 20px 0, 100% 0, 100% 100%, 0 100%);
+  background: 
+    linear-gradient(rgba(10, 10, 26, 0.95), rgba(10, 10, 26, 0.95)),
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 240, 255, 0.04) 10px, rgba(0, 240, 255, 0.04) 11px),
+    repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255, 0, 255, 0.03) 10px, rgba(255, 0, 255, 0.03) 11px);
 }
 
 .footer-heading {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    color: var(--secondary);
-    text-shadow: var(--glow-secondary);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary);
+  text-shadow: var(--glow-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .contact-list,
 .social-media-list {
-    list-style: none;
-    margin-left: 0;
-    font-size: 1rem;
+  list-style: none;
+  margin-left: 0;
+  font-size: 1rem;
 }
 
 .contact-list li,
@@ -539,59 +493,64 @@ table tr:hover {
 
 .contact-list a,
 .social-media-list a {
-    color: var(--text-secondary);
-    text-shadow: none;
-    display: inline-block;
+  color: var(--text-secondary);
+  text-shadow: none;
+  display: inline-block; /* Ensures proper spacing and hover effects */
 }
 
 .contact-list a:hover,
 .social-media-list a:hover {
-    color: var(--primary);
-    text-shadow: var(--glow-primary);
-    transform: translateX(5px);
+  color: var(--primary);
+  text-shadow: var(--glow-primary);
+  transform: translateX(5px);
 }
 
+/* Replaced float layout with Flexbox for a modern, robust structure */
 .footer-col-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-left: 0; /* Reset from previous CSS */
 }
 
+/* Removed float and width calculations */
 .footer-col {
-    padding-left: 0;
-    margin-bottom: 1rem;
-    flex-grow: 1;
-    flex-shrink: 1;
+  padding-left: 0; /* Reset from previous CSS */
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
+/* Define ideal basis for better distribution on large screens */
 .footer-col-1 {
-    flex-basis: 30%;
-    min-width: 220px;
+  flex-basis: 30%;
+  min-width: 220px;
 }
 
 .footer-col-2 {
-    flex-basis: 20%;
-    min-width: 180px;
+  flex-basis: 20%;
+  min-width: 180px;
 }
 
 .footer-col-3 {
-    flex-basis: 40%;
-    min-width: 250px;
+  flex-basis: 40%;
+  min-width: 250px;
 }
 
+/* Responsive adjustments for the new flex layout */
 @media screen and (max-width: 768px) {
-    .footer-col {
-        flex-basis: 45%;
-    }
+  .footer-col {
+    flex-basis: 45%; /* Two columns on tablets */
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .footer-col {
-        flex-basis: 100%;
-    }
+  .footer-col {
+    flex-basis: 100%; /* Stack columns on small screens */
+  }
 }
+/* ... other footer styles from before, adapted with new colors ... */
 
 /* ===== Page & Post Content ===== */
 .page-content {
@@ -638,84 +597,6 @@ table tr:hover {
     text-shadow: var(--glow-primary);
 }
 
-/* ===== Button Styles ===== */
-.btn {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid;
-    cursor: pointer;
-    position: relative;
-    transition: var(--transition);
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-}
-
-.btn-primary {
-    background-color: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
-    text-shadow: var(--glow-primary);
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: rgba(0, 240, 255, 0.1);
-    color: var(--accent);
-    border-color: var(--accent);
-    text-shadow: 0 0 5px var(--accent);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background-color: transparent;
-    border-color: var(--secondary);
-    color: var(--secondary);
-    text-shadow: var(--glow-secondary);
-}
-
-.btn-secondary:hover,
-.btn-secondary:focus {
-    background-color: rgba(255, 0, 255, 0.1);
-    color: var(--text-primary);
-    border-color: var(--secondary);
-    text-shadow: none;
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-    transform: translateY(-2px);
-}
-
-.btn-danger {
-    background-color: transparent;
-    border-color: var(--danger);
-    color: var(--danger);
-}
-
-.btn-danger:hover,
-.btn-danger:focus {
-    background-color: rgba(255, 59, 59, 0.1);
-    border-color: var(--danger);
-    box-shadow: 0 0 10px rgba(255, 59, 59, 0.5);
-    transform: translateY(-2px);
-}
-
-.btn-success {
-    background-color: transparent;
-    border-color: var(--success);
-    color: var(--success);
-}
-
-.btn-success:hover,
-.btn-success:focus {
-    background-color: rgba(57, 255, 20, 0.1);
-    border-color: var(--success);
-    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
-    transform: translateY(-2px);
-}
-
 /* ===== Scrollbar Styling ===== */
 ::-webkit-scrollbar {
     width: 10px;
@@ -728,7 +609,6 @@ table tr:hover {
 ::-webkit-scrollbar-thumb {
     background: var(--primary);
     box-shadow: var(--glow-primary);
-    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -740,46 +620,4 @@ table tr:hover {
 :focus-visible {
     outline: 2px solid var(--secondary);
     outline-offset: 2px;
-}
-/* ===== REVISED H1 & Glitch Animation (Visible) ===== */
-h1 {
-    font-size: 3rem;
-    position: relative;
-    animation: flicker 3s infinite;
-}
-
-h1::before,
-h1::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-    z-index: -1; /* Send behind the main text */
-}
-
-h1::before {
-    left: 2px;
-    text-shadow: -2px 0 var(--secondary);
-    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    animation: glitch-anim-1 3s infinite ease-in-out;
-}
-
-h1::after {
-    left: -2px;
-    text-shadow: -2px 0 var(--accent), 2px 2px var(--primary);
-    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    animation: glitch-anim-2 3s infinite ease-in-out;
-}
-
-@keyframes glitch-anim-1 {
-    0%, 100% { clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); }
-    50% { clip-path: polygon(0 20%, 100% 20%, 100% 70%, 0 70%); }
-}
-
-@keyframes glitch-anim-2 {
-    0%, 100% { clip-path: polygon(0 55%, 100% 55%, 100% 65%, 0 65%); }
-    50% { clip-path: polygon(0 30%, 100% 30%, 100% 80%, 0 80%); }
 }
