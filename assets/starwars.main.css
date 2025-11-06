@@ -698,32 +698,4 @@ table tr:hover {
 .btn-success:focus {
     background-color: rgba(0, 206, 209, 0.1);
     border-color: var(--success);
-    box-shadow: 0 0 10px rgba(0, 206, 209, 0.5);
-    transform: translateY(-2px);
-}
-
-/* ===== Scrollbar Styling ===== */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    box-shadow: var(--glow-primary);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--success);
-    box-shadow: 0 0 8px var(--success);
-}
-
-/* ===== Focus States ===== */
-:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
+    box-shadow: 0
