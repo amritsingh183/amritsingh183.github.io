@@ -1006,7 +1006,7 @@ fn no_dangle() -> String {
 
 ## 6. Non-Lexical Lifetimes (NLL) <a href="#6-non-lexical-lifetimes-nll-" class="header-link">🔗</a>
 
->> **"It's important to note: lexical scoping (determined by curly braces {}) defines where variables live and are dropped. Non-lexical lifetimes define where borrows end. These are different concepts—a variable may live longer than its borrows, and you can use the same variable again after its borrow has ended, even within the same lexical scope."** 
+> **"It's important to note: lexical scoping (determined by curly braces {}) defines where variables live and are dropped. Non-lexical lifetimes define where borrows end. These are different concepts—a variable may live longer than its borrows, and you can use the same variable again after its borrow has ended, even within the same lexical scope."** 
 
 ### What NLL solves <a href="#what-nll-solves-" class="header-link">🔗</a>
 
