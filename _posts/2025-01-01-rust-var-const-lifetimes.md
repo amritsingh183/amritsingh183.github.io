@@ -1092,20 +1092,139 @@ This sequencing prevents overlap between the shared read and the mutable write.
 
 ### The Three Parameter-Passing Mechanisms <a href="#the-three-parameter-passing-mechanisms-" class="header-link">🔗</a>
 
-When passing arguments to functions, Rust uses three distinct mechanisms depending on the type:
+Rust uses **ownership transfer** and **trait-based semantics** to govern parameter passing, providing explicit programmer control via the `Copy` trait and move semantics. The compiler additionally employs **non-lexical lifetimes (NLL)** to manage borrow scopes, ending borrows as soon as they're no longer needed rather than at lexical scope boundaries.
 
-| Feature | Copy | Move | Reborrow |
+
+| Feature | Copy (Trait-Based) (Programmer-Facing) | Move (Default Ownership Transfer)(Programmer-Facing) | NLL Borrow Management/Reborrow (Compiler-Internal) |
 | :-- | :-- | :-- | :-- |
-| Applies to | Immutable references `&T` and stack-only types (`i32`, `bool`, `char`, etc.) | Owned types and heap-allocated data (`String`, `Vec<T>`, `Box<T>`) | Mutable references `&mut T` only |
-| What happens | Bitwise duplication of the value | Ownership transfer; original loses access | Compiler creates temporary borrow with shorter lifetime |
-| Original variable after call | Remains valid and usable | Invalid; cannot be used (moved) | Valid immediately; reborrow ends after function returns |
-| Memory cost | Zero runtime cost; compiler optimization | Zero runtime cost; pointer transfer only | Zero runtime cost; pointer aliasing with lifetime constraints |
-| Compiler assistance | Implicit; automatic bitwise copy | Implicit; automatic ownership transfer | Implicit; compiler transforms `f(x)` to `f(&mut *x)` when needed |
-| Why this design | Stack-only data is cheap to duplicate | Prevents double-free errors; ensures single owner | Avoids awkward "take and return" pattern; enables ergonomic APIs |
-| Example | `let x = 5; let y = x;` ✅ Both valid | `let s = String::from("hi"); let t = s;` ❌ `s` is moved | `vec.push(42);` ✅ `vec` still usable |
+| **Applies to** | Types implementing the `Copy` trait: primitives (`i32`, `bool`, `char`, `f64`), shared references `&T`, tuples/arrays of Copy types, function pointers | All non-Copy types: `String`, `Vec<T>`, `Box<T>`, `File`, or any type implementing `Drop` | Shared and mutable references during parameter passing and implicit deref coercions |
+| **What happens** | Compiler automatically duplicates the bit pattern on the stack; the original binding remains valid and semantically unchanged | Ownership transfers to the function parameter; the original binding becomes invalid; compiler prevents subsequent access | Compiler automatically determines precise borrow end-points based on control flow; borrows end as soon as they're no longer used, even mid-scope |
+| **Original variable after call** | Valid and usable immediately | Invalid; compiler error if accessed | Valid immediately; borrow scope has ended before function returns |
+| **Runtime cost** | Bitwise copy of stack data; for small fixed-size types, this is negligible and often optimized away entirely | Zero cost to ownership transfer itself; only metadata (pointers/references) are affected; actual data movement is a compile-time construct | Zero cost; no code generated, purely compile-time borrow analysis |
+| **Explicit syntax required** | None; happens automatically | None; happens automatically | None; completely automatic, transparent to programmer |
+| **Compiler assistance** | Implicit; automatic for all `Copy` types | Implicit; default behavior for all non-`Copy` types | Implicit; enabled by default since Rust 2018 edition |
+| **Memory behavior** | Stack data bit-pattern duplicated in-place; heap references copied (not dereferenced data) | Heap pointers transferred; stack metadata updated; original binding invalidated | No memory transfer; borrow-checking analysis only; borrows end based on actual usage, not scope boundaries |
+| **Example** | `let x = 5; f(x);` ✅ `x` still valid | `let s = String::from("hi"); f(s);` ❌ `s` moved, invalid after | `let score = &scores; scores.push(4);` ✅ compiles; borrow ends before mutation |
+
+#### Key Distinctions
+
+**Copy Types Cannot:**
+
+- Implement the `Drop` trait (resource cleanup conflicts with trivial copying)
+- Contain any non-Copy fields (even one non-Copy field makes the entire struct non-Copy)
+- Include mutable references `&mut T` (would violate Rust's exclusivity guarantee)
+
+**Important Semantic Distinction:** At the assembly level, both Copy and Move involve similar bitwise operations, but they differ fundamentally in semantics and compiler-enforced constraints. Copy *maintains the original binding's validity* after duplication, whereas Move *transfers ownership and invalidates the original binding*. The Rust compiler may optimize away actual bitwise operations in either case, but the type system treats them fundamentally differently.
+
+**Move as the Default:** Move is the default parameter-passing mechanism in Rust for any type that does not implement the `Copy` trait. When you pass a non-Copy value to a function, you are transferring ownership by default. This differs fundamentally from languages like C++, where value copying is the default unless `std::move` is explicitly used.
+
+**Shared References and Copy:** Shared references (`&T`) **always** implement `Copy`, regardless of whether `T` implements `Copy`. This means passing `&T` to a function creates a copy of the reference itself (not the referenced data), enabling multiple references to coexist safely. Mutable references (`&mut T`), however, never implement `Copy` to preserve Rust's exclusive mutability guarantee.
+
+**Non-Lexical Lifetimes (NLL):** Borrows of mutable references end as soon as they're no longer needed, not necessarily at the end of the lexical scope. This was stabilized by default in Rust 2018 edition and eliminates verbose "take and return" patterns while maintaining memory safety. NLL enables code that was previously rejected by the lexical borrow checker because the compiler now understands when borrows actually end, rather than assuming they last until the end of the scope.
+
+**Reborrowing:** When you pass `&mut T` to a function, Rust implicitly performs a **reborrow**, creating a temporary mutable borrow that lasts only for the duration of the function call. After the function returns, the temporary borrow ends immediately, and the original mutable reference remains valid and usable. This is a compiler-managed operation that transparently allows reuse of mutable references after function calls.
 
 
 This explains why functions like `vec.push()` work without requiring the reference to be returned — the original mutable reference is immediately available again after the reborrow ends.
+
+#### Why This Design?
+
+| Design Choice | Rationale |
+| :-- | :-- |
+| Copy is opt-in via trait | Makes memory allocations and expensive operations explicit; prevents accidental performance issues from implicit deep copies  |
+| Move by default | Prevents double-free errors; enforces single ownership semantics; ensures resource cleanup without garbage collection; differs from C++ to make data flow explicit  |
+| Non-lexical lifetimes (default since 2018 edition) | Maintains memory safety while providing ergonomic parameter passing; programmers write natural code without manual borrow management; precision borrow tracking eliminates false-positive compiler errors and enables more idiomatic patterns  |
+
+#### Practical Examples
+
+```rust
+// COPY: Trivial copying; original binding stays valid
+fn square(x: i32) -> i32 {  // i32 implements Copy
+    x * x
+}
+let n = 5;
+square(n);   // n copied; original binding remains valid
+square(n);   // ✅ Can use n again; Copy semantics allow reuse
+
+// MOVE: Ownership transfer; original binding becomes invalid
+fn consume(s: String) {  // String does not implement Copy
+    println!("{}", s);
+}  // s dropped here; ownership cleanup occurs
+let text = String::from("hello");
+consume(text);  // text moved; ownership transferred to function parameter
+// consume(text);  // ❌ Compiler error: value used after move
+
+// NLL BORROW MANAGEMENT: Precise borrow tracking; transparent to programmer
+fn update(v: &mut Vec<i32>, limit: usize) -> usize {
+    v.push(42);
+    limit + 1  // borrow of v ends here; no longer referenced below
+}
+
+let mut data = vec![1, 2];
+let result = update(&mut data, 10);  // mutable borrow occurs and ends
+println!("Data: {:?}", data);         // ✅ data fully usable; borrow already ended
+
+// NLL: This example demonstrates the actual problem NLL solved
+// Before NLL (pre-2018), this would fail to compile:
+let mut scores = vec![1, 2, 3];
+let score = &scores[0];  // immutable borrow
+// Under old lexical rules, score's borrow would last until end of scope
+// scores.push(4);  // ❌ Would error: cannot mutably borrow while immutably borrowed
+
+// With NLL enabled (Rust 2018+), this compiles:
+let mut scores = vec![1, 2, 3];
+let score = &scores[0];  // immutable borrow
+println!("{}", score);   // last use of score
+scores.push(4);          // ✅ Borrow ends after println!; mutation is safe
+
+// REBORROWING: Implicit reborrow enables reuse of mutable references
+fn modify(v: &mut Vec<i32>) {
+    v.push(42);
+}  // temporary borrow ends here
+
+let mut vec = vec![0];
+modify(&mut vec);  // reborrow begins and ends within this call
+modify(&mut vec);  // ✅ Can call again; previous reborrow already ended
+vec.push(99);      // ✅ vec fully usable; reborrow ended before this line
+```
+
+
+#### Shared References and Copy
+
+```rust
+// Shared references are Copy, independent of the referenced type
+fn read_string(s: &String) {
+    println!("{}", s);
+}
+
+let text = String::from("hello");
+read_string(&text);  // &text copied; reference bit-pattern duplicated
+read_string(&text);  // ✅ Can pass &text again; reference is Copy
+
+// The reference itself (the pointer/metadata) is copied, not the String data
+```
+
+
+#### Mutable Reference Borrowing and NLL
+
+```rust
+// Non-lexical lifetimes: borrow ends when no longer needed
+fn update(v: &mut Vec<i32>, limit: usize) -> usize {
+    v.push(42);
+    limit + 1  // borrow of v ends here; v no longer referenced below
+}
+
+let mut data = vec![1, 2];
+let result = update(&mut data, 10);  // mutable borrow occurs and ends
+println!("Data: {:?}", data);         // ✅ data fully usable; borrow already ended
+
+// Practical NLL benefit: Interleaved mutable and immutable operations
+let mut list = vec![1, 2, 3];
+let len = list.len();  // immutable borrow of list
+list.push(len);        // ✅ With NLL, this compiles; borrows don't overlap in time
+                       // Without NLL, this would fail because len's borrow
+                       // would extend to the end of the scope
+```
 
 ### Reborrowing (applies only to mutable reference) <a href="#reborrowing-applies-only-to-mutable-reference-" class="header-link">🔗</a>
 
