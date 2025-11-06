@@ -1066,30 +1066,6 @@ Without NLL, this would fail because `first` would be considered borrowed until 
 
 ## 7. Advanced Borrowing Patterns <a href="#7-advanced-borrowing-patterns-" class="header-link">🔗</a>
 
-### Two-phase borrows <a href="#two-phase-borrows-" class="header-link">🔗</a>
-
-Two-phase borrows solve a specific problem: calling a method that takes `&mut self` while also reading from `self` in the arguments.
-
-Consider this example:
-
-```rust
-fn main() {
-    let mut v = vec![1, 2, 3];
-    v.push(v.len()); // reads v.len() then mutably borrows v
-    println!("{:?}", v); // prints [1, 2, 3, 3]
-}
-```
-
-This looks like it should fail: `v.push()` takes `&mut self`, but we are also reading `v.len()` at the same time.  However, Rust uses two-phase borrows to make this work.
-
-Here is how it works:
-
-1. When you call `v.push(v.len())`, Rust first evaluates all the arguments.
-2. During argument evaluation, only a shared borrow is needed for `v.len()`.
-3. After all arguments are evaluated, the mutable borrow for `push` becomes active. **(There can be only one writer or many readers)**
-
-This sequencing prevents overlap between the shared read and the mutable write.
-
 ### The Three Parameter-Passing Mechanisms <a href="#the-three-parameter-passing-mechanisms-" class="header-link">🔗</a>
 
 Rust uses **ownership transfer** and **trait-based semantics** to govern parameter passing, providing explicit programmer control via the `Copy` trait and move semantics. The compiler additionally employs **non-lexical lifetimes (NLL)** to manage borrow scopes, ending borrows as soon as they're no longer needed rather than at lexical scope boundaries.
@@ -1126,14 +1102,6 @@ Rust uses **ownership transfer** and **trait-based semantics** to govern paramet
 
 
 This explains why functions like `vec.push()` work without requiring the reference to be returned — the original mutable reference is immediately available again after the reborrow ends.
-
-#### Why This Design?
-
-| Design Choice | Rationale |
-| :-- | :-- |
-| Copy is opt-in via trait | Makes memory allocations and expensive operations explicit; prevents accidental performance issues from implicit deep copies  |
-| Move by default | Prevents double-free errors; enforces single ownership semantics; ensures resource cleanup without garbage collection; differs from C++ to make data flow explicit  |
-| Non-lexical lifetimes (default since 2018 edition) | Maintains memory safety while providing ergonomic parameter passing; programmers write natural code without manual borrow management; precision borrow tracking eliminates false-positive compiler errors and enables more idiomatic patterns  |
 
 #### Practical Examples
 
@@ -1226,6 +1194,34 @@ list.push(len);        // ✅ With NLL, this compiles; borrows don't overlap in 
                        // would extend to the end of the scope
 ```
 
+### Two-phase borrows <a href="#two-phase-borrows-" class="header-link">🔗</a>
+
+Two-phase borrows:
+
+- applies to method calls on `&mut self` with shared borrows in the arguments. It's not a universal rule—it's specific to this pattern
+- solve a specific problem: calling a method that takes `&mut self` while also reading from `self` in the arguments.
+
+Consider this example:
+
+```rust
+fn main() {
+    let mut v = vec![1, 2, 3];
+    v.push(v.len()); // reads v.len() then mutably borrows v
+    println!("{:?}", v); // prints [1, 2, 3, 3]
+}
+```
+
+This looks like it should fail: `v.push()` takes `&mut self`, but we are also reading `v.len()` at the same time.  However, Rust uses two-phase borrows to make this work.
+
+Here is how it works:
+
+1. When you call `v.push(v.len())`, Rust first evaluates all the arguments.
+2. During argument evaluation, only a shared borrow is needed for `v.len()`.
+3. After all arguments are evaluated, the mutable borrow for `push` becomes active. **(There can be only one writer or many readers)**
+
+This sequencing prevents overlap between the shared read and the mutable write.
+
+
 ### Reborrowing (applies only to mutable reference) <a href="#reborrowing-applies-only-to-mutable-reference-" class="header-link">🔗</a>
 
 Reborrowing happens when you create a new reference from an **existing mutable reference**.  The new reference temporarily "pauses" the original reference.
@@ -1267,23 +1263,27 @@ The function `modify` receives a reborrow of `r`, not a move, so `r` is still va
 A partial move happens when you move some fields out of a struct while leaving other fields in place.
 
 ```rust
+#[derive(Debug)]
 struct Point {
     x: i32,
     y: String,
 }
 
 fn main() {
-    let p = Point { // the struct itself is on the stack, x on stack, y on stack pointing to heap data
-        x: 10,// therefore P will have move characteristics
+    let p = Point {
+        // the struct itself is on the stack, x on stack, y on stack pointing to heap data
+        x: 10, // therefore P will have move characteristics
         y: String::from("hello"),
     };
 
-    let x_val = p.x;  // Copy: x is i32, which implements Copy
-    let y_val = p.y;  // Move: y is String, which does not implement Copy
+    let x_val = p.x; // Copy: x is i32, which implements Copy
+    let y_val = p.y; // Move: y is String, which does not implement Copy
 
     // println!("{}", p.y); // ERROR: y was moved
-    println!("{}", p.x);    // OK: x was copied, not moved
+    // println!("{:?}", p); // ERROR: p partially moved; can't use entire struct because y was moved
+    println!("{}", p.x); // OK: x was copied, not moved
 }
+
 ```
 
 After the partial move, you cannot use the whole struct `p` anymore, but you can still access the fields that were not moved (like `p.x` in this case).
