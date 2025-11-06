@@ -11,8 +11,8 @@
     /* White (Holographic) */
     --danger: #DC143C;
     /* Crimson Red (Sith) */
-    --success: #00CED1;
-    /* Cyan (Sci-Fi accent) */
+    --success: #39FF14;
+    /* Yoda Green (Inline code) */
 
     /* Background and Text */
     --bg-primary: #0a0a0a;
@@ -29,6 +29,23 @@
     --glow-secondary: 0 0 5px var(--secondary), 0 0 10px var(--secondary);
 }
 
+/* ===== Reset & Base ===== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-sans);
+}
+
 /* ===== Base & Star Field Effects ===== */
 body {
     font: 400 18px/1.7 var(--font-sans);
@@ -41,10 +58,10 @@ body {
     overflow-x: hidden;
     background-image:
         radial-gradient(2px 2px at 20% 30%, var(--primary), rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 60% 70%, var(--success), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 60% 70%, #00CED1, rgba(0, 0, 0, 0)),
         radial-gradient(1px 1px at 50% 50%, var(--accent), rgba(0, 0, 0, 0)),
         radial-gradient(1px 1px at 80% 10%, var(--primary), rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 90% 60%, var(--success), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 90% 60%, #00CED1, rgba(0, 0, 0, 0)),
         radial-gradient(1px 1px at 30% 80%, var(--accent), rgba(0, 0, 0, 0));
     background-size: 200% 200%, 150% 150%, 180% 180%, 220% 220%, 170% 170%, 210% 210%;
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 20px 140px, 110px 30px;
@@ -80,13 +97,6 @@ body::before {
         opacity: 0.9;
         text-shadow: 0 0 8px var(--primary), 0 0 12px var(--primary);
     }
-}
-
-/* ===== Distortion Animation for H1 (Holographic Text) ===== */
-@keyframes holodistort {
-    0%, 100% { opacity: 1; text-shadow: var(--glow-primary); }
-    50.2% { opacity: 0.85; text-shadow: 0 0 5px var(--primary); }
-    50.5% { opacity: 1; text-shadow: var(--glow-primary), 0 0 15px var(--secondary); }
 }
 
 @keyframes distort-1 {
@@ -203,8 +213,8 @@ h2 {
 
 h3 {
     font-size: 1.8rem;
-    color: var(--success);
-    text-shadow: 0 0 8px var(--success);
+    color: #00CED1;
+    text-shadow: 0 0 8px #00CED1;
 }
 
 h4,
@@ -226,8 +236,8 @@ a {
 
 a:hover,
 a:focus {
-    color: var(--success);
-    text-shadow: 0 0 8px var(--success), 0 0 15px var(--success);
+    color: #00CED1;
+    text-shadow: 0 0 8px #00CED1, 0 0 15px #00CED1;
 }
 
 /* ===== Blockquotes & Callouts ===== */
@@ -263,7 +273,7 @@ blockquote {
 .tip,
 .example {
     border-color: var(--success);
-    box-shadow: inset 3px 0 8px rgba(0, 206, 209, 0.2);
+    box-shadow: inset 3px 0 8px rgba(57, 255, 20, 0.2);
 }
 
 .warning {
@@ -301,17 +311,27 @@ blockquote {
     color: var(--primary);
 }
 
-/* ===== Code Formatting ===== */
+/* ===== Inline Code - Yoda Theme ===== */
 code {
     font-family: var(--font-mono);
     font-size: 0.9em;
-    background-color: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background-color: rgba(57, 255, 20, 0.12);
+    border: 1px solid rgba(57, 255, 20, 0.4);
     padding: 0.2em 0.4em;
-    color: #FFD700;
-    text-shadow: 0 0 2px #FFD700;
+    color: #39FF14;
+    text-shadow: 0 0 3px #39FF14;
+    border-radius: 3px;
+    font-weight: 500;
 }
 
+code:hover {
+    background-color: rgba(57, 255, 20, 0.2);
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+}
+
+/* ===== Code Blocks - Darth Vader Theme ===== */
 pre {
     font-family: var(--font-mono);
     font-size: 0.9rem;
@@ -472,6 +492,7 @@ pre > code {
 .wrapper {
     margin: 0 auto;
     padding: 0 2rem;
+    max-width: 1400px;
 }
 
 @media screen and (max-width: 768px) {
@@ -516,7 +537,7 @@ table th {
 
 table tr:hover {
     background-color: rgba(0, 206, 209, 0.1);
-    color: var(--success);
+    color: #00CED1;
 }
 
 /* ===== Site Header ===== */
@@ -566,8 +587,8 @@ table tr:hover {
 }
 
 .site-nav .page-link:hover {
-    color: var(--success);
-    text-shadow: 0 0 8px var(--success);
+    color: #00CED1;
+    text-shadow: 0 0 8px #00CED1;
 }
 
 @media screen and (max-width: 600px) {
@@ -580,6 +601,7 @@ table tr:hover {
         padding: 1rem;
         flex-direction: column;
         gap: 1rem;
+        z-index: 101;
     }
 
     .site-nav .menu-icon svg {
@@ -703,7 +725,7 @@ table tr:hover {
 .post-meta {
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    color: var(--success);
+    color: #00CED1;
 }
 
 .post-link {
@@ -713,7 +735,7 @@ table tr:hover {
 }
 
 .post-link:hover {
-    color: var(--success);
+    color: #00CED1;
 }
 
 .post-header {
@@ -770,8 +792,8 @@ table tr:hover {
 .btn-secondary:focus {
     background-color: rgba(30, 58, 138, 0.1);
     color: var(--accent);
-    border-color: var(--success);
-    text-shadow: 0 0 8px var(--success);
+    border-color: #00CED1;
+    text-shadow: 0 0 8px #00CED1;
     box-shadow: 0 0 10px rgba(0, 206, 209, 0.5);
     transform: translateY(-2px);
 }
@@ -798,10 +820,42 @@ table tr:hover {
 
 .btn-success:hover,
 .btn-success:focus {
-    background-color: rgba(0, 206, 209, 0.1);
+    background-color: rgba(57, 255, 20, 0.1);
     border-color: var(--success);
-    box-shadow: 0 0 10px rgba(0, 206, 209, 0.5);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
     transform: translateY(-2px);
+}
+
+/* ===== Lists ===== */
+ul,
+ol {
+    margin-left: 2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
+dl {
+    margin-left: 0;
+}
+
+dt {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+dd {
+    margin-left: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 /* ===== Scrollbar Styling ===== */
@@ -820,8 +874,8 @@ table tr:hover {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--success);
-    box-shadow: 0 0 8px var(--success);
+    background: #00CED1;
+    box-shadow: 0 0 8px #00CED1;
 }
 
 /* ===== Focus States ===== */
@@ -830,19 +884,56 @@ table tr:hover {
     outline-offset: 2px;
 }
 
-/* ===== Utility Classes ===== */
-* {
-    box-sizing: border-box;
+/* ===== Responsive Typography ===== */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    body {
+        font-size: 16px;
+    }
 }
 
-html {
-    scroll-behavior: smooth;
-}
+/* ===== Print Styles ===== */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
 
-body,
-button,
-input,
-select,
-textarea {
-    font-family: var(--font-sans);
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        page-break-after: avoid;
+    }
 }

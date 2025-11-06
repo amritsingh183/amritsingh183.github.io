@@ -70,8 +70,6 @@ This document provides complete coverage of Rust's memory layout, addressing all
   - `[&str; N]`: Container on stack (N×16 bytes of fat pointers); **owns** the references themselves, which reference data elsewhere (heap or binary section)
   - `(i32, String)`: Container on stack; **owns** all fields, including the String which owns heap data
 
-- **Not "all data on stack"**: Use this table for types whose container structure is stack-allocated with no indirection, regardless of whether elements own heap data or are references.
-
 - Stack size may vary due to struct field alignment padding. For tuples and structs, actual size = sum of field sizes + alignment padding.
 
 ***
