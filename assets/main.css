@@ -83,16 +83,23 @@ body::before {
 }
 
 @keyframes starwarp {
-    0% { transform: perspective(1000px) scaleZ(1); }
-    100% { transform: perspective(1000px) scaleZ(1.1); }
+    0% {
+        transform: perspective(1000px) scaleZ(1);
+    }
+
+    100% {
+        transform: perspective(1000px) scaleZ(1.1);
+    }
 }
 
 @keyframes holoflicker {
+
     0%,
     100% {
         opacity: 1;
         text-shadow: var(--glow-primary);
     }
+
     50% {
         opacity: 0.9;
         text-shadow: 0 0 8px var(--primary), 0 0 12px var(--primary);
@@ -100,13 +107,27 @@ body::before {
 }
 
 @keyframes distort-1 {
-    0%, 100% { clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%); }
-    50% { clip-path: polygon(0 20%, 100% 25%, 100% 75%, 0 80%); }
+
+    0%,
+    100% {
+        clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+    }
+
+    50% {
+        clip-path: polygon(0 20%, 100% 25%, 100% 75%, 0 80%);
+    }
 }
 
 @keyframes distort-2 {
-    0%, 100% { clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%); }
-    50% { clip-path: polygon(0 35%, 100% 30%, 100% 85%, 0 90%); }
+
+    0%,
+    100% {
+        clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%);
+    }
+
+    50% {
+        clip-path: polygon(0 35%, 100% 30%, 100% 85%, 0 90%);
+    }
 }
 
 /* ===== Vertical Rhythm ===== */
@@ -345,7 +366,7 @@ pre {
     border-radius: 4px;
 }
 
-pre > code {
+pre>code {
     background: none;
     border: none;
     color: var(--text-primary);
@@ -374,98 +395,98 @@ pre > code {
 }
 
 /* Base text */
-.highlight .h, 
-.highlight .n { 
+.highlight .h,
+.highlight .n {
     color: #E0E0E0;
     font-weight: 500;
 }
 
-.highlight .p { 
+.highlight .p {
     color: #B0B0B0;
 }
 
 /* Keywords - Sith Red */
-.highlight .k, 
-.highlight .kd, 
-.highlight .kc { 
+.highlight .k,
+.highlight .kd,
+.highlight .kc {
     color: #FF4444;
     font-weight: bold;
     text-shadow: 0 0 3px #FF4444;
 }
 
-.highlight .kr { 
+.highlight .kr {
     color: #FF6B6B;
     font-weight: bold;
 }
 
 /* Strings - Cyan/Holographic */
-.highlight .s, 
-.highlight .s1, 
-.highlight .s2, 
-.highlight .sh { 
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sh {
     color: #00F0FF;
     text-shadow: 0 0 2px #00F0FF;
 }
 
 /* Numbers - Gold */
-.highlight .m, 
-.highlight .mi, 
-.highlight .mf { 
+.highlight .m,
+.highlight .mi,
+.highlight .mf {
     color: #FFD700;
     font-weight: 600;
 }
 
 /* Built-ins - Bright Cyan */
-.highlight .nb, 
-.highlight .bp { 
+.highlight .nb,
+.highlight .bp {
     color: #00FFFF;
     font-weight: 500;
 }
 
 /* Constants - Dark Red */
-.highlight .kc { 
+.highlight .kc {
     color: #CC0000;
     font-weight: bold;
 }
 
 /* Types & Classes - Yellow-Green */
-.highlight .kt, 
-.highlight .nc { 
+.highlight .kt,
+.highlight .nc {
     color: #FFFF99;
     font-weight: 600;
 }
 
 /* Functions - Bright Green */
-.highlight .nf, 
-.highlight .fm { 
+.highlight .nf,
+.highlight .fm {
     color: #39FF14;
     font-weight: 600;
     text-shadow: 0 0 2px #39FF14;
 }
 
 /* Attributes - Gold */
-.highlight .na { 
+.highlight .na {
     color: #FFD700;
     font-weight: 500;
 }
 
 /* Comments - Dark Grey */
-.highlight .c, 
-.highlight .c1, 
-.highlight .cm, 
-.highlight .cs { 
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight .cs {
     color: #666666;
     font-style: italic;
 }
 
 /* Operators - Sith Red */
-.highlight .o { 
+.highlight .o {
     color: #FF5555;
     font-weight: bold;
 }
 
 /* Errors - Danger Red with glow */
-.highlight .err { 
+.highlight .err {
     color: #FF3333;
     background: rgba(255, 51, 51, 0.15);
     font-weight: bold;
@@ -473,18 +494,18 @@ pre > code {
 }
 
 /* Tags - Cyan */
-.highlight .nt { 
+.highlight .nt {
     color: #00FFFF;
     font-weight: 600;
 }
 
 /* Entities - Gold */
-.highlight .ni { 
+.highlight .ni {
     color: #FFD700;
 }
 
 /* Variables - Light Blue */
-.highlight .nv { 
+.highlight .nv {
     color: #87CEEB;
 }
 
@@ -709,7 +730,7 @@ table tr:hover {
     flex: 1;
 }
 
-.post-list > li {
+.post-list>li {
     margin-bottom: 2rem;
     padding: 1rem;
     border: 1px solid transparent;
@@ -717,7 +738,7 @@ table tr:hover {
     clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
 }
 
-.post-list > li:hover {
+.post-list>li:hover {
     border-color: var(--primary);
     background: rgba(255, 215, 0, 0.08);
 }
