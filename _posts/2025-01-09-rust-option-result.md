@@ -141,10 +141,10 @@ This replaces the concept of "null" found in other languages, but **with type sa
 let some_number: Option<i32> = Some(42);  // Wraps the value 42
 let no_number: Option<i32> = None;        // No value present
 
-// Some and None can be written without Option::
-// The compiler resolves the enum through type inference
-let x = Some(5);
-let y: Option<i32> = None;
+// Some and None are imported by the prelude, so the Option:: prefix is optional
+// Type inference determines the generic type T in Option<T>
+let x = Some(5); // Type inferred as Option<i32>
+let y: Option<i32> = None; // Explicit type annotation required for None
 
 ```
 
@@ -278,6 +278,7 @@ let io_error: Result<String, std::io::Error> = std::fs::read_to_string("missing.
 ```rust
 
 fn divide(numerator: f64, denominator: f64) -> Result<f64, String> {
+    // Checking == 0.0 for floating-point zero is perfectly safe and correct. 
     if denominator == 0.0 {
         Err(String::from("Cannot divide by zero"))
     } else {
@@ -483,9 +484,17 @@ struct Config {
     max_connections: Option<usize>,
 }
 
-fn validate_config(config: &Config) -> bool {
-    // Valid if no limit is set, or if the limit is reasonable
-    config.max_connections.is_none_or(|&n| n > 0 && n <= 10000)
+fn validate_config(config: Config) -> bool {
+    config.max_connections.is_none_or(|n| n > 0 && n <= 10000)
+}
+
+// Alternative: if you need to keep the reference
+// use &Option<T> instead of Option<T>
+fn validate_config_ref(config: &Config) -> bool {
+    config.max_connections
+        .as_ref() // &Option<usize> -> Option<&usize>
+        .copied() // Option<&usize> -> Option<usize> (usize is Copy)
+        .is_none_or(|n| n > 0 && n <= 10000)
 }
 
 ```
@@ -493,7 +502,6 @@ fn validate_config(config: &Config) -> bool {
 **Use case:** Replacing verbose patterns like `opt.is_none() || opt.is_some_and(|x| predicate)` with the more concise `opt.is_none_or(|x| predicate)`.
 
 ***
-
 
 **`is_some_and` - Test Option with a Predicate**
 
@@ -601,13 +609,25 @@ fn parse_positive(s: &str) -> Option<i32> {
 **The key difference between `map` and `and_then`:**
 
 ```rust
+// **The value is "transformed and re-wrapped"**
+//
+// map: function returns a plain value (auto-wrapped in Option)
+//
+// The closure returns a plain value (e.g., `usize`), and `map` 
+// automatically wraps it in `Option<usize>`
+Some("5").map(|s| s.len()) // Some(1)
 
-// map: function returns plain value (auto-wrapped)
-Some(5).map(|x| x * 2)              // Some(10)
+// and_then: function returns Option (NOT wrapped again)
+Some("5").and_then(|s| s.parse::<i32>().ok()) // Some(5)
 
-// and_then: function returns Option (not wrapped again)
-Some(5).and_then(|x| Some(x * 2))   // Some(10)
-Some(5).and_then(|x| None)          // None - transformation can fail
+// Real-world: map creates nesting, and_then flattens
+fn validate_positive(n: i32) -> Option<i32> {
+    if n > 0 { Some(n) } else { None }
+}
+
+Some(5).map(validate_positive) // Some(Some(5)) - double-wrapped!
+Some(5).and_then(validate_positive) // Some(5) - correctly flattened
+Some(-5).and_then(validate_positive) // None - validation failed
 
 ```
 
@@ -649,7 +669,7 @@ fn parse_number(s: &str) -> Result<i32, String> {
 
 #### inspect() - Observe Values Without Consuming
 
-The `inspect()` methods consume `self` by value, pass a reference (`&T`) to the contained value to the closure (allowing temporary observation), and return the original `Option` or `Result` unchanged, enabling method chaining.
+The `inspect()` method takes `self` by value (moving ownership), passes a reference to the inner value to the provided closure for observation, then returns the container (transferring ownership back), enabling method chaining.
 
 In the code below:
 - The container is moved (consumed)
@@ -1112,7 +1132,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 You may have noticed that `main` can return a `Result`, which enables the `?` operator to work at the top level. This works because of the `std::process::Termination` trait.
 
-For a type to be a valid return type for `main`, it must implement `Termination`. The standard library provides an implementation for `Result<(), E>` where `E` implements `std::fmt::Debug`. When the result is `Err(e)`, the `Termination` implementation prints the error's `Debug` representation to stderr via the standard runtime and returns a non-zero exit code (typically 1) to indicate failure. When the result is `Ok(())`, it returns exit code 0 to indicate success.
+For a type to be a valid return type for `main`, it must implement `Termination`. The standard library provides an implementation for `Result<T, E>` where `T: Termination` and `E: Debug`. When the result is `Err(e)`, the `Termination` implementation calls the error's `Debug` formatter to print to stderr via `report()` and returns `ExitCode::FAILURE` (typically exit code 1). When the result is `Ok(val)`, it calls `val.report()` to determine the exit code (usually `ExitCode::SUCCESS` or 0 for `()`).
 **Example:**
 
 ```rust
@@ -1252,7 +1272,7 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 | **Transformation** | `map(f)` | `Result<T, E> -> Result<U, E>` | Transform success value |
 |  | `map_err(f)` | `Result<T, E> -> Result<T, F>` | Transform error value |
 |  | `and_then(f)` | `Result<T, E> -> Result<U, E>` | Chain fallible operations |
-|  | `flatten()` | `Result<Result<T, E>, E> -> Result<T, E>` | Collapse nested Results (stable 1.89.0) |
+|  |`flatten()`|`Result<Result<T, E>, E> -> Result<T, E>`|Collapse nested Results |
 |  | `inspect(f)` | `Result<T, E> -> Result<T, E>` | Observe success value |
 |  | `inspect_err(f)` | `Result<T, E> -> Result<T, E>` | Observe error value |
 | **Borrowing** | `as_ref()` | `&Result<T, E> -> Result<&T, &E>` | Borrow both Ok and Err values |
@@ -1268,9 +1288,7 @@ fn open_database(url: &str) -> Result<Connection, DbError> {
 |  | `err()` | `Result<T, E> -> Option<E>` | Extract error as Option |
 |  | `transpose()` | `Result<Option<T>, E> -> Option<Result<T, E>>` | Swap nesting layers |
 
-**⚠️ Safety Note**: `unwrap_unchecked()` produces undefined behavior if called on `None` or `Err`. Only use in performance-critical code where you can guarantee the value is `Some`/`Ok`.
-
-
+**⚠️ Safety Note**: Calling `unwrap_unchecked()` on `None` or `Err` invokes undefined behavior (UB). This is NOT a panic—UB means the compiler assumes this never happens and may generate code that behaves unpredictably, including memory corruption and security vulnerabilities. Only use in performance-critical code after profiling shows `unwrap()` is a bottleneck, and only when you have a formal proof the value is `Some`/`Ok`.
 
 ### Pattern Matching Syntax
 
@@ -1287,12 +1305,12 @@ if let Ok(value) = result {
     // use value
 }
 
-// Let...else (handle one case, exit for others)
+// Let...else pattern (the else block MUST diverge)
 let Ok(value) = result else {
-    // handle error and return/break/continue
+    // Must use: return, break, continue, panic!(), or loop {}
     return;
 };
-// use value here
+// value is available here - we know result was Ok
 
 ```
 
@@ -1361,7 +1379,7 @@ fn process_numbers(numbers: &[i32], extra: Option<i32>) {
 
 // After: uniform slice handling
 fn process_numbers(numbers: &[i32], extra: Option<i32>) {
-    for n in numbers.iter().chain(extra.as_slice()) {
+    for &n in numbers.iter().chain(extra.as_slice().iter()) {
         println!("{}", n);
     }
 }
@@ -1409,7 +1427,7 @@ fn parse_and_validate(input: &str) -> Result<i32, String> {
 
 **Alternative for code that needs to work before 1.89:**
 
-`and_then` can achieve the same result on older Rust versions:
+Use `and_then` for backwards compatibility:
 
 ```rust
 // Equivalent to flatten() for backwards compatibility
