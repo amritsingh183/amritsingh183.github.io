@@ -430,16 +430,104 @@ let value = result.unwrap_or(0);       // value = 0
 
 ```rust
 
-let x: Option<String> = None;
-let y = x.unwrap_or_else(|| {
-    expensive_computation()            // Only runs if None
-});
+use std::collections::HashMap;
+use std::thread;
+use std::time::Duration;
 
-let result: Result<i32, String> = Err(String::from("error"));
-let value = result.unwrap_or_else(|err| {
-    log_error(&err);
-    0  // Fallback value
-});
+struct UserDatabase {
+    users: HashMap<u32, String>,
+}
+
+impl UserDatabase {
+    fn new() -> Self {
+        let mut users = HashMap::new();
+        users.insert(1, "Alice".to_string());
+        users.insert(2, "Bob".to_string());
+        Self { users }
+    }
+
+    fn get_username(&self, id: u32) -> Option<String> {
+        self.users.get(&id).cloned()
+    }
+
+    // Expensive: queries external API (simulated with sleep)
+    fn fetch_from_api(&self, id: u32) -> String {
+        println!("⏳ Fetching user {} from external API (slow)...", id);
+        thread::sleep(Duration::from_secs(1));
+        format!("User{}", id)
+    }
+}
+
+fn main() {
+    let db = UserDatabase::new();
+
+    println!("Example 1: Option with unwrap_or vs unwrap_or_else\n");
+
+    // ❌ BAD: Always calls expensive function, even when not needed
+    println!("Using unwrap_or (inefficient):");
+    let user1 = db.get_username(1).unwrap_or(db.fetch_from_api(1));
+    println!("Result: {}\n", user1);
+
+    // ✅ GOOD: Only calls expensive function when None
+    println!("Using unwrap_or_else (efficient):");
+    let user1 = db.get_username(1).unwrap_or_else(|| db.fetch_from_api(1));
+    println!("Result: {}\n", user1);
+
+    println!("\nExample 2: Result with error logging\n");
+
+    // Simulate file operations
+    fn read_config(filename: &str) -> Result<String, String> {
+        if filename == "config.json" {
+            Err(format!("File '{}' not found", filename))
+        } else {
+            Ok("{ \"theme\": \"dark\" }".to_string())
+        }
+    }
+
+    // ❌ BAD: Cannot log error details with unwrap_or
+    let config1 = read_config("config.json").unwrap_or("{}".to_string());
+    println!("Config 1: {}", config1);
+
+    // ✅ GOOD: Log error before providing fallback
+    let config2 = read_config("config.json").unwrap_or_else(|err| {
+        eprintln!("⚠️  Error loading config: {}", err);
+        eprintln!("📝 Using default configuration");
+        "{}".to_string()
+    });
+    println!("Config 2: {}\n", config2);
+
+    println!("\nExample 3: Real-world cache miss handling\n");
+
+    // Simulate cache lookup (sometimes hit, sometimes miss)
+    fn get_from_cache(cache_id: u32) -> Option<String> {
+        match cache_id {
+            1 => Some("CachedUser1".to_string()),
+            _ => None, // Cache miss
+        }
+    }
+
+    // Example 3a: Cache HIT
+    println!("Cache hit scenario:");
+    let username_hit = get_from_cache(1).unwrap_or_else(|| {
+        println!("💾 Cache miss! Loading from database...");
+        db.get_username(1).unwrap_or_else(|| {
+            println!("📡 Database miss! Fetching from API...");
+            db.fetch_from_api(1)
+        })
+    });
+    println!("Result: {}\n", username_hit);
+
+    // Example 3b: Cache MISS
+    println!("Cache miss scenario:");
+    let username_miss = get_from_cache(2).unwrap_or_else(|| {
+        println!("💾 Cache miss! Loading from database...");
+        db.get_username(2).unwrap_or_else(|| {
+            println!("📡 Database miss! Fetching from API...");
+            db.fetch_from_api(2)
+        })
+    });
+    println!("Result: {}", username_miss);
+}
 
 ```
 
