@@ -537,7 +537,8 @@ fn main() {
 
 ### Pattern 2: Worker Pool
 
-**Rust Implementation:**
+> Example 1
+
 ```rust
 use crossbeam::channel;
 use std::thread;
@@ -601,6 +602,146 @@ fn main() {
         // Scope guarantees all workers have exited here
         // No thread leaks possible!
     });
+}
+```
+
+> Example 2: Worker Pool with Multiple Producers and Deadlines
+
+The basic worker pool pattern is great for simple scenarios, but production systems often need additional features:
+- **Multiple concurrent producers** creating work items
+- **Deadline-based submission** to prevent indefinite blocking
+- **Explicit timeout handling** to distinguish between different failure modes
+- **Result aggregation** with success/error tracking
+
+```rust
+use crossbeam::channel::{bounded, Receiver, SendTimeoutError, Sender};
+use std::time::{Duration, Instant};
+
+/// Represents a unit of work to be processed by the worker pool
+#[derive(Debug)]
+struct Job {
+    id: usize,
+    data: String,
+}
+
+impl Job {
+    fn new(id: usize, data: String) -> Self {
+        Job { id, data }
+    }
+}
+
+/// Type alias for results returned by workers
+/// Ok variant contains the processed result, Err contains error message
+type JobResult = Result<String, String>;
+
+/// Worker function that processes jobs from a channel
+/// Each worker continuously receives jobs until the channel is closed
+fn handle_job(job_rx: Receiver<Job>, result_tx: Sender<JobResult>) {
+    for job in job_rx {
+        // Simulate some processing work
+        std::thread::sleep(Duration::from_millis(10));
+        
+        // Process the job and send result
+        let result = Ok(format!("Processed job {} with data: {}", job.id, job.data));
+        
+        // If result channel is closed, we can't send - worker should exit
+        if result_tx.send(result).is_err() {
+            eprintln!("Result channel closed, worker exiting");
+            break;
+        }
+    }
+}
+
+fn main() {
+    // Create bounded channels for results and jobs
+    // Bounded channels provide backpressure when full
+    let (result_tx, result_rx) = bounded::<JobResult>(10);
+    let (job_tx, job_rx) = bounded::<Job>(10);
+    
+    // Set a deadline for all job submissions
+    // After this deadline, producers will timeout instead of blocking
+    let deadline = Instant::now() + Duration::from_secs(2);
+
+    crossbeam::thread::scope(|s| {
+        // === WORKER THREADS ===
+        // Spawn 4 worker threads that share the same job_rx
+        // Crossbeam ensures thread-safe access - only one worker gets each job
+        for worker_id in 0..4 {
+            let worker_job_rx = job_rx.clone();
+            let worker_result_tx = result_tx.clone();
+            
+            s.spawn(move |_| {
+                println!("Worker {} started", worker_id);
+                handle_job(worker_job_rx, worker_result_tx);
+                println!("Worker {} finished", worker_id);
+            });
+        }
+        
+        // CRITICAL: Drop the original handles so only workers have them
+        // When workers finish and drop their clones, channels will close
+        drop(job_rx);
+        drop(result_tx);
+
+        // === PRODUCER THREADS ===
+        // Spawn multiple producers that create jobs concurrently
+        // This demonstrates handling many producers with deadline constraints
+        for idx in 0..=100 {
+            let producer_job_tx = job_tx.clone();
+            
+            s.spawn(move |_| {
+                let new_job = Job::new(idx, format!("data-{}", idx));
+                
+                // Try to send with deadline - will timeout if channel is full
+                // or if the deadline has passed
+                match producer_job_tx.send_deadline(new_job, deadline) {
+                    Ok(_) => {
+                        // Job successfully queued
+                    }
+                    Err(SendTimeoutError::Timeout(_job)) => {
+                        // Deadline passed or channel full for too long
+                        eprintln!("Producer {}: Job timed out", idx);
+                    }
+                    Err(SendTimeoutError::Disconnected(_job)) => {
+                        // All receivers (workers) have been dropped
+                        eprintln!("Producer {}: Channel disconnected", idx);
+                    }
+                }
+            });
+        }
+        
+        // CRITICAL: Drop the original job_tx
+        // Once all producer threads finish and drop their clones,
+        // the job channel will close, signaling workers to finish
+        drop(job_tx);
+
+        // === RESULT CONSUMER ===
+        // Single consumer collects all results from workers
+        s.spawn(move |_| {
+            let mut success_count = 0;
+            let mut error_count = 0;
+            
+            for result in result_rx {
+                match result {
+                    Ok(msg) => {
+                        println!("{}", msg);
+                        success_count += 1;
+                    }
+                    Err(err) => {
+                        eprintln!("Job failed: {}", err);
+                        error_count += 1;
+                    }
+                }
+            }
+            
+            println!("\n=== Processing Complete ===");
+            println!("Successful: {}", success_count);
+            println!("Failed: {}", error_count);
+        });
+        
+        // Scope automatically waits for all threads to complete
+        // No thread leaks possible - compiler enforced!
+    })
+    .expect("Thread pool execution failed");
 }
 ```
 
