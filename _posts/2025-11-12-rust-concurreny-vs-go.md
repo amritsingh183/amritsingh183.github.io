@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rust Concurrency and Parallelism"
+title: "Rust Concurrency explained for Go (Golang) Developers"
 date: 2025-11-12 16:36:00 +0530
 categories: rust concepts
 last_updated: 2025-11-12
