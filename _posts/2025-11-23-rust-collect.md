@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "When to Use (and Avoid) `collect()`"
-date: 2025-23-14 15:41:48 +0530
+title: "When to Use (and Avoid) collect()"
+date: 2025-11-23 15:54:48 +0530
 categories: rust concepts
-last_updated: 2025-23-14
+last_updated: 2025-11-23
 ---
 
 # When to Use (and Avoid) `collect()` in Rust 1.91.1
