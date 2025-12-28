@@ -27,7 +27,7 @@ This applies universally, not just for thread safety or data races, but also for
 
 In simple terms, **you can have many readers OR one writer, but never both simultaneously**. It prevents data races at compile time—a guarantee no other mainstream language without a garbage collector provides.
 
-Think of it like a shared document: either many people can read it (shared access) or one person can edit it (exclusive access), but you cannot have someone editing while others are reading. This rule is enforced by the borrow checker, which analyzes your code at compile time to guarantee no two parts of your program can modify the same data simultaneously.[^1]
+Think of it like a shared document: either many people can read it (shared access) or one person can edit it (exclusive access), but you cannot have someone editing while others are reading. This rule is enforced by the borrow checker, which analyzes your code at compile time to guarantee no two parts of your program can modify the same data simultaneously.
 
 ### How This Guide Is Organized
 
@@ -422,7 +422,7 @@ You must wrap them in thread-safe alternatives like `Mutex` or `RwLock`.
 
 **Mutable References: A Rust 2024 Change**
 
-**In Rust 2024, the `static_mut_refs` lint is deny-by-default**, preventing any reference (shared or mutable) to a `static mut`. Taking such a reference—even without reading or writing through it—violates Rust's aliasing XOR mutability principle and is **instantaneous undefined behavior**.[^2] The compiler treats this as unrecoverable because global reasoning about thread safety for mutable statics is impossible in real programs with reentrancy and multithreading.
+**In Rust 2024, the `static_mut_refs` lint is deny-by-default**, preventing any reference (shared or mutable) to a `static mut`. Taking such a reference—even without reading or writing through it—violates Rust's aliasing XOR mutability principle and is **instantaneous undefined behavior**. The compiler treats this as unrecoverable because global reasoning about thread safety for mutable statics is impossible in real programs with reentrancy and multithreading.
 
 ### Why References to `static mut` Are Undefined Behavior
 
@@ -501,7 +501,7 @@ Rust's ownership system has three rules that prevent memory leaks, double-free e
 2. When the owner goes out of scope, the value is dropped automatically.
 3. Ownership can be transferred (moved) from one variable to another.
 
-These are enforced by the compiler, providing memory safety without a garbage collector.[^3]
+These are enforced by the compiler, providing memory safety without a garbage collector.
 
 ### Stack vs Heap: Where Does Data Live?
 
@@ -1593,7 +1593,7 @@ fn main() {
 }
 ```
 
-**Memory ordering matters**. The `Ordering` parameter determines how the operation synchronizes with other threads:[^4]
+**Memory ordering matters**. The `Ordering` parameter determines how the operation synchronizes with other threads:
 
 - **`Ordering::Relaxed`**: No synchronization; no memory fence. Use only for statistics where exact accuracy doesn't matter. ⚠️ **Unsafe on weak-memory architectures (ARM) for coordination patterns.**
 
@@ -1747,7 +1747,7 @@ fn main() {
 
 ### LazyLock for Lazy Initialization (Preferred for 2024+)
 
-`LazyLock` is the **preferred pattern for lazy static initialization in Rust 2024 and later**. It provides automatic lazy evaluation with a cleaner API than `OnceLock`:[^5]
+`LazyLock` is the **preferred pattern for lazy static initialization in Rust 2024 and later**. It provides automatic lazy evaluation with a cleaner API than `OnceLock`:
 
 ```rust
 use std::sync::LazyLock;
