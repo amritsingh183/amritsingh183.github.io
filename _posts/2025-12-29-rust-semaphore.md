@@ -33,7 +33,7 @@ pub struct Semaphore { /* private fields */ }
 
 Simple concept, profound implications. Tokio's semaphore maintains a pool of **permits**. Want to do something? Grab a permit. Done? Release it (or in Rust's case, just drop it—RAII handles the rest).
 
-Here's the beautiful part: **Tokio's semaphore is fair**. First come, first served. No cutting in line. If someone ahead of you is waiting for 3 permits and only 2 are available, you wait too—even if you only need 1. Democracy in action.[^2]
+Here's the beautiful part: **Tokio's semaphore is fair**. First come, first served. No cutting in line. If someone ahead of you is waiting for 3 permits and only 2 are available, you wait too—even if you only need 1. Democracy in action.
 
 But here's where it gets interesting...
 
@@ -54,14 +54,14 @@ where
 
 **"Wait,"** you say, **"'static? You mean it has to live forever? That's insane!"**
 
-Here's the thing—and this is one of the most misunderstood concepts in Rust—`T: 'static` does **not** mean "lives forever." It means "doesn't contain any borrowed references that could become dangling."[^8]
+Here's the thing—and this is one of the most misunderstood concepts in Rust—`T: 'static` does **not** mean "lives forever." It means "doesn't contain any borrowed references that could become dangling."
 
 Think about it:
 - A `String` is `'static`. You can drop it whenever you want.
 - A `Vec<u8>` is `'static`. Create it, mutate it, destroy it—all at runtime.
 - An `Arc<Mutex<Whatever>>` is `'static`. Reference-counted, heap-allocated, mortal as anything.
 
-The Tokio tutorial puts it perfectly: *"When we say that a value is `'static`, all that means is that it would not be incorrect to keep that value around forever."*[^3]
+The Tokio tutorial puts it perfectly: *"When we say that a value is `'static`, all that means is that it would not be incorrect to keep that value around forever."*
 
 The value *could* live forever. It doesn't *have* to. It just needs to own its data instead of borrowing it from somewhere that might disappear.
 
@@ -246,7 +246,7 @@ tokio::spawn(async move {
 error: future cannot be sent between threads safely
 ```
 
-The fix is now burned into your memory: **If it goes into `spawn`, use `Arc` and `acquire_owned`.**[^5]
+The fix is now burned into your memory: **If it goes into `spawn`, use `Arc` and `acquire_owned`.**
 
 ### Trap #2: Holding `std::sync::Mutex` Across `.await`
 
@@ -259,7 +259,7 @@ semaphore.acquire_owned().await;  // Deadlock risk
 
 `std::sync::Mutex` blocks the OS thread. Tokio's worker thread is now stuck. Other tasks on that thread can't run—including the one that might release the semaphore permit you're waiting for.
 
-Use `tokio::sync::Mutex` for locks held across `.await` points. Or better yet, restructure to avoid it.[^5]
+Use `tokio::sync::Mutex` for locks held across `.await` points. Or better yet, restructure to avoid it.
 
 ### Trap #3: Acquiring Outside, Dropping Inside
 
@@ -271,7 +271,7 @@ tokio::spawn(async move {
 });
 ```
 
-If you're not careful, the permit might be dropped before `do_work()` completes. Always bind the permit visibly inside the spawned block.[^3]
+If you're not careful, the permit might be dropped before `do_work()` completes. Always bind the permit visibly inside the spawned block.
 
 ---
 
