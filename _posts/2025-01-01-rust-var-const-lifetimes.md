@@ -147,7 +147,7 @@ pub trait Drop {
 
 #### Why Drop Takes `&mut self`
 
-`Drop::drop` takes a mutable reference (`&mut self`) rather than ownership because destructors need to mutate the value's internal state (deallocating heap memory, closing file handles) without consuming it. This is a **language-level exception** [why it's an exception? Because Normally, obtaining `&mut T` from an immutable binding is forbidden] that only the compiler can invoke:
+`Drop::drop` takes a mutable reference (`&mut self`) rather than ownership because destructors need to mutate the value's internal state (deallocating heap memory, closing file handles) without consuming it. This is a **language-level exception** [why it's an exception? Because, obtaining `&mut T` from an immutable binding is forbidden] that only the compiler can invoke:
 
 1. **Compiler-controlled invocation**: Only the compiler calls `Drop::drop` during automatic cleanup. You cannot manually call it—attempting `value.drop()` results in compile error E0040.
 
