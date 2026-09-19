@@ -3,513 +3,717 @@ layout: post
 title: "Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide"
 date: 2025-01-01 11:23:00 +0530
 categories: rust concepts
-last_updated: 2025-12-30
+last_updated: 2026-09-18
 ---
-# Variables, Constants, and Statics in Rust: A Complete Guide to Ownership and Borrowing
+# Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide
 
-**Note on related topics:**
+**What "lifetime" means in this post.** Every value in a Rust program is born somewhere and dies somewhere. A local variable is born at its `let` and dies at the closing brace of its block. A constant is baked into the program when it is compiled. A static is ready before `main` runs and is never destroyed. That everyday meaning of *lifetime*, how long a value lives and who may touch it while it lives, is what this post teaches. The `'a` annotations you write in function signatures describe how long *borrows* must stay valid, which is bounded by these value lifetimes; they get their own treatment in the [ownership and lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html), which assumes you have the mental model from here.
 
-> Memory layout details are covered extensively in this article, and for deeper technical background, you can reference our [comprehensive memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html).
+> Memory layout details (how many bytes a `String` takes, where padding goes) are in the [memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html). You do not need it to read this post.
 
-> Lifetime syntax and reference semantics are covered in a [separate guide](/rust/concepts/2025/02/09/rust-ownership.html) after you've mastered the concepts in this article.
+**Checked in September 2026 against Rust 1.98.1 (1.98.0 shipped in August 2026), edition 2024.** Every code block compiles and runs as shown, except the ones whose first line starts with ✗. Those are meant to fail so you can see the exact error the compiler gives.
 
-## Foundation: The Core Safety Principle
+**A version is not an edition.** Rust ships a new *version* every six weeks: 1.80, 1.81, ... 1.98. An *edition* (2015, 2018, 2021, 2024) is a setting in `Cargo.toml` that switches on a small set of language rule changes. A compiler supports every edition that existed when it shipped, so a new compiler still builds old-edition crates, while edition 2024 needs Rust 1.85 or newer. So `LazyLock` "needs Rust 1.80" (a version), while "references to `static mut` are an error" is an edition-2024 rule that even Rust 1.98 does not apply to a 2021-edition crate. This post says which one it means every time.
 
-### Aliasing XOR Mutability
+**The running example: a café till.** Throughout this post the code models a small café's cash register. It has a fixed tax rate (a constant), one ticket counter shared by every till (a static), orders that change while the customer is still deciding (mutable variables), receipts that are handed to customers (ownership moves), and an order board that everyone reads but only one person rewrites at a time (borrowing). When a rule feels abstract, ask "what would this mean at the café?"
 
-Rust’s core safety model enforces the “aliasing XOR mutability” rule: you may have either:
+## Foundation: One Rule Behind Everything
 
-- (1) multiple aliased shared references (`&T`), or 
-- (2) a single unique mutable reference (`&mut T`), but never both at the same time. 
+### Many readers or one writer
 
-This applies universally, not just for thread safety or data races, but also for single-threaded code—it prevents iterator invalidation, side-effect ordering bugs, and ensures optimizing compilers can make aggressive assumptions. Data allocation location (stack or heap) does not affect this rule. The rule applies to *all pointers*, including raw pointers: even `*const T` and `*mut T` follow the same logical principle, though enforcement shifts to the programmer in unsafe code.
+The café has an order board on the wall. Any number of baristas can *read* it at the same time. When somebody *rewrites* it, nobody else may read or write until they finish; otherwise a barista reads half an old order and half a new one.
 
+Rust applies this rule to every piece of data. At any moment you may have either
 
-In simple terms, **you can have many readers OR one writer, but never both simultaneously**. It prevents data races at compile time—a guarantee no other mainstream language without a garbage collector provides.
+- any number of **shared references** (`&T`), which can only read, or
+- exactly one **exclusive reference** (`&mut T`), which can write,
 
-Think of it like a shared document: either many people can read it (shared access) or one person can edit it (exclusive access), but you cannot have someone editing while others are reading. This rule is enforced by the borrow checker, which analyzes your code at compile time to guarantee no two parts of your program can modify the same data simultaneously.
+but never both at once. The borrow checker enforces the rule before your program runs. The formal name is **aliasing XOR mutability**: data may be aliased (reachable under several names) or mutable (changed through a name), but not both at the same moment.
 
-### How This Guide Is Organized
+The rule is not only about threads. In a single thread it stops you from adding to a list while you are in the middle of walking through it, a classic crash in C++ and a classic surprise in Java and Python. It also lets the compiler optimise hard, because an exclusive reference really is exclusive: nothing else can change the data behind your back.
 
-This guide assumes you understand basic Rust syntax (variables, functions, control flow) but doesn't require systems programming experience. The goal is to build a mental model so you can write safe code confidently, design APIs that prevent misuse, and debug compiler errors with understanding rather than frustration.
+**Where raw pointers fit.** `*const T` and `*mut T` are exempt from the compile-time check and may alias freely; that is what `unsafe` code uses them for. What must still never happen is contradicting a *reference* that is alive: writing to memory that a live `&T` points at, or touching memory that a live `&mut T` owns through any other path. Do that and the program has undefined behaviour, whether the write came through a raw pointer or not. The one sanctioned exception is memory that a type has wrapped in `UnsafeCell`; that is the foundation of interior mutability, which Part Nine explains, and it is how a `Mutex` can change data behind a shared reference without breaking the rule. Keep this in mind for the `static mut` section in Part Three.
+
+### How this guide is organized
+
+You need basic Rust syntax (variables, functions, `if`, loops) and nothing else. The goal is a mental model good enough to write safe code with confidence, design types that cannot be misused, and read a borrow-checker error as information instead of an insult.
 
 ***
 
 ## Part One: Variable Bindings
 
-### Immutability by Default
+### Immutable by default
 
-In Rust, all bindings are immutable by default. Once you assign a value to a variable, you cannot change it unless you explicitly opt in with `mut`. This design encourages writing code with fewer side effects and makes data flow clearer.
+A `let` creates a **binding**: a name attached to a value. Bindings are immutable unless you say otherwise. Once a receipt is printed its total should not change, and Rust makes that the default for every name.
+
+```rust
+fn main() {
+    let printed_total = 4.50;
+    println!("Receipt total: {printed_total}");
+    // printed_total = 5.00; // ✗ error[E0384]: cannot assign twice to immutable variable
+}
+```
+
+This is the compiler catching a whole family of "who changed this?" bugs for free.
+
+### Mutable bindings
+
+Add `mut` when the value genuinely needs to change, such as a running order total while the customer is still ordering:
+
+```rust
+fn main() {
+    let mut running_total = 0.0;
+    running_total += 3.00; // espresso
+    running_total += 1.50; // extra shot
+    println!("So far: {running_total:.2}");
+}
+```
+
+`mut` lets you change the *value*, never the *type*. A binding that starts as a number stays a number:
+
+```rust
+// ✗ Does not compile. Error: E0308 mismatched types
+fn main() {
+    let mut quantity = 2;
+    quantity = "two";
+    println!("{quantity}");
+}
+```
+
+### `mut` belongs to the name, not the value
+
+`mut` on a binding is a promise about the *name*, not about the value. You can move a value out of an immutable binding into a mutable one and change it there; the value was never "immutable", only its first name was:
+
+```rust
+fn main() {
+    let order = String::from("latte");   // immutable name
+    let mut order = order;               // same value, mutable name
+    order.push_str(", oat milk");
+    println!("{order}");
+}
+```
+
+This matters later, when we look at how values are destroyed.
+
+### An immutable binding can be given its value later
+
+You can declare a binding and fill it in on every path before it is used. It is still immutable: exactly one assignment happens, and the compiler checks that every branch performs it.
+
+```rust
+fn main() {
+    let is_member = true;
+    let discount;              // declared, not yet given a value
+    if is_member {
+        discount = 0.10;
+    } else {
+        discount = 0.0;
+    }
+    println!("Discount: {discount}");
+}
+```
+
+Assign a second time and you get the same error as for any other immutable binding:
+
+```rust
+// ✗ Does not compile. Error: E0384 cannot assign twice to immutable variable
+fn main() {
+    let discount;
+    discount = 0.10;
+    discount = 0.15;
+    println!("{discount}");
+}
+```
+
+### Shadowing
+
+Shadowing declares a *new* binding with the same name. The old one is hidden, not changed. Because it is a new binding, the type can change, which is exactly what you want when a quantity typed at the till arrives as text and must become a number:
+
+```rust
+fn main() {
+    let quantity = "2";                                                   // text from the keypad
+    let quantity: u32 = quantity.trim().parse().expect("a whole number"); // now a number
+    let quantity = quantity * 2;                                          // double-shot day
+    println!("{quantity}");                                               // 4
+}
+```
+
+A shadow inside a block disappears at the block's end, like any other binding:
 
 ```rust
 fn main() {
     let x = 5;
-    println!("The value of x is: {}", x);
-    // x = 6; // ERROR: cannot assign twice to immutable binding
-}
-```
-
-The compiler prevents reassignment, catching entire classes of bugs that would cause subtle issues in other languages.
-
-### Mutable Bindings
-
-To enable reassignment, add `mut` when declaring the binding:
-
-```rust
-fn main() {
-    let mut y = 10;
-    println!("The value of y is: {}", y);
-    y = 20; // OK: y is mutable
-    println!("The value of y is now: {}", y);
-}
-```
-
-**Important**: Mutability only allows changing the value, never the type. A binding declared as an integer remains an integer for its entire lifetime.
-
-### Variable Shadowing
-
-Shadowing declares a new binding with the same name, making the old one inaccessible. Unlike mutability, shadowing creates a completely new variable, so you can change types:
-
-```rust
-fn main() {
-    let x = 5;
-    let x = x + 1;    // Shadow x with new binding
+    let x = x + 1;            // shadow: 6
     {
-        let x = x * 2;  // Shadow again (scope-limited)
-        println!("Inner x: {}", x); // prints 12
+        let x = x * 2;        // shadow again, only inside this block: 12
+        println!("inner x: {x}");
     }
-    println!("Outer x: {}", x);     // prints 6
+    println!("outer x: {x}"); // 6
 }
 ```
 
-This is fundamentally different from mutability because each `let` creates a new variable:
+### Shadowing: two things to know
+
+**It hurts readability when overused.** Four transformations all called `config` bury what is happening; distinct names show the flow. Shadow when a value changes type or meaning once and the old binding is not needed again nearby.
+
+**The shadowed value is not dropped.** Hiding a name does not end the value's life; it lives until the end of its scope. With a lock guard that means the lock stays held:
 
 ```rust
+use std::sync::Mutex;
+
 fn main() {
-    let spaces = "   ";        // String type
-    let spaces = spaces.len(); // Now it's usize—type changed!
-    println!("{}", spaces);    // prints 3
-}
+    let till = Mutex::new(100);
+    let safe = Mutex::new(5000);
+    let drawer = till.lock().unwrap();       // till open, lock held
+    println!("till holds {}", *drawer);
+    let drawer = safe.lock().unwrap();       // name reused for the safe; the till guard is hidden, NOT dropped
+    println!("safe holds {}", *drawer);
+    println!("till still locked? {}", till.try_lock().is_err()); // true
+} // both guards die here, newest first
 ```
 
-You cannot do this with a mutable binding because `mut` only allows value changes, not type changes.
+If you meant to release the lock, drop it explicitly with `drop(drawer)` before shadowing, or end the block.
 
-### Variable Shadowing: Advantages and Pitfalls
+### Scope and automatic cleanup
 
-While Rust permits variable shadowing for convenience—particularly for transforming types or values—it is important to recognize that excessive shadowing harms readability and introduces maintenance risks. Shadowing is most appropriate when:
-
-- Transforming a value into a new type (e.g., `String` to `usize`)
-- A variable's purpose changes semantically between phases
-- The shadowed binding's last use is immediately nearby (within ~5 lines)
-
-Prefer distinct variable names when shadowing creates ambiguity, especially in functions longer than 20 lines or where multiple contributors may misinterpret the intent. In production codebases, excessive shadowing has caused real bugs where developers accidentally reused names without realizing they'd been shadowed, leading to logic errors in refactoring. Consider this a strong code smell in collaborative environments.
-
-**Example of problematic shadowing:**
+Every binding lives inside a scope, usually a pair of braces. When the scope ends, the value is destroyed and anything it owns (heap memory, a file handle, a lock) is released. There is no garbage collector and no manual `free`: the release happens at a point the compiler can name.
 
 ```rust
-let config = parse_config(input);
-let config = apply_defaults(config);
-let config = validate(config);
-let config = optimize(config);  // Multiple transformations bury intent
-```
+struct Drawer;
 
-**Better:**
-
-```rust
-let config = parse_config(input);
-let config_with_defaults = apply_defaults(config);
-let config_validated = validate(config_with_defaults);
-let config_optimized = optimize(config_validated);  // Clear data flow
-```
-
-### Scope and Automatic Cleanup
-
-Every variable lives within a scope, delimited by curly braces `{}`. When a variable goes out of scope, Rust calls the `Drop` trait to automatically clean up its memory. There is no garbage collector and no manual memory management—Rust ensures resources are freed at exactly the right time.
-
-```rust
-fn main() {
-    let s = String::from("hello"); // s is valid from here
-    // you can use s here
-} // s goes out of scope and Drop is called here
-// s is no longer valid
-```
-
-
-#### The Drop Trait
-
-The `Drop` trait allows you to customize what happens when a value is destroyed. Any type implementing `Drop` must provide a `drop` method:
-
-```rust
-pub trait Drop {
-    fn drop(&mut self) { }
-}
-```
-
-#### Why Drop Takes `&mut self`
-
-`Drop::drop` takes a mutable reference (`&mut self`) rather than ownership because destructors need to mutate the value's internal state (deallocating heap memory, closing file handles) without consuming it. This is a **language-level exception** [why it's an exception? Because, obtaining `&mut T` from an immutable binding is forbidden] that only the compiler can invoke:
-
-1. **Compiler-controlled invocation**: Only the compiler calls `Drop::drop` during automatic cleanup. You cannot manually call it—attempting `value.drop()` results in compile error E0040.
-
-2. **Temporary mutable reference**: When dropping an immutable binding, the compiler creates a temporary mutable reference for the drop call. This is safe because:
-   - The value is being destroyed (no user code can observe it)
-   - No other references exist at drop time (enforced by borrow checker)
-   - This happens at a point where normal borrowing rules don't apply
-
-3. **Why mutation is necessary**: Destructors must perform side effects like freeing memory, closing files, or releasing locks. These operations require `&mut self` semantics.
-
-The key insight: **Drop receives special compiler handling.** The compiler automatically invokes Drop::drop() during scope cleanup without user code explicitly calling it. Only Drop receives this compiler treatment because it's fundamental to resource management. You cannot create custom traits with automatic-invocation behavior; that's a compiler privilege reserved for Drop.
-
-
-**Concrete example of compiler-controlled Drop:**
-
-```rust
-struct SmartPointer {
-    data: String,
-}
-
-impl Drop for SmartPointer {
+impl Drop for Drawer {
     fn drop(&mut self) {
-        println!("Dropping SmartPointer with data: {}", self.data);
+        println!("drawer locked");
     }
 }
 
 fn main() {
-    let ptr = SmartPointer {
-        data: String::from("my data")
-    }; // ptr is not declared as mut
-    // ptr is immutable, but the compiler will create a temporary
-    // mutable reference when dropping it—this is a compiler privilege
-    // When ptr goes out of scope, the compiler safely calls (not manually written):
-    // Drop::drop(&mut ptr)
- } // Output: "Dropping SmartPointer with data: my data"
+    {
+        let _morning = Drawer;
+        println!("serving customers");
+    } // _morning goes out of scope: "drawer locked" prints now
+    println!("shop closed");
+}
 ```
 
-Even though `ptr` is immutable, the compiler creates a temporary mutable reference for the drop call because this is the only place it happens and the value is about to be destroyed anyway.
+#### The Drop trait
 
-**Critical limitation:** You cannot manually invoke `Drop::drop(&mut value)` in user code. Attempting to do so results in compiler error E0040. Only the compiler is permitted to call `Drop::drop()` during scope cleanup. If you want to explicitly trigger cleanup, use `std::mem::drop(value)`, which takes ownership and causes the value to be dropped when it goes out of scope (immediately in this context).
+`Drop` is how a type says what "being destroyed" means for it. The signature is fixed:
+
+```rust
+// fragment: the trait as declared in the standard library
+pub trait Drop {
+    fn drop(&mut self);
+}
+```
+
+`Vec`, `Box` and `MutexGuard` implement it. `String` and `File` do not implement it themselves: they clean up through the fields they contain, which is the usual case. Most of your own types will not need it either, because a struct whose fields clean up after themselves needs nothing extra.
+
+#### In what order do things drop?
+
+Three rules cover almost everything:
+
+1. Local variables drop in **reverse** order of declaration (last in, first out).
+2. The fields of a struct drop in **declaration** order.
+3. A temporary (a value that was never given a name) drops at the end of the statement that created it.
+
+```rust
+struct Noisy(&'static str);
+
+impl Drop for Noisy {
+    fn drop(&mut self) {
+        println!("dropped {}", self.0);
+    }
+}
+
+#[allow(dead_code)]
+struct Order {
+    cup: Noisy,
+    lid: Noisy,
+}
+
+fn main() {
+    let _first = Noisy("first local");
+    let _second = Noisy("second local");
+    let _order = Order { cup: Noisy("cup"), lid: Noisy("lid") };
+    let count = { Noisy("temporary"); 1 }; // the temporary dies at the end of its statement
+    println!("count = {count}, end of main");
+}
+// Output:
+// dropped temporary
+// count = 1, end of main
+// dropped cup
+// dropped lid
+// dropped second local
+// dropped first local
+```
+
+#### `let _ = value` is not `let _x = value`
+
+The underscore pattern `_` binds nothing, which has three consequences people mix up:
+
+- `let _ = existing_variable;` does **not** move the variable and does **not** drop it. Nothing happens.
+- `let _ = make_something();` creates a temporary that nothing holds, so it is dropped **immediately**.
+- `let _name = make_something();` binds a real name, so the value lives to the end of the scope.
+
+```rust
+struct Noisy(&'static str);
+
+impl Drop for Noisy {
+    fn drop(&mut self) {
+        println!("dropped {}", self.0);
+    }
+}
+
+fn main() {
+    let receipt = Noisy("receipt");
+    let _ = receipt;                       // nothing moves, nothing drops
+    println!("receipt still here: {}", receipt.0);
+
+    let _ = Noisy("temporary");            // dropped right away
+    println!("after the temporary");
+
+    let _kept = Noisy("kept");             // a real name: lives until main ends
+    println!("end of main");
+}
+// Output:
+// receipt still here: receipt
+// dropped temporary
+// after the temporary
+// end of main
+// dropped kept
+// dropped receipt
+```
+
+The lock guard is where this bites so often that rustc refuses it outright. `let _ = till.lock()` would release the lock in the same statement and protect nothing, so the deny-by-default lint `let_underscore_lock` turns it into a compile error:
+
+```rust
+// ✗ Does not compile. Error: non-binding let on a synchronization lock (lint let_underscore_lock)
+use std::sync::Mutex;
+
+fn main() {
+    let till = Mutex::new(0);
+    let _ = till.lock().unwrap();   // the guard would be dropped in this very statement
+    println!("locked? {}", till.try_lock().is_err());
+}
+```
+
+Name the guard (`let _held = till.lock().unwrap();`) and it lives to the end of the scope, which is what you meant.
+
+#### Why `drop` takes `&mut self`, and why you cannot call it
+
+Destroying a value is its last use. The compiler consumes it and hands the destructor exclusive access (`&mut self`) so cleanup can change internal state, such as returning heap memory or closing a file descriptor. That the binding was not `mut` does not matter: `mut` belongs to the name, and by now the name is gone. Nothing else can observe the value at that moment, so the many-readers-or-one-writer rule is respected without any special exception. The signature is `&mut self` rather than `self` because taking the value by value would move it into `drop`, where it would need dropping again, forever. The [Drop post](/rust/2025/12/30/rust-drop.html) walks through that.
+
+You cannot call the destructor yourself:
+
+```rust
+// ✗ Does not compile. Error: E0040 explicit use of destructor method
+struct Drawer;
+
+impl Drop for Drawer {
+    fn drop(&mut self) {
+        println!("drawer locked");
+    }
+}
+
+fn main() {
+    let d = Drawer;
+    d.drop();
+}
+```
+
+To end a value early, give it to `std::mem::drop`, available everywhere as plain `drop`. It takes ownership, so the value dies inside that call:
+
+```rust
+struct Drawer;
+
+impl Drop for Drawer {
+    fn drop(&mut self) {
+        println!("drawer locked");
+    }
+}
+
+fn main() {
+    let d = Drawer;
+    drop(d);                 // "drawer locked" prints here
+    println!("after drop");
+}
+```
+
+`Drop` is the only trait whose method the compiler runs for you when a value dies. Other traits get compiler support for their *syntax* (`Deref` for `*`, `IntoIterator` for `for`, `Fn` for calls, `Future` for `.await`), but none of them runs code automatically at the end of a scope, and you cannot write a trait that does.
+
+### Edition 2024 changed when two kinds of temporaries die
+
+A temporary is a value with no name, like the guard returned by `orders.borrow()` before you store it anywhere. Temporaries live until the end of the statement that made them. Two places used to keep them alive longer than anyone expected, and edition 2024 shortened both. This is the most practical "lifetimes" change in years, and it is a pure edition rule: the same compiler behaves differently depending on your crate's edition.
+
+**Tail expressions.** In edition 2021 a temporary created in the final expression of a block lived *past the block*, until the enclosing statement ended, so it died after the block's own locals. A guard that borrowed a local therefore outlived the local:
+
+```rust
+use std::cell::RefCell;
+
+fn count_orders() -> usize {
+    let orders = RefCell::new(vec![String::from("latte")]);
+    orders.borrow().len()   // edition 2021: error[E0597] `orders` does not live long enough
+}                            // edition 2024: the temporary guard dies before `orders`, so this compiles
+
+fn main() {
+    println!("{}", count_orders());
+}
+```
+
+**`if let`.** In edition 2021 the temporary from the `if let` scrutinee stayed alive through the `else` branch. With a `RefCell` that meant a panic; with a `Mutex` it meant a deadlock:
+
+```rust
+use std::cell::RefCell;
+
+fn main() {
+    let queue = RefCell::new(Vec::<String>::new());
+    if let Some(next) = queue.borrow().first() {
+        println!("next up: {next}");
+    } else {
+        // edition 2021: panics "already borrowed", because the read guard is still alive here
+        // edition 2024: the read guard died before `else`, so this is fine
+        queue.borrow_mut().push(String::from("latte"));
+    }
+    println!("{:?}", queue.borrow());
+}
+```
+
+Separately from editions, Rust 1.98 (August 2026) tightened one more corner in every edition: temporaries created inside `assert_eq!` and `assert_ne!` now get their own scope, so a guard made inside the assertion is released as soon as the assertion finishes.
 
 ***
 
 ## Part Two: Constants
 
-### Declaring Constants
+### Declaring constants
 
-Constants are declared with the `const` keyword and **must always have a type annotation**. Unlike variables, constants can be declared in any scope, including global scope:
+A `const` is a value the compiler works out completely while compiling. It must have a type annotation, and it can live at module level or inside a function:
 
 ```rust
-const MAX_POINTS: u32 = 100_000;
+const TAX_RATE: f64 = 0.05;            // 5 percent, the same at every till
+const MAX_ITEMS_PER_ORDER: usize = 20;
 
 fn main() {
-    const HOURS_IN_DAY: u32 = 24;
-    println!("Max points: {}", MAX_POINTS);
-    println!("Hours: {}", HOURS_IN_DAY);
+    const OPENING_HOUR: u32 = 7;       // constants can be local too
+    let subtotal = 10.0;
+    println!("total {:.2}", subtotal * (1.0 + TAX_RATE));
+    println!("max {MAX_ITEMS_PER_ORDER} items, opens at {OPENING_HOUR}");
 }
 ```
 
-
-### When to Use Constants
-
-Use constants for values that are known at compile time and never change. Examples: mathematical constants, configuration limits, fixed array sizes, or compile-time lookup tables.
+Leave the type off and the compiler refuses:
 
 ```rust
-const PI: f64 = 3.14159265359;
-const MAX_BUFFER_SIZE: usize = 1024;
-const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3; // Computed at compile time
+// ✗ Does not compile. Error: missing type for `const` item
+const MAX_ITEMS_PER_ORDER = 20;
 
 fn main() {
-    // const RUNTIME_VAL: u32 = get_user_input();  // ERROR: not a const fn
-    // Const initializers can only call const fn or evaluate constant expressions.
+    println!("{MAX_ITEMS_PER_ORDER}");
 }
 ```
 
-**Why?** Constants are compile-time values inlined at each use site, so the compiler must know their value before generating machine code. Runtime operations (file I/O, system time, random values) violate this requirement.
-- Literal values: `5`, `"hello"`, `3.14`
-- Compile-time arithmetic: `60 * 60 * 3`
-- Const function calls: `u32::MAX`
-- Const generic expansions (Rust 1.79+): `std::array::from_fn::<_, LEN, _>(|i| i as u32)`
+### What may go into a constant
 
-Runtime-dependent values (results that vary per execution), I/O operations, and calls to non-const functions are forbidden
+The rule is simple: anything the compiler can finish evaluating before the program runs. That includes literals, arithmetic, arrays and structs, associated constants like `u32::MAX`, calls to functions marked `const fn`, and `const { ... }` blocks. It excludes anything that depends on the world at run time: the clock, files, the network, random numbers, and any ordinary function.
 
 ```rust
-const INVALID: u32 = std::time::SystemTime::now().elapsed().unwrap().as_secs() as u32;
-// ERROR: time operations aren't const; result is runtime-dependent
+const SECONDS_PER_SHIFT: u32 = 60 * 60 * 8;        // arithmetic
+const MAX_TICKET: u32 = u32::MAX;                   // an associated constant
+const CUP_SIZES_ML: [u32; 3] = [240, 350, 470];     // an array
+const BIGGEST_CUP_ML: u32 = 2u32.pow(9);            // a const fn call: 512
+const SHOP_NAME: &str = "Corner Café";              // a string literal
+const _: () = assert!(CUP_SIZES_ML.len() == 3);     // a compile-time check; the build fails if it is false
+
+fn main() {
+    println!("{SECONDS_PER_SHIFT} {MAX_TICKET} {CUP_SIZES_ML:?} {BIGGEST_CUP_ML} {SHOP_NAME}");
+}
 ```
 
+```rust
+// ✗ Does not compile. Error: E0015 cannot call non-const associated function `SystemTime::now` in constants
+use std::time::SystemTime;
 
-**Note:** Const functions are a separate feature (marked `const fn`) that enables compile-time evaluation. Most standard library functions are not const; for those cases, use runtime initialization with `LazyLock` or `OnceLock` for alternatives.
+const OPENED_AT: SystemTime = SystemTime::now();
 
+fn main() {
+    println!("{OPENED_AT:?}");
+}
+```
 
-### Constants vs Variables
+Two things worth knowing about `const fn`: most standard-library functions are **not** const, and a `const fn` is an ordinary function too, so you can also call it at run time with run-time values. Since Rust 1.83 a `const fn` may take `&mut` parameters, and a `const` may hold a reference to a `static`, as long as that static is immutable and has no interior mutability.
 
-| Feature | `const` | `let` |
+**Inline `const { }` blocks (Rust 1.79).** A block marked `const` is evaluated at compile time wherever it appears. The everyday use is building an array of something that is not `Copy`, because the block is evaluated afresh for every element:
+
+```rust
+use std::sync::Mutex;
+
+// Eight independent queues, one per till. `Mutex` is not Copy, so `[Mutex::new(Vec::new()); 8]`
+// is rejected; the `const { }` block is evaluated once per element instead.
+static QUEUES: [Mutex<Vec<String>>; 8] = [const { Mutex::new(Vec::new()) }; 8];
+
+fn main() {
+    QUEUES[2].lock().unwrap().push(String::from("latte"));
+    println!("till 2 has {} order(s)", QUEUES[2].lock().unwrap().len());
+}
+```
+
+### Constants vs variables
+
+| | `const` | `let` |
 | :-- | :-- | :-- |
-| **Mutability** | Always immutable; `mut` cannot be used | Immutable by default; can use `mut` |
-| **Type Annotation** | Mandatory—must be explicitly declared | Optional—compiler infers the type |
-| **Value** | Must be constant expression evaluated at compile time | Can be computed at runtime |
-| **Memory** | No fixed address; each use is replaced with the value directly (inlining). `Copy` types (`i32`, `bool`, `&T`) inline cost-free. Larger types like `&str` or `&[T]` are stored once per compilation unit and referenced at use sites. Const is a **compile-time value**, not a storage location; to guarantee a single address, use `static`. | Has a guaranteed fixed address in memory at runtime |
-| **Scope** | Can be declared anywhere, including globally | Scoped to the block where declared |
+| **Mutability** | never; `mut` is not allowed | immutable unless `mut` |
+| **Type annotation** | required | optional, usually inferred |
+| **Value** | must be computable at compile time | computed at run time |
+| **Memory** | no address of its own; every use gets a fresh copy of the value | one place in memory while it is alive |
+| **Scope** | anywhere, including module level | the block it is declared in |
 
-**Key distinction**: Constants don't have a fixed address in the way statics do. Instead, const values are **inlined** at each use site (for `Copy` types like `i32`) 
-or stored once per compilation unit (for non-`Copy` types like `&str`). For example, `const GREETING: &str = "hello"` might result in the string literal appearing once in your binary, with references at each use site. 
+### Where a constant lives: a recipe, not a cake
 
-**Implementation detail**: The `&str` value itself (the pointer and length) is stored once per compilation unit and dereferenced at use sites. This is different from `Copy` types like `i32`, which are truly inlined (each use site has the literal `42` embedded). The key difference from `static`: if the same const is used across multiple compilation units (e.g., different .so files), separate copies may exist. Use `static` when you need a **single guaranteed address** throughout the entire program.
+A `const` is a recipe. Every place you use it, the compiler bakes a fresh copy of the value right there. A `static` (Part Three) is one cake on the counter that everybody points at. Three consequences follow:
 
-**Concrete examples:**
+1. Two uses of the same constant are **not guaranteed** to share an address. In practice rustc usually gives them the same read-only location, but nothing promises it.
+2. For a constant whose value has no destructor and no interior mutability, taking `&SOME_CONST` gives you a `'static` reference anyway, because the compiler *promotes* the value into read-only memory. The same happens for `&5` or `&[1, 2, 3]` written directly in code.
+3. If the value is large and used in many places, or if something outside Rust needs one stable address (C code, hardware), use a `static`.
 
 ```rust
-// Example: Demonstrating that static has a fixed address
-static STATIC_VAL: i32 = 42;
-const CONST_VAL: i32 = 42;
+static TICKET_PREFIX: &str = "CC-";
+const TAX_RATE: f64 = 0.05;
 
 fn main() {
-    let ptr1 = &STATIC_VAL as *const i32;
-    let ptr2 = &STATIC_VAL as *const i32;
-    assert_eq!(ptr1, ptr2);  // Same address: static has a fixed location
-    
-    // const has no guaranteed address—compiler may inline or deduplicate
-    let ptr3 = &CONST_VAL as *const i32;
-    let ptr4 = &CONST_VAL as *const i32;
-    // ptr3 and ptr4 may or may not be equal (implementation-defined)
+    let a = &TICKET_PREFIX as *const &str;
+    let b = &TICKET_PREFIX as *const &str;
+    println!("static: same address? {}", a == b);   // always true
+
+    let c = &TAX_RATE as *const f64;
+    let d = &TAX_RATE as *const f64;
+    println!("const: same address? {}", c == d);    // usually true, but not promised
+
+    let forever: &'static f64 = &TAX_RATE;          // promoted into read-only memory
+    println!("{forever}");
 }
 ```
 
+### It is the expression that must be constant, not the type
 
-
-```rust
-const GREETING: &str = "Hello";   // Compiler may inline this string literal
-const NUMBERS: [u32; 2] = [1, 2]; // Duplicated if used in multiple .so files
-
-// Each of these may have different memory addresses:
-fn greet_alice() { println!("{}", GREETING); }
-fn greet_bob() { println!("{}", GREETING); }
-
-// vs static guarantees single address:
-static GREETING_STATIC: &str = "Hello";
-// All references point to identical memory
-```
-
-> All uses of a `const` are replaced directly by their value at each use site (inlining). This can increase binary size if the value is large or used often, but improves access speed compared to loading from an address[web:13]. Use `static` for a single address, especially for large data or FFI.
-
-**Warning:** Not all types support const initialization. Types that require runtime computation (filesystem I/O, network access, system time) cannot be used in const contexts. If you need to initialize a non-const type globally, use `LazyLock` or `OnceLock`:
-
+A constant may own heap-typed values, as long as the initializer itself is constant. `Vec::new()` and `String::new()` are `const fn` (they allocate nothing), so this works, and each use is a brand-new, independent value:
 
 ```rust
-// ❌ WRONG: Compiler error
-const DB_CONNECTION: String = String::from("would be runtime");
-
-// ✅ RIGHT: Lazy initialization
-use std::sync::LazyLock;
-static DB_CONNECTION: LazyLock<String> = LazyLock::new(|| {
-    // This closure runs on first access, not at compile time
-    String::from("postgres://localhost")
-});
-```
-
-## Part Three: Static Items
-
-### What Is Static
-
-A `static` item is a value that lives for the entire duration of the program and occupies a single fixed memory address. All references to the same static point to identical memory.
-
-```rust
-static MAX_CONNECTIONS: u32 = 100;
-
-// This uses a const initializer, evaluated at compile time.
-// For runtime initialization, use OnceLock or LazyLock (covered below).
+const EMPTY_ORDER: Vec<String> = Vec::new();   // Vec::new is a const fn
 
 fn main() {
-    println!("Maximum connections: {}", MAX_CONNECTIONS);
+    let mut order_a = EMPTY_ORDER;             // a fresh Vec
+    order_a.push(String::from("latte"));
+    let order_b = EMPTY_ORDER;                 // another fresh Vec, still empty
+    println!("{} {}", order_a.len(), order_b.len()); // 1 0
 }
 ```
 
-This differs fundamentally from `const`, where each use may result in different memory locations (or no location at all if inlined).
-
-### Static vs Const Comparison
-
-| Feature | `const` | `static` |
-| :-- | :-- | :-- |
-| **Memory Address** | No fixed address; compiler inlines the value | Single fixed address throughout program |
-| **Initialization** | Evaluated at compile time; no runtime cost | Evaluated at program startup (before main); or lazily via LazyLock/LazyCell (Rust 1.80+) |
-| **Mutability** | Always immutable | Can be mutable with `static mut` (unsafe) |
-| **Thread Safety** | N/A (no runtime concept) | Immutable statics must implement `Sync` |
-| **Use Case** | Compile-time constants, values to inline | Global state, FFI, large read-only data |
-
-
-Static items can be initialized in two ways:
-
-1. **Compile-time (eager):** The value is computed at compile time and stored in the binary. This requires a constant expression.
+There is one limit hiding here: compile-time evaluation cannot hand you a heap allocation, so a constant can never own a heap buffer. `String::new()` passes because it allocates nothing. `String::from("welcome")` is rejected, first because `From::from` is not a `const fn`, and it could not work anyway, because the result would need a heap allocation:
 
 ```rust
-static PORT: u16 = 8080;  // Compile-time
-```
-
-2. **Lazy initialization (runtime):** The value is computed on first access via `LazyLock` or `LazyCell` (Rust 1.80+). This allows runtime computation and reduces startup time.
-
-```rust
-use std::sync::LazyLock;
-
-static DB: LazyLock<Database> = LazyLock::new(|| {
-    Database::connect("postgres://localhost")  // Evaluated on first access
-});
-
-```
-
-For most new code, **prefer `LazyLock` over `OnceLock`** when initialization logic is known at definition time; it provides the same thread-safety with a cleaner API.
-
-### When to Use Static
-
-Use `static` when you need:
-
-- A single fixed memory address (essential for FFI—Foreign Function Interface)
-- Global mutable state with interior mutability (using `Mutex`, `RwLock`, `OnceLock`, `LazyLock`)
-- Large read-only data that should not be duplicated across your binary
-- Per-program-lifetime state
-
-```rust
-static LANGUAGE: &str = "Rust";
+// ✗ Does not compile. Error: E0015 cannot call non-const associated function `<String as From<&str>>::from` in constants
+const GREETING: String = String::from("welcome");
 
 fn main() {
-    let ptr1 = &LANGUAGE as *const _; // Address 1
-    let ptr2 = &LANGUAGE as *const _; // Same address
-    assert_eq!(ptr1, ptr2);
+    println!("{GREETING}");
 }
 ```
 
+For values that genuinely need run time (a menu parsed from a file, a database handle), use a `static` with `LazyLock`, covered in Part Three and Part Ten.
 
-### Mutable Statics and Safety
+### The counter that never counts: interior mutability in a `const`
 
-**CRITICAL in Rust 2024:** Mutable statics are problematic and should be avoided entirely in new code. Taking **any reference** to a `static mut`—even without reading or writing through it—is instantaneous undefined behavior and violates the aliasing XOR mutability principle. In Rust 2024 and later, the `static_mut_refs` lint is **deny-by-default**, preventing this footgun at compile time. Creating a reference includes implicit cases (method calls, format macros).
-
-This limitation makes `static mut` unsuitable for almost all real-world use cases. Instead, use thread-safe alternatives listed below.
-
-
-```rust
-// OUTDATED CODE - DO NOT USE
-static mut COUNTER: u32 = 0;
-
-fn increment_counter() {
-    unsafe {
-        COUNTER += 1;
-    }
-}
-
-fn main() {
-    unsafe {
-        increment_counter();
-        // ❌ ERROR in Rust 2024: static_mut_refs lint (deny-by-default)
-        // println!("{}", COUNTER);  // Taking implicit reference
-    }
-}
-
-```
-
-### The Sync Requirement for Immutable Statics
-
-Immutable `static` items must implement the `Sync` trait, which certifies they are safe to access from multiple threads. Most types composed entirely of immutable data are automatically `Sync`:
-
-```rust
-static NUMBERS: [i32; 3] = [1, 2, 3]; // OK: [i32; 3] is Sync
-```
-
-Types like `RefCell` are **not** `Sync` and cannot be used directly in a `static`. 
-`Cell<T>` is `Sync` if `T` is `Sync`, but it's still unsuitable for statics because 
-`Cell` doesn't provide thread-safe mutation—only single-threaded interior mutability. 
-For thread-safe shared state, use `Mutex` or `RwLock` (or atomics for simple types). 
-You must wrap them in thread-safe alternatives like `Mutex` or `RwLock`.
-
-### Mutable Static References: A Rust 2024 Change
-
-**Mutable References: A Rust 2024 Change**
-
-**In Rust 2024, the `static_mut_refs` lint is deny-by-default**, preventing any reference (shared or mutable) to a `static mut`. Taking such a reference—even without reading or writing through it—violates Rust's aliasing XOR mutability principle and is **instantaneous undefined behavior**. The compiler treats this as unrecoverable because global reasoning about thread safety for mutable statics is impossible in real programs with reentrancy and multithreading.
-
-### Why References to `static mut` Are Undefined Behavior
-
-Taking **any** reference (shared or mutable) to a `static mut`—even without reading or writing through it—is **instantaneous undefined behavior** that violates the aliasing XOR mutability principle. This is fundamental:
-
-- A reference represents a **borrow promise** to the Rust type system
-- The compiler optimizes based on this promise
-- For `static mut`, the compiler cannot verify global reasoning (thread reentrancy makes it impossible)
-- Therefore, taking a reference (visible or implicit) is UB regardless of whether you use it
-
-**Explicitly creating references:**
-
-```rust
-static mut X: i32 = 0;
-unsafe {
-    let r = &X; // ❌ ERROR in Rust 2024+: UB, lint denies this
-}
-```
-
-**Implicit references (also UB):**
-
-```rust
-static mut NUMS: [i32; 3] =;​​
-unsafe {
-    println!("{:?}", NUMS); // ❌ ERROR: println! creates implicit reference
-    let n = NUMS.len(); // ❌ ERROR: method calls create implicit reference
-}
-```
-
-**Using `&raw const` or `&raw mut` DOES bypass the lint:**
-
-```rust
-static mut X: i32 = 0;
-unsafe {
-    let ptr = &raw const X; // ✅ Compiles (raw pointers bypass checks)
-    println!("{}", *ptr); // ❌ Still UB: same aliasing violation
-}
-```
-
-
-However, this doesn't solve the underlying safety problem. Raw pointers move verification from the compiler to the programmer, who must manually ensure no data races occur. For production code with static mut accessed across threads, safer alternatives (atomics, Mutex) are always preferable. Using raw pointers here trades compile-time guarantees for runtime bugs.
-
-
-**How to handle mutable global state correctly:**
-
-For counters and coordination, use atomic types:
+Because every use of a constant is a fresh copy, a constant that can be changed from the inside (an atomic, a `Mutex`, a `Cell`) is useless as shared state. Each call changes a temporary copy and throws it away. It is not dangerous, just a silent no-op, and rustc warns about it by default:
 
 ```rust
 use std::sync::atomic::{AtomicU32, Ordering};
 
-static COUNTER: AtomicU32 = AtomicU32::new(0);
+const TICKETS: AtomicU32 = AtomicU32::new(0); // rustc warns: const_item_interior_mutations
 
 fn main() {
-    COUNTER.fetch_add(1, Ordering::SeqCst);
-    println!("{}", COUNTER.load(Ordering::SeqCst));
+    TICKETS.fetch_add(1, Ordering::Relaxed);   // adds 1 to a fresh temporary copy
+    TICKETS.fetch_add(1, Ordering::Relaxed);   // adds 1 to another fresh copy
+    println!("{}", TICKETS.load(Ordering::Relaxed)); // 0: a third fresh copy
 }
 ```
 
-For other patterns, choose based on your needs:
+Make it a `static` and it counts. The one legitimate use of an interior-mutable `const` is as a *template* for building arrays, which is what `[const { ... }; N]` now does more directly.
 
-- **Atomic types** (`AtomicU64`, `AtomicBool`, etc.) for counters and flags
-- **Mutex** for shared state requiring mutual exclusion
-- **RwLock** for read-heavy scenarios
-- **OnceLock** for one-time initialization with external setup
-- **LazyLock** for lazy-initialized static data (preferred for most cases)
+***
+
+## Part Three: Static Items
+
+### What a static is
+
+A `static` is a value with **one fixed address for the whole program**. Every reference to it points at the same bytes. The initializer is evaluated at compile time, exactly like a constant, and the bytes are stored inside your executable. There is no "run this before `main`" step in Rust.
+
+```rust
+static SHOP_NAME: &str = "Corner Café";   // one copy, one address, for the whole program
+
+fn main() {
+    println!("Welcome to {SHOP_NAME}");
+}
+```
+
+**Statics are never dropped.** When the program ends the operating system reclaims the memory, but no `Drop` code runs. A static holding a buffered writer (`BufWriter`) never flushes it at exit; a static holding a lock never unlocks. If the last write matters, do it explicitly before `main` returns.
+
+```rust
+struct Drawer(&'static str);
+
+impl Drop for Drawer {
+    fn drop(&mut self) {
+        println!("locking {}", self.0);
+    }
+}
+
+static MAIN_DRAWER: Drawer = Drawer("main drawer");   // allowed, but its Drop never runs
+
+fn main() {
+    let spare = Drawer("spare drawer");
+    println!("closing time for {} and {}", MAIN_DRAWER.0, spare.0);
+}
+// Output:
+// closing time for main drawer and spare drawer
+// locking spare drawer          <- the local is dropped
+//                               <- nothing is printed for the static
+```
+
+### Static vs const
+
+| | `const` | `static` |
+| :-- | :-- | :-- |
+| **Memory address** | none of its own; fresh copy per use | one fixed address |
+| **Initialisation** | compile time | compile time; or on first use with `LazyLock` (Rust 1.80+) |
+| **Dropped at exit** | each copy is dropped like any value | never |
+| **Mutability** | never | `static mut` (unsafe) or interior mutability (`Mutex`, atomics) |
+| **Thread safety** | not applicable | the type must be `Sync` |
+| **Use for** | fixed numbers, small tables, anything you want inlined | shared state, large tables, calling into C |
+
+### Two ways to fill a static
+
+**At compile time**, with a constant expression:
+
+```rust
+static PORT: u16 = 8080;
+
+fn main() {
+    println!("listening on {PORT}");
+}
+```
+
+**On first use**, with `LazyLock` (Rust 1.80, any edition). The closure runs at run time, once, the first time anybody touches the value; every later use reuses the result. This is how you give a static something that needs run time to build, like a menu parsed from a file:
+
+```rust
+use std::collections::HashMap;
+use std::sync::LazyLock;
+
+static MENU: LazyLock<HashMap<&'static str, f64>> = LazyLock::new(|| {
+    println!("building the menu");
+    HashMap::from([("espresso", 2.50), ("latte", 3.50)])
+});
+
+fn main() {
+    println!("program started");
+    println!("latte costs {}", MENU["latte"]);        // "building the menu" prints here
+    println!("espresso costs {}", MENU["espresso"]);  // reused, nothing is rebuilt
+}
+```
+
+Prefer `LazyLock` over `OnceLock` when the initialisation code is known where the static is declared; `OnceLock` is for values that arrive from somewhere else at run time (Part Ten).
+
+### When to use a static
+
+- You need one stable address: FFI (calling into C code), a device register that lives at a fixed address, anything outside Rust that keeps a pointer.
+- You need program-wide shared state: a ticket counter, a cache, a connection pool. Use interior mutability (`Mutex`, `RwLock`, atomics, `OnceLock`, `LazyLock`).
+- The data is large and read-only and you do not want a copy at every use site.
+
+### The `Sync` requirement
+
+A static is visible from every thread, so its type must be `Sync`. Two words that are easy to confuse:
+
+- **`Send`**: the value may be *handed over* to another thread.
+- **`Sync`**: the value may be *looked at from several threads at once* through shared references.
+
+Plain data (`u32`, `[i32; 3]`, `&str`, `String`) is both. `Cell` and `RefCell` are `Send` whenever what they hold is `Send` (you may move one to another thread) but **never** `Sync`, whatever they contain, because they let you mutate through a shared reference with no synchronisation. So they cannot be statics:
+
+```rust
+// ✗ Does not compile. Error: E0277 `Cell<u32>` cannot be shared between threads safely
+use std::cell::Cell;
+
+static TICKETS: Cell<u32> = Cell::new(0);
+
+fn main() {
+    TICKETS.set(1);
+}
+```
+
+Their thread-safe siblings are atomics (for `Cell`) and `Mutex` or `RwLock` (for `RefCell`):
+
+```rust
+use std::sync::atomic::{AtomicU32, Ordering};
+
+static TICKETS: AtomicU32 = AtomicU32::new(0);   // AtomicU32 is Sync
+
+fn main() {
+    let mine = TICKETS.fetch_add(1, Ordering::Relaxed) + 1;
+    println!("ticket {mine}");
+}
+```
+
+### `static mut`: what is actually wrong with it
+
+Before `Mutex::new` and the atomics could be used in statics, people wrote `static mut` for global counters. Edition 2024 made the compiler refuse most uses of it: taking **any reference** to a `static mut`, including the hidden references made by `println!` or by a method call, is rejected by the deny-by-default lint `static_mut_refs`. In editions 2021 and earlier the same lint is only a warning. A lint can be switched off with `#[allow]`, but doing that is a written statement that you are taking over the compiler's job.
+
+```rust
+// ✗ Does not compile in edition 2024. Error: creating a shared reference to mutable static
+static mut TICKETS: u32 = 0;
+
+fn main() {
+    unsafe {
+        TICKETS += 1;              // a plain read or write is still allowed (inside unsafe)
+        println!("{}", TICKETS);   // println! takes a reference: rejected by the lint
+    }
+}
+```
+
+Here is the honest version of the rule, because the short version ("any reference is instantly undefined behaviour") is not quite right. Creating a reference to a `static mut` is undefined behaviour **if** the static is written while your shared reference is alive, or if anyone holds a second reference while your exclusive one is alive. That is the many-readers-or-one-writer rule from the Foundation, and the compiler says so in the error itself: shared references to mutable statics are undefined behaviour *if the static is mutated or a mutable reference is created while the shared reference lives*. A lone `&TICKETS` in a program with one thread and no other reference is not, by itself, broken. The problem is that with a global you cannot prove that by looking at one function: any function, in any thread, might be writing at the same time. So the lint refuses references outright, because nobody can check the rule locally.
+
+If you truly must keep a `static mut` (some C interfaces demand a plain mutable global), use raw pointers (`&raw const` and `&raw mut`, Rust 1.82), which the lint accepts because a raw pointer makes no aliasing promise. The responsibility for the many-readers-or-one-writer rule is now yours:
+
+```rust
+static mut TICKETS: u32 = 0;
+
+fn main() {
+    let p = &raw mut TICKETS;      // a raw pointer, not a reference: the lint is satisfied
+    unsafe { *p += 1; }            // your promise: no other thread or reference touches TICKETS now
+    let now = unsafe { *p };       // copy the value out
+    println!("ticket {now}");
+}
+```
+
+This is the pattern the edition guide itself recommends. It is not undefined behaviour on its own; it becomes so the moment another thread, or a live reference, uses the same memory at the same time. For everything that is not C interop, use the types in Part Ten:
+
+- **atomics** for counters and flags,
+- **`Mutex`** or **`RwLock`** for anything bigger,
+- **`OnceLock`** for set-once values that arrive at run time,
+- **`LazyLock`** for values built on first use.
 
 ***
 
 ## Part Four: Ownership Fundamentals
 
-### The Three Ownership Rules
+### The three ownership rules
 
-Rust's ownership system has three rules that prevent memory leaks, double-free errors, and use-after-free bugs at compile time:
+1. Every value has exactly one owner at a time.
+2. When the owner goes out of scope, the value is dropped.
+3. Ownership can be handed over (moved) to another binding, to a function, or back to a caller.
 
-1. Each value has exactly one owner at any point in time.
-2. When the owner goes out of scope, the value is dropped automatically.
-3. Ownership can be transferred (moved) from one variable to another.
+At the café a receipt is a physical thing. Whoever holds it owns it; hand it to the customer and you no longer have it. There is never a moment when two people both hold the same receipt.
 
-These are enforced by the compiler, providing memory safety without a garbage collector.
+### Stack vs heap: where does data live?
 
-### Stack vs Heap: Where Does Data Live?
+Local variables live in the current function's stack frame. Data that can grow, or whose size is not known at compile time, lives on the heap, and something on the stack holds its address. Needing to outlive a function is not a reason on its own: a value leaves a function by being moved out, heap or not. In Rust you do not choose this per variable; the *type* chooses. `Box`, `Vec`, `String` and `HashMap` are the everyday heap types.
 
-**By default, Rust allocates all data on the stack**, just like C++. To explicitly allocate on the heap, use `Box<T>`, `Vec<T>`, `String`, or similar heap-allocating types.
-
-> For deeper technical background, you can reference our [comprehensive memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html). But you can read it later after this article.
-
-#### Stack Allocation (Default)
+**Stack only:**
 
 ```rust
 struct Point {
@@ -518,392 +722,219 @@ struct Point {
 }
 
 fn main() {
-    let point = Point { x: 3.0, y: 4.0 }; // Stack-allocated
-    println!("{} bytes on stack", std::mem::size_of_val(&point));
+    let table = Point { x: 3.0, y: 4.0 };                // lives in main's stack frame
+    println!("({:?}, {:?}) takes {} bytes", table.x, table.y, std::mem::size_of_val(&table)); // 16
 }
 ```
 
-
-#### Heap Allocation (Explicit)
+**Heap, explicitly:**
 
 ```rust
+struct Point {
+    x: f64,
+    y: f64,
+}
+
 fn main() {
-    let boxed = Box::new(Point { x: 3.0, y: 4.0 }); // Heap-allocated
-    // Box stores pointer (8 bytes on 64-bit) on stack, data on heap
+    let boxed = Box::new(Point { x: 3.0, y: 4.0 }); // the Point is on the heap; `boxed` holds its address
+    println!("{} {}", boxed.x, boxed.y);
 }
 ```
 
-
-#### Hybrid: Stack Struct with Heap-Allocated Fields
-
-Many types like `String`, `Vec<T>`, and `HashMap` are stack-allocated but contain pointers to heap memory:
+**Both at once, the common case.** An `Order` is a small fixed-size struct on the stack whose `String` and `Vec` fields point at heap buffers:
 
 ```rust
-struct Person {
-    name: String,        // Stack struct pointing to heap data
-    age: u32,            // Stack-allocated
-    hobbies: Vec<String>, // Stack struct pointing to heap data
+struct Order {
+    customer: String,     // 24 bytes here; the letters live on the heap
+    ticket: u32,          // 4 bytes here
+    items: Vec<String>,   // 24 bytes here; the list lives on the heap
 }
 
 fn main() {
-    let person = Person {
-        name: String::from("Alice"),
-        age: 30,
-        hobbies: vec![
-            String::from("Reading"),
-            String::from("Gaming"),
-        ],
+    let order = Order {
+        customer: String::from("Asha"),
+        ticket: 17,
+        items: vec![String::from("latte")],
     };
-    // person struct on stack: ~50 bytes
-    // "Alice", "Reading", "Gaming" on heap
+    println!("{} bytes in the Order itself", std::mem::size_of::<Order>()); // 56 on 64-bit
+    println!("{} #{} {}", order.customer, order.ticket, order.items.len());
 }
 ```
 
-#### When Stack vs Heap Matters
+**When does it matter?** Rarely, at first. Primitives and small structs are on the stack; growable things are on the heap because they must be; `thread_local!` values live in per-thread storage; statics live in the executable's data section. Reach for `Box` only when you need it (a recursive type, a trait object, a huge value you do not want to copy around), and let a profiler, not a hunch, tell you when allocation is your problem. The [memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html) has the byte-level detail.
 
-For **most Rust code**, you don't consciously choose stack vs heap. Instead:
+### Move: the default for every type
 
-1. **Primitives and small types**: Stack automatically (design-time choice by the type)
-2. **Large data or unknown size**: Heap automatically via `Vec`, `String`, `Box` (design-time choice by the type)
-3. **Dynamic collections**: Always heap (runtime size, so must be heap)
-4. **Thread-local data**: Usually stack within `thread_local!` blocks
-5. **Global state**: Usually static (fixed address)
-
-**You only micromanage allocation when profiling reveals a bottleneck.** Rust's type system encourages correct choices by default. Premature optimization—wrapping everything in `Box` or prematurely chunking heap allocations—adds complexity without measurable benefit.
-
-For detailed allocation analysis, see our [memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html).
-
-### Move Semantics: The Default Behavior
-
-**Move semantics (ownership transfer) are the default for all types in Rust.** When you assign a value to another variable or pass it to a function, ownership moves to the new location. After the move, the original binding becomes invalid and the compiler prevents further use.
-
-> **Critical point**: Even stack-allocated types move by default unless they explicitly implement the `Copy` trait. Just because data lives on the stack doesn't mean it uses Copy trait behavior.
-
-```rust
-struct Point { x: i32, y: i32 } // Moves by default
-
-fn main() {
-    let p1 = Point { x: 1, y: 2 };
-    let p2 = p1;  // Ownership moves to p2
-    // println!("{:?}", p1);  // ERROR: p1 moved
-    println!("{:?}", p2);     // OK
-}
-```
-
-
-#### Move on Assignment
-
-```rust
-fn main() {
-    let s1 = String::from("hello");
-    let s2 = s1; // Ownership transfers to s2
-
-    // println!("{}", s1); // ERROR: s1 no longer valid
-    println!("{}", s2);    // OK
-}
-```
-
-
-#### Move When Passing to Functions
-
-```rust
-fn takes_ownership(s: String) {
-    println!("{}", s);
-} // s dropped here
-
-fn main() {
-    let s = String::from("hello");
-    takes_ownership(s); // s moved into function
-
-    // println!("{}", s); // ERROR: s moved
-}
-```
-
-
-#### Move When Returning from Functions
-
-Functions can transfer ownership to the caller:
-
-```rust
-fn gives_ownership() -> String {
-    String::from("hello")  // Ownership transferred to caller
-}
-
-fn main() {
-    let s = gives_ownership();
-    println!("{}", s);  // OK: s owns the string
-}
-```
-
-
-### Copy Trait: Opt-In Stack Semantics (Marker for Safe Bitwise Duplication)
-
-⚠️ **Critical clarification**: **All types use move semantics (ownership transfer) by default.** The `Copy` trait doesn't create a separate "Copy trait behavior" mode. Instead, it's a permission that **allows the compiler to bitwise-duplicate values as an implementation detail** instead of tracking ownership transfer through the type system. Without `Copy`, ownership tracking is explicit; with `Copy`, bitwise duplication is permitted.
-
-> Even stack-allocated types move by default unless they explicitly implement the 
-> `Copy` trait. Stack allocation is not related to move vs. Copy trait behavior.
-
-```rust
-struct Point { x: i32, y: i32 }  // Non-Copy: uses move semantics (ownership transfer)
-
-#[derive(Copy, Clone)]
-struct Point { x: i32, y: i32 }  // Copy: compiler bitwise-copies instead of tracking moves
-```
-
-#### Why Copy Requires Certain Constraints
-
-For a type to implement `Copy`:
-- **`Copy` is a marker trait**: It has no methods and exists only to signal "bitwise duplication is semantically safe."
-
-The compiler auto-generates bitwise duplication when you assign or pass `Copy` values; `Clone::clone()` is the explicit user-facing counterpart for deep copies.
-
-#### Common Copy Types
-
-Types that can safely implement `Copy` (and usually do):
-
-- All integer types: `i8`, `u32`, `i64`, etc.
-- Boolean: `bool`
-- Floating-point: `f32`, `f64`
-- Character: `char`
-- Function pointers: `fn()`
-- **Immutable references: `&T`** — Safe to copy because multiple pointers to the same data don't violate aliasing rules. Copying a pointer doesn't affect the borrow.
-- **NOT mutable references: `&mut T`** — Cannot be copied because `Copy` would break the exclusivity guarantee. If you could copy `&mut T`, two mutable references to the same data would exist, violating "one writer, many readers."
-- Raw pointers: `*const T`, `*mut T`
-- Tuples of Copy types: `(i32, i32)`, `(bool, char)`
-
-
-```rust
-// &T IS Copy (let me demonstrate):
-let x = 5;
-let r1: &i32 = &x;
-let r2 = r1;   // r1 is copied here (bitwise duplication of the pointer)
-let r3 = r1;   // r1 is copied again
-// r1, r2, r3 all point to the same data: multiple readers = safe
-
-// &mut T is NOT Copy:
-let mut y = 10;
-let m1: &mut i32 = &mut y;
-// let m2 = m1;  // ERROR: cannot copy exclusive reference
-// Reason: if copying were allowed, m1 and m2 would both claim exclusive access 
-// to the same data—a data race.
-
-```
-**Why `&T` is Copy but `&mut T` is not:**
-
-Copy means "bitwise-duplicate the bytes creates a valid independent copy". For &mut T, duplicating the bytes creates TWO pointers, each claiming exclusive access to the same data. This violates the fundamental exclusivity guarantee. Bitwise duplication of an exclusive pointer = data race.
-
-`Copy` means the compiler can **bitwise-duplicate** the value (copy the bytes) instead of moving ownership. For `&T` (immutable reference), duplicating the pointer is safe—multiple pointers to the same read-only data don't violate the borrowing rules. But for `&mut T`, bitwise duplication would create multiple independent mutable pointers, each believing they have exclusive access. This violates the core safety invariant. Therefore, `&mut T` cannot be `Copy`.
-
-
-```rust
-#[derive(Copy, Clone)]
-struct Ref<'a, T: 'a>(&'a T);  // If this were implemented, it would be Copy
-
-let x = 5;
-let r1: &i32 = &x;  // r1 copies freely
-let r2 = r1;        // r2 is a copy of r1's bits (same pointer)
-let r3 = r1;        // r3 is also a copy of r1's bits
-
-// Multiple readers of the same data via different pointers: ✅ SAFE
-
-// Now imagine mutable references were Copy (they're not):
-let mut y = 10;
-let m1: &mut i32 = &mut y;
-// let m2 = m1;  // If Copy, would bitwise-copy the pointer
-// let m3 = m1;  // If Copy, would bitwise-copy the pointer again
-// Now m1, m2, m3 all point to the same mutable data, each thinking they have 
-// exclusive access: ❌ UNSAFE
-// Bitwise duplication of exclusive references = data race
-//
-// Therefore, &mut T cannot implement Copy. Copy means "bitwise duplication is 
-// safe," and bitwise duplication of exclusive pointers violates Rust's aliasing rules.
-```
-
-#### Copy trait behavior in Action
-
-```rust
-#[derive(Copy, Clone)]
-struct Point { x: i32, y: i32 }
-
-fn main() {
-    let p1 = Point { x: 1, y: 2 };
-    let p2 = p1;  // Copy: bitwise duplication, both valid
-    println!("{:?} and {:?}", p1, p2); // Both still valid
-    
-    process_point(p1);  // Copy passed to function
-    println!("{:?}", p1);  // Still valid after function call
-}
-
-fn process_point(p: Point) {
-    println!("{:?}", p);
-}
-```
-
-With `Copy`, the original binding remains valid because the compiler bitwise-copies the value instead of tracking ownership transfer.
-
-**Critical clarification:** Copy trait behavior apply only to how values transition between scopes. Function calls with Copy types still "pass" the value (the compiler bitwise-copies it), but from the programmer's perspective, the original binding remains valid because `Copy` authorizes the compiler to duplicate instead of tracking ownership transfer. This is an implementation detail—the semantics are "the function receives an independent copy."
-
-#### Why Copy Requires Certain Constraints
-
-For a type to implement `Copy`:
-
-- It must be stored entirely on the stack (no heap allocations)
-- It cannot implement `Drop` (which would require compiler-controlled cleanup logic)
-- It must implement `Clone` (a requirement enforced by the compiler). Types deriving `Copy` must also derive or implement `Clone` because `Copy` is semantically a promise that bitwise duplication is safe. Since `Clone::clone()` is the user-facing way to duplicate values, `Copy` implicitly requires it. The compiler makes both derivable together: `#[derive(Copy, Clone)]`.
-- **`Copy` is a marker trait**: It has no methods and exists only to signal that bitwise duplication is semantically equivalent to value semantics. This means `Copy` is purely a compile-time marker indicating "duplicating the bits creates a valid, independent copy."
-
-> Why Copy requires Clone: If a type is Copy, the compiler auto-duplicates it. To ensure users have an explicit way to request duplication, Copy requires Clone—the user-facing method for duplication. Together, they guarantee bitwise duplication is both automatic (compiler) and explicit (user code via clone()).
-
-
-Additionally, a type cannot implement `Drop` and `Copy` simultaneously. If a type requires custom cleanup logic (Drop), it is inherently tied to a specific owner, so bitwise copying would bypass that cleanup, causing resource leaks or double-frees. This is enforced by the compiler:
-
-
-```rust
-#[derive(Copy)]
-struct FileHandle { /* ... */ }
-
-impl Drop for FileHandle {  // ERROR: cannot implement Drop for Copy type
-    fn drop(&mut self) { /* cleanup */ }
-}
-```
-
-
-This mutual exclusion ensures that every value's cleanup is guaranteed to run exactly once.
-
-
-```rust
-#[derive(Copy, Clone)]
-struct Safe { x: i32, y: i32 }  // OK: all Copy fields
-
-// #[derive(Copy, Clone)]
-// struct Unsafe { data: String }  // ERROR: String not Copy
-
-// #[derive(Copy, Clone)]
-// struct Unsafe { data: Box<i32> }  // ERROR: Box has Drop
-```
-
-
-### Non-Copy Types: Move-Only Data
-
-Types that allocate heap memory or implement `Drop` **cannot** be `Copy` and therefore use move semantics (ownership transfer):
+When you assign a value to another binding, pass it to a function, or return it, ownership **moves**. The old name becomes invalid and the compiler will not let you use it. This is true for every type, stack or heap, unless the type opts into `Copy` (next section).
 
 ```rust
 #[derive(Debug)]
-struct Person {
-    name: String,
+struct Receipt {
+    ticket: u32,
 }
 
 fn main() {
-    let p1 = Person { name: String::from("Alice") };
-    let p2 = p1;  // Move: p1 invalid after this
-    
-    // println!("{:?}", p1);  // ERROR: moved
-    println!("{:?}", p2);     // OK
+    let r1 = Receipt { ticket: 17 };
+    let r2 = r1;                  // the receipt changes hands
+    // println!("{r1:?}");        // ✗ error[E0382]: borrow of moved value: `r1`
+    println!("{r2:?} for ticket {}", r2.ticket);
 }
 ```
 
+The same happens on a function call and on a return:
 
-#### Common Move Types
+```rust
+fn hand_to_customer(receipt: String) {
+    println!("customer takes: {receipt}");
+} // `receipt` is dropped here: the function owned it
 
-- `String`: Heap-allocated text
-- `Vec<T>`: Heap-allocated array
-- `Box<T>`: Heap-allocated single value
-- `HashMap<K, V>`: Heap-allocated mapping
-- Any custom struct containing move types
+fn print_receipt() -> String {
+    String::from("latte 3.50")   // ownership goes to the caller
+}
 
+fn main() {
+    let receipt = print_receipt();
+    hand_to_customer(receipt);
+    // println!("{receipt}");    // ✗ error[E0382]: borrow of moved value: `receipt`
+}
+```
 
-#### Move Semantics in Action
+### Copy: permission to duplicate the bytes
+
+`Copy` is a permission a type gives the compiler: *"duplicating my bytes produces a complete, independent value, because I own nothing outside those bytes."* With that permission, `let b = a;` copies instead of moving, and `a` stays usable.
+
+Numbers, `bool`, `char`, shared references, raw pointers, function pointers, and tuples, arrays and closures made only of `Copy` things all qualify. A `String` does not: its bytes contain the address of a heap buffer it owns, so two bit-for-bit copies would both think they own the same buffer and both would free it.
+
+The compiler enforces three rules for `#[derive(Copy)]`:
+
+1. every field must be `Copy`,
+2. the type must not implement `Drop`, and
+3. the type must also be `Clone`, because `Copy` is a promise that `clone()` is just a bit copy, so the two are always derived together.
+
+```rust
+#[derive(Clone, Copy, Debug)]
+struct Price {
+    cents: u32,
+}
+
+fn charge(p: Price) {
+    println!("charging {} cents", p.cents);
+}
+
+fn main() {
+    let p1 = Price { cents: 350 };
+    let p2 = p1;          // copied, both usable
+    charge(p1);           // copied again
+    println!("{p1:?} {p2:?}");
+}
+```
+
+```rust
+// ✗ Does not compile. Error: E0204 the trait `Copy` cannot be implemented for this type
+#[derive(Clone, Copy)]
+struct Order {
+    customer: String,   // String is not Copy
+}
+
+fn main() {}
+```
+
+```rust
+// ✗ Does not compile. Error: E0184 the trait `Copy` cannot be implemented for this type; the type has a destructor
+#[derive(Clone, Copy)]
+struct Drawer;
+
+impl Drop for Drawer {
+    fn drop(&mut self) {}
+}
+
+fn main() {}
+```
+
+Notice what the rules do **not** say. They do not say "no heap": a struct holding a raw pointer to heap memory can be `Copy`, and a `Copy` value can sit on the heap inside a `Box`. They do not say "small": a `[u8; 4096]` is `Copy`. The only question is whether copying the bytes copies any *ownership*.
+
+#### Why `&T` is `Copy` and `&mut T` is not
+
+A shared reference is a promise that nobody writes while it exists. Duplicating that promise is harmless: more readers are always allowed. An exclusive reference is a promise that *nothing else* can reach the data. Duplicating it would create two "exclusive" paths, which is the one thing the Foundation rule forbids. So `&mut T` moves:
 
 ```rust
 fn main() {
-    let s1 = String::from("hello");
-    let s2 = s1;  // Move to s2
-
-    // println!("{}", s1);  // ERROR: Cannot use s1 after move
-    println!("{}", s2);     // OK
-
-    let numbers = vec![1, 2, 3];
-    take_ownership(numbers);  // Move into function
-    // println!("{:?}", numbers);  // ERROR: moved
-}
-
-fn take_ownership(v: Vec<i32>) {
-    println!("{:?}", v);
+    let mut total = 10;
+    let m1 = &mut total;
+    let m2 = m1;          // this line compiles: m1 is MOVED into m2, not copied
+    *m2 += 1;
+    // *m1 += 1;          // ✗ error[E0382]: use of moved value: `m1`
+    println!("{total}");
 }
 ```
 
+A reference is small, so copying one is cheap, but it is not always one machine word:
 
-### The Clone Trait
+| Reference | Size on 64-bit |
+| :-- | :-- |
+| `&i32`, `&String`, `&Order` | 8 bytes (an address) |
+| `&str`, `&[T]` | 16 bytes (address + length) |
+| `&dyn Trait` | 16 bytes (address + a pointer to the type's method table) |
 
-If you need to create a deep copy of heap-allocated data while keeping the original, use `clone()`:
+### Non-Copy types move, and `clone()` copies on request
+
+Anything that owns heap memory or has a destructor is a move-only type: `String`, `Vec<T>`, `Box<T>`, `HashMap<K, V>`, `File`, and any struct containing one of them. When you genuinely want two independent copies of such a value, ask for it with `clone()`. It is explicit because it can be expensive:
 
 ```rust
 fn main() {
-    let s1 = String::from("hello");
-    let s2 = s1.clone();  // Deep copy of heap data
-
-    println!("{}", s1);  // OK: both valid
-    println!("{}", s2);  // OK: both valid
+    let original = String::from("latte");
+    let duplicate = original.clone();   // a second heap buffer with the same letters
+    println!("{original} {duplicate}"); // both usable
 }
 ```
 
-Cloning is explicit and potentially expensive because it duplicates heap memory. Use it when you genuinely need two independent copies.
+### Move and Drop cooperate
 
-***
-
-### Move Semantics and Drop
-
-When a value is **moved** to a new location, the compiler ensures `Drop` is called exactly once—at the end of the new owner's scope, not the old binding's scope. This is critical for resource management:
+A moved value is dropped exactly once, where its *final* owner goes out of scope. The old binding owns nothing, so nothing happens when it dies. This is what makes resource handling automatic and leak-free:
 
 ```rust
-struct File {
-    fd: i32,
+struct Drawer {
+    id: u32,
 }
 
-impl Drop for File {
+impl Drop for Drawer {
     fn drop(&mut self) {
-        println!("Closing file descriptor {}", self.fd);
-        // In real code: close_fd(self.fd)
+        println!("locking drawer {}", self.id);
     }
 }
 
 fn main() {
-    let f1 = File { fd: 3 };
-    let f2 = f1;  // f1 moved to f2; f1 is invalid
-
-    // f1's scope ends, but Drop is NOT called (f1 no longer owns anything)
-    // f2's scope ends; Drop IS called (f2 owns the file)
-    // Output: "Closing file descriptor 3" (exactly once)
-}
+    let morning_shift = Drawer { id: 3 };
+    let evening_shift = morning_shift;   // the drawer changes hands; morning_shift owns nothing now
+    println!("evening shift has drawer {}", evening_shift.id);
+} // "locking drawer 3" prints exactly once
 ```
-This is why move semantics (ownership transfer) guarantee resource safety. The `Drop` trait cooperates with ownership transfer to eliminate double-frees and resource leaks.
+
+***
 
 ## Part Five: Non-Lexical Lifetimes (NLL)
 
-**Note:** This section explains how borrow *scopes* work in Rust 2018+. Full lifetime syntax (explicit annotations like `'a`) is covered in our [separate lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html). This section focuses on the borrow checker's inference, not on lifetime parameters.
+> This part is about how long a **borrow** lasts. Explicit lifetime annotations (`'a`) are in the [ownership and lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html).
 
-### The Problem NLL Solves
+### The problem NLL solved
 
-Before Non-Lexical Lifetimes (stabilized in Rust 2018), the borrow checker used lexical block scopes to determine how long **borrows** lasted. A borrow would last from its creation until the end of the entire enclosing block, even if the reference was never used again. This was overly conservative and rejected valid code:
+Until Rust 1.31 (December 2018) the borrow checker decided that a borrow lasted until the closing brace of the block, even when the reference was never used again. That rejected obviously fine code:
 
 ```rust
 fn main() {
-    let mut scores = vec![1, 2, 3];
-    let score = &scores;      // Shared borrow begins
-    println!("{:?}", score);    // Last use of score
-    // score's borrow ends here—it's not used after this line
-    scores.push(4);             // ERROR in pre-2018 Rust: mutable access conflicts
+    let mut board = vec![String::from("latte")];
+    let first = &board[0];
+    println!("next: {first}");             // last use of `first`
+    board.push(String::from("espresso"));  // rejected before NLL: `first` was "still borrowed"
+    println!("{board:?}");
 }
 ```
 
-In pre-2018 Rust, `score` would be "borrowed" until the end of the `main` function, preventing the `push()`. A human knows the borrow is dead, but the old checker couldn't see that.
+A human sees that `first` is dead after the `println!`. The old checker could not.
 
+### How NLL works
 
-### How NLL Works
-
-> NLL applies to all borrow types, but the improvement is most dramatic for shared borrows. Mutable borrows were already relatively restricted, so the impact is less visible.
-
-NLL changes the borrow checker to determine the **precise endpoint of each borrow based on control-flow analysis**, not lexical scope. The compiler identifies the last point in the control-flow graph where a reference is actually **used**, and the borrow ends after that point. This enables earlier reuse of the binding:
+Since Rust 1.31 for edition 2018, and 1.36 for edition 2015 (at first as warnings only; the old checker was removed for good in 1.63), the borrow checker follows the control flow and ends a borrow at the **last point the reference can be used**. It is not an optimisation and it changes nothing about the compiled program; it changes which programs are accepted.
 
 ```rust
 fn main() {
@@ -911,1167 +942,925 @@ fn main() {
 
     let r1 = &s;
     let r2 = &s;
-    println!("{} and {}", r1, r2);  // Final use of r1 and r2 here
-    
-    // NLL: Borrows end after the last use (argument to println!), not after println! returns
-    let r3 = &mut s;  // OK: r1 and r2 no longer borrowed
+    println!("{r1} and {r2}");  // last use of r1 and r2
+
+    let r3 = &mut s;            // fine: no shared borrow is alive any more
     r3.push_str(" world");
-    println!("{}", r3);
-}
-
-```
-
-The shared references `r1` and `r2` end after `println!`, so the mutable reference `r3` can be created.
-
-### NLL in Practice
-
-```rust
-fn main() {
-    let mut data = vec![1, 2, 3];
-    let first = &data;
-    println!("First: {}", first);  // Last use
-
-    data.push(4);  // OK: first is no longer active
-    println!("Data: {:?}", data);
+    println!("{r3}");
 }
 ```
 
-Without NLL, this would fail because `first` would be considered "borrowed" until the end of the scope. With NLL, the borrow ends after `println!`, so mutation is allowed.
+One precise detail: the borrows behind `r1` and `r2` last through the *whole* `println!` call, not just the moment the arguments are read. The macro hands references into a function, and a reference passed to a function counts as alive for the entire call. They end when that statement finishes, which is still before `r3` is created.
+
+Most of the time you never think about NLL. It is why the borrow checker feels reasonable instead of pedantic.
 
 ***
-
-Borrow Scope Inference (NLL) is a compiler optimization you don't need to think about—it just makes the borrow checker less conservative.
 
 ## Part Six: Borrowing and References
 
-> Lifetime syntax and reference semantics are covered deeply in a [separate guide](/rust/concepts/2025/02/09/rust-ownership.html) after you've mastered the concepts in this article. But you can read it later after this article.
+> Lifetime annotations and reference semantics in depth: the [ownership and lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html). Part Eight covers two-phase borrows, which explain why `v.push(v.len())` is allowed.
 
-**Note on method call optimization:** In Part Eight, we'll cover two-phase borrows, a compiler optimization that allows certain patterns (like `v.push(v.len())`) to work despite appearing to conflict with borrowing rules. This is a compile-time convenience; understanding basic borrowing rules first is essential.
+### Binding mutability and reference mutability are two different dials
 
-### Binding Mutability vs Reference Mutability
-
-**These are independent concepts.** Binding mutability (controlled by `let mut`) determines whether you can reassign the variable. Reference mutability (controlled by `&` vs `&mut`) determines whether a reference has permission to modify the data.
-
-Knowing a binding is mutable tells you nothing about what type of reference `&` will create:
-
-```rust
-let s = String::from("hi");
-let r = &s;  // Immutable reference
-
-let mut s = String::from("hi");
-let r = &s;  // Still immutable reference! mut on binding doesn't affect &
-
-let mut s = String::from("hi");
-let r = &mut s;  // Mutable reference—binding AND reference are mutable
-```
-
-
-### The Four Combinations
-
-| Binding | Reference | Example | Behavior |
-| :-- | :-- | :-- | :-- |
-| Immutable | Immutable | `let s = String::from("hi"); let r = &s;` | Read-only; cannot modify or rebind |
-| Immutable | Mutable | `let s = String::from("hi"); let r = &mut s;` | **Compile error**: Cannot create mutable reference from immutable binding |
-| Mutable | Immutable | `let mut s = String::from("hi"); let r = &s;` | Read-only through reference; binding can be rebound |
-| Mutable | Mutable | `let mut s = String::from("hi"); let r = &mut s;` | Can modify through reference and rebind binding |
-
-
-```rust
-// ❌ Does not compile:
-let s = String::from("hi");
-let r = &mut s; // ERROR: cannot borrow s as mutable because it is not declared as mutable
-
-// ✅ Fix: declare s as mutable
-let mut s = String::from("hi");
-let r = &mut s; // OK
-
-```
-### Shared References (&T)
-
-A shared reference lets you read a value without taking ownership. Create one with the `&` operator:
+`let mut` decides whether the **name** can be reassigned or borrowed mutably. `&` versus `&mut` decides what a **reference** may do with the data. Knowing one tells you nothing about the other:
 
 ```rust
 fn main() {
-    let s = String::from("hello");
-    let len = calculate_length(&s);
+    let s = String::from("hi");
+    let r = &s;                     // immutable binding, shared reference: read only
+    println!("{r}");
 
-    println!("Length of '{}' is {}", s, len);  // s still valid
-}
+    let mut s = String::from("hi");
+    let r = &s;                     // mutable binding, still a shared reference: read only
+    println!("{r}");
 
-fn calculate_length(s: &String) -> usize {
-    s.len()
+    let r = &mut s;                 // mutable binding, exclusive reference: may modify
+    r.push('!');
+    println!("{r}");
 }
 ```
 
-The function borrows the string without taking ownership, so the string is not dropped when the function returns.
+| Binding | Reference | Result |
+| :-- | :-- | :-- |
+| immutable | `&` | read-only view; the name cannot be reassigned |
+| immutable | `&mut` | **compile error E0596**: cannot borrow as mutable |
+| mutable | `&` | read-only view; the name can be reassigned later |
+| mutable | `&mut` | the view may modify the value |
 
-You can have multiple shared references to the same value simultaneously:
+```rust
+// ✗ Does not compile. Error: E0596 cannot borrow `s` as mutable, as it is not declared as mutable
+fn main() {
+    let s = String::from("hi");
+    let r = &mut s;
+    r.push('!');
+}
+```
+
+### Shared references (`&T`)
+
+A shared reference lets a function read a value without taking it. The caller keeps ownership, and the value is not dropped when the function returns:
+
+```rust
+fn count_items(order: &Vec<String>) -> usize {
+    order.len()
+}
+
+fn main() {
+    let order = vec![String::from("latte"), String::from("scone")];
+    let n = count_items(&order);
+    println!("{n} items: {order:?}");  // order is still ours
+}
+```
+
+Any number of shared references may exist at once, and because `&T` is `Copy`, passing one to a function does not use it up: the function receives a copy of the reference.
+
+### Cloning through a reference: which thing gets cloned?
+
+Calling `.clone()` on a reference does one of two things depending on the type behind it, and it is worth knowing which:
 
 ```rust
 fn main() {
-    let s = String::from("hello");
-    let r1 = &s;
-    let r2 = &s;
-    println!("{} and {}", r1, r2);  // Both valid simultaneously
+    let orders = vec![String::from("latte")];
+    let orders_ref: &Vec<String> = &orders;
+
+    let copy = orders_ref.clone();          // clones the Vec, not the reference
+    let _: Vec<String> = copy;
+
+    let double_ref: &&Vec<String> = &orders_ref;
+    let just_a_ref = double_ref.clone();    // clones the reference; rustc warns: suspicious_double_ref_op
+    let _: &Vec<String> = just_a_ref;
 }
 ```
 
-**Shared references are `Copy`**: Each reference is a pointer (8 bytes on 64-bit systems). Copying a reference duplicates the pointer, creating an independent reference to the same underlying data. This doesn't violate aliasing rules because multiple readers are safe.
+When Rust resolves `orders_ref.clone()`, it first looks for a `clone` whose receiver is exactly `&Vec<String>`. `Vec::clone(&self)` is exactly that, so the list is cloned. The reference type's own `clone` would need `&&Vec<String>`, which comes later in the search. That is method resolution, not deref coercion. The trap runs the other way: if the type behind the reference is **not** `Clone`, `.clone()` quietly copies the reference and hands you another `&T`, and rustc warns with `noop_method_call`. Read that warning as "you did not clone what you think you cloned".
+
+### Exclusive references (`&mut T`)
+
+An exclusive reference lets a function modify a value it does not own:
 
 ```rust
-fn read_string(s: &String) {
-    println!("{}", s);
+fn add_shot(order: &mut String) {
+    order.push_str(" + extra shot");
 }
 
-let text = String::from("hello");
-read_string(&text);  // Reference copied (8 bytes)
-read_string(&text);  // Can pass again; previous reference was Copy
+fn main() {
+    let mut order = String::from("latte");
+    add_shot(&mut order);
+    println!("{order}");
+}
 ```
 
-**String literals as shared references:**
+`&mut T` is not `Copy`. When you pass one to a function it is *reborrowed* for the duration of the call, which is why you can pass the same `&mut` twice in a row. Part Eight explains reborrowing.
 
-```rust
-let text: &'static str = "hello";  // String literals have 'static lifetime
-let r1 = text;                      // r1 copies the reference
-let r2 = text;                      // r2 copies the reference
-```
-String literals are immutable and live for the program's entire duration, making them particularly copy-friendly.
+### The borrowing rules
 
-
-### References to Non-Copy Types: Why Cloning the Reference Doesn't Clone the Data
-
-A common mistake is attempting to clone a reference to get the underlying data:
-
-```rust
-let vec_ref: &Vec<String> = &vec![String::from("hello")];
-// let vec_clone = vec_ref.clone();  // ❌ ERROR: &Vec<String> doesn't implement clone
-```
-
-The reference itself is Copy (it's just a pointer), so cloning it creates another pointer to the same data, not a copy of the data. To duplicate the underlying Vec:
-
-```rust
-let vec_clone = vec_ref.clone();        // ✅ Wait, this DOES work!
-let vec_clone = (*vec_ref).clone();     // ✅ Explicit deref then clone
-let vec_clone = vec_ref.as_slice().to_vec();  // ✅ Alternative via slice
-```
-
-Actually, Vec implements Clone, so vec_ref.clone() works due to deref coercion—the compiler automatically dereferences the reference to call clone on the Vec. This is convenient but important to understand: you're cloning the Vec, not the reference. The distinction matters when working with types that don't implement Clone.
-
-### Mutable References (&mut T)
-
-A mutable reference lets you modify a borrowed value:
+1. **Many readers or one writer**, checked on every path through the code: any number of `&T` or exactly one `&mut T`, never both alive at once.
+2. **No dangling references**: a reference can never outlive the value it points at.
 
 ```rust
 fn main() {
     let mut s = String::from("hello");
-    change(&mut s);
-    println!("{}", s);  // prints "hello, world"
-}
-
-fn change(s: &mut String) {
-    s.push_str(", world");
+    let r1 = &s;
+    let r2 = &s;
+    // let r3 = &mut s;   // ✗ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+    println!("{r1} and {r2}");
+    s.push('!');          // fine here: r1 and r2 are no longer used
+    println!("{s}");
 }
 ```
 
-**Mutable references do NOT implement `Copy`** because Rust guarantees only one mutable reference exists at a time. When you pass a mutable reference to a function, special handling occurs (reborrowing, covered below).
+### Dangling references
 
-### The Borrowing Rules
+Returning a reference to a local is refused. The compiler stops at the signature: a returned reference has to borrow from *something*, and with no parameters there is nothing to borrow from:
 
-Rust enforces two strict rules about references:
+```rust
+// ✗ Does not compile. Error: E0106 missing lifetime specifier
+fn todays_special() -> &String {
+    let s = String::from("flat white");
+    &s
+}
 
-1. **Aliasing XOR Mutability (revisited):** At any point in the program, you can have either multiple concurrent shared references (`&T`) to the same data OR exactly one exclusive mutable reference (`&mut T`), but never both active simultaneously. This rule is enforced across **all execution paths** via the borrow checker's flow-sensitive analysis.
-    Why does this matter?
-    - **Iterator invalidation prevention**: You cannot mutate a collection while iterating (`&mut vec.push()` while `vec.iter()` is active = error)
-    - **Safe aliasing under mutation**: Compiler can assume mutable references have exclusive access, enabling optimizations that would be unsafe with aliased pointers
-    - **No data races**: Multiple threads reading is safe; one writer is safe; both simultaneously is caught at compile time
-2. **No dangling references:** A reference must not outlive the data it points to. The compiler prevents returning references to local variables, which would point to deallocated memory.
+fn main() {
+    println!("{}", todays_special());
+}
+```
+
+If you "help" the compiler by writing `-> &'static String`, the error changes to E0515, *cannot return reference to local variable*, which is the one people expect to see first. The fix in both cases is to return the owned value:
+
+```rust
+fn todays_special() -> String {
+    let s = String::from("flat white");
+    s   // ownership goes to the caller
+}
+
+fn main() {
+    println!("{}", todays_special());
+}
+```
+
+### Two exclusive references into one collection
+
+You cannot hold `&mut v[0]` and `&mut v[2]` at the same time by indexing twice; the compiler cannot see that the indexes differ. The standard library provides the safe ways to split a collection into non-overlapping exclusive views:
 
 ```rust
 fn main() {
-    let mut s = String::from("hello");
+    let mut queue = vec![String::from("latte"), String::from("mocha"), String::from("espresso")];
 
-    let r1 = &s;
-    let r2 = &s;
-    // let r3 = &mut s;  // ERROR: cannot have mutable reference while shared refs exist
+    let [first, last] = queue.get_disjoint_mut([0, 2]).unwrap();   // Rust 1.86+
+    std::mem::swap(first, last);                                   // the last order jumps to the front
 
-    println!("{} and {}", r1, r2);  // OK
+    let (front, back) = queue.split_at_mut(1);                     // front: [0], back: [1, 2]
+    front[0].push_str(" (rush)");
+    back[0].push_str(" (regular)");
+
+    println!("{queue:?}");   // ["espresso (rush)", "mocha (regular)", "latte"]
 }
 ```
-
-
-### Dangling References Prevention
-
-The compiler prevents dangling references—references to freed memory:
-
-```rust
-fn dangle() -> &String {  // ERROR: cannot return reference to local data
-    let s = String::from("hello");
-    &s  // s is dropped; reference invalid
-}
-
-// Correct approach: return owned value
-fn no_dangle() -> String {
-    let s = String::from("hello");
-    s  // Ownership transferred to caller
-}
-```
-
 
 ***
 
-## Part Seven: Parameter Passing Mechanisms
+## Part Seven: Passing Values to Functions
 
-Rust uses three mechanisms for parameter passing, all with zero runtime cost and enforced at compile time:
+Rust passes every argument **by value**. What that means depends on the type, and it is all decided at compile time with no run-time cost:
 
-
-| Mechanism | Applies To | What Happens | Original After Call |
+| What you pass | Type | What happens | The caller's binding afterwards |
 | :-- | :-- | :-- | :-- |
-| **Copy** | Types implementing `Copy` | Compiler auto-duplicates bitwise; original binding stays valid | Valid, unchanged |
-| **Move** | Non-`Copy` types (default for all types) | Ownership transfers to function; original binding becomes invalid | Invalid (compile error if accessed) |
-| **Borrow (NLL)** | References (`&T` and `&mut T`) | Reference passed; borrow ends at last use via NLL; original remains usable when borrow ends | Valid; borrow-checker tracks timing |
+| `x` | a `Copy` type | the bytes are duplicated | still valid, unchanged |
+| `x` | any other type | ownership moves into the function | invalid; using it is a compile error |
+| `&x` or `&mut x` | a reference | the reference itself is passed by value (copied for `&T`, reborrowed for `&mut T`); the borrow lasts as long as the callee can use it | valid; usable again once the borrow ends |
 
-### Copy: Trivial Duplication
+"By reference" is not a third mechanism in the machine's eyes: a reference is a small value that is copied or reborrowed like any other. It only *feels* different because the borrow checker tracks what the callee may do with it.
 
 ```rust
-fn square(x: i32) -> i32 {  // i32 implements Copy
+fn square(x: i32) -> i32 {                 // i32 is Copy: `n` is copied
     x * x
 }
 
-let n = 5;
-square(n);   // n copied; original binding remains valid
-square(n);   // Can use n again
-```
-
-
-### Move: Ownership Transfer
-
-```rust
-fn consume(s: String) {
-    println!("{}", s);
+fn hand_over(receipt: String) {            // String is not Copy: `receipt` is moved
+    println!("{receipt}");
 }
 
-let text = String::from("hello");
-consume(text);  // text moved; ownership transferred
-// consume(text);  // ERROR: value used after move
-```
-
-
-### Borrow Management with NLL
-
-```rust
-fn update(v: &mut Vec<i32>) {
-    v.push(42);
+fn add_item(order: &mut Vec<String>) {     // borrowed exclusively for the call
+    order.push(String::from("scone"));
 }
 
-let mut data = vec![1, 2];
-update(&mut data);  // Mutable borrow occurs and ends within call
-println!("{:?}", data);  // OK: borrow already ended
-update(&mut data);  // Can call again
-```
+fn main() {
+    let n = 5;
+    println!("{} {}", square(n), square(n));   // n still usable
 
+    let receipt = String::from("latte 3.50");
+    hand_over(receipt);
+    // hand_over(receipt);                     // ✗ error[E0382]: use of moved value
+
+    let mut order = vec![String::from("latte")];
+    add_item(&mut order);                      // borrow starts and ends inside the call
+    add_item(&mut order);                      // so we can do it again
+    println!("{order:?}");
+}
+```
 
 ***
 
 ## Part Eight: Advanced Borrowing Patterns
 
-### Two-Phase Borrows
+### Two-phase borrows: why `v.push(v.len())` works
 
-Two-phase borrows are a **compiler optimization that applies exclusively to method calls** where the receiver (`self`) and an argument both borrow the same data. This special handling does NOT apply to free function calls. Misunderstanding when two-phase borrows apply causes confusion in production code.
-
-**Key principle**: Two-phase borrows are a **convenience**, not a general rule. The compiler has special handling for the `receiver.method(args)` syntax but not for `function(args)`, due to limitations in reasoning about argument evaluation order in free functions. Understanding when two-phase borrows apply—and critically, when they don't—prevents confusing borrow checker errors in real code.
-
-
-**Method call (two-phase borrow applies):**
-
-```rust
-
-fn main() {
-    let mut v = vec![];
-    v.push(v.len());  // Looks like conflict: mutable borrow (push) + shared borrow (v.len)
-    println!("{:?}", v);
-}
-
-```
-
-Here's what happens internally:
-
-1. `v.len()` is evaluated first, creating a temporary shared borrow
-2. After all arguments are evaluated, the mutable borrow for `push(&mut self, ...)` becomes active
-3. Borrows never overlap in time—reading ends before writing begins
-
-**Free function call (two-phase borrow does NOT apply):**
-
-```rust
-
-fn process(v: &mut Vec<usize>, len: usize) {
-    v.push(len);
-}
-
-fn main() {
-    let mut v = vec![];
-
-    // ❌ Does NOT work: free functions don't get two-phase borrow treatment
-    // process(&mut v, v.len());  // ERROR: cannot borrow mutably and immutably
-    
-    // ✅ Workaround: separate the borrow operations
-    let len = v.len();
-    process(&mut v, len);
-}
-
-```
-
-**Why the difference?** The Rust compiler has special handling for the method call syntax `receiver.method(args)`. For regular function calls `function(args)`, the compiler cannot reliably reason about the argument evaluation order, so it's conservative.
-
-
-```rust
-// ❌ Does NOT work: free functions don't get two-phase borrow treatment
-process(&mut v, v.len());  // ERROR: cannot borrow mutably and immutably
-
-// ✅ Workaround: separate the borrow operations
-let len = v.len();
-process(&mut v, len);
-```
-
-**Why this restriction?** The compiler cannot guarantee the evaluation order of function arguments. By separating the operations into distinct statements, you explicitly order the borrows: the immutable borrow (`v.len()`) ends before the mutable borrow (`process(&mut v, ...)`) begins.
-
-**Method calls differ:** With `receiver.method(args)`, the receiver is always evaluated first, and arguments are evaluated left-to-right. This deterministic order allows two-phase borrows to work.
-
-
-**Quick recap:** Two-phase borrows are a **compiler optimization for method calls only**. They enable patterns like `v.push(v.len())` by ensuring argument evaluation completes before method application. Free functions don't receive this treatment because the compiler conservatively reasons about argument order. When you encounter a borrow checker error in a free function call, separate the borrows into distinct statements.
-
-**Practical guidance**: If you get a borrow checker error with function calls, split the borrow into separate statements rather than relying on argument evaluation ordering.
-
-### Reborrowing (Mutable References Only)
-
-Reborrowing creates a new mutable reference from an existing mutable reference. The original reference becomes suspended until the reborrow ends. **In practice, you rarely write explicit reborrow syntax—the compiler handles this implicitly when passing mutable references to functions.**
-
-**Explicit reborrow (uncommon):**
+Read literally, `queue.push(queue.len())` takes an exclusive borrow of `queue` for `push` *and* a shared borrow for `len()` at the same time, which the Foundation rule forbids. It compiles anyway:
 
 ```rust
 fn main() {
-    let mut x = 5;
-    let r1 = &mut x;
-    let r2 = &mut *r1;  // Explicit reborrow syntax using dereference
-    *r2 += 1;
-    *r1 += 1;  // r1 usable after r2's scope ends
-    println!("{}", x);  // prints 7
+    let mut queue: Vec<usize> = vec![];
+    queue.push(queue.len());   // number each ticket by its position in the queue
+    queue.push(queue.len());
+    println!("{queue:?}");     // [0, 1]
 }
 ```
 
-**Implicit reborrow (common pattern):**
+The borrow checker treats the `&mut` it created for the method receiver as a **two-phase borrow**. Phase one *reserves* it: from then on nobody may take another `&mut`, but shared reads are still fine. Phase two *activates* it at the moment `push` is actually called, after all the arguments have been evaluated. `queue.len()` runs during phase one, so the two borrows never truly overlap.
+
+Two-phase treatment applies to three shapes, all of them borrows the compiler inserts *for* you:
+
+1. the automatic `&mut self` of a method call (`queue.push(...)`),
+2. the automatic reborrow of a `&mut` you pass as a function argument,
+3. the hidden `&mut` of a compound assignment on an overloaded operator (`x += x` on a `Wrapping`, the integer wrapper whose arithmetic wraps around instead of overflowing).
+
+It does **not** apply to a `&mut queue` that you write out by hand, because that is an ordinary borrow that starts the moment it is evaluated:
 
 ```rust
-fn modify(x: &mut i32) {
-    *x += 1;
+// ✗ Does not compile. Error: E0502 cannot borrow `queue` as immutable because it is also borrowed as mutable
+fn number_ticket(queue: &mut Vec<usize>, n: usize) {
+    queue.push(n);
 }
 
 fn main() {
-    let mut n = 0;
-    let r = &mut n;
-    modify(r);  // Compiler implicitly reborrows; r remains valid
-    modify(r);  // Can call again—previous reborrow already ended
-    println!("{}", n);  // prints 2
+    let mut queue: Vec<usize> = vec![];
+    number_ticket(&mut queue, queue.len());
 }
 ```
 
-
-The function receives a temporary reborrow of `r`. When the function returns, the reborrow ends and `r` becomes usable again. This is why you can call `modify(r)` multiple times.
-
-**Important:** You are not explicitly writing reborrow syntax in this code. The compiler **implicitly reborrows** whenever you pass a mutable reference to a function. This is a convenience mechanism—the compiler converts `modify(r)` into `modify(&mut *r)` automatically, suspending `r` during the call and resuming it afterward. This implicit reborrow is why mutable references feel flexible despite the "one mutable ref at a time" rule.
-
-**Implicit reborrow in iterators:**
-
+The difference is not "method call versus free function". The same free function is happy when the `&mut` is *reborrowed* for you (shape 2):
 
 ```rust
-let mut v = vec![1, 2, 3];
-let r = &mut v;
-
-for item in &*r {  // Implicit: borrows the iterator from r
-    println!("{}", item);
+fn number_ticket(queue: &mut Vec<usize>, n: usize) {
+    queue.push(n);
 }
 
-r.push(4);  // OK: implicit borrow ended
+fn main() {
+    let mut queue: Vec<usize> = vec![];
+    let q = &mut queue;
+    number_ticket(q, q.len());   // `q` is implicitly reborrowed, and that reborrow is two-phase
+    println!("{queue:?}");
+}
 ```
 
+And the method-call form breaks as soon as you write the borrow by hand: `Vec::push(&mut queue, queue.len())` gives the same error as the free function. Rust always evaluates a function's arguments **left to right**; that order is guaranteed by the language. The explicit `&mut queue` is evaluated first and is already active when `queue.len()` runs, which is the conflict.
 
-In this example, the `for` loop implicitly reborrows `r` to iterate. When the loop exits, the reborrow ends and `r` is available again.
+**Practical rule:** if a call complains about a borrow, evaluate the argument into a local first:
 
-### Closures and the `move` Keyword
+```rust
+fn number_ticket(queue: &mut Vec<usize>, n: usize) {
+    queue.push(n);
+}
 
-Closures (anonymous functions) capture variables from their environment by reference by default. To transfer ownership into a closure, use the `move` keyword:
+fn main() {
+    let mut queue: Vec<usize> = vec![];
+    let n = queue.len();           // the shared borrow ends here
+    number_ticket(&mut queue, n);  // now the exclusive borrow has no competition
+    println!("{queue:?}");
+}
+```
+
+### Reborrowing
+
+A reborrow is a new reference created *through* an existing one, written `&*r` or `&mut *r`. While the reborrow is alive the original is paused; once the reborrow's last use has passed, the original is usable again. You can write one by hand:
 
 ```rust
 fn main() {
-    let s = String::from("hello");
-    
-    // Without move: closure borrows s
-    let borrowed = || println!("{}", s);
-    borrowed();
-    println!("{}", s);  // Still valid
-    
-    // With move: closure takes ownership of s
-    let moved = move || println!("{}", s);
-    moved();
-    // println!("{}", s);  // ERROR: s moved into closure
+    let mut total = 5;
+    let r1 = &mut total;
+    let r2 = &mut *r1;   // explicit reborrow
+    *r2 += 1;            // r1 is paused while r2 is in use
+    *r1 += 1;            // r2's last use has passed, so r1 is back
+    println!("{total}"); // 7
+}
+```
+
+You rarely write that, because the compiler does it for you **whenever an expression of type `&mut T` is used where exactly `&mut T` is expected**, such as a function parameter. That is why an exclusive reference can be passed to a function again and again:
+
+```rust
+fn add_shot(order: &mut String) {
+    order.push_str(" +shot");
 }
 
+fn main() {
+    let mut order = String::from("latte");
+    let r = &mut order;
+    add_shot(r);   // implicitly reborrowed as `&mut *r` for the call
+    add_shot(r);   // so `r` is still ours afterwards
+    println!("{order}");
+}
 ```
-This is essential when passing closures to threads or storing them in data structures:
+
+**The trap: implicit reborrowing needs a known `&mut T` target.** When the parameter is generic, the compiler does not know it is looking for `&mut T`, so it moves the reference instead:
+
+```rust
+fn add_shot(order: &mut String) {
+    order.push_str(" +shot");
+}
+
+fn log<T: std::fmt::Debug>(item: T) {   // generic parameter: no implicit reborrow
+    println!("{item:?}");
+}
+
+fn main() {
+    let mut order = String::from("latte");
+    let r = &mut order;
+    add_shot(r);      // reborrowed
+    log(r);           // MOVED into `log`
+    // add_shot(r);   // ✗ error[E0382]: borrow of moved value: `r`
+    println!("{order}");
+}
+```
+
+The `for` loop has the same shape. `for item in r` calls `IntoIterator::into_iter(r)`, whose parameter is the generic `Self`, so `r` is moved and gone after the loop. Iterate through a method call or an explicit reborrow instead:
+
+```rust
+fn main() {
+    let mut orders = vec![String::from("latte"), String::from("mocha")];
+    let r = &mut orders;
+
+    for o in r.iter_mut() { o.push('!'); }   // method call: reborrowed, r survives
+    for o in &mut *r { o.push('?'); }        // explicit reborrow: r survives
+    // for o in r { }                        // would MOVE r; using r afterwards is E0382
+
+    r.push(String::from("espresso"));
+    println!("{orders:?}");
+}
+```
+
+If you ever need the paused-original behaviour on purpose, for instance to hand a `&mut` to a helper and keep your own afterwards, write `&mut *r` explicitly; it always works.
+
+### Closures and the `move` keyword
+
+A closure looks at how its body uses each variable and captures it in the **gentlest way that works**: a shared borrow if it only reads, an exclusive borrow if it changes it, by value if it consumes it. The compiler tries the modes in that order (the Reference lists one more in between, a "unique immutable borrow", which only matters when a closure writes through a `&mut` it merely borrowed).
+
+```rust
+fn main() {
+    let special = String::from("flat white");
+    let announce = || println!("today: {special}");   // only reads: borrows `special`
+    announce();
+    println!("{special}");                            // still ours
+
+    let mut served = 0;
+    let mut tick = || served += 1;                    // changes it: exclusive borrow
+    tick();
+    tick();
+    println!("{served}");
+
+    let sold_out = || drop(special);                  // consumes it: captured by value, no `move` needed
+    sold_out();
+    // println!("{special}");                         // ✗ error[E0382]: borrow of moved value: `special`
+}
+```
+
+`move` forces by-value capture of everything the closure mentions. You need it when the closure will **outlive the current function** and the body only *borrows*, because a borrow of a local cannot leave the function alive. Threads are the classic case:
 
 ```rust
 use std::thread;
 
-let numbers = vec![1, 2, 3];
-
-// ✅ Correct: move captures ownership
-let handle = thread::spawn(move || {
-    for n in numbers {
-        println!("{}", n);
-    }
-});
-
-handle.join().unwrap();
-// println!("{:?}", numbers);  // ERROR: numbers moved
-
-```
-
-Without `move`, the closure would hold a reference to `numbers`, but `numbers` lives on the main thread's stack. When the thread spawned, that reference would outlive the original scope, violating the no-dangling-references rule.
-
-### Partial Moves: A Production Pitfall
-
-When you move individual fields out of a struct, the struct becomes "partially moved"—some fields are gone while others remain accessible. This asymmetry causes real production bugs because the compiler allows accessing unmoved `Copy` fields while forbidding whole-struct access.
-
-
-**This is a real source of production bugs.**
-
-After a partial move, you cannot use the entire struct via dot notation, even though you can access unmoved fields. This asymmetry causes confusion and introduces subtle errors.
-
-#### The Problem
-
-```rust
-
-#[derive(Debug)]
-struct Point {
-    x: i32,        // Copy
-    y: String,     // Non-Copy; can be moved
-}
-
 fn main() {
-    let p = Point {
-    x: 10,
-    y: String::from("hello"),
-};
+    let orders = vec![String::from("latte"), String::from("mocha")];
 
-    let y_val = p.y;  // Move: ownership of y transferred out of p
-    
-    println!("{}", p.x);      // ✅ OK: x is Copy, still valid
-    // println!("{:?}", p);   // ❌ ERROR: p is partially moved; cannot use as a whole
-    // println!("{}", p.y);   // ❌ ERROR: y was moved out; invalid access
-    }
+    // This body consumes `orders` (a `for` loop takes it by value), so the closure
+    // owns it even without `move`.
+    let kitchen = thread::spawn(|| {
+        for o in orders {
+            println!("making {o}");
+        }
+    });
+    kitchen.join().unwrap();
 
-```
+    let orders = vec![String::from("espresso")];
 
-The asymmetry: `p.x` works because `x` implements `Copy`, but `p` (the whole struct) is invalid because `y` moved. This is confusing because the compiler allows accessing `p.x` but forbids using `p`.
-
-#### The Fix: Use Destructuring
-
-**Pattern**: When extracting fields from mixed `Copy`/`Move` structs, use destructuring to make ownership transfer explicit:
-
-```rust
-
-fn main() {
-    let p = Point {
-        x: 10,
-        y: String::from("hello"),
-    };
-
-    // Destructure: explicitly separate Copy and Move fields
-    let Point { x, y } = p;
-
-    // Now ownership transfer is clear:
-    use_x(x); // x copied (Copy trait)
-    use_y(y); // y moved
-
-    // No surprises: p is no longer accessible (intentional)
-}
-
-fn use_x(x: i32) {
-    println!("x: {}", x);
-}
-fn use_y(y: String) {
-    println!("y: {}", y);
-}
-
-
-```
-
-This pattern eliminates the confusing mix of "some fields work, but the whole struct doesn't."
-
-#### Updating Fields After Partial Moves
-
-If you need to update a field after a partial move, rebuild the struct:
-
-```rust
-
-struct Data {
-    id: u32,         // Copy
-    content: String, // Non-Copy
-}
-
-fn main() {
-    let d = Data {
-        id: 42,
-        content: String::from("data"),
-    };
-
-    let content = d.content; // Move out
-    let d = Data {
-        id: d.id, // Can still read d.id (Copy)
-        content: String::from("updated"),
-    };
-
-    println!("{:?}", d); // OK: d is fully reconstructed
-}
-
-```
-
-This pattern makes ownership flow explicit: the moved field is gone, and you're intentionally creating a new struct value.
-
-
-#### Why This Matters in Production
-
-```rust
-
-// ❌ Antipattern found in real code:
-impl Data {
-    fn process(mut self) {
-        let config = self.config.clone();  // Move out of config field
-        let result = self.compute();       // Uses self (partially moved!) — confusing
-        // Later: someone adds self.config.log() by mistake → confusing error
-    }
-}
-
-// ✅ Better:
-impl Data {
-    fn process(self) {
-        let Data { config, .. } = self;  // Explicit destructure
-        let result = self.compute();     // Clear that self is no longer valid
-    }
-}
-
-```
-
-
-This pattern appears **extremely frequently in web frameworks** where request/response handlers extract fields. Misunderstanding partial moves causes real production bugs where code compiles but handlers mysteriously fail.
-
-```rust
-pub async fn handle_request(req: HttpRequest) -> HttpResponse {
-    let body = req.body().to_vec();  // Move
-    
-    // Later: someone adds logging that tries to use the whole request
-    tracing::error!("Request failed: {:?}", req);  // ❌ COMPILE ERROR
+    // This body only borrows `orders`. Without `move` the compiler refuses (E0373): the
+    // thread could outlive main's stack frame. `move` hands the whole Vec to the thread.
+    let kitchen = thread::spawn(move || {
+        for o in &orders {
+            println!("making {o}");
+        }
+    });
+    kitchen.join().unwrap();
+    // println!("{orders:?}");   // ✗ error[E0382]: borrow of moved value: `orders`
 }
 ```
 
-The error seems random because they don't understand partial moves. Fix: destructure at entry point:
+Two details experts rely on: `move` on a `Copy` value copies it, so the original stays usable; and since edition 2021 a closure captures individual *fields* (`order.items`) rather than whole variables, which makes many more closures compile.
 
-```rust
-pub async fn handle_request(req: HttpRequest) -> HttpResponse {
-    let HttpRequest { body, headers, method, .. } = req;
-    
-    // Now it's clear: req is gone; individual fields are available
-    let body_bytes = body.to_vec();
-    tracing::debug!("Method: {}", method);  // ✅ Clear and works
-}
+### Partial moves
 
-```
-
-#### A Pattern to Avoid: Partial Moves in Request Handlers
-
-Partial moves commonly appear in request/response handlers where developers extract fields without realizing the struct becomes partially-moved:
-
+Moving one field out of a struct leaves the struct **partially moved**. The fields that are still there can be used; the struct as a whole cannot. This is entirely a compile-time matter: code with a partial-move mistake is refused, never run.
 
 ```rust
 #[derive(Debug)]
-pub struct Request {
-    pub id: u32,           // Copy
-    pub body: Vec<u8>,     // Non-Copy; can be moved
-    pub headers: String,   // Non-Copy; can be moved
+struct Order {
+    ticket: u32,
+    receipt: String,
 }
 
-// ❌ COMMON MISTAKE: Partial move in handler
-fn process_request(mut req: Request) {
-    let body = req.body;  // Move out
-    
-    // Log the request... but what do we log?
-    println!("Request: {:?}", req);  // ERROR: req is partially moved
-    
-    // Even though these work:
-    println!("ID: {}", req.id);  // OK: id is Copy
-    
-    // The original object is unusable as a whole
-    save_metadata(&req);  // ERROR: can't pass partially-moved struct
-}
-
-// ✅ FIX: Destructure at the entry point
-fn process_request(req: Request) {
-    let Request { id, body, headers } = req;
-    
-    // Ownership transfer is now explicit
-    handle_body(body);
-    handle_headers(headers);
-    
-    // id is independent; no confusion
-    log_request_id(id);
-    
-    // No attempt to use `req` (which doesn't exist anymore)
+fn main() {
+    let order = Order { ticket: 17, receipt: String::from("paid 3.50") };
+    let receipt = order.receipt;          // moved out: `order` is now partially moved
+    println!("{}", order.ticket);         // fine: `ticket` is Copy and still there
+    // println!("{order:?}");             // ✗ error[E0382]: borrow of partially moved value: `order`
+    // println!("{}", order.receipt);     // ✗ error[E0382]: borrow of moved value: `order.receipt`
+    println!("{receipt}");
 }
 ```
 
-This pattern appears in request/response handlers, event processors, and async tasks where fields need to be extracted and moved to different handlers.
-
-#### Real-World Fix: Extracting State at Entry Points
-
-Production-grade handlers should extract mutable state at entry and pass immutable views to downstream functions:
+**Fix one: destructure**, when you own the struct. Every field gets a name, ownership is explicit, and the old name is gone rather than half-gone:
 
 ```rust
-// ✅ PRODUCTION PATTERN: Separate extraction from processing
-#[derive(Debug)]
-pub struct Request {
-    pub id: u32,
-    pub body: Vec<u8>,
-    pub headers: String,
+struct Order {
+    ticket: u32,
+    receipt: String,
 }
 
-// Extract at entry; pass immutable references to handlers
-pub async fn handle_request(req: Request) -> Response {
-    let Request { id, body, headers } = req;
-    
-    let parsed_body = parse_body(&body);
-    let request_headers = HeaderMap::from(&headers);
-    
-    // Downstream handlers receive what they need; no RefCell required
-    process_with_headers(&parsed_body, &request_headers)
-        .await
+fn file_receipt(receipt: String) {
+    println!("filed: {receipt}");
 }
 
-fn process_with_headers(body: &[u8], headers: &HeaderMap) -> Response {
-    // Pure function; no state coordination needed
-    Response::ok()
+fn main() {
+    let order = Order { ticket: 17, receipt: String::from("paid 3.50") };
+    let Order { ticket, receipt } = order;   // ticket is copied, receipt is moved, `order` no longer exists
+    file_receipt(receipt);
+    println!("ticket {ticket}");
 }
-
 ```
 
-This pattern eliminates interior mutability entirely by ensuring handlers receive exactly what they need at entry points.
+**Fix two: `mem::take` or `Option::take`**, when you only have `&mut self` and cannot move anything out. `take` swaps in an empty value and hands you the old one, so the struct stays whole:
 
-## Part Nine: Why Interior Mutability Is Out of Scope
+```rust
+#[derive(Debug)]
+struct Order {
+    ticket: u32,
+    receipt: String,
+}
 
-Interior mutability (`Cell`, `RefCell`, `UnsafeCell`) allows mutation through shared references by deferring borrow checking to runtime. While powerful, these patterns:
+impl Order {
+    fn hand_over_receipt(&mut self) -> String {
+        std::mem::take(&mut self.receipt)   // leaves an empty String behind
+    }
+}
 
-1. **Require runtime checks** that can panic (`RefCell`)
-2. **Bypass compiler guarantees** (you must manually ensure safety)
-3. **Belong in advanced guides** focused on `unsafe` abstractions
+fn main() {
+    let mut order = Order { ticket: 17, receipt: String::from("paid 3.50") };
+    let receipt = order.hand_over_receipt();
+    println!("{receipt} / ticket {} / {order:?}", order.ticket); // order is still whole; its receipt is now ""
+}
+```
 
-Since this guide focuses on **compiler-verified safe patterns**, we intentionally skip interior mutability. For global state, the patterns in Part Ten (atomics, `Mutex`, `LazyLock`) provide thread-safe alternatives without runtime borrow checking panics.
+**Fix three: rebuild.** Read the copyable fields from the partially moved value and construct a fresh struct:
 
-We will cover interior mutability in another post (coming soon...)
+```rust
+#[derive(Debug)]
+struct Order {
+    ticket: u32,
+    receipt: String,
+}
+
+fn main() {
+    let order = Order { ticket: 17, receipt: String::from("paid 3.50") };
+    let old_receipt = order.receipt;                                                 // move out
+    let order = Order { ticket: order.ticket, receipt: String::from("refunded") };   // ticket still readable
+    println!("{old_receipt} -> {order:?}");
+}
+```
+
+***
+
+## Part Nine: Interior Mutability, Briefly
+
+**Interior mutability** means changing data through a *shared* reference, with the many-readers-or-one-writer rule checked at run time instead of compile time. Everything in Part Ten is built on it: an atomic, a `Mutex`, a `RwLock`, a `OnceLock` and a `LazyLock` all let you mutate through `&`, which is exactly what a `static` hands out. They are entirely safe to use; the check has simply moved from the compiler to a lock, an atomic instruction, or a "set exactly once" rule.
+
+Each thread-safe type has a cheaper single-thread sibling that a `static` cannot hold (they are not `Sync`), but that is perfect inside one thread or inside `thread_local!`:
+
+| Single thread | Across threads | What it gives you |
+| :-- | :-- | :-- |
+| `Cell<T>` | atomics | get and set a small value |
+| `RefCell<T>` | `Mutex<T>`, `RwLock<T>` | borrow a value mutably, checked at run time |
+| `OnceCell<T>` | `OnceLock<T>` | set once, read many times |
+| `LazyCell<T>` | `LazyLock<T>` | build on first use |
+
+A `RefCell` panics if you break the rule; a `Mutex` makes the second thread wait. Same rule, different response. The single-thread column, and the `UnsafeCell` underneath all of it, get their own post.
+
+***
 
 ## Part Ten: Safe Global State Patterns
 
-### Atomic Types for Counters and Flags
+### Atomics for counters and flags
 
-For simple counters and flags, atomic types provide thread-safe operations without locks:
+For a number or a flag shared by every thread, an atomic gives you correct updates without a lock. The café's ticket counter:
 
 ```rust
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::thread;
 
-static COUNTER: AtomicUsize = AtomicUsize::new(0);
+static TICKETS_SOLD: AtomicU64 = AtomicU64::new(0);
 
 fn main() {
-    COUNTER.fetch_add(1, Ordering::SeqCst);
-    println!("Counter: {}", COUNTER.load(Ordering::SeqCst));
+    let tills: Vec<_> = (0..4)
+        .map(|_| {
+            thread::spawn(|| {
+                for _ in 0..10_000 {
+                    TICKETS_SOLD.fetch_add(1, Ordering::Relaxed);
+                }
+            })
+        })
+        .collect();
+    for t in tills {
+        t.join().unwrap();
+    }
+    println!("{}", TICKETS_SOLD.load(Ordering::Relaxed)); // exactly 40000, every run
 }
 ```
 
-**Memory ordering matters**. The `Ordering` parameter determines how the operation synchronizes with other threads:
+Note the result: **exactly** 40 000. `Relaxed` does not mean "approximately". Every atomic operation is indivisible whatever ordering you pick, and no increment is ever lost. What the `Ordering` controls is something else: whether the operation also *publishes or waits for other memory*.
 
-- **`Ordering::Relaxed`**: No synchronization; no memory fence. Use only for statistics where exact accuracy doesn't matter. ⚠️ **Unsafe on weak-memory architectures (ARM) for coordination patterns.**
+**The orderings in plain words:**
 
-- **`Ordering::Acquire`/`Ordering::Release`**: One-way synchronization. Release writes are visible to subsequent Acquire reads. Sufficient for most coordination patterns (signaling, flags). Better performance on ARM than SeqCst. **Use this for ~90% of real-world coordination.**
+- **`Relaxed`**: "count correctly, promise nothing about any other memory." Right for counters and statistics that nothing else depends on. Wrong the moment you use the value to decide that some *other* data is ready.
+- **`Release`** on a store and **`Acquire`** on a load: a hand-off note. Everything the writer did *before* the `Release` store is visible to a reader *after* its `Acquire` load sees that value. This is the pattern for "the data is ready" flags and for most coordination.
+- **`SeqCst`**: `Acquire` and `Release` plus one extra promise: every thread agrees on a single global order of all `SeqCst` operations. You need this only when several threads reason about the *combined* order of several atomics. As a replacement for a weaker ordering it is never wrong, only slower; it does not repair an algorithm that is wrong for other reasons.
 
-- **`Ordering::SeqCst`**: Total ordering; full memory fence on both sides. Safest but carries performance costs on weak-memory systems (ARM, PowerPC). **Use only when documenting why other orderings are insufficient.**
-
-****Platform Reality Check**: On x86-64 (Intel, AMD), the x86-TSO memory model is strong, so `Acquire`/`Release` and `SeqCst` compile to nearly identical machine code. On weak-memory architectures (ARM, PowerPC, RISC-V), `SeqCst` requires additional memory barriers, resulting in measurable performance costs. For portable code, default to `Acquire`/`Release` unless you document why `SeqCst`'s total ordering is required. Benchmark on your target platform if performance is critical.
-
-
-**Quick Decision Tree for Memory Ordering:**
-
-1. Is this a statistics counter (hit counts, metrics)?
-   → Use `Ordering::Relaxed` (fastest, no sync overhead)
-
-2. Are you signaling readiness/completion between threads?
-   → Use `Ordering::Release` (writer) + `Ordering::Acquire` (reader)
-   → Most coordination patterns; good ARM performance
-
-3. Do you have multiple independent atomic variables that must be coordinated?
-   → Reach for `Ordering::SeqCst` ONLY after confirming Relaxed/Acquire-Release don't suffice
-   → Document WHY SeqCst is necessary for future maintainers
-
-4. Multithreaded coordination you're not 100% sure about?
-   → Default to `SeqCst`, document the question, benchmark later
-   → Correctness first; optimize after profiling shows need
-
-This tree prevents over-engineering and ensures correct choices for 90% of real code.
-
-
-**Memory Ordering Practical Examples**:
+The hand-off pattern, with the "shop open" sign publishing today's price:
 
 ```rust
-// ❌ WRONG: SeqCst for a statistics counter (overkill, expensive, especially on ARM)
-static PAGE_VIEWS: AtomicU64 = AtomicU64::new(0);
-fn record_view() {
-    PAGE_VIEWS.fetch_add(1, Ordering::SeqCst);  // Unnecessary full fence
+use std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
+use std::thread;
+
+static PRICE_CENTS: AtomicU32 = AtomicU32::new(0);
+static OPEN: AtomicBool = AtomicBool::new(false);
+
+fn main() {
+    let manager = thread::spawn(|| {
+        PRICE_CENTS.store(350, Ordering::Relaxed);   // 1. set today's price
+        OPEN.store(true, Ordering::Release);         // 2. flip the sign: publishes everything written before it
+    });
+
+    while !OPEN.load(Ordering::Acquire) {            // 3. a till waits for the sign
+        std::hint::spin_loop();
+    }
+    println!("{}", PRICE_CENTS.load(Ordering::Relaxed)); // 4. guaranteed 350, because of Release/Acquire
+    manager.join().unwrap();
 }
-
-// ✅ RIGHT: Relaxed for non-critical statistics
-static PAGE_VIEWS: AtomicU64 = AtomicU64::new(0);
-fn record_view() {
-    PAGE_VIEWS.fetch_add(1, Ordering::Relaxed);  // No sync overhead
-}
-
-// ✅ RIGHT: Acquire/Release for thread coordination (95% of use cases)
-static READY: AtomicBool = AtomicBool::new(false);
-// Thread A:
-READY.store(true, Ordering::Release);  // Signal readiness; visibility guaranteed
-// Thread B:
-while !READY.load(Ordering::Acquire) { }  // Wait for signal; sees Thread A's writes
-
-// ✅ RIGHT: SeqCst only when documented
-static INIT_COMPLETE: AtomicBool = AtomicBool::new(false);
-// SeqCst needed here because we must establish a total order across
-// multiple synchronization variables
 ```
 
-```rust
-// Statistics counter: Relaxed is safe (accuracy loss is acceptable)
-static REQUESTS: AtomicU64 = AtomicU64::new(0);
-fn record_request() {
-    REQUESTS.fetch_add(1, Ordering::Relaxed);
-}
+Make the sign `Relaxed` on both sides and step 4 may print 0 on a phone or a server CPU with a weak memory model, and even on x86 the *compiler* is free to reorder the two stores. That is not undefined behaviour, it is a wrong answer, and it is wrong per the language rules on every architecture, not only on ARM.
 
-// Single boolean flag signaling initialization completion: Release/Acquire
-static INITIALIZED: AtomicBool = AtomicBool::new(false);
-// Thread A:
-INITIALIZED.store(true, Ordering::Release);  // Writers use Release
-// Thread B:
-while !INITIALIZED.load(Ordering::Acquire) { }  // Readers use Acquire
-// Guarantees: Thread B sees all of Thread A's writes before the flag
+**Choosing:**
 
-// Impossible to use Relaxed for flags; weak synchronization breaks the pattern
-```
+1. A counter or statistic that nothing else depends on: `Relaxed`.
+2. A flag or handle that tells other threads "this data is ready": `Release` to publish, `Acquire` to observe.
+3. Several atomics whose *combined* ordering matters across threads: `SeqCst`, and write down why.
+4. Not sure? `SeqCst` is always correct. Measure before you weaken it.
 
-
-**When to use each:**
-
-- **Relaxed:** Statistics (hit counters, telemetry). Accuracy loss is acceptable, performance critical.
-- **Acquire/Release:** Synchronization between threads (flags, condition variables). Balances safety and performance across architectures.
-- **SeqCst:** Multi-variable coordination requiring total order. Use only when you can document why weaker orderings fail. Most code doesn't need this.
-
-
-**Practical guidance**: Use `Relaxed` for stats, `Acquire`/`Release` for coordination, and `SeqCst` only when you can document why weaker orderings fail.
+On x86-64, loads and read-modify-write operations compile to the same instructions under every ordering, though a weaker ordering still gives the compiler more freedom to reorder around them; a `SeqCst` *store* becomes an `xchg` (or a move plus a fence) where a `Release` store is a plain move. On ARM and RISC-V the differences are larger. Busy-waiting as in step 3 is for illustration; real code parks the thread or uses a condition variable (`Condvar`), which lets a thread sleep until it is woken.
 
 ### Mutex and RwLock
 
-For more complex shared state, `Mutex` and `RwLock` provide safe access:
+For anything bigger than a number, a `Mutex` lets one thread at a time work on the data; the guard it returns unlocks when dropped. A `RwLock` allows many readers *or* one writer, which is the Foundation rule enforced at run time.
 
 ```rust
 use std::sync::Mutex;
 
-static NAMES: Mutex<Vec<String>> = Mutex::new(Vec::new());
+static TODAYS_ORDERS: Mutex<Vec<String>> = Mutex::new(Vec::new());
 
 fn main() {
     {
-        let mut names = NAMES.lock().unwrap();  // Acquire lock
-        names.push(String::from("Alice"));
-        names.push(String::from("Bob"));
-    }  // MutexGuard dropped here, releasing the lock automatically
+        let mut orders = TODAYS_ORDERS.lock().unwrap();   // waits until the lock is free
+        orders.push(String::from("latte"));
+        orders.push(String::from("mocha"));
+    } // guard dropped: unlocked
 
-    let names = NAMES.lock().unwrap();  // Can acquire lock again
-    println!("Names: {:?}", names);
-}  // Second MutexGuard dropped here
+    let orders = TODAYS_ORDERS.lock().unwrap();          // lock it again
+    println!("{orders:?}");
+} // dropped again
 ```
 
-`Mutex` allows only one thread to access the data at a time. `RwLock` allows multiple readers OR one writer, mirroring Rust's borrowing rules.
+**Poisoning.** If a thread panics while holding the lock, the mutex becomes *poisoned*, because the data may be half-updated. `lock()` then returns `Err`; it does not panic by itself. The usual `.unwrap()` is what turns that into a panic, deliberately, so that a broken invariant spreads no further. You can also choose to look inside:
 
-**Important**: `lock()` blocks until the lock is acquired. For non-blocking behavior, use `try_lock()`.
+```rust
+use std::sync::Mutex;
+use std::thread;
 
-> **Best Practice:** Always document panic conditions and deadlock risks if you expose global locks. Acquiring a poisoned or recursive lock will panic; use `.lock().expect("mutex not poisoned")` for clearer error messages.
+static TILL: Mutex<u32> = Mutex::new(100);
 
+fn main() {
+    let _ = thread::spawn(|| {
+        let _cash = TILL.lock().unwrap();
+        panic!("printer jammed while the drawer was open");
+    })
+    .join();                                   // that thread panicked while holding the lock
 
-### OnceLock for One-Time Initialization
+    match TILL.lock() {
+        Ok(cash) => println!("clean: {cash}"),
+        Err(poisoned) => {                      // lock() returned Err; no panic happened here
+            let cash = poisoned.into_inner();   // you may still take the guard
+            println!("poisoned, but the drawer holds {cash}");
+        }
+    }
+}
+```
 
-`OnceLock` enables one-time initialization with external setup:
+When you run this, the spawned thread's panic message also appears on stderr; that is the point of the example.
+
+Three more things to know:
+
+- **Locking a mutex you already hold**, on the same thread, is a bug. The documentation promises only that the second call never returns; in practice it deadlocks (observed on macOS). Keep guards short-lived, and never call out to code that might lock the same mutex.
+- `try_lock()` returns immediately with `Err` if the lock is busy, for the cases where waiting is wrong.
+- Rust 1.98 still ships only the poisoning `Mutex` on stable. A non-poisoning variant exists in the standard library as an unstable `std::sync::nonpoison` module.
+
+### OnceLock: set once, from wherever the value comes from
+
+`OnceLock` starts empty and accepts exactly one value. It is the tool for a global that is filled in at start-up from something outside the code, such as a config file or a command-line flag:
 
 ```rust
 use std::sync::OnceLock;
 
-static CONFIG: OnceLock<String> = OnceLock::new();
+static SHOP_ID: OnceLock<String> = OnceLock::new();
 
 fn main() {
-    CONFIG.set(String::from("production")).unwrap();
-    println!("Config: {}", CONFIG.get().unwrap());
-    
-    // CONFIG.set(...);  // ERROR: already set
+    let from_config = String::from("corner-cafe-01");   // imagine: read from a file at start-up
+    println!("{:?}", SHOP_ID.set(from_config));         // Ok(())
+    println!("{:?}", SHOP_ID.set(String::from("x")));   // Err("x"): already set; no panic
+    println!("{}", SHOP_ID.get().unwrap());
 }
 ```
 
-`set()` succeeds only once. The more ergonomic `get_or_init()` handles initialization in one call:
+`get_or_init` combines the two steps and is safe to race: if several threads call it at once, one closure runs and the others wait for its result. If that closure panics, the cell stays empty and the next caller's closure gets its turn:
 
 ```rust
-static DB_CONNECTION: OnceLock<String> = OnceLock::new();
+use std::sync::OnceLock;
 
-fn get_db() -> &'static str {
-    DB_CONNECTION.get_or_init(|| {
-        println!("Initializing database connection...");
-        String::from("postgres://localhost")
+static DB_URL: OnceLock<String> = OnceLock::new();
+
+fn db_url() -> &'static str {
+    DB_URL.get_or_init(|| {
+        println!("reading the connection string once");
+        String::from("postgres://localhost/cafe")
     })
 }
 
 fn main() {
-    println!("{}", get_db());
-    println!("{}", get_db());  // Second call uses cached value
+    println!("{}", db_url());
+    println!("{}", db_url());   // cached
 }
 ```
 
-**Thread-safety guarantee**: Only one thread's closure executes; others block until initialization completes, preventing duplicate initialization costs.
+Do not call `get_or_init` on the same cell from inside its own initialiser: the documentation says the outcome is unspecified, and the current implementation deadlocks.
 
-### LazyLock for Lazy Initialization (Preferred for 2024+)
+### LazyLock: build on first use
 
-`LazyLock` is the **preferred pattern for lazy static initialization in Rust 2024 and later**. It provides automatic lazy evaluation with a cleaner API than `OnceLock`:
+`LazyLock` (Rust 1.80, any edition) is a `OnceLock` whose initialiser is written right where the static is declared. The closure runs at **run time, on first access**, never at compile time:
 
 ```rust
 use std::sync::LazyLock;
 
-static EXPENSIVE: LazyLock<Vec<i32>> = LazyLock::new(|| {
-    println!("Initializing...");
-    vec![1, 2, 3, 4, 5]
+static PRICE_LIST: LazyLock<Vec<(&'static str, f64)>> = LazyLock::new(|| {
+    println!("building the price list");
+    vec![("espresso", 2.50), ("latte", 3.50)]
 });
 
 fn main() {
-    println!("Before access");
-    println!("{:?}", *EXPENSIVE);  // Initialization happens here
-    println!("{:?}", *EXPENSIVE);  // Uses cached value
+    println!("before first use");
+    println!("{:?}", *PRICE_LIST);   // "building the price list" prints here
+    println!("{:?}", *PRICE_LIST);   // reused
 }
 ```
 
-**Design philosophy**: `LazyLock` is simpler than `OnceLock` for the common pattern where initialization logic is known at definition time. `OnceLock` shines when initialization parameters come from runtime sources.
+Use `LazyLock` when the initialisation code is self-contained, and `OnceLock` when the value is handed in from elsewhere. Since Rust 1.94, `LazyLock::get` tells you whether it has been initialised without forcing it, and `LazyLock::force_mut` gives mutable access through a `&mut` to the lock.
 
-**When to use LazyLock vs OnceLock:**
+### LazyCell and `thread_local!`
 
-- **LazyLock**: Initialization logic is known at definition time (e.g., `LazyLock::new(|| { parse_config_file() })`)
-- **OnceLock**: Initialization comes from runtime sources external to the definition (e.g., accepting a value from `fn set()` called elsewhere)
-
-
-**Example distinguishing the two:**
+`LazyCell` is the single-thread twin of `LazyLock`. Because it is not `Sync`, the compiler simply refuses to put it in a `static`; there is no run-time hazard to worry about, only a compile error:
 
 ```rust
-// LazyLock: initialization at definition
-static CONFIG: LazyLock<Config> = LazyLock::new(|| {
-    Config::from_file("app.toml") // Known at definition time
-});
-
-// OnceLock: initialization external
-static RUNTIME_VALUE: OnceLock<String> = OnceLock::new();
-
-fn main() {
-    let user_input = read_user_input();
-    RUNTIME_VALUE.set(user_input).unwrap(); // Set externally
-    println!("{}", RUNTIME_VALUE.get().unwrap());
-}
-```
-
-**Design philosophy**: `LazyLock` simplifies the common pattern where initialization is self-contained; `OnceLock` is for decoupled initialization.
-
-### LazyCell for Thread-Local Lazy Initialization
-
-⚠️ **Availability Note**: `LazyCell` was stabilized in Rust 1.80.0 (July 2024). If your MSRV (Minimum Supported Rust Version) is earlier, use the external `once_cell` crate, which provides `once_cell::unsync::Lazy` (equivalent to `LazyCell`) for thread-local and non-thread-safe contexts. Many production codebases still target Rust 1.70 or earlier, so check your project's MSRV before using this feature.
-
-**For projects using `once_cell` crate:**
-
-
-```rust
-use once_cell::unsync::Lazy;  // Replace std::cell::LazyCell
-
-thread_local! {
-    static BUFFER: Lazy<Vec<u8>> = Lazy::new(|| {
-        Vec::with_capacity(4096)
-    });
-}
-```
-
-+⚠️ **Critical:** `LazyCell` is **not thread-safe**. Use it only inside `thread_local!` blocks or single-threaded contexts. Attempting to share a `LazyCell` across threads (or pass it to another thread) will cause data races and undefined behavior.
-
-```rust
-
+// ✗ Does not compile. Error: E0277 `UnsafeCell<...>` cannot be shared between threads safely; the help line points at LazyCell, which is not Sync
 use std::cell::LazyCell;
 
+static MENU: LazyCell<Vec<&'static str>> = LazyCell::new(|| vec!["latte"]);
+
+fn main() {
+    println!("{:?}", *MENU);
+}
+```
+
+It is `Send` whenever both its value and its initialiser closure are `Send`, so *moving* one into a thread is fine. Its natural home is inside a single thread's own data. For per-thread globals, `thread_local!` already initialises its value lazily the first time each thread touches it, so a `LazyCell` inside is rarely needed. What you often want instead is the `const { }` initialiser, which lets the implementation skip the lazy-initialisation check on most platforms:
+
+```rust
+use std::cell::Cell;
+
 thread_local! {
-    static BUFFER: LazyCell<Vec<u8>> = LazyCell::new(|| {
-        println!("Allocating per-thread buffer");
-        Vec::with_capacity(4096)
-    });
+    // One counter per thread; with a `const` initialiser the lazy-initialisation check can be skipped.
+    static SERVED_HERE: Cell<u32> = const { Cell::new(0) };
 }
 
 fn main() {
-    BUFFER.with(|buf| {
-        println!("Capacity: {}", buf.capacity());
-        // Each thread has its own BUFFER instance
-    });
+    SERVED_HERE.with(|n| n.set(n.get() + 1));
+    let on_other_thread = std::thread::spawn(|| SERVED_HERE.with(|n| n.get())).join().unwrap();
+    println!("this thread {}, other thread {}", SERVED_HERE.with(|n| n.get()), on_other_thread); // 1, 0
 }
-
 ```
 
-**Design distinction**: 
-- `LazyCell` is to `RefCell` as `LazyLock` is to `Mutex`
-- Use `LazyCell` inside `thread_local!` for per-thread lazy initialization
-- Use `LazyLock` for program-wide lazy initialization
+### Arc<Mutex<T>> for shared ownership across threads
 
-
-### Arc<Mutex<T>> for Shared Ownership Across Threads
-
-When multiple threads need to own and mutate shared data:
+A `static` is one value for the whole program. When a group of threads needs to share something created at run time, wrap it in `Arc` (shared ownership with an atomic reference count) around a `Mutex` (one writer at a time):
 
 ```rust
 use std::sync::{Arc, Mutex};
 use std::thread;
 
 fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
+    let tips = Arc::new(Mutex::new(0));
+    let mut baristas = vec![];
 
     for _ in 0..3 {
-        let counter = Arc::clone(&counter);  // Explicit: clones the Arc (cheap pointer copy)
-        // Note: counter.clone() also works, but Arc::clone() is preferred in
-        // production code because it makes the shallow pointer copy explicit,
-        // reducing reader confusion about data duplication costs.
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().expect("Counter mutex was poisoned; a thread panicked while holding it");
-            *num += 1;
-        });
-        handles.push(handle);
+        let tips = Arc::clone(&tips);   // another handle to the same jar; the jar itself is not copied
+        baristas.push(thread::spawn(move || {
+            let mut jar = tips.lock().expect("tip jar mutex poisoned");
+            *jar += 5;
+        }));
     }
-
-    for handle in handles {
-        handle.join().unwrap();
+    for b in baristas {
+        b.join().unwrap();
     }
-
-    println!("Final: {}", *counter.lock().unwrap());
+    println!("tips: {}", *tips.lock().unwrap());   // 15
 }
 ```
 
-**Critical production notes:**
-- `lock()` panics if the mutex is poisoned (a thread panicked while holding the lock). Use `lock().expect("mutex not poisoned")` for clearer errors.
-- `lock()` blocks indefinitely; use `try_lock()` to avoid potential deadlocks.
-- Avoid acquiring multiple locks in different orders across threads; this causes deadlocks.
-- Hold locks for the **minimum time** needed; long-held locks reduce concurrency.
-
-For production code, document lock acquisition order and deadlock prevention strategy.
-
-`Arc` (Atomic Reference Counting) enables shared ownership with atomic reference counting. Unlike statics, `Arc` values are dynamic and can be created/destroyed at runtime.
-
-**Production consideration:** The `.unwrap()` here will panic if the mutex is poisoned (a thread panicked while holding the lock). For production code, use `.expect(msg)` to provide context. Better yet, structure your code to avoid panicking while holding locks, or use `.lock()` in contexts where poisoning is acceptable (e.g., per-thread operations where a poison indicates a fatal error).
+Writing `Arc::clone(&tips)` rather than `tips.clone()` is a convention that tells the reader "this copies a handle, not the data". Keep guards short, take locks in one fixed order everywhere, and remember that `lock()` gives you `Err` on poison; `expect` with a message is the clearest way to turn that into a panic.
 
 ***
 
 ## Part Eleven: Best Practices and Decision Guide
 
-### Choosing Between Const and Static
+### Const or static?
 
-**Use `const` when:**
-
-- The value is known at compile time and never changes
-- You don't need a fixed memory address
-- The value is small and you want it inlined
-- Examples: mathematical constants, configuration values, lookup tables
+**Use `const` when** the value is fixed at compile time, is small, and you are happy for every use to get its own copy: the tax rate, a maximum, a lookup table.
 
 ```rust
-const PI: f64 = 3.14159265359;
-const MAX_CONNECTIONS: usize = 100;
-const FIBONACCI: [u32; 5] = [1, 1, 2, 3, 5];
+const TAX_RATE: f64 = 0.05;
+const MAX_ITEMS_PER_ORDER: usize = 20;
+const LOYALTY_STAMPS: [u8; 5] = [1, 2, 3, 4, 5];
 
-fn calculate_circumference(radius: f64) -> f64 {
-    2.0 * PI * radius  // PI inlined at compile time
+fn total_with_tax(subtotal: f64) -> f64 {
+    subtotal * (1.0 + TAX_RATE)   // TAX_RATE is copied in right here
+}
+
+fn main() {
+    println!("{:.2} {MAX_ITEMS_PER_ORDER} {LOYALTY_STAMPS:?}", total_with_tax(10.0));
 }
 ```
 
-**Use `static` when:**
-
-- A single fixed memory address (essential for FFI—Foreign Function Interface with C/C++/other languages, which require stable memory addresses for data shared across language boundaries)
-- The data is large and should not be duplicated
-- You need global state initialized at runtime
-- You need interior mutability for shared mutable state
+**Use `static` when** you need one address (calling into C code), one instance of something large, or shared state that changes at run time:
 
 ```rust
-use std::sync::OnceLock;
-use std::sync::Mutex;
+use std::sync::{Mutex, OnceLock};
 
-static CONFIG: OnceLock<AppConfig> = OnceLock::new();
-
-#[derive(Clone)]
 struct AppConfig {
     database_url: String,
 }
 
-fn get_config() -> &'static AppConfig {
-    CONFIG.get_or_init(|| AppConfig {
-        database_url: "postgres://localhost".to_string(),
-    })
-}
+static CONFIG: OnceLock<AppConfig> = OnceLock::new();
+static TICKETS: Mutex<u64> = Mutex::new(0);
 
-static COUNTER: Mutex<u64> = Mutex::new(0);
+fn config() -> &'static AppConfig {
+    CONFIG.get_or_init(|| AppConfig { database_url: String::from("postgres://localhost/cafe") })
+}
 
 fn main() {
-    let config = get_config();
-    println!("Database: {}", config.database_url);
+    *TICKETS.lock().unwrap() += 1;
+    println!("{} / tickets {}", config().database_url, TICKETS.lock().unwrap());
 }
 ```
-> **Warning:** Never use types with interior mutability (e.g., `AtomicU32`, `Cell`, `RefCell`) in a `const`. It compiles, but leads to dangerous, non-thread-safe behavior, and Clippy will warn. Use `static` for any atomic, cell, or lock type
 
-### When to Move vs Borrow
+Anything with interior mutability (`AtomicU32`, `Mutex`, `Cell`) that is meant to be *shared* belongs in a `static`, never in a `const`: in a `const` every use is a fresh copy and the mutation is lost (Part Two). rustc warns about it by default.
 
-**Move ownership when:**
+### Move or borrow?
 
-- The caller no longer needs the value
-- Transferring a resource with cleanup logic (file handles, connections)
-- The function consumes the value to produce something new
-- Performance optimization requires bypassing reference layers
+**Move** when the callee should own the value from now on: the caller is done with it, the value carries a resource with cleanup (a file, a connection), or the function turns it into something new.
 
-**Borrow when:**
-
-- The caller still needs the value after the call
-- You only need to read the value
-- You need temporary mutable access
-- Designing library APIs that should work with many types
+**Borrow** when the caller still needs it afterwards, the callee only reads it, or the callee needs temporary write access. Library functions usually borrow, and take the most general type they can (`&str` rather than `&String`, `&[T]` rather than `&Vec<T>`).
 
 ```rust
-// MOVE: Takes ownership
-fn open_and_read(path: &str) -> std::io::Result<String> {
+use std::io::Read;
+
+// Returns an owned String: the caller becomes the owner.
+fn read_menu(path: &str) -> std::io::Result<String> {
     let mut file = std::fs::File::open(path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-    Ok(contents)  // Ownership transferred to caller
+    Ok(contents)
 }
 
-// BORROW: Doesn't need ownership
+// Borrows: only needs to look.
 fn count_lines(text: &str) -> usize {
     text.lines().count()
 }
-```
 
-
-### Common Pitfalls
-
-**Pitfall 1: Excessive Cloning**
-
-Widespread cloning signals a design problem. Refactor to use borrowing strategically:
-
-```rust
-// WRONG
-fn process(data: Vec<String>) -> Vec<String> {
-    let mut result = Vec::new();
-    for item in &data {
-        result.push(item.clone());  // Unnecessary
-    }
-    let transformed = data.clone();  // Unnecessary
-    transformed
-}
-
-// RIGHT
-fn process(data: &[String]) -> Vec<String> {
-    data.iter()
-        .map(|s| format!("processed: {}", s))
-        .collect()
-}
-```
-
-**Pitfall 2: Fighting the Borrow Checker**
-
-Borrow checker errors represent real safety issues. Understand the error instead of immediately reaching for `.clone()`:
-
-```rust
-// WRONG: Fighting the borrow checker
-fn swap_bad(a: &mut i32, b: &mut i32) {
-    let temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-// This doesn't work: swap_bad(&mut x, &mut x);  // ERROR: two mutable refs
-// Because two mutable references to the same data are impossible
-
-// RIGHT: Use the utility function
 fn main() {
-    let mut x = 5;
-    let mut y = 10;
-    std::mem::swap(&mut x, &mut y);
+    match read_menu("menu.txt") {
+        Ok(menu) => println!("{} lines", count_lines(&menu)),
+        Err(e) => println!("no menu file: {e}"),
+    }
 }
 ```
 
-**Pitfall 3: Using `static mut` When Safer Alternatives Exist**
+Run as shown there is no `menu.txt`, so you will see the error branch; the point is the two signatures.
 
-> **Guidance:** Declaring a `static mut` is almost always **avoided in practice**. Modern Rust (2024+) makes it a lint error to take references to `static mut`, and for good reason. Prefer interior mutability patterns — `Mutex`, `RwLock`, atomics, or `LazyLock` — for safe shared state. In rare FFI scenarios requiring C-compatible mutable statics, use atomics or re-architecture the FFI boundary to minimize unsafe code.
+### Common pitfalls
 
-In Rust 1.90.0, `OnceLock`, `Mutex`, atomics, and other types cover nearly all use cases safely:
+**Pitfall 1: cloning to make the compiler go away.** A `.clone()` sprinkled in to silence an error usually means the function should borrow:
 
 ```rust
-// WRONG: unsafe mutable static
-static mut BAD_COUNTER: u64 = 0;
-
-fn unsafe_increment() {
-    unsafe {
-        BAD_COUNTER += 1;  // Data races possible
+// Wasteful: takes the whole list by value although it only reads it, so every caller
+// that still needs the list has to clone it first.
+fn print_receipts_wasteful(orders: Vec<String>) -> Vec<String> {
+    let mut receipts = Vec::new();
+    for order in &orders {
+        receipts.push(format!("receipt: {order}"));
     }
+    receipts
 }
 
-// RIGHT: use atomics
+// Right: borrow the slice; the caller keeps its list and nothing is copied but the output.
+fn print_receipts(orders: &[String]) -> Vec<String> {
+    orders.iter().map(|order| format!("receipt: {order}")).collect()
+}
+
+fn main() {
+    let orders = vec![String::from("latte"), String::from("mocha")];
+    let a = print_receipts_wasteful(orders.clone());   // the clone exists only to keep `orders`
+    let b = print_receipts(&orders);                   // no clone needed
+    println!("{a:?} {b:?} {}", orders.len());
+}
+```
+
+**Pitfall 2: holding a borrow across a change.** The borrow checker is describing a real bug here: pushing may move the whole vector to a new heap buffer, and `first` would point at freed memory.
+
+```rust
+// ✗ Does not compile. Error: E0502 cannot borrow `board` as mutable because it is also borrowed as immutable
+fn main() {
+    let mut board = vec![String::from("latte")];
+    let first = &board[0];
+    board.push(String::from("mocha"));
+    println!("{first}");
+}
+```
+
+Take what you need out of the borrow first (clone the item, or copy its length), or do the push before you take the reference.
+
+**Pitfall 3: `static mut` when a safe type exists.** Since Rust 1.63 `Mutex::new` is usable in a static, and the atomics' constructors have been since Rust 1.24; there is no reason left for a `static mut` outside C interop (Part Three).
+
+```rust
 use std::sync::atomic::{AtomicU64, Ordering};
 
-static GOOD_COUNTER: AtomicU64 = AtomicU64::new(0);
+static TICKETS: AtomicU64 = AtomicU64::new(0);
 
-fn safe_increment() {
-    GOOD_COUNTER.fetch_add(1, Ordering::SeqCst);
+fn next_ticket() -> u64 {
+    TICKETS.fetch_add(1, Ordering::Relaxed) + 1   // a counter nothing else depends on: Relaxed is exact
+}
+
+fn main() {
+    println!("{} {}", next_ticket(), next_ticket());
 }
 ```
-
 
 ***
 
 ## Part Twelve: Choosing the Right Global State Pattern
 
-| Pattern | When to Use | Example |
+| Pattern | Use it for | Example |
 | :-- | :-- | :-- |
-| **Atomic types** (`AtomicU32`, etc.) | Counters, flags, simple coordination | `static HITS: AtomicU64 = AtomicU64::new(0)` |
-| **Mutex/RwLock** | Protected shared state with multiple threads | `static DATA: Mutex<Vec<_>> = Mutex::new(vec![])` |
-| **LazyLock** | Lazy-initialized immutable static (preferred for 2024+) | `static CONFIG: LazyLock<AppConfig> = LazyLock::new(\|\| {...})` |
-| **OnceLock** | One-time initialization from external sources | `static ONCE: OnceLock<T> = OnceLock::new()` then `ONCE.set(val)` |
-| **Arc<Mutex<T>>** | Shared ownership across threads (heap-allocated) | `let shared = Arc::new(Mutex::new(data));` in threads |
+| plain `static` | a fixed value with one address, known at compile time | `static PORT: u16 = 8080;` |
+| **atomics** | counters and flags | `static HITS: AtomicU64 = AtomicU64::new(0);` |
+| **`Mutex` / `RwLock`** | shared state that changes at run time | `static ORDERS: Mutex<Vec<String>> = Mutex::new(Vec::new());` |
+| **`LazyLock`** | a value built on first use, initialiser known at the declaration | `static MENU: LazyLock<Menu> = LazyLock::new(load_menu);` |
+| **`OnceLock`** | a value set once at run time from somewhere else | `static ID: OnceLock<String> = OnceLock::new();` then `ID.set(v)` |
+| **`Arc<Mutex<T>>`** | shared ownership of run-time data between threads | `let shared = Arc::new(Mutex::new(data));` |
 
 **Quick decision:**
-- Counters/flags → Atomic
-- Shared mutable state → Mutex/RwLock
-- Initialize once at compile time → LazyLock
-- Initialize once at runtime (custom params) → OnceLock
-- Multi-thread ownership (heap) → Arc<Mutex<T>>
 
+- A number or a flag: an atomic.
+- Anything bigger that changes: `Mutex` or `RwLock`.
+- Built once, on first use, from code you can write at the declaration: `LazyLock`.
+- Set once, from a value that arrives at run time: `OnceLock`.
+- Not global at all, but shared by some threads: `Arc<Mutex<T>>`.
 
 ## Conclusion
 
-Rust's ownership system provides memory safety and thread safety guarantees that would require runtime overhead (garbage collection) or extensive manual verification in other languages. The borrow checker may seem strict initially, but it enforces patterns that are both safe and efficient.
+Everything in this post follows from two ideas. **One owner at a time**: every value has exactly one owner, so it is dropped exactly once, at a point the compiler can name. **Many readers or one writer**: while a value is shared it cannot change, and while it is being changed nobody else can see it. Constants are values copied into place at compile time; statics are single, never-dropped values with one address; bindings own values for a scope; borrows lend them out under the one rule.
 
-The key mental model: **one owner at a time**. This rule, combined with the borrow checker, eliminates entire categories of bugs—use-after-free, double-free, data races—at compile time with zero runtime cost.
+Learn where each value is born and where it dies, and the borrow checker stops being an obstacle and becomes the colleague who reads your code more carefully than you do.
 
-Master these concepts and you'll write Rust code that compiles cleanly and runs efficiently, with the compiler helping you catch mistakes that would cause subtle bugs in other languages.
-
-For deeper exploration of memory layout specifics, see our [memory reference guide](/rust/concepts/2025/01/05/rust-mem-ref.html). For lifetime syntax and reference semantics, see our [ownership and lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html).
-
-***
+For byte-level layout, see the [memory layout guide](/rust/concepts/2025/01/05/rust-mem-ref.html). For lifetime annotations, variance and the advanced ownership patterns, continue with the [ownership and lifetimes guide](/rust/concepts/2025/02/09/rust-ownership.html).
