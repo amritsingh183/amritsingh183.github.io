@@ -17,6 +17,46 @@ last_updated: 2026-09-18
 
 **The running example: a café till.** Throughout this post the code models a small café's cash register. It has a fixed tax rate (a constant), one ticket counter shared by every till (a static), orders that change while the customer is still deciding (mutable variables), receipts that are handed to customers (ownership moves), and an order board that everyone reads but only one person rewrites at a time (borrowing). When a rule feels abstract, ask "what would this mean at the café?"
 
+Here is the café at a glance, with each thing mapped to the Rust idea it stands for. Come back to it whenever a later part mentions the till, the board, or the receipt.
+
+<style>.mermaid { text-align: center; margin: 1.5rem 0; } .mermaid foreignObject { overflow: visible; }</style>
+<div class="mermaid">
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "Helvetica Neue, Helvetica, Arial, sans-serif", "fontSize": "14px", "primaryColor": "#fffbeb", "primaryTextColor": "#292524", "primaryBorderColor": "#d97706", "lineColor": "#78716c", "textColor": "#292524", "clusterBkg": "#f5f5f4", "clusterBorder": "#a8a29e", "titleColor": "#292524", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart TB
+  subgraph wall["🧱 On the wall, fixed all day"]
+    MENU["📋 Menu board<br/>prices and the tax rate<br/><b>const</b>: baked in at compile time,<br/>copied wherever it is used"]
+  end
+  subgraph counter["🛎️ Shared counter, used by every till"]
+    TICKETS["🎟️ Ticket counter<br/><b>static</b>: one address for the whole program,<br/>never dropped"]
+    BOARD["🗒️ Order board<br/><b>borrowing</b>: many may read (#38;T)<br/>or one may rewrite (#38;mut T), never both"]
+  end
+  subgraph till["☕ Till 1: one order = one scope"]
+    TOTAL["running_total<br/><b>let mut</b>: changes while the customer decides"]
+    RECEIPT["🧾 Receipt<br/><b>owned value</b>: exactly one holder at a time"]
+  end
+  CUSTOMER(["🙂 Customer"])
+  DONE["🔒 Drawer locked<br/><b>Drop</b>: cleanup runs on its own<br/>when the scope ends"]
+
+  MENU -. "read a copy" .-> TOTAL
+  TICKETS -- "next number" --> TOTAL
+  BOARD -. "read, or rewrite" .-> TOTAL
+  TOTAL -- "customer pays" --> RECEIPT
+  RECEIPT == "handed over: a <b>move</b><br/>the till no longer has it" ==> CUSTOMER
+  TOTAL -. "order finished, the scope ends" .-> DONE
+
+  classDef cafe fill:#fffbeb,stroke:#d97706,color:#292524,stroke-width:1.5px,rx:10,ry:10
+  classDef person fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px
+  classDef finish fill:#f5f5f4,stroke:#78716c,color:#292524,stroke-width:1.5px,rx:10,ry:10
+  class MENU,TICKETS,BOARD,TOTAL,RECEIPT cafe
+  class CUSTOMER person
+  class DONE finish
+</div>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: false });
+  await mermaid.run({ querySelector: ".mermaid" });
+</script>
+
 ## Foundation: One Rule Behind Everything
 
 ### Many readers or one writer
