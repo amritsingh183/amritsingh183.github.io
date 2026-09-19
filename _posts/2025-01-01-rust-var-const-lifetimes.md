@@ -19,8 +19,28 @@ last_updated: 2026-09-18
 
 Here is the café at a glance, with each thing mapped to the Rust idea it stands for. Come back to it whenever a later part mentions the till, the board, or the receipt.
 
-<style>.mermaid { text-align: center; margin: 1.5rem 0; } .mermaid foreignObject { overflow: visible; }</style>
-<div class="mermaid">
+<style>
+  .cafe-diagram {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    border: 1px solid #a8a29e;
+    border-radius: 0.5rem;
+    background: #ffffff;
+  }
+  .cafe-diagram:focus-visible { outline: 2px solid #d97706; outline-offset: 3px; }
+  .cafe-diagram .mermaid {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .cafe-diagram foreignObject { overflow: visible; }
+  .cafe-diagram svg { display: block; max-width: none; margin: 0 auto; }
+</style>
+<div class="cafe-diagram" role="region" aria-label="Café example of Rust ownership and borrowing; scroll horizontally to see the whole diagram" tabindex="0">
+<div class="mermaid" id="cafe-rust-diagram">
 %%{init: {"theme": "base", "themeVariables": {"fontFamily": "Helvetica Neue, Helvetica, Arial, sans-serif", "fontSize": "14px", "primaryColor": "#fffbeb", "primaryTextColor": "#292524", "primaryBorderColor": "#d97706", "lineColor": "#78716c", "textColor": "#292524", "clusterBkg": "#f5f5f4", "clusterBorder": "#a8a29e", "titleColor": "#292524", "edgeLabelBackground": "#ffffff"}}}%%
 flowchart TB
   subgraph wall["🧱 On the wall, fixed all day"]
@@ -51,10 +71,11 @@ flowchart TB
   class CUSTOMER person
   class DONE finish
 </div>
+</div>
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-  mermaid.initialize({ startOnLoad: false });
-  await mermaid.run({ querySelector: ".mermaid" });
+  mermaid.initialize({ startOnLoad: false, flowchart: { useMaxWidth: false } });
+  await mermaid.run({ querySelector: "#cafe-rust-diagram" });
 </script>
 
 ## Foundation: One Rule Behind Everything
