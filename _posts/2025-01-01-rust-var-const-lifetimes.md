@@ -15,7 +15,7 @@ last_updated: 2026-09-18
 
 **A version is not an edition.** Rust ships a new *version* every six weeks: 1.80, 1.81, ... 1.98. An *edition* (2015, 2018, 2021, 2024) is a setting in `Cargo.toml` that switches on a small set of language rule changes. A compiler supports every edition that existed when it shipped, so a new compiler still builds old-edition crates, while edition 2024 needs Rust 1.85 or newer. So `LazyLock` "needs Rust 1.80" (a version), while "references to `static mut` are an error" is an edition-2024 rule that even Rust 1.98 does not apply to a 2021-edition crate. This post says which one it means every time.
 
-**The running example: a café till.** Throughout this post the code models a small café's cash register. It has a fixed tax rate (a constant), one ticket counter shared by every till (a static), orders that change while the customer is still deciding (mutable variables), receipts that are handed to customers (ownership moves), and an order board that everyone reads but only one person rewrites at a time (borrowing). When a rule feels abstract, ask "what would this mean at the café?"
+**The running example: a café till.** Throughout this post the code models a small café's till: the cash register, or billing counter, where one customer is served at a time. It has a fixed tax rate (a constant), one ticket counter shared by every till (a static), orders that change while the customer is still deciding (mutable variables), receipts that are handed to customers (ownership moves), and an order board that everyone reads but only one person rewrites at a time (borrowing). When a rule feels abstract, ask "what would this mean at the café?"
 
 Here is the café at a glance, with each thing mapped to the Rust idea it stands for. Come back to it whenever a later part mentions the till, the board, or the receipt.
 
@@ -46,7 +46,7 @@ flowchart TB
   subgraph wall["🧱 On the wall, fixed all day"]
     MENU["📋 Menu board<br/>prices and the tax rate<br/><b>const</b>: baked in at compile time,<br/>copied wherever it is used"]
   end
-  subgraph counter["🛎️ Shared counter, used by every till"]
+  subgraph counter["🛎️ Behind the counter, shared by every till"]
     TICKETS["🎟️ Ticket counter<br/><b>static</b>: one address for the whole program,<br/>never dropped"]
     BOARD["🗒️ Order board<br/><b>borrowing</b>: many may read (#38;T)<br/>or one may rewrite (#38;mut T), never both"]
   end
