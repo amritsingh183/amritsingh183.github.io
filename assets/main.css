@@ -926,35 +926,613 @@ dd {
 
 /* ===== Print Styles ===== */
 @media print {
+
+    /* ================================================================================
+       Two print modes share this block.
+       (A) LAYOUT: page geometry, chrome, sizes, breaks, wrapping. Always applies.
+       (B) CLEAN LOOK (default): white paper, serif body, light Rouge palette. Scoped to
+           html:not([data-print="theme"]).
+       (C) THEME LOOK: the screen theme on paper. Scoped to html[data-print="theme"], set by
+           _includes/head.html when the URL carries ?print=theme. Screen rules supply the
+           colours; (C) adds only what paper needs.
+       Every colour, background, border colour, font family and text decoration lives in
+       (B) or (C). The prefix adds (0,1,1) to every (B)/(C) rule; (A) never sets a property
+       that (B) or (C) sets on the same element, so the extra specificity cannot flip (A).
+       ================================================================================ */
+
+    /* ---- (A) Page geometry: A4, margins 15/18/18/18 mm, page number in the bottom margin.
+       The margin box cannot see the html attribute; it sits on the white canvas in both
+       modes, so #666 (5.7:1 on white) stays. Full-bleed dark canvas would need #777. ---- */
+    @page {
+        size: A4;
+        margin: 15mm 18mm 18mm 18mm;
+
+        @bottom-center {
+            content: counter(page) " / " counter(pages);
+            font: 8.5pt/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #666;
+        }
+    }
+
+    /* The cafe flowchart is 1145 px wide: in a portrait column its 14 px labels shrink to ~6 pt,
+       on a landscape page they stay ~9 pt. Delete this rule and the `page: wide` line further
+       down to keep the diagram in the portrait flow instead. */
+    @page wide {
+        size: A4 landscape;
+    }
+
+    /* ---- (A) Screen-only effects off in BOTH modes. Blurred shadows cannot be expressed in
+       PDF vectors: Skia rasterises each shadowed run (1,674 of them in one post). ---- */
+    *,
+    *::before,
+    *::after {
+        text-shadow: none !important;
+        box-shadow: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* ---- (A) Canvas and body box. The canvas stays white in both modes so page margins and
+       the page number print on paper white; in theme mode the body box carries the dark. ---- */
+    html {
+        font-size: 11pt;
+        background: #fff;
+        overflow: visible;
+    }
+
     body {
-        background: white;
-        color: black;
+        display: block;
+        margin: 0;
+        min-height: 0;
+        position: static;
+        overflow: visible;
+        font-size: 11pt;
+        line-height: 1.4;
     }
 
-    a,
-    a:visited {
-        text-decoration: underline;
+    body::before {
+        display: none;
     }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
+    /* ---- (A) Site chrome ---- */
+    .site-header,
+    .site-nav,
+    .site-footer,
+    .mermaidTooltip,
+    .header-link {
+        display: none;
     }
 
-    pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
+    .wrapper {
+        max-width: none;
+        margin: 0;
+        padding: 0;
     }
 
-    img {
-        max-width: 100%;
+    .page-content {
+        padding: 0;
     }
 
+    /* ---- (A) One title: minima's h1.post-title duplicates the H1 every post body opens with ---- */
+    .post-header:has(+ .post-content h1) .post-title {
+        display: none;
+    }
+
+    .post-header {
+        margin: 0 0 4pt;
+    }
+
+    .post-meta {
+        font-size: 9.5pt;
+        line-height: 1.3;
+        margin: 0;
+    }
+
+    /* ---- (A) Headings: sizes, rhythm, breaks (faces and colours in B/C) ---- */
     h1,
     h2,
     h3,
     h4,
     h5,
     h6 {
-        page-break-after: avoid;
+        line-height: 1.2;
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    h1 {
+        font-size: 20pt;
+        margin: 0 0 0.6em;
+        position: static;
+    }
+
+    h1::before,
+    h1::after {
+        content: none;
+    }
+
+    h2 {
+        font-size: 15pt;
+        margin: 1.6em 0 0.5em;
+        padding-bottom: 2pt;
+        border-bottom-width: 0.5pt;
+        border-bottom-style: solid;
+    }
+
+    h3 {
+        font-size: 12.5pt;
+        margin: 1.3em 0 0.4em;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: 11pt;
+        margin: 1em 0 0.3em;
+    }
+
+    h2 + h3,
+    h3 + h4 {
+        margin-top: 0.5em;
+    }
+
+    /* ---- (A) Body text ---- */
+    p,
+    li,
+    dd {
+        orphans: 3;
+        widows: 3;
+    }
+
+    p {
+        margin: 0 0 0.75em;
+        text-wrap-style: pretty;
+    }
+
+    /* A lead-in paragraph stays on the same page as the code block it introduces */
+    .post-content p:has(+ .highlighter-rouge) {
+        break-after: avoid;
+    }
+
+    ul {
+        margin: 0 0 0.75em;
+        padding-left: 1.5em;
+    }
+
+    ol {
+        margin: 0 0 0.75em;
+        padding-left: 1.8em;
+    }
+
+    li {
+        margin: 0 0 0.2em;
+    }
+
+    li > ul,
+    li > ol {
+        margin: 0.2em 0 0;
+    }
+
+    hr {
+        border: 0;
+        border-top-width: 0.5pt;
+        border-top-style: solid;
+        width: 40%;
+        margin: 1.2em auto;
+    }
+
+    hr:has(+ h2) {
+        display: none;
+    }
+
+    /* ---- (A) Links: external ones print their URL once; provenance line from the hidden
+       <a class="u-url> minima emits. The font-weight/style resets replace the former `font`
+       shorthand so the suffix never inherits a link's 500 weight or a blockquote's italic. ---- */
+    .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after {
+        content: " (" attr(href) ")";
+        font-size: 8.5pt;
+        line-height: 1;
+        font-weight: normal;
+        font-style: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .post > a.u-url[hidden] {
+        display: block;
+        margin-top: 1.5em;
+        font-size: 8.5pt;
+        line-height: 1.3;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        break-inside: avoid;
+        break-before: avoid;
+    }
+
+    .post > a.u-url[hidden]::before {
+        content: "Source: https://amritsingh183.github.io" attr(href);
+    }
+
+    /* ---- (A) Inline code size ---- */
+    code {
+        font-size: 0.88em;
+        overflow-wrap: anywhere;
+    }
+
+    /* ---- (A) Code blocks: div.highlighter-rouge > div.highlight > pre.highlight > code ----
+       The outer group repeats the screen selector `.highlighter-rouge .highlight` (0,2,0); it also
+       matches the inner pre.highlight, whose frame the next rule removes again at (0,2,1). (B)/(C)
+       set only the frame COLOUR, never its width, so the inner reset holds in both modes. */
+    .highlighter-rouge .highlight,
+    .highlight,
+    pre {
+        border-width: 0.5pt;
+        border-style: solid;
+        padding: 5pt 7pt;
+        margin: 0 0 0.9em;
+        overflow: visible;
+        break-inside: avoid;
+    }
+
+    .highlighter-rouge .highlight pre,
+    .highlight pre {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    pre {
+        font-size: 8.5pt;
+        line-height: 1.35;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        orphans: 3;
+        widows: 3;
+    }
+
+    pre > code {
+        font-size: inherit;
+    }
+
+    /* ---- (A) Tables ---- */
+    table {
+        width: 100%;
+        margin: 0.5em 0 1em;
+        border-collapse: collapse;
+        border-width: 0.5pt;
+        border-style: solid;
+        font-size: 9.5pt;
+        line-height: 1.3;
+        break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr {
+        break-inside: avoid;
+    }
+
+    table th,
+    table td {
+        border-width: 0.5pt;
+        border-style: solid;
+        padding: 3pt 5pt;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    table th {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    table code {
+        font-size: 0.9em;
+    }
+
+    /* ---- (A) Blockquotes ---- */
+    blockquote {
+        margin: 0.8em 0 1em;
+        padding: 0.2em 0 0.2em 1em;
+        border-left-width: 1.5pt;
+        border-left-style: solid;
+        clip-path: none;
+        font-size: 10.5pt;
+        font-style: italic;
+        break-inside: avoid;
+    }
+
+    blockquote p:last-child {
+        margin-bottom: 0;
+    }
+
+    blockquote code {
+        font-style: normal;
+    }
+
+    /* ---- (A) Images, figures, SVG ---- */
+    img {
+        max-width: 100%;
+        height: auto;
+        filter: none;
+        break-inside: avoid;
+    }
+
+    figure {
+        margin: 0 0 1em;
+        break-inside: avoid;
+    }
+
+    figcaption {
+        font-size: 9pt;
+        line-height: 1.3;
+        margin-top: 4pt;
+        text-align: center;
+    }
+
+    .post-content svg {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* ---- (A) Mermaid. The post's inline <style> (later in cascade order than this file) sets
+       `.cafe-diagram svg { max-width: none }` and `.cafe-diagram { overflow-x: auto; padding: 1rem }`;
+       Mermaid writes width/height attributes (useMaxWidth: false). Higher specificity and
+       !important are therefore required here, and they cannot reach screen media. The frame
+       colour #a8a29e is the post's own and identical in both modes. ---- */
+    .post-content :has(> .mermaid) {
+        overflow: visible;
+    }
+
+    .post-content .mermaid {
+        margin: 0;
+        overflow: visible;
+    }
+
+    .post-content .mermaid svg {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 auto;
+    }
+
+    .post-content .cafe-diagram {
+        page: wide;
+        overflow: visible;
+        margin: 0.8em 0 1em;
+        padding: 6pt;
+        border: 0.5pt solid #a8a29e;
+        break-inside: avoid;
+    }
+
+    /* ================================================================================
+       (B) CLEAN LOOK: white paper, dark ink, serif body, sans headings, Menlo code.
+       ================================================================================ */
+    html:not([data-print="theme"]) body {
+        background: #fff none;
+        color: #000;
+        font-family: Charter, "Iowan Old Style", Georgia, "Times New Roman", Times, serif;
+    }
+
+    html:not([data-print="theme"]) .post-meta {
+        font-family: var(--font-sans);
+        color: #555;
+    }
+
+    html:not([data-print="theme"]) h1,
+    html:not([data-print="theme"]) h2,
+    html:not([data-print="theme"]) h3,
+    html:not([data-print="theme"]) h4,
+    html:not([data-print="theme"]) h5,
+    html:not([data-print="theme"]) h6 {
+        font-family: var(--font-sans);
+        font-weight: 700;
+        color: #000;
+        letter-spacing: 0;
+    }
+
+    html:not([data-print="theme"]) h2 {
+        border-bottom-color: #999;
+    }
+
+    html:not([data-print="theme"]) dt {
+        color: #000;
+    }
+
+    html:not([data-print="theme"]) hr {
+        border-top-color: #bbb;
+    }
+
+    /* Internal links plain; `.post-link` listed for the home page (its screen rule is (0,1,0)) */
+    html:not([data-print="theme"]) a,
+    html:not([data-print="theme"]) a:visited,
+    html:not([data-print="theme"]) .post-link {
+        color: inherit;
+        font-weight: inherit;
+        text-decoration: underline;
+        text-decoration-color: #999;
+        text-decoration-thickness: 0.5pt;
+        text-underline-offset: 1.5pt;
+    }
+
+    html:not([data-print="theme"]) .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
+    html:not([data-print="theme"]) .post > a.u-url[hidden] {
+        font-family: var(--font-sans);
+        color: #555;
+    }
+
+    html:not([data-print="theme"]) code {
+        font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+        font-weight: inherit;
+        color: #000;
+        background: none;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    html:not([data-print="theme"]) .highlighter-rouge .highlight,
+    html:not([data-print="theme"]) .highlight,
+    html:not([data-print="theme"]) pre {
+        background: none;
+        color: #000;
+        border-color: #b3b3b3;
+        border-radius: 0;
+    }
+
+    html:not([data-print="theme"]) pre {
+        font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    }
+
+    html:not([data-print="theme"]) pre > code {
+        color: inherit;
+    }
+
+    /* Rouge palette for white paper (every colour >= 5:1 against #fff).
+       `.highlight :is(...)` keeps the (0,3,1) specificity of the expanded selectors. */
+    html:not([data-print="theme"]) .highlight span {
+        color: #000;
+        background: none;
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.k, .kd, .kr, .kn, .kp, .nt) {
+        color: #00008b;
+        font-weight: bold;
+    }
+
+    html:not([data-print="theme"]) .highlight .kc {
+        color: #8b0000;
+        font-weight: bold;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.kt, .nc, .nb, .bp) {
+        color: #006b6b;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.nf, .fm) {
+        color: #005f87;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.nd, .na) {
+        color: #6f2da8;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.s, .s1, .s2, .sh, .sc, .se, .si, .sr, .ss) {
+        color: #006400;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.m, .mi, .mf, .mh, .mo, .no, .ni) {
+        color: #8a3d00;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.c, .c1, .cm, .cs, .cd, .cp) {
+        color: #555;
+        font-style: italic;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.o, .ow, .p, .nn, .py) {
+        color: #333;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight :is(.n, .h, .nv, .nl) {
+        color: #000;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) .highlight .err {
+        color: #b00020;
+        background: none;
+        font-weight: normal;
+    }
+
+    html:not([data-print="theme"]) table {
+        border-color: #999;
+        color: #000;
+    }
+
+    html:not([data-print="theme"]) table tr:nth-child(even) {
+        background: none;
+    }
+
+    html:not([data-print="theme"]) table th,
+    html:not([data-print="theme"]) table td {
+        border-color: #999;
+    }
+
+    html:not([data-print="theme"]) table th {
+        background: #eee;
+        color: #000;
+        font-family: var(--font-sans);
+        font-weight: 700;
+    }
+
+    html:not([data-print="theme"]) blockquote {
+        border-left-color: #999;
+        background: none;
+        color: #222;
+    }
+
+    html:not([data-print="theme"]) img {
+        border: 0;
+    }
+
+    html:not([data-print="theme"]) figcaption {
+        font-family: var(--font-sans);
+        color: #333;
+    }
+
+    html:not([data-print="theme"]) .post-content .cafe-diagram {
+        border-radius: 0;
+        background: none;
+    }
+
+    /* ================================================================================
+       (C) THEME LOOK (?print=theme): the screen rules paint gold Share Tech Mono headings,
+       green inline code, the dark Rouge palette, gold table heads. Paper needs: forced
+       backgrounds, a dark body box on the white canvas (flat: the six radial-gradient stars
+       would become shading patterns on every page), an inset so text clears the box edge,
+       and visible colours where the screen uses 15-20 % alpha or has no rule.
+       #857105 = gold at 50 % over #0a0a0a, pre-composited (no PDF transparency).
+       ================================================================================ */
+    html[data-print="theme"] {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    html[data-print="theme"] body {
+        background: var(--bg-primary);
+        padding: 10pt 12pt;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+    html[data-print="theme"] hr {
+        border-top-color: #857105;
+    }
+
+    html[data-print="theme"] .highlighter-rouge .highlight,
+    html[data-print="theme"] .highlight,
+    html[data-print="theme"] pre {
+        border-color: #857105;
+    }
+
+    html[data-print="theme"] table,
+    html[data-print="theme"] table td {
+        border-color: #857105;
+    }
+
+    html[data-print="theme"] .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
+    html[data-print="theme"] .post > a.u-url[hidden] {
+        color: var(--text-secondary);
     }
 }
