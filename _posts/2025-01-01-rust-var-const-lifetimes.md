@@ -3,7 +3,7 @@ layout: post
 title: "Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide"
 date: 2025-01-01 11:23:00 +0530
 categories: rust concepts
-last_updated: 2026-09-18
+last_updated: 2026-09-24
 ---
 # Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide
 
@@ -308,6 +308,28 @@ fn main() {
 // dropped first local
 ```
 
+Rule 3 has two refinements. Some temporaries die even *earlier* than the end of the statement: the condition of a plain `if` or `while` (an `if let` is different: the value it matches on lives through the body, as the next section shows), the body of a loop and the body of each `match` arm are scopes of their own, so a temporary made there dies when that part finishes. The value you `match` on is not one of them: a guard created in a `match` scrutinee lives through every arm. And one shape lives *longer*: when a `let` binds a **reference** to a temporary, the temporary is kept alive as long as the binding. This is called temporary lifetime extension, and it is why `let r = &String::from("x");` is fine:
+
+```rust
+struct Noisy(&'static str);
+
+impl Drop for Noisy {
+    fn drop(&mut self) {
+        println!("dropped {}", self.0);
+    }
+}
+
+fn main() {
+    let r = &Noisy("extended");         // `r` borrows a temporary: the temporary lives as long as `r`
+    let n = Noisy("plain").0.len();     // this temporary dies at the end of this statement
+    println!("{} {n}", r.0);
+}
+// Output:
+// dropped plain
+// extended 5
+// dropped extended
+```
+
 #### `let _ = value` is not `let _x = value`
 
 The underscore pattern `_` binds nothing, which has three consequences people mix up:
@@ -431,7 +453,7 @@ fn main() {
     if let Some(next) = queue.borrow().first() {
         println!("next up: {next}");
     } else {
-        // edition 2021: panics "already borrowed", because the read guard is still alive here
+        // edition 2021: panics "RefCell already borrowed", because the read guard is still alive here
         // edition 2024: the read guard died before `else`, so this is fine
         queue.borrow_mut().push(String::from("latte"));
     }
@@ -439,7 +461,22 @@ fn main() {
 }
 ```
 
-Separately from editions, Rust 1.98 (August 2026) tightened one more corner in every edition: temporaries created inside `assert_eq!` and `assert_ne!` now get their own scope, so a guard made inside the assertion is released as soon as the assertion finishes.
+Separately from editions, Rust 1.98 (August 2026) tightened one more corner in every edition: temporaries created inside `assert_eq!` and `assert_ne!` now get their own scope, so a guard made inside the assertion is released as soon as the assertion finishes. Before 1.98 these two macros expanded to a bare `match`, whose scrutinee has no temporary scope of its own, so in edition 2021 an assertion written as a block's tail expression kept its guard alive past the block's locals, exactly like `count_orders` above. Now this compiles in every edition:
+
+```rust
+use std::sync::Mutex;
+
+fn check_board() {
+    let orders = Mutex::new(vec![String::from("latte")]);
+    assert_eq!(orders.lock().unwrap().len(), 1)   // no semicolon: the assertion is the tail expression
+}   // Rust 1.98+: the guard died inside the assertion, so `orders` can be dropped here in any edition
+    // (before Rust 1.98, in edition 2021, this was error[E0597]: `orders` does not live long enough)
+
+fn main() {
+    check_board();
+    println!("board checked");
+}
+```
 
 ***
 
@@ -500,7 +537,36 @@ fn main() {
 }
 ```
 
-Two things worth knowing about `const fn`: most standard-library functions are **not** const, and a `const fn` is an ordinary function too, so you can also call it at run time with run-time values. Since Rust 1.83 a `const fn` may take `&mut` parameters, and a `const` may hold a reference to a `static`, as long as that static is immutable and has no interior mutability.
+Two things worth knowing about `const fn`: most standard-library functions are **not** const, and a `const fn` is an ordinary function too, so you can also call it at run time with run-time values.
+
+Since Rust 1.83 a `const fn` may take `&mut` parameters, and a constant may refer to an immutable `static`: it may take its address and read its value. Since Rust 1.90 a constant may also hold the address of a `static mut` or of an interior-mutable static, though such a constant can then not be used as a `match` pattern. What a constant may never do is *read* a `static mut` or an interior-mutable static at compile time, because that value can change while the program runs, or write to any static:
+
+```rust
+static OPENING_HOUR: u32 = 7;
+
+const fn plus_one(n: &mut u32) {                   // Rust 1.83: `&mut` in a const fn
+    *n += 1;
+}
+
+const CLOSING_HOUR: u32 = { let mut h = 17; plus_one(&mut h); h };
+const OPENING_REF: &u32 = &OPENING_HOUR;           // Rust 1.83: a constant may point at a static
+const FIRST_SHIFT: u32 = OPENING_HOUR;             // and may read an immutable static
+
+fn main() {
+    println!("{CLOSING_HOUR} {OPENING_REF} {FIRST_SHIFT}");   // 18 7 7
+}
+```
+
+```rust
+// ✗ Does not compile. Error: E0080 constant accesses mutable global memory
+static mut TICKETS: u32 = 0;   // `static mut` is explained in Part Three
+
+const TICKETS_AT_BUILD: u32 = unsafe { TICKETS };   // the value could change at run time, so it cannot be baked in
+
+fn main() {
+    println!("{TICKETS_AT_BUILD}");
+}
+```
 
 **Inline `const { }` blocks (Rust 1.79).** A block marked `const` is evaluated at compile time wherever it appears. The everyday use is building an array of something that is not `Copy`, because the block is evaluated afresh for every element:
 
@@ -597,7 +663,21 @@ fn main() {
 }
 ```
 
-Make it a `static` and it counts. The one legitimate use of an interior-mutable `const` is as a *template* for building arrays, which is what `[const { ... }; N]` now does more directly.
+Make it a `static` and it counts; Part Three shows the `AtomicU32` version. The one legitimate use of an interior-mutable `const` is as a *template* for building an array of independent values, because "a fresh copy per use" is exactly what an array initialiser wants:
+
+```rust
+use std::sync::Mutex;
+
+const EMPTY_QUEUE: Mutex<Vec<String>> = Mutex::new(Vec::new());   // a template: every use is a fresh value
+static QUEUES: [Mutex<Vec<String>>; 8] = [EMPTY_QUEUE; 8];        // eight independent queues, one per till
+
+fn main() {
+    QUEUES[2].lock().unwrap().push(String::from("latte"));
+    println!("till 2 has {}, till 3 has {}", QUEUES[2].lock().unwrap().len(), QUEUES[3].lock().unwrap().len()); // 1, 0
+}
+```
+
+This is what `[const { ... }; N]` (above) does without the named constant. rustc does not warn here, because nothing is mutated through the constant itself.
 
 ***
 
@@ -1093,7 +1173,21 @@ fn main() {
 }
 ```
 
-When Rust resolves `orders_ref.clone()`, it first looks for a `clone` whose receiver is exactly `&Vec<String>`. `Vec::clone(&self)` is exactly that, so the list is cloned. The reference type's own `clone` would need `&&Vec<String>`, which comes later in the search. That is method resolution, not deref coercion. The trap runs the other way: if the type behind the reference is **not** `Clone`, `.clone()` quietly copies the reference and hands you another `&T`, and rustc warns with `noop_method_call`. Read that warning as "you did not clone what you think you cloned".
+When Rust resolves `orders_ref.clone()`, it first looks for a `clone` whose receiver is exactly `&Vec<String>`. `Vec::clone(&self)` is exactly that, so the list is cloned. The reference type's own `clone` would need `&&Vec<String>`, which comes later in the search. That is method resolution, not deref coercion. The trap runs the other way: if the type behind the reference is **not** `Clone`, `.clone()` quietly copies the reference and hands you another `&T`, and rustc warns with `noop_method_call`. Read that warning as "you did not clone what you think you cloned":
+
+```rust
+struct Till {           // deliberately not Clone
+    id: u32,
+}
+
+fn main() {
+    let till = Till { id: 1 };
+    let r: &Till = &till;
+    let r2 = r.clone();          // Till is not Clone, so this copies the reference; rustc warns: noop_method_call
+    let _: &Till = r2;           // r2 is another &Till, not a Till
+    println!("{}", r2.id);
+}
+```
 
 ### Exclusive references (`&mut T`)
 
@@ -1146,7 +1240,21 @@ fn main() {
 }
 ```
 
-If you "help" the compiler by writing `-> &'static String`, the error changes to E0515, *cannot return reference to local variable*, which is the one people expect to see first. The fix in both cases is to return the owned value:
+If you "help" the compiler by writing `-> &'static String`, the error changes to E0515, *cannot return reference to local variable*, which is the one people expect to see first:
+
+```rust
+// ✗ Does not compile. Error: E0515 cannot return reference to local variable `s`
+fn todays_special() -> &'static String {
+    let s = String::from("flat white");
+    &s   // `s` dies at the closing brace; the reference would point at freed memory
+}
+
+fn main() {
+    println!("{}", todays_special());
+}
+```
+
+The fix in both cases is to return the owned value:
 
 ```rust
 fn todays_special() -> String {
@@ -1161,7 +1269,20 @@ fn main() {
 
 ### Two exclusive references into one collection
 
-You cannot hold `&mut v[0]` and `&mut v[2]` at the same time by indexing twice; the compiler cannot see that the indexes differ. The standard library provides the safe ways to split a collection into non-overlapping exclusive views:
+You cannot hold `&mut v[0]` and `&mut v[2]` at the same time by indexing twice; the compiler tracks borrows of `queue` as a whole and cannot see that the indexes differ:
+
+```rust
+// ✗ Does not compile. Error: E0499 cannot borrow `queue` as mutable more than once at a time
+fn main() {
+    let mut queue = vec![String::from("latte"), String::from("mocha"), String::from("espresso")];
+    let first = &mut queue[0];
+    let last = &mut queue[2];    // a second exclusive borrow of `queue` while `first` is still in use
+    std::mem::swap(first, last);
+    println!("{queue:?}");
+}
+```
+
+The standard library provides the safe ways to split a collection into non-overlapping exclusive views:
 
 ```rust
 fn main() {
@@ -1245,6 +1366,29 @@ Two-phase treatment applies to three shapes, all of them borrows the compiler in
 2. the automatic reborrow of a `&mut` you pass as a function argument,
 3. the hidden `&mut` of a compound assignment on an overloaded operator (`x += x` on a `Wrapping`, the integer wrapper whose arithmetic wraps around instead of overflowing).
 
+Shape 3 in action:
+
+```rust
+use std::num::Wrapping;
+
+fn main() {
+    let mut x = Wrapping(200u8);
+    x += x;                 // the hidden `&mut x` is two-phase, so the right-hand `x` can still be read (copied)
+    println!("{}", x.0);    // 144: 400 wrapped around at 256
+}
+```
+
+The right-hand side must not *keep* a borrow, though: `s += &s` on a `String` is rejected, because the shared borrow `&s` is still in use when the exclusive one activates:
+
+```rust
+// ✗ Does not compile. Error: E0502 cannot borrow `s` as mutable because it is also borrowed as immutable
+fn main() {
+    let mut s = String::from("latte");
+    s += &s;   // `&s` is still in use when the hidden `&mut s` activates
+    println!("{s}");
+}
+```
+
 It does **not** apply to a `&mut queue` that you write out by hand, because that is an ordinary borrow that starts the moment it is evaluated:
 
 ```rust
@@ -1274,7 +1418,16 @@ fn main() {
 }
 ```
 
-And the method-call form breaks as soon as you write the borrow by hand: `Vec::push(&mut queue, queue.len())` gives the same error as the free function. Rust always evaluates a function's arguments **left to right**; that order is guaranteed by the language. The explicit `&mut queue` is evaluated first and is already active when `queue.len()` runs, which is the conflict.
+And the method-call form breaks as soon as you write the borrow by hand: `Vec::push(&mut queue, queue.len())` gives the same error as the free function. Rust always evaluates a function's arguments **left to right**; that order is guaranteed by the language. The explicit `&mut queue` is evaluated first and is already active when `queue.len()` runs, which is the conflict:
+
+```rust
+// ✗ Does not compile. Error: E0502 cannot borrow `queue` as immutable because it is also borrowed as mutable
+fn main() {
+    let mut queue: Vec<usize> = vec![];
+    Vec::push(&mut queue, queue.len());   // the hand-written `&mut queue` is active before `queue.len()` runs
+    println!("{queue:?}");
+}
+```
 
 **Practical rule:** if a call complains about a borrow, evaluate the argument into a local first:
 
@@ -1415,7 +1568,24 @@ fn main() {
 }
 ```
 
-Two details experts rely on: `move` on a `Copy` value copies it, so the original stays usable; and since edition 2021 a closure captures individual *fields* (`order.items`) rather than whole variables, which makes many more closures compile.
+Two details experts rely on: `move` on a `Copy` value copies it, so the original stays usable; and since edition 2021 a closure captures individual *fields* (`order.items`) rather than whole variables, which makes many more closures compile:
+
+```rust
+struct Order {
+    items: Vec<String>,
+    note: String,
+}
+
+fn main() {
+    let mut order = Order { items: vec![], note: String::from("no sugar") };
+    let mut add = || order.items.push(String::from("latte"));   // edition 2021+: captures only `order.items`
+    println!("note: {}", order.note);                            // reading another field meanwhile is fine
+    add();
+    println!("{} item(s)", order.items.len());
+}
+```
+
+Compiled as edition 2018, the same program fails with E0502, *cannot borrow `order.note` as immutable because it is also borrowed as mutable*: the closure captured the whole of `order`.
 
 ### Partial moves
 
@@ -1512,7 +1682,7 @@ Each thread-safe type has a cheaper single-thread sibling that a `static` cannot
 | `OnceCell<T>` | `OnceLock<T>` | set once, read many times |
 | `LazyCell<T>` | `LazyLock<T>` | build on first use |
 
-A `RefCell` panics if you break the rule; a `Mutex` makes the second thread wait. Same rule, different response. The single-thread column, and the `UnsafeCell` underneath all of it, get their own post.
+A `RefCell` panics if you break the rule; a `Mutex` makes the second thread wait. Same rule, different response. The single-thread column, and the `UnsafeCell` underneath all of it, deserve a post of their own.
 
 ***
 
@@ -1699,7 +1869,22 @@ fn main() {
 }
 ```
 
-Use `LazyLock` when the initialisation code is self-contained, and `OnceLock` when the value is handed in from elsewhere. Since Rust 1.94, `LazyLock::get` tells you whether it has been initialised without forcing it, and `LazyLock::force_mut` gives mutable access through a `&mut` to the lock.
+Use `LazyLock` when the initialisation code is self-contained, and `OnceLock` when the value is handed in from elsewhere. Since Rust 1.94, `LazyLock::get` tells you whether it has been initialised without forcing it, and `LazyLock::force_mut` gives mutable access through a `&mut` to the lock (so it is for a lazy value you own outright, not for a `static`):
+
+```rust
+use std::sync::LazyLock;
+
+static PRICE_LIST: LazyLock<Vec<(&'static str, f64)>> = LazyLock::new(|| {
+    println!("building the price list");
+    vec![("espresso", 2.50), ("latte", 3.50)]
+});
+
+fn main() {
+    println!("{:?}", LazyLock::get(&PRICE_LIST));                // None: nobody has forced it yet
+    println!("{} prices", PRICE_LIST.len());                      // first use: the closure runs
+    println!("{:?}", LazyLock::get(&PRICE_LIST).map(Vec::len));  // Some(2)
+}
+```
 
 ### LazyCell and `thread_local!`
 
@@ -1716,7 +1901,7 @@ fn main() {
 }
 ```
 
-It is `Send` whenever both its value and its initialiser closure are `Send`, so *moving* one into a thread is fine. Its natural home is inside a single thread's own data. For per-thread globals, `thread_local!` already initialises its value lazily the first time each thread touches it, so a `LazyCell` inside is rarely needed. What you often want instead is the `const { }` initialiser, which lets the implementation skip the lazy-initialisation check on most platforms:
+It is `Send` whenever both its value and its initialiser closure are `Send`, so *moving* one into a thread is fine. Its natural home is inside a single thread's own data. For per-thread globals, `thread_local!` already initialises its value lazily the first time each thread touches it, so a `LazyCell` inside is rarely needed. What you often want instead is the `const { }` initialiser, which lets the implementation avoid the lazy-initialisation step altogether (and, for a type with no destructor, the bookkeeping that goes with it):
 
 ```rust
 use std::cell::Cell;
@@ -1733,7 +1918,7 @@ fn main() {
 }
 ```
 
-### Arc<Mutex<T>> for shared ownership across threads
+### `Arc<Mutex<T>>` for shared ownership across threads
 
 A `static` is one value for the whole program. When a group of threads needs to share something created at run time, wrap it in `Arc` (shared ownership with an atomic reference count) around a `Mutex` (one writer at a time):
 
@@ -1881,7 +2066,7 @@ fn main() {
 
 Take what you need out of the borrow first (clone the item, or copy its length), or do the push before you take the reference.
 
-**Pitfall 3: `static mut` when a safe type exists.** Since Rust 1.63 `Mutex::new` is usable in a static, and the atomics' constructors have been since Rust 1.24; there is no reason left for a `static mut` outside C interop (Part Three).
+**Pitfall 3: `static mut` when a safe type exists.** Since Rust 1.63 `Mutex::new` is usable in a static, and the atomics' constructors have been since Rust 1.24 (the sized ones such as `AtomicU64` arrived in Rust 1.34, const from the start); there is no reason left for a `static mut` outside C interop (Part Three).
 
 ```rust
 use std::sync::atomic::{AtomicU64, Ordering};
