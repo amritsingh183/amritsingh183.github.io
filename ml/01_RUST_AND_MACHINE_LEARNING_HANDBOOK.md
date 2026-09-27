@@ -1,6 +1,6 @@
 # Rust and Machine Learning: From Tensors to Attention
 
-**An indexed, consolidated learning handbook — revised 19 September 2026**
+**An indexed, consolidated learning handbook — revised 19 September 2026, re-verified 27 September 2026**
 
 This handbook brings together the 35 notes listed in the [source index](#source-index). Its purpose is to help you reason about the mathematics and the Rust implementation at the same time. Repeated explanations have been combined; useful distinctions, worked examples, and implementation traps have been retained and corrected.
 
@@ -19,12 +19,13 @@ Read the foundations, Rust, and Candle chapters first. Then follow the convoluti
 
 | Item | Basis for this revision |
 |---|---|
-| Review date | 19 September 2026 |
+| Review date | 19 September 2026; re-verified 27 September 2026 (see the [verification note](#verification)) |
 | Locally observed compiler | `rustc 1.98.1 (48a229cea 2026-09-01)` |
 | Local host | `aarch64-apple-darwin` |
 | Project edition | Rust 2024, as declared in `Cargo.toml` |
 | Project Candle dependency | Git revision `f5838914f788d3950d0a25042cffe199d9325a9e` in `Cargo.lock`; crate version field `0.9.1` |
 | Project feature selection | Metal is enabled in the existing manifest |
+| Newest crates.io Candle on 27 September 2026 | 0.11.0 (26 June 2026); every program and fragment in this handbook also compiled and ran against it, as the verification note records |
 | API references | Immutable Candle source links where implementation matters; official Rust/PyTorch documentation and original research for the associated contracts |
 
 Rust's compiler version and a crate's version are separate. Installing Rust 1.98.1 does not update Candle. A `version = "0.9.1"` registry dependency is also not automatically the same source as a Git commit whose package reports that version. This handbook uses the project's exact lockfile revision for Candle-specific claims and does not claim that it is the newest available Candle release.
@@ -585,7 +586,7 @@ Strings also have supported conversions into boxed error messages, so `return Er
 
 For a public error enum expected to gain variants, `#[non_exhaustive]` requires downstream matches to allow future cases, normally with a wildcard arm. This is a deliberate API-evolution choice; adding the attribute is not a mandatory final stage for every application's private error type. [Non-exhaustive types](https://doc.rust-lang.org/reference/attributes/type_system.html#the-non_exhaustive-attribute).
 
-For top-level applications, the existing project's `anyhow` dependency can add the operation's meaning while preserving its cause. This fragment requires `anyhow = "=1.0.100"`:
+For top-level applications, the existing project's `anyhow` dependency can add the operation's meaning while preserving its cause. This fragment needs the `anyhow` crate; the project's `Cargo.toml` asks for `anyhow = "1.0.100"`, which Cargo reads as any 1.x release from 1.0.100 upwards (the checks for this edition resolved 1.0.104):
 
 ```rust
 use anyhow::{Context, Result, ensure};
@@ -815,7 +816,7 @@ If a layer has no bias, represent that as `None` and omit its creation. Zero-val
 <a id="candle-checkpoints"></a>
 ### 3.9 Loading for inference and restoring trainable variables
 
-An inference loader can read a safetensors file into owned bytes, then give a buffered builder to the same layer constructor. This complete function assumes the `build_readout` function above and adds `anyhow = "=1.0.100"`:
+An inference loader can read a safetensors file into owned bytes, then give a buffered builder to the same layer constructor. This complete function assumes the `build_readout` function above and the `anyhow` dependency of section 2.5:
 
 ```rust
 use anyhow::{Context, Result as AppResult};
@@ -835,7 +836,7 @@ fn load_readout(path: &std::path::Path) -> AppResult<candle_nn::Linear> {
 
 The constructor still requests `readout.weight` and `readout.bias`. Its initialization hints do not replace stored checkpoint values. Missing names or incorrect shapes must be treated as incompatibility, not as permission to silently initialize part of a supposedly restored model. Buffer loading uses owned bytes; slice loading instead ties the builder to the supplied slice's lifetime. [Pinned safetensors builder backends](https://github.com/huggingface/candle/blob/f5838914f788d3950d0a25042cffe199d9325a9e/candle-nn/src/var_builder.rs).
 
-For trainable restoration, first create the named variables your model expects. `VarMap::load(&mut self, path)` updates variables already in the map. It does not discover and insert every file entry. Loading into an empty map therefore does not prepare a model for later construction. Extra checkpoint names are ignored, while a required missing variable produces an error. A later failure can occur after some earlier variables were updated, so loading is not transactional. [Pinned VarMap loading](https://github.com/huggingface/candle/blob/f5838914f788d3950d0a25042cffe199d9325a9e/candle-nn/src/var_map.rs#L42-L61).
+For trainable restoration, first create the named variables your model expects. `VarMap::load(&mut self, path)` updates variables already in the map. It does not discover and insert every file entry. Loading into an empty map therefore does not prepare a model for later construction. Extra checkpoint names are ignored, while a required missing variable produces an error. A later failure can occur after some earlier variables were updated, so loading is not transactional. [Pinned VarMap loading](https://github.com/huggingface/candle/blob/f5838914f788d3950d0a25042cffe199d9325a9e/candle-nn/src/var_map.rs#L39-L53).
 
 For a restoration path using owned bytes throughout, build a fresh candidate model and map, obtain checkpoint tensors through a buffered builder, check all expected names and shapes, then apply those tensors to the candidate's existing variables with `set_one` or `set`. Adopt that candidate only after restoration succeeds. This separates an incomplete load from the model currently serving requests; it also gives you a place to validate label mappings and configuration.
 
@@ -2230,13 +2231,13 @@ x -> pointwise convolution -> split into a and b
 concat(a, b) -> pointwise convolution -> output
 ```
 
-The pinned `PSA` class has one attention/FFN pair. The paper's `N_PSA` counts such pairs on the selected branch, not heads or spatial tokens. That general repetition parameter is absent from this concrete class interface. [Pinned Attention and PSA code](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/block.py#L701).
+The pinned `PSA` class has one attention/FFN pair. The paper's `N_PSA` counts such pairs on the selected branch, not heads or spatial tokens. That general repetition parameter is absent from this concrete class interface. [Pinned Attention and PSA code](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/block.py#L771-L826).
 
 The channel split preserves all spatial locations. For a toy incoming `[1,256,20,20]` tensor and half-channel split, the attention branch has `[1,128,20,20]`. The pinned configuration rule `num_heads=branch_channels/64` gives two heads, with value width 64 and query/key width 32. There are still `20*20=400` queries and 400 keys per head. The attention score tensor contains `1*2*400*400=320,000` entries.
 
 This also illustrates why `dk` and `dv` are different concepts. Q and K use width 32 for their dot product, so the scale is `1/sqrt(32)`. The values carry 64 features per head, so weighted values return 64 features per query per head. Narrowing Q/K does not change the `400×400` attention matrix dimensions.
 
-The official attention code stores Q,K as `[B,heads,dk,N]` and V as `[B,heads,dv,N]`, where `N=H*W`. It computes `QᵀK`, then `V Aᵀ`, the transpose-layout equivalent of our `AV`. It adds a depthwise `3×3` convolution of the value map before output projection, contributing local spatial structure. [Pinned attention calculation](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/block.py#L714).
+The official attention code stores Q,K as `[B,heads,dk,N]` and V as `[B,heads,dv,N]`, where `N=H*W`. It computes `QᵀK`, then `V Aᵀ`, the transpose-layout equivalent of our `AV`. It adds a depthwise `3×3` convolution of the value map before output projection, contributing local spatial structure. [Pinned attention calculation](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/block.py#L792-L795).
 
 The convolution wrapper uses BatchNorm and optional activation, so `act=False` does not mean “remove normalization.” A pointwise convolution mixes channels at each location, whereas the depthwise spatial convolution mixes nearby locations within channels. BatchNorm's evaluation statistics can be folded into the preceding convolution under the conditions in [chapter 7](#normalization). It is not equivalent to replacing a language Transformer's LayerNorm without retraining. [Pinned Conv wrapper](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/conv.py).
 
@@ -2256,7 +2257,7 @@ Several predicted boxes may describe the same apple. Non-maximum suppression, or
 
 YOLOv10 trains one-to-many and one-to-one detection branches with consistent matching criteria, then uses one-to-one predictions for its NMS-free deployment path. This objective is distinct from PSA: attention supplies features, while assignment determines how predictions receive supervision. [Official YOLOv10 project](https://github.com/THU-MIG/yolov10).
 
-The pinned detector code detaches backbone/neck feature tensors on the one-to-one branch. That branch can train its own head parameters, while those particular gradients do not continue through the detached feature inputs. The one-to-many branch supplies feature-learning supervision. This is a concrete example of why “both losses train every parameter” would be an inaccurate description. [Pinned v10Detect](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/head.py#L445).
+The pinned detector code detaches backbone/neck feature tensors on the one-to-one branch. That branch can train its own head parameters, while those particular gradients do not continue through the detached feature inputs. The one-to-many branch supplies feature-learning supervision. This is a concrete example of why “both losses train every parameter” would be an inaccurate description. [Pinned v10Detect](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/head.py#L497-L512).
 
 NMS-free does not mean there are no output-handling steps. The export path still decodes predictions and selects a bounded set of scored detections. The official repository specifically warns that non-exported execution can run unnecessary one-to-many-head operations during inference, biasing a speed measurement. Comparing export latency with an unoptimized eager path is not a clean comparison. [Repository benchmark note](https://github.com/THU-MIG/yolov10#notes).
 
@@ -2518,5 +2519,7 @@ The 35 original notes were read in full. Their unique concepts were mapped into 
 The Candle execution used an isolated CPU package pointing to an unmodified archive of commit `f5838914f788d3950d0a25042cffe199d9325a9e`. Its newly resolved transitive dependency lock was separate from the original application's `Cargo.lock`. This is evidence for the educational examples on that CPU environment, not a reconstruction of the original Metal-enabled project build.
 
 The source project, dependencies, and preexisting changes were not edited. No Metal/CUDA execution, full detector training, learned-checkpoint parity, accuracy claim, latency benchmark, or complete ML application is established by this documentation revision. Those questions require the specific data, model, backend, and workload they concern. Exercises are proposed practice, not claims that those experiments were performed.
+
+**Re-verification of 27 September 2026.** The four standard-library programs were compiled again with `rustc --edition 2024` (Rust 1.98.1, `aarch64-apple-darwin`) and printed the values this handbook states: the softmax cases, the four parser messages and the six-decimal attention rows. The two Candle programs and the ten fragments were compiled and run in fresh scratch packages, once at the pinned revision `f5838914` and once at Candle 0.11.0, the newest crates.io release on that date; the price program printed weights `[[1.9999963, 2.9999967]]` and bias `[1.0000042]` on both versions, and each fragment was placed in the smallest caller its text declares (a stub `build_model`, a saved readout for the loader, a `VarMap` builder for the four convolutions, a trained BatchNorm for the fold comparison, a struct holding the four `Linear` fields for the attention body, a `[2, 64, 3, 4]` tensor for the token conversion) and behaved as described. All 129 cited links returned HTTP 200 when swept on 27 September 2026 and again on 28 September 2026 (one GitHub page answered 503 once on the first sweep and 200 on retry), and the pinned YOLOv10 and Candle source files were downloaded to check the line anchors: three anchors were corrected (`block.py` lines 771 to 826 for `Attention` and `PSA`, 792 to 795 for the attention calculation, `head.py` lines 497 to 512 for `v10Detect` and its `detach`) and the `VarMap::load` anchor was tightened. The `anyhow` wording in sections 2.5 and 3.9 was changed from an exact pin to what the project manifest actually requests. No numerical, mathematical or API statement was found wrong. An independent Fable 5.1 reviewer then re-ran the programs and the fragment harness on both Candle versions, recomputed every worked number, re-fetched about forty-five primary sources and re-read the pinned Candle and YOLOv10 files, and found no wrong statement, number, quotation or code block; its wording notes on this paragraph were applied.
 
 [Return to contents](#contents)

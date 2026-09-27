@@ -1,6 +1,6 @@
 # Rust and Candle for machine learning: the consolidated guide
 
-*One file that replaces the 35 notes under `candle_practice/docs/` written in September and October 2025. Every statement was re-checked on 19 September 2026 against rustc 1.98.1, the candle version this project locks (0.9.1, git `f5838914`) and the current candle release (0.11.0). Every code block was compiled and run. Section 18 says exactly how.*
+*One file that replaces the 35 notes under `candle_practice/docs/` written in September and October 2025. Every statement was re-checked on 19 September 2026, and again on 27 September 2026, against rustc 1.98.1, the candle version this project locks (0.9.1, git `f5838914`) and the current candle release (0.11.0). Every code block was compiled and run on both dates. Section 18 says exactly how.*
 
 ## Contents
 
@@ -52,6 +52,7 @@ The café is only a way to keep the examples concrete. Nothing in the maths depe
 - A ```` ```text ```` block placed directly under a program is that program's exact standard output.
 - A block whose first line is `// ✗ expected: ...` is meant to fail to compile, and the line says what the compiler reports. These blocks show you the trap, not the fix.
 - A block whose first line is `// ~ output varies` prints random numbers, so its output is not reproduced.
+- One block (section 2.3) carries a second line, `// ✓ on: candle 0.11.0`: it fails on 0.9.1 exactly as its first line says, and compiles and runs on 0.11.0; the output shown under it is the 0.11.0 output.
 - "0.9.1" means candle-core and candle-nn 0.9.1 at git commit `f5838914`, which is what this project's `Cargo.lock` pins. "0.11.0" means the crates.io release of 26 June 2026. When they differ, the text says so. Everything else behaved identically on both.
 - candle programs use `candle_core::Result<()>` as the return type of `main` unless the section is about a different error type.
 
@@ -89,7 +90,7 @@ Every candle operation returns a `Result`. You will meet three error types in pr
 | `anyhow::Result<T>` | most candle examples and applications | any error that is `Send + Sync + 'static`, plus an optional context message per layer |
 | `Result<T, Box<dyn std::error::Error>>` | plain standard-library code | any error type, on the heap, behind a trait object |
 
-They interoperate. The `?` operator converts a candle error into a `Box<dyn Error>` or into an `anyhow::Error` automatically: `Box<dyn Error>` implements `From` for every type that implements `std::error::Error`, and `anyhow::Error` does the same for every such type that is also `Send + Sync + 'static` (candle's error is).
+They interoperate. The `?` operator converts a candle error into a `Box<dyn Error>` or into an `anyhow::Error` automatically: `Box<dyn Error>` implements `From` for every `'static` type that implements `std::error::Error`, and `anyhow::Error` does the same for every such type that is also `Send + Sync + 'static` (candle's error is).
 
 ### 1.2 What `?` actually does
 
@@ -393,11 +394,11 @@ fn main() -> candle_core::Result<()> {
 
 ### 2.3 The `i32` trap, and how it changed between versions
 
-The old note said that calling `to_vec1::<i32>()` on an `f32` tensor is "a runtime error". On the candle this project locks it is not even that: `i32` does not implement `WithDType` on 0.9.1, so the program does not compile. The same applies to `Tensor::new(&[[1, 2], [3, 4]], ..)`, because an untyped integer literal defaults to `i32`. On 0.11.0 candle gained an `I32` dtype, so both compile and produce an `I32` tensor.
+The old note said that calling `to_vec1::<i32>()` on an `f32` tensor is a "Runtime Error". On the candle this project locks it is not even that: `i32` does not implement `WithDType` on 0.9.1, so the program does not compile. The same applies to `Tensor::new(&[[1, 2], [3, 4]], ..)`, because an untyped integer literal defaults to `i32`. On 0.11.0 candle gained an `I32` dtype, so both compile and produce an `I32` tensor.
 
 ```rust
 // ✗ expected: the trait `WithDType` is not implemented for `i32`
-// ✓ on: candle_probe11
+// ✓ on: candle 0.11.0
 use candle_core::{Device, Tensor};
 
 fn main() -> candle_core::Result<()> {
@@ -465,7 +466,7 @@ candle follows the same convention as PyTorch: the first dimension counts items.
 inputs (128, 784)  @  weights.t() (784, 20)  =  outputs (128, 20)
 ```
 
-This is what `candle_nn::Linear` does. Its documentation calls the layer `y = x @ w.t() + b`; the weight is created with shape `(out_dim, in_dim)`; and the bias, of shape `(out_dim,)`, is added to every row with `broadcast_add`. The code below builds a `Linear` by hand and checks the arithmetic:
+This is what `candle_nn::Linear` does. Its documentation calls the layer `y = x@w.t() + b`; the weight is created with shape `(out_dim, in_dim)`; and the bias, of shape `(out_dim,)`, is added to every row with `broadcast_add`. The code below builds a `Linear` by hand and checks the arithmetic:
 
 ```rust
 use candle_core::{Device, Module, Tensor};
@@ -1759,7 +1760,7 @@ multiply-adds on a 32x32 map, 64->128: 1x1 8388608 vs 3x3 75497472
 
 **Adding depth without spatial cost.** Stacking `1×1 → ReLU → 1×1 → ReLU` adds non-linear capacity at every pixel. Without the activations the stack would collapse into a single 1×1, for the same reason two `Linear` layers collapse (section 5.2).
 
-**Replacing the fully connected classifier.** Network in Network (Lin, Chen and Yan, 2013) is the origin of the technique. Their "cross channel parametric pooling layer is also equivalent to a convolution layer with 1×1 convolution kernel", and they replaced the final fully connected layers by global average pooling over each class's feature map. On CIFAR-10 their Table 5 reports 11.59% test error with fully connected layers, 10.88% with dropout added, and 10.41% with global average pooling instead. The old note's "from 15.99% to 10.41%" compared two different networks: in the paper's section 4.6 a *conventional* CNN reaches 17.56% with a fully connected layer, 15.99% with dropout added, and 16.46% with global average pooling instead; the 10.41% belongs to the mlpconv network of Table 5.
+**Replacing the fully connected classifier.** Network in Network (Lin, Chen and Yan, 2013) is the origin of the technique. Their "cross channel parametric pooling layer is also equivalent to a convolution layer with 1x1 convolution kernel", and they replaced the final fully connected layers by global average pooling over each class's feature map. On CIFAR-10 their Table 5 reports 11.59% test error with fully connected layers, 10.88% with dropout added, and 10.41% with global average pooling instead. The old note's "from 15.99% to 10.41%" compared two different networks: in the paper's section 4.6 a *conventional* CNN reaches 17.56% with a fully connected layer, 15.99% with dropout added, and 16.46% with global average pooling instead; the 10.41% belongs to the mlpconv network of Table 5.
 
 The next program builds both residual blocks and reports shapes and parameter counts; the numbers match the arithmetic above (70,016 for the ResNet bottleneck against 590,080 for a plain 3×3 at 256 channels).
 
@@ -2792,7 +2793,7 @@ Reading the program against the old notes:
 - **`contiguous()`.** `transpose` returns a strided view. The `matmul` calls in this program accepted the transposed queries without complaint on both candle versions; the explicit `contiguous()` on the transposed keys and values is the safe habit for backends and custom kernels that require a plain layout, and it costs one copy.
 - **Scaling.** The scores are divided by `√d_k` of one head (`√4 = 2` here), not of `d_model`.
 - **Precision.** When the model runs in `f16` or `bf16`, compute the scores and the softmax in `f32` (`to_dtype(DType::F32)` before, and back after); the old notes' upcast was about this, and it is correct.
-- **Cost.** The score tensor is `(batch, heads, seq, seq)`: memory grows with the square of the sequence length, and time as `seq² · d`. That is why long-context models use fused attention kernels (candle-nn has a CPU flash-attention module, `candle_nn::ops::sdpa` with a fused Metal path, and a separate CUDA flash-attention crate), windowed attention (section 10.5's Swin), or approximations. None of them change the equation above, only how it is evaluated.
+- **Cost.** The score tensor is `(batch, heads, seq, seq)`: memory grows with the square of the sequence length, and time as `seq² · d`. That is why long-context models use fused attention kernels (candle-nn has a CPU flash-attention module, `candle_nn::ops::sdpa` with a fused Metal path, whose argument list on 0.11.0 also takes an optional mask and a causal flag, and a separate CUDA flash-attention crate), windowed attention (section 10.5's Swin), or approximations. None of them change the equation above, only how it is evaluated.
 
 ### 14.6 Where attention sits: the Transformer block
 
@@ -3015,9 +3016,9 @@ Every message below was produced during the checks for this guide. Compile-time 
 
 ## 18. How this guide was verified
 
-**Toolchain.** rustc 1.98.1 (48a229cea 2026-09-01) and cargo 1.98.1 on macOS, aarch64, edition 2024. candle-core and candle-nn at two versions: 0.9.1, the git commit `f5838914f788d3950d0a25042cffe199d9325a9e` of 22 September 2025 that this project's `Cargo.lock` pins; and 0.11.0, the crates.io release of 26 June 2026 (the newest on 19 September 2026; 0.10.0 to 0.10.2 appeared between the end of March and the start of April 2026).
+**Toolchain.** rustc 1.98.1 (48a229cea 2026-09-01) and cargo 1.98.1 on macOS, aarch64, edition 2024. candle-core and candle-nn at two versions: 0.9.1, the git commit `f5838914f788d3950d0a25042cffe199d9325a9e` of 22 September 2025 that this project's `Cargo.lock` pins; and 0.11.0, the crates.io release of 26 June 2026 (still the newest on 27 September 2026; 0.10.0 to 0.10.2 appeared between the end of March and the start of April 2026).
 
-**Method.** A script extracted every ```` ```rust ```` block of this file. Blocks that mention neither candle nor `tracing` were compiled with `rustc --edition 2024 -O` and run. The others were written into `src/bin/` of two scratch crates (both depend on `tracing`), one per candle version, built with `cargo build` and run. A ```` ```text ```` block directly under a program had to equal the program's standard output line for line. Blocks beginning `// ✗ expected:` had to fail to compile with the quoted text in the compiler's output; the one block marked `// ✓ on:` had to fail on 0.9.1 and run on 0.11.0. Blocks beginning `// ~` were run but their output was not compared. Counts on 19 September 2026: 60 ```rust blocks; 108 compile-and-run checks (every candle and tracing block on both versions, every other block once); 0 mismatches.
+**Method.** A script extracted every ```` ```rust ```` block of this file. Blocks that mention neither candle nor `tracing` were compiled with `rustc --edition 2024 -O` and run. The others were written into `src/bin/` of two scratch crates (both depend on `tracing`), one per candle version, built with `cargo build` and run. A ```` ```text ```` block directly under a program had to equal the program's standard output line for line. Blocks beginning `// ✗ expected:` had to fail to compile with the quoted text in the compiler's output; the one block marked `// ✓ on: candle 0.11.0` had to fail on 0.9.1 and run on 0.11.0. Blocks beginning `// ~` were run but their output was not compared. Counts on 19 September 2026: 60 ```rust blocks; 108 compile-and-run checks (every candle and tracing block on both versions, every other block once); 0 mismatches. The same run on 27 September 2026, from freshly built scratch crates, gave the same counts: 60 blocks, 108 checks, 0 mismatches.
 
 **Differences between the two candle versions that this guide touches.** 0.11.0 adds the dtypes `I16`, `I32`, `F6E2M3`, `F6E3M2`, `F4` and `F8E8M0` (only `i16` and `i32` gain `WithDType`, so `i32` literals work there and not on 0.9.1), and `VarBuilder` gains `get_unchecked`, `get_unchecked_dtype`, `set_device` and `set_dtype`. Every other API and every number in this guide behaved identically on both. Runs that start from random weights (the training loop of section 5.4 and the gate values of section 13) differ between runs and versions because the CPU random generator cannot be seeded (`Device::set_seed` returns an error on the CPU).
 
@@ -3026,6 +3027,8 @@ Every message below was produced during the checks for this guide. Compile-time 
 **Dropped from the old notes as unverifiable.** Throughput percentages per dilation rate; frame rates, mIoU and sensitivity figures per use case; "a bottleneck ratio of 2 is optimal"; fusion speed-up and memory tables; "learning rates 10 to 100 times larger"; a "Hybrid Batch Normalization (2025)" reference; the AlexNet GPU memory of 1.5 GB; the GPT-2 row with 85-dimensional heads; the 2-D receptive-field formula and the mixed-stride table; the softmax expected values 0.93587624 and 0.04697593.
 
 **Independent review.** An independent Fable 5.1 reviewer audited the complete draft on 19 September 2026: it re-ran the block checker (same result), re-read the candle source at both versions and re-fetched about thirty primary sources, and returned 1 blocker, 7 major, 17 minor and 6 optional findings. All were applied: the `vb.get` default (zeros, not Kaiming), scalars on the left of an operator, `detach` sharing storage, the BERT position count, the Keras/PyTorch momentum correspondence, the NIN 15.99% figure, the dilation-in-classifiers rule, the 0.11.0 dtype list, the missing material on Transformer blocks, head pruning, binary cross-entropy and tracing spans, and the wording items in its report. A focused re-audit by the same reviewer of every changed passage found all corrections applied and no new error, and its own checker run matched; its remaining notes (stale block counts in this section, four one-sentence rewordings and glosses, the order of the term index) were applied last.
+
+**Re-verification of 27 September 2026.** Eight days after the first edition, every block was compiled and run again on rustc 1.98.1 (48a229cea 2026-09-01) with the same two candle versions, and crates.io still listed 0.11.0 as the newest release. Every quoted sentence was re-read in its primary source (the papers' arXiv text or PDF, the PyTorch, Keras and anyhow documentation, the Hugging Face model configuration files, the distill.pub article), every candle API statement was re-read in the source at both versions, and the project files this guide names (`main.rs`, `mlp.rs`, `transformer.rs`) were re-read. Nothing in the text was found wrong. Two small changes were made: the `// ✓ on:` marker of section 2.3 now names the candle version instead of the scratch crate it was checked in, and the convention is stated in section 0; and section 14.5 notes that `sdpa` on 0.11.0 also takes a mask and a causal flag. An independent Fable 5.1 reviewer then re-ran the block checker on both candle versions (60 blocks, 108 checks, 0 mismatches), recomputed every worked number, re-fetched about forty-five primary sources and re-read the candle source at both versions, and found no wrong statement, number or code block and no quotation wrong in substance; its four wording notes were applied (the exact spacing of the `Linear` documentation quote in section 3.2, the `1x1` spelling inside the Network in Network quotation in section 8.3, the old note's "Runtime Error" wording in section 2.3, and the `'static` bound in section 1.1).
 
 **To re-run any block.** Create a crate with the `Cargo.toml` of section 0 (or this project's, for 0.9.1), paste the block into `src/main.rs`, and `cargo run`. The std-only blocks need only `rustc --edition 2024 file.rs`.
 
