@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-labelledby="title desc">
+<title id="title">A forward convolution with kernel 3, stride 2 and no padding maps 5 and 6 samples to 2; output_padding tells the transposed convolution to return 5 or 6</title>
+<desc id="desc">Two forward panels (inputs 5 and 6) with their two windows and the shared output of 2, the sixth sample marked as never read, then the way back: two stamps cover five positions and output_padding 1 declares a sixth that no stamp reaches.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="380" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="24">Lin = 5, k = 3, s = 2, p = 0</text>
+<rect x="30" y="34" width="108" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="84" y="46" font-size="11" fill="#52514e" text-anchor="middle">window 1</text>
+<rect x="102" y="53" width="108" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="156" y="65" font-size="11" fill="#52514e" text-anchor="middle">window 2</text>
+<rect x="30" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="48" y="95" font-size="11" text-anchor="middle">1</text>
+<rect x="66" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="84" y="95" font-size="11" text-anchor="middle">2</text>
+<rect x="102" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="120" y="95" font-size="11" text-anchor="middle">3</text>
+<rect x="138" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="156" y="95" font-size="11" text-anchor="middle">4</text>
+<rect x="174" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="192" y="95" font-size="11" text-anchor="middle">5</text>
+<line x1="120" y1="106" x2="120" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="84" y="134" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="102" y="151" font-size="11" text-anchor="middle">1</text>
+<rect x="120" y="134" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="138" y="151" font-size="11" text-anchor="middle">2</text>
+<text x="164" y="151">Lout = 2</text>
+<text x="30" y="176" font-size="11" fill="#52514e">every sample is read</text>
+<text x="330" y="24">Lin = 6, k = 3, s = 2, p = 0</text>
+<rect x="330" y="34" width="108" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="384" y="46" font-size="11" fill="#52514e" text-anchor="middle">window 1</text>
+<rect x="402" y="53" width="108" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="456" y="65" font-size="11" fill="#52514e" text-anchor="middle">window 2</text>
+<rect x="330" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="348" y="95" font-size="11" text-anchor="middle">1</text>
+<rect x="366" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="384" y="95" font-size="11" text-anchor="middle">2</text>
+<rect x="402" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="420" y="95" font-size="11" text-anchor="middle">3</text>
+<rect x="438" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="456" y="95" font-size="11" text-anchor="middle">4</text>
+<rect x="474" y="78" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="492" y="95" font-size="11" text-anchor="middle">5</text>
+<rect x="510" y="78" width="36" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1.5"/>
+<text x="528" y="95" font-size="11" fill="#898781" text-anchor="middle">6</text>
+<line x1="438" y1="106" x2="438" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="402" y="134" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="420" y="151" font-size="11" text-anchor="middle">1</text>
+<rect x="438" y="134" width="36" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="456" y="151" font-size="11" text-anchor="middle">2</text>
+<text x="482" y="151">Lout = 2</text>
+<text x="330" y="176" font-size="11" fill="#52514e">sample 6 is read by no window</text>
+<rect x="30" y="187" width="10" height="10" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1.5"/>
+<text x="46" y="196" font-size="11" fill="#52514e">orange: the sample no window reads</text>
+<text x="30" y="226" font-size="13" font-weight="600">back from 2: transposed convolution, stride 2, kernel [u, v, w]</text>
+<text x="30" y="244">the 2 outputs, now the inputs a and b</text>
+<rect x="30" y="252" width="180" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="120" y="264" font-size="11" fill="#52514e" text-anchor="middle">stamp of a</text>
+<rect x="150" y="271" width="180" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="240" y="283" font-size="11" fill="#52514e" text-anchor="middle">stamp of b</text>
+<rect x="30" y="296" width="60" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="313" font-size="11" text-anchor="middle">a·u</text>
+<rect x="90" y="296" width="60" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="120" y="313" font-size="11" text-anchor="middle">a·v</text>
+<rect x="150" y="296" width="60" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="180" y="313" font-size="11" text-anchor="middle">a·w + b·u</text>
+<rect x="210" y="296" width="60" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="240" y="313" font-size="11" text-anchor="middle">b·v</text>
+<rect x="270" y="296" width="60" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="300" y="313" font-size="11" text-anchor="middle">b·w</text>
+<rect x="330" y="296" width="60" height="26" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5" stroke-dasharray="4 2"/>
+<path d="M32 326 v5 H328 v-5" fill="none" stroke="#52514e" stroke-width="1"/>
+<text x="180" y="343" font-size="11" fill="#52514e" text-anchor="middle">output_padding = 0 → Lout = 5</text>
+<path d="M32 350 v5 H388 v-5" fill="none" stroke="#52514e" stroke-width="1"/>
+<text x="210" y="367" font-size="11" fill="#52514e" text-anchor="middle">output_padding = 1 → Lout = 6</text>
+<text x="412" y="252" font-size="11" fill="#52514e">Lout = (2 − 1)·2 − 2·0 + 1·(3 − 1)</text>
+<text x="412" y="267" font-size="11" fill="#52514e">+ output_padding + 1 = 5 + output_padding</text>
+<text x="412" y="282" font-size="11" fill="#52514e">output_padding 1 declares a 6th position:</text>
+<text x="412" y="297" font-size="11" fill="#52514e">a place for unread sample 6, not its value</text>
+<text x="412" y="312" font-size="11" fill="#52514e">(admissible: output_padding 1 &lt; stride 2)</text>
+</g>
+</svg>

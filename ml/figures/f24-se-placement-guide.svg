@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 210" width="720" height="210" role="img" aria-labelledby="title desc">
+<title id="title">In a residual block the SE gate scales the branch after conv-BN-ReLU 1×1, conv-BN-ReLU 3×3 and conv-BN 1×1, before the skip is added and the final ReLU applied</title>
+<desc id="desc">Left-to-right flow of the guide&apos;s residual block: three convolution stages, the highlighted SE box, the addition with the skip (identity or 1×1 projection), then ReLU; the skip bypasses SE.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="210" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="53.4" y="84" text-anchor="middle">x</text>
+<line x1="60.7" y1="80" x2="78.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="80.7" y="60" width="96" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="128.7" y="77" text-anchor="middle">conv-BN-ReLU</text>
+<text x="128.7" y="92" font-size="11" fill="#52514e" text-anchor="middle">1×1</text>
+<line x1="178.7" y1="80" x2="196.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="198.7" y="60" width="96" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="246.7" y="77" text-anchor="middle">conv-BN-ReLU</text>
+<text x="246.7" y="92" font-size="11" fill="#52514e" text-anchor="middle">3×3</text>
+<line x1="296.7" y1="80" x2="314.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="316.7" y="60" width="96" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="364.7" y="77" text-anchor="middle">conv-BN</text>
+<text x="364.7" y="92" font-size="11" fill="#52514e" text-anchor="middle">1×1</text>
+<line x1="414.7" y1="80" x2="432.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="434.7" y="60" width="56" height="40" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="462.7" y="84" text-anchor="middle">SE</text>
+<line x1="492.7" y1="80" x2="510.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<circle cx="523.7" cy="80" r="11" fill="#fcfcfb" stroke="#52514e" stroke-width="1.5"/>
+<text x="523.7" y="84" font-size="13" text-anchor="middle">+</text>
+<line x1="536.7" y1="80" x2="554.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="556.7" y="60" width="56" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="584.7" y="84" text-anchor="middle">ReLU</text>
+<line x1="614.7" y1="80" x2="632.7" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="640.1" y="84" text-anchor="middle">y</text>
+<text x="462.7" y="36" font-size="11" fill="#52514e" text-anchor="middle">one gate per channel, z (B, C, 1, 1), each in (0, 1)</text>
+<text x="462.7" y="50" font-size="11" fill="#52514e" text-anchor="middle">multiplies the branch (13.2); the skip is not gated</text>
+<path d="M69.4 80 C69.4 136 523.7 136 523.7 97" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="523.7" y1="97" x2="523.7" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="296.5" y="140" font-size="11" fill="#52514e" text-anchor="middle">identity or 1×1 projection</text>
+<text x="360" y="184" font-size="11" fill="#52514e" text-anchor="middle">SE is the last stage of the branch, after the last conv-BN and before the addition;</text>
+<text x="360" y="198" font-size="11" fill="#52514e" text-anchor="middle">the ReLU follows the addition, and the skip joins at the addition without passing the gates</text>
+</g>
+</svg>

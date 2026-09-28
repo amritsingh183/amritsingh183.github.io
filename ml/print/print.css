@@ -1,0 +1,501 @@
+/* A4 print stylesheet for the two documents in ml/.
+   make_print.rs inlines this file into the page it prints with headless Chrome and appends the
+   generated @page rules that carry the running-head strings. Values follow the site's print block
+   (assets/main.css, 2026-09-21) unless a comment gives the reason for a difference.
+   Page model: A4, double-sided. Binding edge 22 mm, outer edge 16 mm, mirrored on facing pages.
+   Running head and folio sit on the outer edge: title on left-hand pages, current part or chapter
+   on right-hand pages. The sans face is Avenir Next because headless Chrome embeds the site's
+   -apple-system face only as glyph outlines. */
+
+/* ---- Page geometry, running heads, folios ---- */
+@page {
+    size: A4;
+    margin: 18mm 16mm 19mm 22mm;
+}
+
+@page :left {
+    margin: 18mm 22mm 19mm 16mm;
+
+    @top-left {
+        font: 8.5pt/1 "Avenir Next", Helvetica, Arial, sans-serif;
+        color: #555;
+        vertical-align: bottom;
+        padding-bottom: 5mm;
+    }
+
+    @bottom-left {
+        content: counter(page);
+        font: 9pt/1 "Avenir Next", Helvetica, Arial, sans-serif;
+        color: #555;
+        vertical-align: top;
+        padding-top: 5mm;
+    }
+}
+
+@page :right {
+    margin: 18mm 16mm 19mm 22mm;
+
+    @top-right {
+        font: 8.5pt/1 "Avenir Next", Helvetica, Arial, sans-serif;
+        color: #555;
+        vertical-align: bottom;
+        padding-bottom: 5mm;
+    }
+
+    @bottom-right {
+        content: counter(page);
+        font: 9pt/1 "Avenir Next", Helvetica, Arial, sans-serif;
+        color: #555;
+        vertical-align: top;
+        padding-top: 5mm;
+    }
+}
+
+/* The cover and the blank pages that push a part onto a right-hand page carry nothing */
+@page cover {
+    @top-left { content: none; }
+    @top-right { content: none; }
+    @bottom-left { content: none; }
+    @bottom-right { content: none; }
+}
+
+@page blank {
+    @top-left { content: none; }
+    @top-right { content: none; }
+    @bottom-left { content: none; }
+    @bottom-right { content: none; }
+}
+
+/* ---- Body. No canvas fill: paper is white, and a fill would paint every blank page ---- */
+html {
+    font-size: 11pt;
+}
+
+body {
+    margin: 0;
+    color: #000;
+    font: 11pt/1.4 Charter, "Iowan Old Style", Georgia, "Times New Roman", serif;
+}
+
+.blank {
+    height: 1px;
+}
+
+/* ---- Cover: the document's own title and opening line, then where it comes from ---- */
+.cover {
+    position: relative;
+    box-sizing: border-box;
+    height: 250mm;
+    padding-top: 70mm;
+}
+
+.cover h1 {
+    font: 700 26pt/1.15 "Avenir Next", Helvetica, Arial, sans-serif;
+    margin: 0 0 8mm;
+    padding-bottom: 6mm;
+    border-bottom: 1pt solid #999;
+}
+
+.cover p {
+    font-size: 12.5pt;
+    line-height: 1.45;
+}
+
+.cover .src {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    font: 8.5pt/1.3 "Avenir Next", Helvetica, Arial, sans-serif;
+    color: #555;
+}
+
+/* Invisible links that give every part a PDF destination the build can read page numbers from */
+.cover .map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1pt;
+    height: 1pt;
+    overflow: hidden;
+}
+
+.cover .map a {
+    display: block;
+    width: 1pt;
+    height: 1pt;
+}
+
+/* ---- Headings ---- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Avenir Next", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.2;
+    letter-spacing: 0;
+    break-after: avoid;
+    break-inside: avoid;
+}
+
+h1 {
+    font-size: 20pt;
+    margin: 0 0 0.6em;
+}
+
+h2 {
+    font-size: 15pt;
+    margin: 1.6em 0 0.5em;
+    padding-bottom: 2pt;
+    border-bottom: 0.5pt solid #999;
+}
+
+h3 {
+    font-size: 12.5pt;
+    margin: 1.3em 0 0.4em;
+}
+
+h4,
+h5,
+h6 {
+    font-size: 11pt;
+    margin: 1em 0 0.3em;
+}
+
+h1 + h2 {
+    margin-top: 0.4em;
+}
+
+h2 + h3,
+h3 + h4 {
+    margin-top: 0.5em;
+}
+
+/* A part or chapter opens a little below the running head, as book openers do */
+section.division > :first-child {
+    margin-top: 0;
+}
+
+section.recto > :first-child {
+    padding-top: 10mm;
+}
+
+/* ---- Text ---- */
+p {
+    margin: 0 0 0.75em;
+    orphans: 3;
+    widows: 3;
+    text-wrap-style: pretty;
+}
+
+ul {
+    margin: 0 0 0.75em;
+    padding-left: 1.5em;
+}
+
+ol {
+    margin: 0 0 0.75em;
+    padding-left: 1.8em;
+}
+
+li {
+    margin: 0 0 0.2em;
+    orphans: 3;
+    widows: 3;
+}
+
+li > ul,
+li > ol {
+    margin: 0.2em 0 0;
+}
+
+hr {
+    border: 0;
+    border-top: 0.5pt solid #bbb;
+    width: 40%;
+    margin: 1.2em auto;
+}
+
+hr:has(+ h2),
+section.division > hr:last-child {
+    display: none;
+}
+
+blockquote {
+    margin: 0.8em 0 1em;
+    padding: 0.2em 0 0.2em 1em;
+    border-left: 1.5pt solid #999;
+    font-size: 10.5pt;
+    font-style: italic;
+    color: #222;
+    break-inside: avoid;
+}
+
+blockquote code {
+    font-style: normal;
+}
+
+/* ---- A lead-in sentence stays on the page where its code begins. A figure is not a lead-in, and a block the
+   build marks "tall" cannot share a page with one, so it is not asked to. ---- */
+p:not(:has(> img)):has(+ div.sourceCode:not(.tall)),
+p:not(:has(> img)):has(+ pre:not(.tall)) {
+    break-after: avoid;
+}
+
+/* ---- Links: internal ones plain with a thin rule; external ones print their address once ---- */
+a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: underline;
+    text-decoration-color: #999;
+    text-decoration-thickness: 0.5pt;
+    text-underline-offset: 1.5pt;
+}
+
+a[href^="http"]:not(.uri)::after {
+    content: " (" attr(href) ")";
+    font: 8.5pt/1 "Avenir Next", Helvetica, Arial, sans-serif;
+    color: #555;
+    font-weight: normal;
+    font-style: normal;
+    overflow-wrap: anywhere;
+}
+
+/* ---- Inline code ---- */
+code {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 0.88em;
+    overflow-wrap: anywhere;
+}
+
+/* ---- Code blocks: one thin frame, closed on every page a long block spans. Each source line is a
+   span.l; --i is its indentation in characters, so a wrapped line continues 4 characters further in ---- */
+pre {
+    font: 8.5pt/1.35 Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    color: #000;
+    border: 0.5pt solid #b3b3b3;
+    padding: 5pt 7pt;
+    margin: 0 0 0.9em;
+    overflow: visible;
+    break-inside: avoid;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+div.sourceCode {
+    margin: 0;
+}
+
+pre > code {
+    font-size: inherit;
+    white-space: normal;
+}
+
+pre > code > span.l {
+    display: block;
+    min-height: 1lh;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding-left: calc((var(--i, 0) + 4) * 1ch);
+    text-indent: -4ch;
+}
+
+/* Program output: the same frame on a light grey ground, so it never reads as code */
+pre.text {
+    background: #eee;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* Highlighting on white paper (the site's Rouge palette mapped onto pandoc's token classes).
+   Every colour is at least 6.3:1 on white; keywords and constants are bold, comments italic,
+   so the distinctions survive a black-and-white printer. */
+pre span {
+    color: #000;
+    font-weight: normal;
+    font-style: normal;
+}
+
+pre :is(.kw, .cf, .im) {
+    color: #00008b;
+    font-weight: bold;
+}
+
+pre .cn {
+    color: #8b0000;
+    font-weight: bold;
+}
+
+pre :is(.dt, .bu) {
+    color: #006b6b;
+}
+
+pre .fu {
+    color: #005f87;
+}
+
+pre .at {
+    color: #6f2da8;
+}
+
+pre :is(.st, .ss, .vs, .ch, .sc) {
+    color: #006400;
+}
+
+pre :is(.dv, .fl, .bn) {
+    color: #8a3d00;
+}
+
+pre :is(.co, .do, .an, .cv, .in) {
+    color: #555;
+    font-style: italic;
+}
+
+pre :is(.op, .pp) {
+    color: #333;
+}
+
+pre :is(.va, .ot, .ex, .re) {
+    color: #000;
+}
+
+pre :is(.er, .al) {
+    color: #b00020;
+}
+
+/* ---- Tables. Long tables continue with their heading row repeated; short ones (class keep,
+   set by the build) stay whole. Cells break a long word only when it cannot fit, so identifiers
+   such as candle_core::Var are not split to make a column narrower. ---- */
+table {
+    width: 100%;
+    margin: 0.5em 0 1em;
+    border-collapse: collapse;
+    border: 0.5pt solid #999;
+    font-size: 9.5pt;
+    line-height: 1.3;
+    break-inside: auto;
+}
+
+table.keep {
+    break-inside: avoid;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tr {
+    break-inside: avoid;
+}
+
+th,
+td {
+    border: 0.5pt solid #999;
+    padding: 3pt 5pt;
+    vertical-align: top;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+th {
+    background: #eee;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: "Avenir Next", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+}
+
+table code {
+    font-size: 0.9em;
+    overflow-wrap: break-word;
+}
+
+/* ---- Figures: the image and its caption on one page ---- */
+p:has(> img) {
+    margin: 0.6em 0 1em;
+    text-align: center;
+    break-inside: avoid;
+}
+
+p:has(> img) > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 4pt;
+}
+
+p:has(> img) > em {
+    display: block;
+    font: 9pt/1.3 "Avenir Next", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    color: #333;
+}
+
+/* ---- Maths. The padding keeps a fraction at the top or foot of a page inside the text area ---- */
+math {
+    font-family: "STIX Two Math", math;
+}
+
+p:has(> math[display="block"]) {
+    margin: 0.6em 0 0.9em;
+    padding: 3pt 0;
+    text-align: center;
+    break-inside: avoid;
+}
+
+/* ---- Contents: entries with dotted leaders and the page number on the right ---- */
+ul.toc {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.toc ul {
+    list-style: none;
+    padding-left: 1.6em;
+    margin: 0.1em 0 0.5em;
+}
+
+ul.toc > li {
+    margin-top: 0.5em;
+}
+
+ul.toc ul li {
+    font-size: 10pt;
+}
+
+ul.toc li > p {
+    margin: 0;
+}
+
+ul.toc a {
+    text-decoration: none;
+}
+
+.e {
+    display: flex;
+    align-items: flex-end;
+    break-inside: avoid;
+}
+
+.e a {
+    flex: 0 1 auto;
+    color: inherit;
+}
+
+.e .ld {
+    flex: 1 0 1em;
+    margin: 0 0.4em 0.3em;
+    border-bottom: 1pt dotted #666;
+}
+
+.e .pg {
+    flex: none;
+    width: 2.4em;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}

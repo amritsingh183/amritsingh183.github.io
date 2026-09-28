@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" width="720" height="200" role="img" aria-labelledby="title desc">
+<title id="title">SE sits on the residual branch after its convolution stack and multiplies it by one gate per channel before the skip path is added</title>
+<desc id="desc">Left-to-right flow of the handbook&apos;s residual integration: the convolution branch, the highlighted SE box with its per-channel gates, the addition with the ungated skip path, the output; the footer keeps the order of BN and activations open.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="200" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="128.8" y="84" text-anchor="middle">input</text>
+<line x1="149.6" y1="80" x2="167.6" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="169.6" y="60" width="160" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="249.6" y="77" text-anchor="middle">convolution branch</text>
+<text x="249.6" y="92" font-size="11" fill="#52514e" text-anchor="middle">[N,C,H,W]</text>
+<line x1="331.6" y1="80" x2="349.6" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="351.6" y="60" width="110" height="40" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="406.6" y="77" text-anchor="middle">SE</text>
+<text x="406.6" y="92" font-size="11" fill="#52514e" text-anchor="middle">gates [N,C,1,1]</text>
+<line x1="463.6" y1="80" x2="481.6" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="483.6" y="60" width="56" height="40" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="511.6" y="84" text-anchor="middle">add</text>
+<line x1="541.6" y1="80" x2="559.6" y2="80" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="583.8" y="84" text-anchor="middle">output</text>
+<text x="406.6" y="44" font-size="11" fill="#52514e" text-anchor="middle">one gate per channel from the pooled descriptor (8.1)</text>
+<path d="M154.8 80 C154.8 136 511.6 136 511.6 106" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="511.6" y1="106" x2="511.6" y2="101" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="333.2" y="140" font-size="11" fill="#52514e" text-anchor="middle">skip path, not gated</text>
+<text x="360" y="174" font-size="11" fill="#52514e" text-anchor="middle">an actual block may also contain BN and activations;</text>
+<text x="360" y="188" font-size="11" fill="#52514e" text-anchor="middle">their order belongs to the architecture, not to SE</text>
+</g>
+</svg>

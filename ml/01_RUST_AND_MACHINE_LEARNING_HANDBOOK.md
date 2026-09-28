@@ -1508,6 +1508,9 @@ For example, `Lin=4,k=4,s=2,p=1,d=1,output_padding=0` gives eight outputs. Chang
 
 Why is `output_padding` needed? A forward convolution with `k=3,s=2,p=0,d=1` maps both length five and length six to length two. The output shape alone cannot tell us which original length was used. A matching transposed convolution maps length two to five when output_padding is zero, or six when it is one. It resolves size ambiguity; it does not restore values that were lost. Use the library's admissible range rather than treating output_padding as arbitrary padding. In the usual dilation-one case it is smaller than stride. [Transposed-convolution shape contract](https://docs.pytorch.org/docs/2.9/generated/torch.nn.ConvTranspose2d.html)
 
+![Kernel 3, stride 2, no padding maps both 5 and 6 samples to 2 outputs and never reads the sixth; the transposed convolution returns 5 positions, or 6 with output padding 1, restoring the size but not the lost value](figures/f23-output-padding-handbook.svg)
+*Figure 12. A forward pass with k = 3, s = 2, p = 0 reads a 5-sample and a 6-sample conveyor signal with the same two windows, so both give Lout = 2 and the sixth sample is never read; going back from 2, the two stamps cover five positions, and output_padding = 1 only declares a sixth so that Lout is 6 again; the value of the sample the forward pass never read is not restored.*
+
 The “fractionally strided” interpretation can also help. For stride 2, insert a zero **between** adjacent input values. `[a,b]` becomes `[a,0,b]`, which has length three, not four. More generally that interior expansion has length `(Lin−1)s+1`; filtering and border handling then determine the final output.
 
 For a three-weight kernel `[u,v,w]`, the uncropped full scatter result is:
@@ -1521,7 +1524,7 @@ There are five positions. Appropriate cropping or size adjustment changes this r
 Uneven overlap can introduce **checkerboard artifacts**. With a three-weight kernel placed every two positions, some interior outputs receive two contributions and others one. In two dimensions the horizontal and vertical patterns combine. Choosing a kernel size divisible by stride can avoid this particular interior overlap-count imbalance, but learned weights and other architectural effects can still produce artifacts. Resize followed by ordinary convolution is another design: first enlarge using a defined interpolation rule, then learn spatial filtering. It has its own costs and does not recreate missing evidence automatically. [Checkerboard analysis](https://distill.pub/2016/deconv-checkerboard/)
 
 ![Upsampling two samples at stride 2 stamps the kernel twice: the middle output collects two terms and its neighbours one, the uneven overlap behind checkerboard artifacts](figures/f09-tconv-overlap-handbook.svg)
-*Figure 12. Upsampling two conveyor samples with kernel [u, v, w] at stride 2 stamps the kernel twice, two positions apart: the middle output collects a·w + b·u while its neighbours collect one term each, the uneven overlap behind checkerboard artifacts, and a kernel width divisible by the stride removes this particular unevenness (other artifacts can remain).*
+*Figure 13. Upsampling two conveyor samples with kernel [u, v, w] at stride 2 stamps the kernel twice, two positions apart: the middle output collects a·w + b·u while its neighbours collect one term each, the uneven overlap behind checkerboard artifacts, and a kernel width divisible by the stride removes this particular unevenness (other artifacts can remain).*
 
 At this Candle pin, ConvTranspose2d weights are `[Cin,Cout,Kh,Kw]`, and its configuration has no grouped-transpose option. PyTorch's grouped form uses `[Cin,Cout/g,Kh,Kw]`. A mathematical feature existing in another library does not establish its availability in the pinned Candle API. [Pinned ConvTranspose2d source](https://github.com/huggingface/candle/blob/f5838914f788d3950d0a25042cffe199d9325a9e/candle-nn/src/conv.rs)
 
@@ -1639,7 +1642,7 @@ For NCHW image features, the following table describes common forms. “Per imag
 In a Transformer, LayerNorm commonly normalizes a token's hidden-feature vector while keeping different tokens separate. In a CNN, a LayerNorm configured over C,H,W has a different population. GroupNorm separates channels into groups, but those groups concern statistics; they are distinct from grouped convolution's connectivity restriction. [Layer Normalization](https://arxiv.org/abs/1607.06450), [Group Normalization](https://arxiv.org/html/1803.08494v3)
 
 ![BatchNorm, LayerNorm, GroupNorm and InstanceNorm differ only in which cells are averaged together](figures/f14-norm-axes.svg)
-*Figure 13. Choose a normaliser by its population: BatchNorm pools one channel across all N·H·W values of the conveyor batch, LayerNorm pools the feature vector of one token, GroupNorm pools a channel group within one image, and InstanceNorm pools one channel of one image.*
+*Figure 14. Choose a normaliser by its population: BatchNorm pools one channel across all N·H·W values of the conveyor batch, LayerNorm pools the feature vector of one token, GroupNorm pools a channel group within one image, and InstanceNorm pools one channel of one image.*
 
 Weight Standardization subtracts each output filter's mean and divides by a stabilized measure of its spread. It has been studied with normalization alternatives for small per-device batches. A reported improvement on a particular benchmark does not make it a universal replacement for BatchNorm. [Weight Standardization research](https://arxiv.org/html/1903.10520v2)
 
@@ -1690,7 +1693,7 @@ Fused:    4×5−6=14
 Keeping epsilon was necessary to obtain the correct scale. Replacing `sqrt(v+epsilon)` with `sqrt(v)` would define a different function.
 
 ![Folding a fixed BatchNorm into the convolution: the scale a equals gamma over the square root of variance plus epsilon, the weights and bias are rewritten, and both routes give the same output](figures/f15-bn-fold-handbook.svg)
-*Figure 14. Folding the fixed BatchNorm into the convolution: a = 4/√(3 + 1) = 2 turns z = 2x + 1 with mean 3, variance 3, epsilon 1, gamma 4 and beta −2 into the single map 4x − 6, and both routes give 14 for x = 5.*
+*Figure 15. Folding the fixed BatchNorm into the convolution: a = 4/√(3 + 1) = 2 turns z = 2x + 1 with mean 3, variance 3, epsilon 1, gamma 4 and beta −2 into the single map 4x − 6, and both routes give 14 for x = 5.*
 
 The derivation requires fixed statistics. Current-batch normalization depends on the input population, so a single fixed pair of fused weights and bias cannot replace its general training behavior. PyTorch's evaluation-fusion helper requires evaluation mode and populated running buffers. [Official fusion contract](https://docs.pytorch.org/docs/2.9/generated/torch.nn.utils.fuse_conv_bn_eval.html)
 
@@ -1805,7 +1808,7 @@ No pixel moved. All positions within a channel used the same gate. The two gates
 If another image had descriptor `[1,2]`, the hidden unit would output zero, both logits would be zero, and both gates would be 0.5. That is input dependence with fixed learned MLP weights. The numbers are hand-selected to reveal the mechanics, not evidence of a trained model's behavior.
 
 ![The two-channel Squeeze-and-Excitation example: channel averages, one hidden unit, two gates from a sigmoid, and every position of a channel multiplied by its gate](figures/f16-se-gates-handbook.svg)
-*Figure 15. The two-channel SE example: averages [2, 1] give hidden ReLU(2 − 1) = 1, logits ln 3 and −ln 3 give gates 0.75 and 0.25, and every position of channel 1 is multiplied by 0.75 and of channel 2 by 0.25; no pixel moves, and the gates need not sum to one.*
+*Figure 16. The two-channel SE example: averages [2, 1] give hidden ReLU(2 − 1) = 1, logits ln 3 and −ln 3 give gates 0.75 and 0.25, and every position of channel 1 is multiplied by 0.75 and of channel 2 by 0.25; no pixel moves, and the gates need not sum to one.*
 
 <a id="se-cost"></a>
 ### 8.3 Count the cost and choose the hidden width explicitly
@@ -1879,6 +1882,9 @@ In a common residual integration, apply SE to the residual branch after its conv
 input ── convolution branch ── SE ── add ── output
   └───────────────────────────────┘
 ```
+
+![SE sits on the residual branch after its convolution stack and multiplies it by one gate per channel before the skip path is added; the skip is not gated and the order of BN and activations belongs to the architecture](figures/f24-se-placement-handbook.svg)
+*Figure 17. SE in a residual integration of the conveyor model: the convolution branch produces [N,C,H,W], SE multiplies it by its [N,C,1,1] gates, and the skip path joins at the addition untouched; whether BN and activations sit inside the branch or after the addition is the architecture's choice, not the SE block's.*
 
 An actual block may also contain BN and activations. Their order belongs to that architecture. A Conv→BN→ReLU pattern with activation after the addition is not a preactivation ResNet merely because it has a skip connection.
 
@@ -1975,7 +1981,7 @@ $$O\approx\begin{bmatrix}1.197776&0.802224\\1.604448&0.598888\\1.503490&0.751745
 Nothing was retrieved as an exact record. Every allowed value contributed according to a soft weight. Row 1 gave equal weight to tokens 2 and 3 because their keys had equal compatibility with query 1; their values remain different.
 
 ![The numerical attention example: scores of every query against every key, softmax over each row into weights that sum to 1, and each output row as a soft blend of the value rows](figures/f17-attention-flow-handbook.svg)
-*Figure 16. The numerical attention example: Q·Kᵀ/√2 scores every query against every key, softmax over each row gives weights that sum to 1, and output row 1 is 0.197776·[2,0] + 0.401112·[0,1] + 0.401112·[2,1] = [1.197776, 0.802224], a soft blend of the value rows rather than a lookup.*
+*Figure 18. The numerical attention example: Q·Kᵀ/√2 scores every query against every key, softmax over each row gives weights that sum to 1, and output row 1 is 0.197776·[2,0] + 0.401112·[0,1] + 0.401112·[2,1] = [1.197776, 0.802224], a soft blend of the value rows rather than a lookup.*
 
 This standalone Rust program calculates the same example using arrays. It is an educational CPU calculation without Candle or automatic differentiation:
 
@@ -2038,7 +2044,7 @@ With the earlier scores, row 1 becomes `[0,-∞,-∞]` and has weights `[1,0,0]`
 Do not say that `softmax(-∞)` by itself is zero. Softmax is defined over a whole row. A masked element gets zero weight when the row also contains at least one valid finite score. If every entry is `-∞`, the denominator is zero in the unshifted formula and subtracting the maximum produces `-∞-(-∞)`, which is NaN. Reject that situation or define a deliberate output policy before applying ordinary softmax. A very large finite negative constant is not the same contract: masking every position with that constant can yield a uniform distribution over forbidden values.
 
 ![Adding the causal mask replaces forbidden scores with minus infinity: their weights are exactly 0 and the rest of the row renormalises to 1; a row of nothing but minus infinity gives NaN](figures/f18-masks-handbook.svg)
-*Figure 17. Adding the causal mask replaces forbidden scores with −∞: row 2 becomes [a, 0, −∞], its weights [0.669762, 0.330238, 0], and its output [1.339523, 0.330238] blends only the two permitted values; a row containing nothing but −∞ would give NaN.*
+*Figure 19. Adding the causal mask replaces forbidden scores with −∞: row 2 becomes [a, 0, −∞], its weights [0.669762, 0.330238, 0], and its output [1.339523, 0.330238] blends only the two permitted values; a row containing nothing but −∞ would give NaN.*
 
 Mask polarity is an API decision. In this handbook's Candle fragment, U8 value 1 means **blocked**. PyTorch's functional scaled-dot-product attention boolean mask uses `True` for **allowed**. Read the specific API rather than transferring a convention from another function. [PyTorch SDPA mask semantics](https://docs.pytorch.org/docs/2.9/generated/torch.nn.functional.scaled_dot_product_attention.html).
 
@@ -2122,7 +2128,7 @@ Take `B=2`, `T=3`, `D=8`, `H=2`, and `d=4`:
 Reshape and transpose solve different problems. Reshape separates a feature index into `(head,feature_in_head)`; transpose puts the head axis where batched matrix multiplication expects it. A missing transpose can make tokens and heads trade meanings while leaving several numerical dimensions plausible.
 
 ![The shape walk for two heads: reshape separates each projected feature index into head and feature within head, transpose puts heads where batched matrix multiplication expects them, and the inverse pair restores the token order](figures/f19-heads-handbook.svg)
-*Figure 18. The shape walk for B = 2, T = 3, D = 8, H = 2: reshape separates each projected feature index into (head, feature within head), [2,3,8] → [2,3,2,4]; transpose(1, 2) puts heads where batched matrix multiplication expects them, [2,2,3,4]; and the inverse pair after A@V restores [2,3,8] with the token order intact.*
+*Figure 20. The shape walk for B = 2, T = 3, D = 8, H = 2: reshape separates each projected feature index into (head, feature within head), [2,3,8] → [2,3,2,4]; transpose(1, 2) puts heads where batched matrix multiplication expects them, [2,2,3,4]; and the inverse pair after A@V restores [2,3,8] with the token order intact.*
 
 The following is a **Candle fragment, source-checked and executed inside an educational CPU wrapper**. It assumes initialized `Linear` fields `q_lin`, `k_lin`, `v_lin`, `out_lin`, and positive `n_heads`, `head_dim` satisfying the configuration above. The surrounding function returns `candle_core::Result<Tensor>` and imports `Tensor`, `DType`, `D`, and `Module` from `candle_core`.
 
@@ -2192,7 +2198,7 @@ $$PE_{p,2i}=\sin(p/10000^{2i/D}),\quad PE_{p,2i+1}=\cos(p/10000^{2i/D}).$$
 For `D=4`, the position-zero vector is `[0,1,0,1]`; position one is approximately `[.841471,.540302,.010000,.999950]`. Different frequencies change at different rates, providing distinguishable position-dependent signals. The formula is defined beyond the training lengths, but useful extrapolation is an empirical property, not a guarantee. [Original positional encoding](https://arxiv.org/html/1706.03762v7).
 
 ![For D = 4 the two dimension pairs are sines and cosines of p over 1 and p over 100: the faster pair separates neighbours and the slower pair separates far-apart positions](figures/f20-positional-handbook.svg)
-*Figure 19. For D = 4 the two dimension pairs are sines and cosines of p/1 and p/100: position 0 gives [0, 1, 0, 1], position 1 gives [0.841471, 0.540302, 0.010000, 0.999950], and the slower pair separates far-apart positions while the faster one separates neighbours.*
+*Figure 21. For D = 4 the two dimension pairs are sines and cosines of p/1 and p/100: position 0 gives [0, 1, 0, 1], position 1 gives [0.841471, 0.540302, 0.010000, 0.999950], and the slower pair separates far-apart positions while the faster one separates neighbours.*
 
 Learned absolute embeddings use a trainable table indexed by position and require a policy outside that table. Relative-bias methods add a function of query/key positions to scores. Rotary position embeddings instead rotate paired query/key coordinates so their dot products encode relative-position effects; they are not simply an extra vector added to X. [RoFormer / rotary embeddings](https://arxiv.org/abs/2104.09864).
 
@@ -2222,7 +2228,7 @@ Pre-norm:
 The placement changes the forward function and gradient paths. Pre-norm models may also apply a final norm after the stack. A checkpoint designed for one arrangement cannot be ported by casually moving its norms. [Analysis of pre- and post-norm Transformers](https://arxiv.org/abs/2002.04745).
 
 ![Post-norm and pre-norm blocks contain the same four parts; only the position of the two LayerNorms differs](figures/f21-transformer-block.svg)
-*Figure 20. Post-norm and pre-norm blocks contain the same four parts; only the position of the two LayerNorms differs (after each residual addition, or before each sublayer), which changes the forward function and the gradient paths, so a checkpoint from one cannot be ported by moving its norms.*
+*Figure 22. Post-norm and pre-norm blocks contain the same four parts; only the position of the two LayerNorms differs (after each residual addition, or before each sublayer), which changes the forward function and the gradient paths, so a checkpoint from one cannot be ported by moving its norms.*
 
 <a id="transformer-decoding"></a>
 ### 10.6 Parallel training and sequential generation coexist
@@ -2266,7 +2272,7 @@ let restored = tokens.transpose(1, 2)?.reshape((batch, channels, height, width))
 For `[2,64,3,4]`, there are 12 tokens per image, each with 64 features: output `[2,12,64]`. A particular spatial coordinate maps to sequence index `row*width+column` under this row-major flattening. Returning to the image grid requires the inverse axis operations with the original height and width.
 
 ![A channel-first feature map becomes a sequence of tokens: each token is one image location carrying all its features, and the pixel at row 1, column 2 becomes token 6](figures/f03-image-to-tokens-handbook.svg)
-*Figure 21. A [2,64,3,4] conveyor feature map becomes [2,12,64]: each of the 12 tokens is one image location carrying all 64 features, and the pixel at row 1, column 2 becomes token 1·4 + 2 = 6.*
+*Figure 23. A [2,64,3,4] conveyor feature map becomes [2,12,64]: each of the 12 tokens is one image location carrying all 64 features, and the pixel at row 1, column 2 becomes token 1·4 + 2 = 6.*
 
 `dims4()` proves rank four, not that the axes really mean NCHW. That meaning comes from the producer. Nor does the reshape extract patches: it only reorganizes existing values. A Vision Transformer normally forms patch embeddings, such as flattening each non-overlapping patch and applying a learned projection. For a `32×32` image and `4×4` patches, there are 64 patches before any extra tokens, rather than 1024 individual pixels. [Vision Transformer paper](https://arxiv.org/abs/2010.11929).
 
@@ -2301,7 +2307,7 @@ The channel split preserves all spatial locations. For a toy incoming `[1,256,20
 This also illustrates why `dk` and `dv` are different concepts. Q and K use width 32 for their dot product, so the scale is `1/sqrt(32)`. The values carry 64 features per head, so weighted values return 64 features per query per head. Narrowing Q/K does not change the `400×400` attention matrix dimensions.
 
 ![Partial self-attention on the 20 by 20 map: the 1×1 split leaves half the channels for attention with 2 heads over 400 locations, and the score matrix grows with the square of the number of locations](figures/f22-psa-split-handbook.svg)
-*Figure 22. PSA on a [1,256,20,20] map: the 1×1 split leaves a [1,128,20,20] branch for attention with 2 heads (query/key width 32, value width 64) over N = 400 locations, so the scores hold 2·400·400 = 320,000 entries, while at 80×80 one head alone would need 40,960,000, 256 times more.*
+*Figure 24. PSA on a [1,256,20,20] map: the 1×1 split leaves a [1,128,20,20] branch for attention with 2 heads (query/key width 32, value width 64) over N = 400 locations, so the scores hold 2·400·400 = 320,000 entries, while at 80×80 one head alone would need 40,960,000, 256 times more.*
 
 The official attention code stores Q,K as `[B,heads,dk,N]` and V as `[B,heads,dv,N]`, where `N=H*W`. It computes `QᵀK`, then `V Aᵀ`, the transpose-layout equivalent of our `AV`. It adds a depthwise `3×3` convolution of the value map before output projection, contributing local spatial structure. [Pinned attention calculation](https://github.com/THU-MIG/yolov10/blob/453c6e38a51e9d1d5a2aa5fb7f1014a711913397/ultralytics/nn/modules/block.py#L792-L795).
 
@@ -2588,6 +2594,6 @@ The source project, dependencies, and preexisting changes were not edited. No Me
 
 **Re-verification of 27 September 2026.** The four standard-library programs were compiled again with `rustc --edition 2024` (Rust 1.98.1, `aarch64-apple-darwin`) and printed the values this handbook states: the softmax cases, the four parser messages and the six-decimal attention rows. The two Candle programs and the ten fragments were compiled and run in fresh scratch packages, once at the pinned revision `f5838914` and once at Candle 0.11.0, the newest crates.io release on that date; the price program printed weights `[[1.9999963, 2.9999967]]` and bias `[1.0000042]` on both versions, and each fragment was placed in the smallest caller its text declares (a stub `build_model`, a saved readout for the loader, a `VarMap` builder for the four convolutions, a trained BatchNorm for the fold comparison, a struct holding the four `Linear` fields for the attention body, a `[2, 64, 3, 4]` tensor for the token conversion) and behaved as described. All 129 cited links returned HTTP 200 when swept on 27 September 2026 and again on 28 September 2026 (one GitHub page answered 503 once on the first sweep and 200 on retry), and the pinned YOLOv10 and Candle source files were downloaded to check the line anchors: three anchors were corrected (`block.py` lines 771 to 826 for `Attention` and `PSA`, 792 to 795 for the attention calculation, `head.py` lines 497 to 512 for `v10Detect` and its `detach`) and the `VarMap::load` anchor was tightened. The `anyhow` wording in sections 2.5 and 3.9 was changed from an exact pin to what the project manifest actually requests. No numerical, mathematical or API statement was found wrong. An independent Fable 5.1 reviewer then re-ran the programs and the fragment harness on both Candle versions, recomputed every worked number, re-fetched about forty-five primary sources and re-read the pinned Candle and YOLOv10 files, and found no wrong statement, number, quotation or code block; its wording notes on this paragraph were applied.
 
-**Figures (28 September 2026).** The 22 figures were added in this edition. They are drawn by `figures/make_figures.rs`, a standard-library Rust program (Rust 1.98.1, edition 2024) run with the `figures` folder as its argument; it recomputes every value it draws from the same inputs as the handbook's examples rather than typing them, and two runs write byte-identical files. Every `.svg` was checked to be well-formed XML with explicit colours and its own light background (so a dark theme leaves it readable), rendered at full width and inspected, and each number shown was compared with the text block or equation beside it; the eight densest figures were also inspected at 380 pixels wide and two on a dark page. No program or fragment in this handbook changed. An independent Fable 5.1 audit of the drafts, the generator and all 41 files (28 September 2026) re-derived every drawn number from this handbook and the guide, reproduced every file byte for byte from the source, and found one wiring error (the post-norm skip in Figure 20) and twenty smaller items: caption wording, notation, two label collisions and a clipped canvas, result numbers typed as literals in the generator, and this note's own description of the rendering checks; all were corrected and the changed files re-audited.
+**Figures (28 September 2026).** The 24 figures were added in this edition, 22 first and two more later the same day (the `output_padding` ambiguity in section 6.5, Figure 12, and the SE placement in section 8.5, Figure 17). They are drawn by `figures/make_figures.rs`, a standard-library Rust program (Rust 1.98.1, edition 2024) run with the `figures` folder as its argument; it recomputes every value it draws from the same inputs as the handbook's examples rather than typing them, and two runs write byte-identical files. Every `.svg` was checked to be well-formed XML with explicit colours and its own light background (so a dark theme leaves it readable), rendered at full width and inspected, and each number shown was compared with the text block or equation beside it; the eight densest figures were also inspected at 380 pixels wide and two on a dark page. No program or fragment in this handbook changed. An independent Fable 5.1 audit of the drafts, the generator and the 41 files then present (28 September 2026) re-derived every drawn number from this handbook and the guide, reproduced every file byte for byte from the source, and found one wiring error (the post-norm skip in the block figure, now Figure 22) and twenty smaller items: caption wording, notation, two label collisions and a clipped canvas, result numbers typed as literals in the generator, and this note's own description of the rendering checks; all were corrected and the changed files re-audited. The two later figures (four files, 45 in all) were re-derived from this text, rendered at full width, at 380 pixels wide and on a dark page, and audited separately by a fresh Fable 5.1 pass, which found no error; its wording and generator suggestions were applied and the changed files re-audited.
 
 [Return to contents](#contents)

@@ -6,7 +6,7 @@
 //!
 //! Every number drawn is computed in `calc` from the same inputs the documents use (softmax, attention,
 //! positional encodings, receptive fields, dilation offsets, transposed-convolution stamp counts,
-//! normalisation statistics, the BatchNorm fold, the backward examples). Two runs write byte-identical files.
+//! convolution output sizes and window positions, normalisation statistics, the BatchNorm fold, the backward examples). Two runs write byte-identical files.
 #![forbid(unsafe_code)]
 
 /// Colour and font tokens: the only colour literals in this program. Validated as a set (see the documents'
@@ -681,6 +681,31 @@ mod calc {
     /// A 1×1 convolution at one pixel: the channel vector times the (C_out, C_in) matrix.
     pub fn pointwise(vector: &[f64], matrix: &[Vec<f64>]) -> Vec<f64> {
         matvec(matrix, vector)
+    }
+
+    /// Output length of a forward convolution: floor((l + 2p − d(k − 1) − 1) / s) + 1.
+    pub fn conv_out(l: usize, k: usize, s: usize, p: usize, d: usize) -> usize {
+        (l + 2 * p - d * (k - 1) - 1) / s + 1
+    }
+
+    /// Output length of a transposed convolution, the documents' formula: (l − 1)s − 2p + d(k − 1) + output_padding + 1.
+    pub fn tconv_out(l: usize, k: usize, s: usize, p: usize, d: usize, op: usize) -> usize {
+        (l - 1) * s + d * (k - 1) + op + 1 - 2 * p
+    }
+
+    /// The input indices each forward window reads (0-based; below 0 or at least `l` means a padding cell):
+    /// window i covers i·s − p + j·d for j = 0..k.
+    pub fn conv_windows(l: usize, k: usize, s: usize, p: usize, d: usize) -> Vec<Vec<i64>> {
+        (0..conv_out(l, k, s, p, d))
+            .map(|i| (0..k).map(|j| (i * s + j * d) as i64 - p as i64).collect())
+            .collect()
+    }
+
+    /// The output positions each input of a transposed convolution stamps (0-based after the padding crop; a
+    /// negative position is cropped by the padding, one at or beyond the output length is kept only if
+    /// `output_padding` extends the axis that far): input i reaches i·s + j·d − p for j = 0..k.
+    pub fn tconv_stamps(lin: usize, k: usize, s: usize, p: usize, d: usize) -> Vec<Vec<i64>> {
+        (0..lin).map(|i| (0..k).map(|j| (i * s + j * d) as i64 - p as i64).collect()).collect()
     }
 }
 
@@ -2683,6 +2708,364 @@ mod figs {
         (format!("f22-psa-split-{}.svg", v.suffix()), s.finish())
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // F23 the output-size ambiguity that output_padding resolves
+    // ---------------------------------------------------------------------------------------------
+    /// One cell of a position strip: a real position with its label, a padding or cropped position, a position
+    /// no window reads, the position that only `output_padding` keeps, or a declared position nothing reaches.
+    enum Pos {
+        Real(String),
+        Pad(&'static str),
+        Unread(String),
+        Extra(String),
+        Declared,
+    }
+
+    /// A strip of `cw` × `ch` cells at (x, y): padding cells dashed with a muted label, never-read cells neutral
+    /// with an orange outline, the extra cell tinted with an orange outline, a declared cell dashed orange and empty.
+    fn pos_strip(s: &mut Svg, x: f64, y: f64, cw: f64, ch: f64, cells: &[Pos]) {
+        for (j, p) in cells.iter().enumerate() {
+            let cx = x + j as f64 * cw;
+            let (tx, ty) = (cx + cw / 2.0, y + ch / 2.0 + 4.0);
+            match p {
+                Pos::Real(t) => {
+                    s.rect(cx, y, cw, ch, tok::SURFACE, Some(tok::GRID));
+                    s.text(tx, ty, t, 11, tok::INK, Anchor::Middle);
+                }
+                Pos::Pad(t) => {
+                    s.rect_dashed(cx, y, cw, ch, tok::AXIS);
+                    if !t.is_empty() {
+                        s.text(tx, ty, t, 11, tok::MUTED, Anchor::Middle);
+                    }
+                }
+                Pos::Unread(t) => {
+                    s.rect_bold(cx, y, cw, ch, tok::NEUTRAL, tok::S2);
+                    s.text(tx, ty, t, 11, tok::MUTED, Anchor::Middle);
+                }
+                Pos::Extra(t) => {
+                    s.rect_bold(cx, y, cw, ch, tok::FILL2, tok::S2);
+                    s.text(tx, ty, t, 11, tok::INK, Anchor::Middle);
+                }
+                Pos::Declared => s.rect_dashed(cx, y, cw, ch, tok::S2),
+            }
+        }
+    }
+
+    /// One window or stamp bar, `width` cells wide from column `col` of a strip whose cells are `cw` wide.
+    fn bar_row(s: &mut Svg, x: f64, y: f64, cw: f64, col: i64, width: usize, label: &str, outline: &str) {
+        let x0 = x + col as f64 * cw;
+        let w = width as f64 * cw;
+        s.rect_bold(x0, y, w, 16.0, tok::FILL2, outline);
+        s.text(x0 + w / 2.0, y + 12.0, label, 11, tok::INK2, Anchor::Middle);
+    }
+
+    /// A square bracket under columns `col0..col1` of a strip, with its label beneath.
+    fn bracket_under(s: &mut Svg, x: f64, y: f64, cw: f64, col0: usize, col1: usize, label: &str) {
+        let x0 = x + col0 as f64 * cw + 2.0;
+        let x1 = x + col1 as f64 * cw - 2.0;
+        s.path(&format!("M{} {} v5 H{} v-5", svg::c(x0), svg::c(y), svg::c(x1)), tok::INK2, 1.0);
+        s.text((x0 + x1) / 2.0, y + 17.0, label, 11, tok::INK2, Anchor::Middle);
+    }
+
+    /// The number of cells a window or stamp covers, from its first to its last tap.
+    fn span(taps: &[i64]) -> usize {
+        (taps[taps.len() - 1] - taps[0] + 1) as usize
+    }
+
+    /// The real cells (1-based) that no forward window reads.
+    fn unread(windows: &[Vec<i64>], l: usize) -> Vec<usize> {
+        (0..l).filter(|c| !windows.iter().any(|w| w.contains(&(*c as i64)))).map(|c| c + 1).collect()
+    }
+
+    /// Where the last forward window ends: on the padding, or on a real cell (1-based, named by `unit`).
+    fn last_window_ends(windows: &[Vec<i64>], l: usize, unit: &str) -> String {
+        let last = windows[windows.len() - 1][windows[0].len() - 1];
+        if last >= l as i64 { format!("window {} ends on the padding", windows.len()) } else { format!("window {} ends on {unit} {}", windows.len(), last + 1) }
+    }
+
+    /// Which samples no window reads, as a footer.
+    fn unread_footer(windows: &[Vec<i64>], l: usize) -> String {
+        let u = unread(windows, l);
+        if u.is_empty() { "every sample is read".to_string() } else { format!("sample {} is read by no window", u.iter().map(|c| c.to_string()).collect::<Vec<_>>().join(", ")) }
+    }
+
+    /// A forward panel: the windows as stacked bars over the padded input strip, an arrow to the output strip,
+    /// and a footer line. `out_name` is the document's name for the output length. Returns the y below the footer.
+    fn forward_panel(s: &mut Svg, x: f64, y: f64, cw: f64, l: usize, k: usize, st: usize, p: usize, title: &str, mark_last: bool, out_name: &str, footer: &str) -> f64 {
+        s.text(x, y, title, 12, tok::INK, Anchor::Start);
+        let windows = calc::conv_windows(l, k, st, p, 1);
+        let n = windows.len();
+        for (i, w) in windows.iter().enumerate() {
+            let outline = if mark_last && i + 1 == n { tok::S2 } else { tok::S1 };
+            bar_row(s, x, y + 10.0 + i as f64 * 19.0, cw, w[0] + p as i64, span(w), &format!("window {}", i + 1), outline);
+        }
+        let sy = y + 10.0 + n as f64 * 19.0 + 6.0;
+        let mut cells: Vec<Pos> = (0..p).map(|_| Pos::Pad("pad")).collect();
+        for c in 0..l {
+            let read = windows.iter().any(|w| w.contains(&(c as i64)));
+            let t = (c + 1).to_string();
+            cells.push(if read { Pos::Real(t) } else { Pos::Unread(t) });
+        }
+        cells.extend((0..p).map(|_| Pos::Pad("pad")));
+        pos_strip(s, x, sy, cw, 26.0, &cells);
+        let total = cells.len() as f64 * cw;
+        let oy = sy + 26.0 + 30.0;
+        s.arrow(x + total / 2.0, sy + 28.0, x + total / 2.0, oy - 4.0, None);
+        let out_cells: Vec<Pos> = (0..n).map(|c| Pos::Real((c + 1).to_string())).collect();
+        let ox = x + (total - n as f64 * cw) / 2.0;
+        pos_strip(s, ox, oy, cw, 26.0, &out_cells);
+        s.text(ox + n as f64 * cw + 8.0, oy + 17.0, &format!("{out_name} = {n}"), 12, tok::INK, Anchor::Start);
+        s.text(x, oy + 26.0 + 16.0, footer, 11, tok::INK2, Anchor::Start);
+        oy + 26.0 + 16.0
+    }
+
+    pub fn fig_output_padding(v: Variant) -> (String, String) {
+        match v {
+            Variant::Guide => {
+                let (k, st, p) = (3usize, 2usize, 1usize);
+                let (a, b) = (7usize, 8usize);
+                let mut s = Svg::new(
+                    720,
+                    462,
+                    "A stride-2 convolution gives the same output size for two input sizes; output_padding tells the transposed convolution which one to return",
+                    "Two forward panels (inputs 7 and 8, kernel 3, stride 2, padding 1) with their four windows and the shared output of 4, then the way back: four stamps into a strip of nine columns, where the padding crops the first and output_padding keeps the last. One axis of the photo is drawn; the other behaves the same, so in two dimensions the added positions are the bottom row and the right column.",
+                );
+                let cw = 28.0;
+                let (na, nb) = (calc::conv_out(a, k, st, p, 1), calc::conv_out(b, k, st, p, 1));
+                let (wa, wb) = (calc::conv_windows(a, k, st, p, 1), calc::conv_windows(b, k, st, p, 1));
+                debug_assert_eq!((wa.len(), wb.len()), (na, nb));
+                let end_a = forward_panel(&mut s, 30.0, 24.0, cw, a, k, st, p, &format!("H_in = {a}, padding {p} each side"), true, "H_out", &last_window_ends(&wa, a, "pixel"));
+                forward_panel(&mut s, 380.0, 24.0, cw, b, k, st, p, &format!("H_in = {b}, padding {p} each side"), true, "H_out", &last_window_ends(&wb, b, "pixel"));
+                let ly = end_a + 20.0;
+                s.rect_bold(30.0, ly - 9.0, 10.0, 10.0, tok::FILL2, tok::S2);
+                s.text(46.0, ly, "orange: the window that ends differently", 11, tok::INK2, Anchor::Start);
+                // the way back: the forward outputs are now the inputs of a transposed convolution
+                let lin = na;
+                let (l0, l1) = (calc::tconv_out(lin, k, st, p, 1, 0), calc::tconv_out(lin, k, st, p, 1, 1));
+                let by = ly + 30.0;
+                s.text_bold(30.0, by, &format!("back from {lin}: transposed convolution, stride {st}, padding {p}"), 13, tok::INK, Anchor::Start);
+                let bcw = 36.0;
+                let stamps = calc::tconv_stamps(lin, k, st, p, 1);
+                s.text(30.0, by + 18.0, &format!("the {lin} outputs, now the inputs"), 12, tok::INK, Anchor::Start);
+                for (i, st_i) in stamps.iter().enumerate() {
+                    let outline = if i + 1 == lin { tok::S2 } else { tok::S1 };
+                    bar_row(&mut s, 30.0, by + 26.0 + i as f64 * 19.0, bcw, st_i[0] + p as i64, span(st_i), &format!("stamp of {}", i + 1), outline);
+                }
+                let sy = by + 26.0 + lin as f64 * 19.0 + 6.0;
+                // full columns 0..=l1: column c is position c − p; negative positions are cropped, positions ≥ l0 kept only with output_padding
+                let mut cells: Vec<Pos> = Vec::new();
+                for c in 0..(l1 + p) {
+                    let pos = c as i64 - p as i64;
+                    cells.push(if pos < 0 {
+                        Pos::Pad("")
+                    } else if (pos as usize) < l0 {
+                        Pos::Real((pos + 1).to_string())
+                    } else {
+                        Pos::Extra((pos + 1).to_string())
+                    });
+                }
+                pos_strip(&mut s, 30.0, sy, bcw, 26.0, &cells);
+                s.text(30.0 + bcw / 2.0, sy - 6.0, "cropped", 11, tok::MUTED, Anchor::Middle);
+                bracket_under(&mut s, 30.0, sy + 30.0, bcw, p, p + l0, &format!("output_padding = 0 → H_out = {l0}"));
+                bracket_under(&mut s, 30.0, sy + 54.0, bcw, p, p + l1, &format!("output_padding = 1 → H_out = {l1}"));
+                let lines = [
+                    format!("H_out = ({lin} − 1)·{st} − 2·{p} + 1·({k} − 1)"),
+                    format!("+ output_padding + 1 = {l0} + output_padding"),
+                    format!("column {l1} is the tail of stamp {lin}:"),
+                    "cropped when output_padding = 0,".to_string(),
+                    "kept when output_padding = 1: one side only".to_string(),
+                    "(in 2-D: the bottom row and the right column)".to_string(),
+                ];
+                for (i, l) in lines.iter().enumerate() {
+                    s.text(400.0, by + 26.0 + i as f64 * 15.0, l, 11, tok::INK2, Anchor::Start);
+                }
+                (format!("f23-output-padding-{}.svg", v.suffix()), s.finish())
+            }
+            Variant::Handbook => {
+                let (k, st, p) = (3usize, 2usize, 0usize);
+                let (a, b) = (5usize, 6usize);
+                let mut s = Svg::new(
+                    720,
+                    380,
+                    "A forward convolution with kernel 3, stride 2 and no padding maps 5 and 6 samples to 2; output_padding tells the transposed convolution to return 5 or 6",
+                    "Two forward panels (inputs 5 and 6) with their two windows and the shared output of 2, the sixth sample marked as never read, then the way back: two stamps cover five positions and output_padding 1 declares a sixth that no stamp reaches.",
+                );
+                let cw = 36.0;
+                let (na, nb) = (calc::conv_out(a, k, st, p, 1), calc::conv_out(b, k, st, p, 1));
+                debug_assert_eq!(na, nb);
+                let (wa, wb) = (calc::conv_windows(a, k, st, p, 1), calc::conv_windows(b, k, st, p, 1));
+                let end_a = forward_panel(&mut s, 30.0, 24.0, cw, a, k, st, p, &format!("Lin = {a}, k = {k}, s = {st}, p = {p}"), false, "Lout", &unread_footer(&wa, a));
+                forward_panel(&mut s, 330.0, 24.0, cw, b, k, st, p, &format!("Lin = {b}, k = {k}, s = {st}, p = {p}"), false, "Lout", &unread_footer(&wb, b));
+                let dropped = unread(&wb, b);
+                debug_assert_eq!(dropped, vec![b]);
+                let ly = end_a + 20.0;
+                s.rect_bold(30.0, ly - 9.0, 10.0, 10.0, tok::NEUTRAL, tok::S2);
+                s.text(46.0, ly, "orange: the sample no window reads", 11, tok::INK2, Anchor::Start);
+                let lin = na;
+                let (l0, l1) = (calc::tconv_out(lin, k, st, p, 1, 0), calc::tconv_out(lin, k, st, p, 1, 1));
+                let by = ly + 30.0;
+                s.text_bold(30.0, by, &format!("back from {lin}: transposed convolution, stride {st}, kernel [u, v, w]"), 13, tok::INK, Anchor::Start);
+                let bcw = 60.0;
+                let names = ["a", "b"];
+                let taps = ["u", "v", "w"];
+                let stamps = calc::tconv_stamps(lin, k, st, p, 1);
+                s.text(30.0, by + 18.0, &format!("the {lin} outputs, now the inputs a and b"), 12, tok::INK, Anchor::Start);
+                for (i, st_i) in stamps.iter().enumerate() {
+                    bar_row(&mut s, 30.0, by + 26.0 + i as f64 * 19.0, bcw, st_i[0] + p as i64, span(st_i), &format!("stamp of {}", names[i]), tok::S1);
+                }
+                let sy = by + 26.0 + lin as f64 * 19.0 + 6.0;
+                // each position collects one term per stamp that reaches it: input name · kernel weight
+                let mut cells: Vec<Pos> = Vec::new();
+                for pos in 0..l1 {
+                    let mut terms: Vec<String> = Vec::new();
+                    for (i, st_i) in stamps.iter().enumerate() {
+                        for (j, &q) in st_i.iter().enumerate() {
+                            if q == pos as i64 {
+                                terms.push(format!("{}·{}", names[i], taps[j]));
+                            }
+                        }
+                    }
+                    cells.push(if terms.is_empty() { Pos::Declared } else { Pos::Real(terms.join(" + ")) });
+                }
+                pos_strip(&mut s, 30.0, sy, bcw, 26.0, &cells);
+                bracket_under(&mut s, 30.0, sy + 30.0, bcw, 0, l0, &format!("output_padding = 0 → Lout = {l0}"));
+                bracket_under(&mut s, 30.0, sy + 54.0, bcw, 0, l1, &format!("output_padding = 1 → Lout = {l1}"));
+                let lines = [
+                    format!("Lout = ({lin} − 1)·{st} − 2·{p} + 1·({k} − 1)"),
+                    format!("+ output_padding + 1 = {l0} + output_padding"),
+                    format!("output_padding 1 declares a {}th position:", l1),
+                    format!("a place for unread sample {}, not its value", dropped[0]),
+                    format!("(admissible: output_padding 1 < stride {st})"),
+                ];
+                for (i, l) in lines.iter().enumerate() {
+                    s.text(412.0, by + 26.0 + i as f64 * 15.0, l, 11, tok::INK2, Anchor::Start);
+                }
+                (format!("f23-output-padding-{}.svg", v.suffix()), s.finish())
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // F24 where the SE block sits in a residual block
+    // ---------------------------------------------------------------------------------------------
+    /// One stage of a left-to-right flow: a plain label, a one- or two-line box (highlighted or not), or ⊕.
+    enum Stage {
+        Label(&'static str),
+        Box1(&'static str, f64, bool),
+        Box2(&'static str, &'static str, f64, bool),
+        Plus,
+    }
+
+    /// Draws the stages left to right from `x` with boxes `bh` tall whose top is `y`, arrows between them;
+    /// returns the x centre of every stage.
+    fn flow_row(s: &mut Svg, x: f64, y: f64, bh: f64, stages: &[Stage]) -> Vec<f64> {
+        let gap = 22.0;
+        let mid = y + bh / 2.0;
+        let mut cx = x;
+        let mut centres = Vec::new();
+        for (i, st) in stages.iter().enumerate() {
+            let w = match st {
+                Stage::Label(t) => svg::text_w(t, 12) + 4.0,
+                Stage::Box1(_, w, _) | Stage::Box2(_, _, w, _) => *w,
+                Stage::Plus => 22.0,
+            };
+            match st {
+                Stage::Label(t) => s.text(cx + w / 2.0, mid + 4.0, t, 12, tok::INK, Anchor::Middle),
+                Stage::Box1(t, _, hi) => {
+                    let (fill, stroke) = if *hi { (tok::FILL2, tok::S1) } else { (tok::SURFACE, tok::AXIS) };
+                    if *hi {
+                        s.rect_bold(cx, y, w, bh, fill, stroke);
+                        s.text(cx + w / 2.0, mid + 4.0, t, 12, tok::INK, Anchor::Middle);
+                    } else {
+                        s.labelled_box(cx, y, w, bh, t, fill, stroke);
+                    }
+                }
+                Stage::Box2(t1, t2, _, hi) => {
+                    let (fill, stroke) = if *hi { (tok::FILL2, tok::S1) } else { (tok::SURFACE, tok::AXIS) };
+                    if *hi {
+                        s.rect_bold(cx, y, w, bh, fill, stroke);
+                        s.text(cx + w / 2.0, mid - 3.0, t1, 12, tok::INK, Anchor::Middle);
+                        s.text(cx + w / 2.0, mid + 12.0, t2, 11, tok::INK2, Anchor::Middle);
+                    } else {
+                        s.labelled_box2(cx, y, w, bh, t1, t2, fill, stroke);
+                    }
+                }
+                Stage::Plus => {
+                    s.dot(cx + w / 2.0, mid, 11.0, tok::SURFACE, Some(tok::INK2));
+                    s.text(cx + w / 2.0, mid + 4.0, "+", 13, tok::INK, Anchor::Middle);
+                }
+            }
+            centres.push(cx + w / 2.0);
+            if i + 1 < stages.len() {
+                s.arrow(cx + w + 2.0, mid, cx + w + gap - 2.0, mid, None);
+            }
+            cx += w + gap;
+        }
+        centres
+    }
+
+    /// A skip connection from the arrow after stage `from` (x coordinate) down and along to the bottom of the
+    /// stage centred at `to`, entering it from below; the label sits under the curve.
+    fn skip_below(s: &mut Svg, x_from: f64, x_to: f64, mid: f64, bottom: f64, depth: f64, label: &str) {
+        let low = mid + depth;
+        s.path(&format!("M{} {} C{} {} {} {} {} {}", svg::c(x_from), svg::c(mid), svg::c(x_from), svg::c(low), svg::c(x_to), svg::c(low), svg::c(x_to), svg::c(bottom + 6.0)), tok::INK2, 1.5);
+        s.arrow(x_to, bottom + 6.0, x_to, bottom + 1.0, None);
+        s.text((x_from + x_to) / 2.0, low + 4.0, label, 11, tok::INK2, Anchor::Middle);
+    }
+
+    pub fn fig_se_placement(v: Variant) -> (String, String) {
+        let (y, bh) = (60.0, 40.0);
+        let mid = y + bh / 2.0;
+        match v {
+            Variant::Guide => {
+                let mut s = Svg::new(
+                    720,
+                    210,
+                    "In a residual block the SE gate scales the branch after conv-BN-ReLU 1×1, conv-BN-ReLU 3×3 and conv-BN 1×1, before the skip is added and the final ReLU applied",
+                    "Left-to-right flow of the guide's residual block: three convolution stages, the highlighted SE box, the addition with the skip (identity or 1×1 projection), then ReLU; the skip bypasses SE.",
+                );
+                let stages = [
+                    Stage::Label("x"),
+                    Stage::Box2("conv-BN-ReLU", "1×1", 96.0, false),
+                    Stage::Box2("conv-BN-ReLU", "3×3", 96.0, false),
+                    Stage::Box2("conv-BN", "1×1", 96.0, false),
+                    Stage::Box1("SE", 56.0, true),
+                    Stage::Plus,
+                    Stage::Box1("ReLU", 56.0, false),
+                    Stage::Label("y"),
+                ];
+                let c = flow_row(&mut s, 48.0, y, bh, &stages);
+                s.text(c[4], 36.0, "one gate per channel, z (B, C, 1, 1), each in (0, 1)", 11, tok::INK2, Anchor::Middle);
+                s.text(c[4], 50.0, "multiplies the branch (13.2); the skip is not gated", 11, tok::INK2, Anchor::Middle);
+                skip_below(&mut s, c[0] + 16.0, c[5], mid, mid + 11.0, 56.0, "identity or 1×1 projection");
+                s.text(360.0, 184.0, "SE is the last stage of the branch, after the last conv-BN and before the addition;", 11, tok::INK2, Anchor::Middle);
+                s.text(360.0, 198.0, "the ReLU follows the addition, and the skip joins at the addition without passing the gates", 11, tok::INK2, Anchor::Middle);
+                (format!("f24-se-placement-{}.svg", v.suffix()), s.finish())
+            }
+            Variant::Handbook => {
+                let mut s = Svg::new(
+                    720,
+                    200,
+                    "SE sits on the residual branch after its convolution stack and multiplies it by one gate per channel before the skip path is added",
+                    "Left-to-right flow of the handbook's residual integration: the convolution branch, the highlighted SE box with its per-channel gates, the addition with the ungated skip path, the output; the footer keeps the order of BN and activations open.",
+                );
+                let stages = [
+                    Stage::Label("input"),
+                    Stage::Box2("convolution branch", "[N,C,H,W]", 160.0, false),
+                    Stage::Box2("SE", "gates [N,C,1,1]", 110.0, true),
+                    Stage::Box1("add", 56.0, false),
+                    Stage::Label("output"),
+                ];
+                let c = flow_row(&mut s, 110.0, y, bh, &stages);
+                s.text(c[2], 44.0, "one gate per channel from the pooled descriptor (8.1)", 11, tok::INK2, Anchor::Middle);
+                skip_below(&mut s, c[0] + 26.0, c[3], mid, y + bh, 56.0, "skip path, not gated");
+                s.text(360.0, 174.0, "an actual block may also contain BN and activations;", 11, tok::INK2, Anchor::Middle);
+                s.text(360.0, 188.0, "their order belongs to the architecture, not to SE", 11, tok::INK2, Anchor::Middle);
+                (format!("f24-se-placement-{}.svg", v.suffix()), s.finish())
+            }
+        }
+    }
+
     pub fn figures() -> Vec<(String, String)> {
         let mut out = Vec::new();
         for v in [Variant::Guide, Variant::Handbook] {
@@ -2744,6 +3127,12 @@ mod figs {
         out.push(fig_block());
         for v in [Variant::Guide, Variant::Handbook] {
             out.push(fig_psa(v));
+        }
+        for v in [Variant::Guide, Variant::Handbook] {
+            out.push(fig_output_padding(v));
+        }
+        for v in [Variant::Guide, Variant::Handbook] {
+            out.push(fig_se_placement(v));
         }
         out
     }

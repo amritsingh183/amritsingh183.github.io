@@ -1616,6 +1616,9 @@ H_out = (H_in − 1)·stride − 2·padding + dilation·(kernel − 1) + output_
 
 which is PyTorch's formula and candle's behaviour. `output_padding` adds rows and columns on one side to resolve the ambiguity that a strided convolution introduces: with a 3×3 kernel, padding 1 and stride 2, an input of 7 and an input of 8 both give 4, so going back from 4 needs to be told which one you meant.
 
+![A stride-2 convolution with kernel 3 and padding 1 maps both 7 and 8 pixels to 4 outputs; output padding decides whether the transposed convolution returns 7 or 8, adding the extra pixel at the end of the axis](figures/f23-output-padding-guide.svg)
+*Figure 9. With a 3×3 kernel, stride 2 and padding 1, a 7-pixel and an 8-pixel row of the counter photo both give 4 outputs; going back, the transposed convolution stamps the 4 outputs into 7 pixels, and output_padding = 1 keeps the tail of the last stamp as an eighth pixel at the end of the axis, restoring the size, not the pixel values.*
+
 candle's kernel layout for `conv_transpose2d` is `(in_channels, out_channels, kh, kw)`, the reverse of `conv2d`'s `(out_channels, in_channels, kh, kw)`. `candle_nn::ConvTranspose2dConfig` has four fields, `padding`, `output_padding`, `stride`, `dilation`; there is no `groups` field.
 
 ```rust
@@ -1685,7 +1688,7 @@ kernel 2 stride 2: output [1, 1, 6, 6], middle row [1.0, 1.0, 1.0, 1.0, 1.0, 1.0
 `3` with stride `2` alternates between one and two contributions; `4` with stride `2` and `2` with stride `2` are even away from the borders.
 
 ![A transposed convolution stamps its kernel once per input, stride positions apart, and adds: some outputs receive two stamps when the kernel width is not a multiple of the stride](figures/f09-tconv-overlap-guide.svg)
-*Figure 9. A transposed convolution stamps its kernel once per input pixel of the counter photo, two steps apart: a 3-wide kernel gives the seven outputs 1, 1, 2, 1, 2, 1, 1 stamps (the checkerboard), a 4-wide kernel is even away from the borders, and a 2-wide kernel gives every output exactly one.*
+*Figure 10. A transposed convolution stamps its kernel once per input pixel of the counter photo, two steps apart: a 3-wide kernel gives the seven outputs 1, 1, 2, 1, 2, 1, 1 stamps (the checkerboard), a 4-wide kernel is even away from the borders, and a 2-wide kernel gives every output exactly one.*
 
 ### 7.7 What runs in practice
 
@@ -1702,7 +1705,7 @@ A 1×1 kernel looks at one pixel at a time, but it looks at *all the channels* o
 The program builds a 1×1 convolution from 64 to 128 channels, applies it to a 32×32 map, then does the same job with a `matmul` on the pixels and shows the two agree.
 
 ![A 1×1 convolution reads one pixel at a time but all of its channels and applies the same matrix at every pixel; height and width are untouched](figures/f10-pointwise-guide.svg)
-*Figure 10. A 1×1 convolution reads one pixel of the counter photo at a time but all 64 of its channels, and multiplies that channel vector by the same (128, 64) matrix at every pixel: the map stays 32×32, only the channel count changes, and the layer has 8,320 parameters.*
+*Figure 11. A 1×1 convolution reads one pixel of the counter photo at a time but all 64 of its channels, and multiplies that channel vector by the same (128, 64) matrix at every pixel: the map stays 32×32, only the channel count changes, and the layer has 8,320 parameters.*
 
 ```rust
 use candle_core::{DType, Device, Module, Tensor};
@@ -1963,7 +1966,7 @@ C4 ──► F4 ──► O4
 The extreme `g = C_in` is a depthwise convolution: one 2-D kernel per input channel, no mixing between channels at all. A depthwise convolution followed by a 1×1 convolution (the "pointwise" step, which does the mixing) is a depthwise separable convolution, the building block of MobileNet. The old note asked whether "a standard convolution has a 3-D kernel and a depthwise one a 2-D kernel": yes, in the sense that a standard kernel is `k × k × C_in` and a depthwise kernel is `k × k × 1`.
 
 ![Each filter of a grouped convolution reads the input channels divided by the number of groups; depthwise means one channel each, and only the following 1×1 mixes the channels again](figures/f11-groups-guide.svg)
-*Figure 11. With groups = 1 every filter reads all four channels of the counter photo (weight (4, 4, k, k)); with groups = 2 each filter reads its own pair (4, 2, k, k); with groups = 4 each filter reads one channel (4, 1, k, k), and only the 1×1 that follows mixes the channels again.*
+*Figure 12. With groups = 1 every filter reads all four channels of the counter photo (weight (4, 4, k, k)); with groups = 2 each filter reads its own pair (4, 2, k, k); with groups = 4 each filter reads one channel (4, 1, k, k), and only the 1×1 that follows mixes the channels again.*
 
 ```rust
 use candle_core::{Device, Tensor};
@@ -2088,7 +2091,7 @@ Yu & Koltun 1,1,2,4,8,16,1         [3, 5, 9, 17, 33, 65, 67]
 Three plain 3×3 layers see 7 pixels: the receptive field grows by 2 per layer. Five 3×3 layers with doubling dilations see 63 pixels with the same 45 weights per channel pair, where a single 63×63 kernel would need 3,969. That is the sentence from Yu and Koltun's paper: "The receptive field grows exponentially while the number of parameters grows linearly." Their module's dilations 1, 1, 2, 4, 8, 16, 1 give 3, 5, 9, 17, 33, 65, 67, exactly as they report.
 
 ![The receptive field grows by (k minus 1) times dilation times jump per layer: linearly for a plain stack, doubling with doubled dilations, and multiplied by every stride](figures/f13-receptive-field-guide.svg)
-*Figure 12. The receptive field of one unit grows by (k − 1)·d·jump per layer: a stack of three undilated 3×3 layers reaches 7 pixels of the counter photo, five layers with dilations 1, 2, 4, 8, 16 reach 63 without adding a single weight (still 45 per channel pair), and strides 1, 2, 2, 2 reach 17 because each stride doubles the jump of every later layer.*
+*Figure 13. The receptive field of one unit grows by (k − 1)·d·jump per layer: a stack of three undilated 3×3 layers reaches 7 pixels of the counter photo, five layers with dilations 1, 2, 4, 8, 16 reach 63 without adding a single weight (still 45 per channel pair), and strides 1, 2, 2, 2 reach 17 because each stride doubles the jump of every later layer.*
 
 ### 10.3 Dilation, effective kernel size, padding and stride
 
@@ -2199,7 +2202,7 @@ impulse through dilations [4, 4, 4]: 49 pixels lit inside a 25x25 box of 625 pix
 The impulse experiment is the receptive field drawn for you: with dilations 1, 2, 4 every one of the 225 pixels of the 15×15 field is reached; with 4, 4, 4 the field is 25×25 but only 49 pixels of it are ever read.
 
 ![Dilation spaces the kernel weights apart; stacked equal dilations reach only multiples of d and leave holes, while dilations 1, 2, 5 cover every offset in their span](figures/f12-dilation-holes.svg)
-*Figure 13. Three layers of dilation 4 read only offsets that are multiples of 4, so one output unit sees 7 of the 25 positions in its span of the counter photo and never the pixels between them, while dilations 1, 2, 5 reach all 17 positions in theirs.*
+*Figure 14. Three layers of dilation 4 read only offsets that are multiples of 4, so one output unit sees 7 of the 25 positions in its span of the counter photo and never the pixels between them, while dilations 1, 2, 5 reach all 17 positions in theirs.*
 
 DeepLab's Atrous Spatial Pyramid Pooling sidesteps the problem differently: it runs several dilated 3×3 convolutions *in parallel* on the same map (rates 6, 12 and 18 at output stride 16, doubled at output stride 8; the output stride is the factor by which the feature map is smaller than the image), plus a 1×1 branch and a global-average-pooling branch, and concatenates the results. Each branch sees a different scale; none is stacked on another.
 
@@ -2385,7 +2388,7 @@ The alternatives differ only in *which numbers are averaged together*:
 candle provides `layer_norm`, `rms_norm` and `group_norm` in candle-nn alongside `batch_norm`.
 
 ![BatchNorm, LayerNorm, GroupNorm and InstanceNorm differ only in which cells are averaged together](figures/f14-norm-axes.svg)
-*Figure 14. The normalisers differ only in which cells share a mean and variance: BatchNorm averages one channel over every photo and pixel in the batch, LayerNorm averages the features of one token, GroupNorm a group of channels of one photo, and InstanceNorm one channel of one photo.*
+*Figure 15. The normalisers differ only in which cells share a mean and variance: BatchNorm averages one channel over every photo and pixel in the batch, LayerNorm averages the features of one token, GroupNorm a group of channels of one photo, and InstanceNorm one channel of one photo.*
 
 ### 11.6 Conventions differ between frameworks
 
@@ -2416,7 +2419,7 @@ b' = α·(b − μ) + β
 The fused layer computes exactly the same function, one pass over the activations instead of two. A convolution created without a bias gets one from the fold, because `β − α·μ` is rarely zero.
 
 ![With fixed statistics BatchNorm is a per-channel scale and shift, so it folds into the convolution before it and both routes give the same output](figures/f15-bn-fold-guide.svg)
-*Figure 15. At inference BatchNorm is a fixed scale α = γ/√(σ² + ε) and shift per channel, so it folds into the convolution in front of it: every weight of output channel c is multiplied by α_c (α reshaped to (3, 1, 1, 1)) and the bias becomes α·(b − μ) + β, one pass over the counter photo instead of two.*
+*Figure 16. At inference BatchNorm is a fixed scale α = γ/√(σ² + ε) and shift per channel, so it folds into the convolution in front of it: every weight of output channel c is multiplied by α_c (α reshaped to (3, 1, 1, 1)) and the bias becomes α·(b − μ) + β, one pass over the counter photo instead of two.*
 
 ### 12.2 In candle: `absorb_bn`, and the broadcasting trap
 
@@ -2498,7 +2501,7 @@ Y (B, C, H, W)
 The reduction ratio `r` (16 in the paper) keeps the excitation network small: `2C²/r` weights plus `C/r + C` biases. SENet won the 2017 ImageNet Large Scale Visual Recognition Challenge (ILSVRC) classification task and "reduced the top-5 error to 2.251%", at what the paper calls "slight additional computational cost".
 
 ![Squeeze averages each channel to one number, a tiny network turns those numbers into one gate per channel, and every position of a channel is multiplied by its gate](figures/f16-se-gates-guide.svg)
-*Figure 16. Squeeze-and-Excitation averages each of the 64 channels of the counter photo to one number, turns those 64 numbers into 64 gates between 0 and 1 through a 64 → 4 → 64 network (580 parameters), and multiplies every pixel of a channel by its gate: attention over channels, with no pixel moved.*
+*Figure 17. Squeeze-and-Excitation averages each of the 64 channels of the counter photo to one number, turns those 64 numbers into 64 gates between 0 and 1 through a 64 → 4 → 64 network (580 parameters), and multiplies every pixel of a channel by its gate: attention over channels, with no pixel moved.*
 
 ### 13.2 The block in candle, corrected
 
@@ -2603,6 +2606,9 @@ x ──► conv-BN-ReLU ──► conv-BN-ReLU ──► conv-BN ──► SE �
   └──────────────────── identity or 1×1 projection ─────────┘
 ```
 
+![In a residual block the SE gate scales the branch after conv-BN-ReLU 1×1, conv-BN-ReLU 3×3 and conv-BN 1×1, before the skip is added and the final ReLU applied; the skip is not gated](figures/f24-se-placement-guide.svg)
+*Figure 18. In a residual block the counter photo's branch runs conv-BN-ReLU (1×1), conv-BN-ReLU (3×3) and conv-BN (1×1), then the SE block scales those channels with one gate each, and only then is the skip (identity or a 1×1 projection) added and the ReLU applied: the gates act on the branch, not on the skip.*
+
 Two later modules generalise the idea. **CBAM** (Woo and colleagues) "sequentially infers attention maps along two separate dimensions, channel and spatial, then the attention maps are multiplied to the input feature map", adding a *where* gate after the *what* gate, with "negligible overheads". **ECA-Net** (Wang and colleagues) keeps only the channel gate but replaces the two fully connected layers with a one-dimensional convolution across neighbouring channels, avoiding the dimensionality reduction; on a ResNet-50 backbone of 24.37M parameters their module adds 80 parameters and still improves top-1 accuracy by more than 2%.
 
 Practical notes that survive: keep `C` divisible by `r`; log the gate statistics during training, because gates stuck at 0 or 1 mean the block has stopped adapting; and remember that SE, CBAM and ECA modulate *existing* channels, so they help most where the channel count is large and the channels are diverse.
@@ -2672,7 +2678,7 @@ output  [ 0.802, 0.599] [ 0.599, 0.802] [ 0.752, 0.752]
 Row 0 of the weights: token 0 scores 1 against itself, 0 against token 1 and 1 against token 2, so after scaling and softmax it gives about 0.40 to itself, 0.40 to token 2 and 0.20 to token 1. Its output is `0.40·[1,0] + 0.20·[0,1] + 0.40·[1,1] = [0.80, 0.60]`: the token has pulled in some of token 2's second coordinate.
 
 ![Scaled dot-product attention: the scores of every query against every key, softmax over each row into weights that sum to 1, and each output row as a blend of the value rows](figures/f17-attention-flow-guide.svg)
-*Figure 17. Scaled dot-product attention on three order-slip tokens used as their own queries, keys and values: the scores X·Xᵀ are divided by √2, softmax along each row turns them into weights that sum to 1, and token 0's output 0.401·[1, 0] + 0.198·[0, 1] + 0.401·[1, 1] = [0.802, 0.599] is a blend of the value rows.*
+*Figure 19. Scaled dot-product attention on three order-slip tokens used as their own queries, keys and values: the scores X·Xᵀ are divided by √2, softmax along each row turns them into weights that sum to 1, and token 0's output 0.401·[1, 0] + 0.198·[0, 1] + 0.401·[1, 1] = [0.802, 0.599] is a blend of the value rows.*
 
 ### 14.3 Self-attention and cross-attention
 
@@ -2692,7 +2698,7 @@ One attention pattern per layer is limiting: the pattern that links *lattes* to 
 In code, nobody keeps `h` separate small projections. One `Linear` maps `d_model → d_model`, and the result is *reshaped* to `(batch, seq, h, d_k)` and *transposed* to `(batch, h, seq, d_k)`: head `i` is simply columns `i·d_k .. (i+1)·d_k` of the projected vector, and the transpose puts the head axis in front so that one batched `matmul` computes all heads at once. The total arithmetic equals that of a single head at full width; multi-head attention is not "free diversity", it is the same budget split `h` ways.
 
 ![One Linear produces every head at once: reshape splits the feature axis into a head axis and a per-head width, and transpose(1, 2) moves the head axis in front so one batched matmul runs every head](figures/f19-heads-guide.svg)
-*Figure 18. One Linear maps each of the slip's 4 words from 8 numbers to 8, reshape splits those 8 into 2 heads of 4 (head 1 is columns 4..8), and transpose(1, 2) puts the head axis first, (1, 4, 8) → (1, 4, 2, 4) → (1, 2, 4, 4), so one batched matmul computes both heads' scores at once.*
+*Figure 20. One Linear maps each of the slip's 4 words from 8 numbers to 8, reshape splits those 8 into 2 heads of 4 (head 1 is columns 4..8), and transpose(1, 2) puts the head axis first, (1, 4, 8) → (1, 4, 2, 4) → (1, 2, 4, 4), so one batched matmul computes both heads' scores at once.*
 
 | model | d_model | heads | d_k | layers |
 | :-- | :-- | :-- | :-- | :-- |
@@ -2850,7 +2856,7 @@ Reading the program against the old notes:
 - **Cost.** The score tensor is `(batch, heads, seq, seq)`: memory grows with the square of the sequence length, and time as `seq² · d`. That is why long-context models use fused attention kernels (candle-nn has a CPU flash-attention module, `candle_nn::ops::sdpa` with a fused Metal path, whose argument list on 0.11.0 also takes an optional mask and a causal flag, and a separate CUDA flash-attention crate), windowed attention (section 10.5's Swin), or approximations. None of them change the equation above, only how it is evaluated.
 
 ![A mask names the keys a query may not read: their scores become minus infinity before softmax, so their weights are exactly 0 while each row still sums to 1](figures/f18-masks-guide.svg)
-*Figure 19. A mask names the words of the slip a query may not read: the causal mask (1 above the diagonal = the future) and the padding mask (the last word) replace those scores with −∞ before softmax, so their weights are exactly 0 while each row of the rest still sums to 1; masking a whole row would give NaN.*
+*Figure 21. A mask names the words of the slip a query may not read: the causal mask (1 above the diagonal = the future) and the padding mask (the last word) replace those scores with −∞ before softmax, so their weights are exactly 0 while each row of the rest still sums to 1; masking a whole row would give NaN.*
 
 ### 14.6 Where attention sits: the Transformer block
 
@@ -2864,7 +2870,7 @@ pre-LN block:   x ──► LN ──► attention ──►(+)──► LN ─�
 The program builds a pre-LN block with a stand-in for the attention of section 14.5 (plain attention with no projections, enough to show the wiring) and checks that layer normalisation really gives each token mean 0 and variance 1 before the sub-layer sees it.
 
 ![Post-LN and pre-LN blocks contain the same four parts; only where the layer normalisation sits differs](figures/f21-transformer-block.svg)
-*Figure 20. A Transformer block is attention, a per-token feed-forward network, two skip additions and two layer normalisations; the original post-LN block normalises after each addition, while the pre-LN block used by GPT-2 and most later models normalises each sub-layer's input, which is why its gradients behave at initialisation.*
+*Figure 22. A Transformer block is attention, a per-token feed-forward network, two skip additions and two layer normalisations; the original post-LN block normalises after each addition, while the pre-LN block used by GPT-2 and most later models normalises each sub-layer's input, which is why its gradients behave at initialisation.*
 
 ```rust
 use candle_core::{D, DType, Device, Module, Tensor};
@@ -3014,7 +3020,7 @@ embeddings [1, 5, 8] + pe [5, 8] -> [1, 5, 8]
 ```
 
 ![Each dimension pair of the sinusoidal encoding is a sine and a cosine of pos over 10000 to the power 2i over d: low pairs change quickly with position and high pairs slowly](figures/f20-positional-guide.svg)
-*Figure 21. Each pair of dimensions of the slip's positional encoding is a sine and a cosine of pos / 10000^(2i/8): the first pair moves fast (0.841 at position 1), the fourth barely moves (0.001), so every position gets its own pattern and position 0 is 0, 1, 0, 1, ….*
+*Figure 23. Each pair of dimensions of the slip's positional encoding is a sine and a cosine of pos / 10000^(2i/8): the first pair moves fast (0.841 at position 1), the fourth barely moves (0.001), so every position gets its own pattern and position 0 is 0, 1, 0, 1, ….*
 
 ### 15.3 The other families, briefly
 
@@ -3032,7 +3038,7 @@ The original note was a bookmark: the paper's address (arXiv 2405.14458), the ab
 The PSA module, in the authors' words: "We evenly partition the features across channels into two parts after the 1×1 convolution. We only feed one part into the N_PSA blocks comprised of multi-head self-attention module (MHSA) and feed-forward network (FFN). Two parts are then concatenated and fused by a 1×1 convolution." Inside the attention block they "assign the dimensions of the query and key to half of that of the value in MHSA and replace the LayerNorm with BatchNorm for fast inference", and "PSA is only placed after the Stage 4 with the lowest resolution". `N_PSA` is set to 1 by default; the paper reports that 2 blocks add 0.2 AP (average precision, the detection score) for 0.1 ms of latency. The B model is obtained from M "by simply increasing the width scale factor".
 
 ![Partial self-attention splits the channels after a 1×1 convolution, runs attention and a feed-forward network on one half only, and fuses the halves with another 1×1](figures/f22-psa-split-guide.svg)
-*Figure 22. YOLOv10's partial self-attention: a 1×1 convolution splits the counter photo's channels in half, only one half passes through attention and a feed-forward network (each with a skip), and a 1×1 fuses the halves again; it sits only after the lowest-resolution stage because the score matrix has one entry per pair of pixels.*
+*Figure 24. YOLOv10's partial self-attention: a 1×1 convolution splits the counter photo's channels in half, only one half passes through attention and a feed-forward network (each with a skip), and a 1×1 fuses the halves again; it sits only after the lowest-resolution stage because the score matrix has one entry per pair of pixels.*
 
 Mapped onto this guide:
 
@@ -3098,7 +3104,7 @@ Every message below was produced during the checks for this guide. Compile-time 
 
 **To re-run any block.** Create a crate with the `Cargo.toml` of section 0 (or this project's, for 0.9.1), paste the block into `src/main.rs`, and `cargo run`. The std-only blocks need only `rustc --edition 2024 file.rs`.
 
-**Figures.** The 22 figures in this guide are drawn by `figures/make_figures.rs`, a dependency-free Rust program compiled with `rustc --edition 2024` and run with the `figures` folder as its argument; running it again rewrites every `.svg` byte for byte. It computes every number it draws (the softmax values, the attention weights and outputs, the positional encodings, the receptive fields, the dilation offsets, the transposed-convolution stamp counts, the BatchNorm fold and the backward example) from the same inputs as the programs above instead of copying them. Each file was checked to be well-formed XML with explicit colours and its own light background (so a dark theme leaves it readable), rendered at full width and inspected, and every number shown in it was compared with the ```text block or sentence beside it; the eight densest figures were also inspected at 380 pixels wide and two on a dark page. The figures are illustrations: no code block changed, so the block counts and checks of the paragraphs above are unchanged. An independent Fable 5.1 audit of the drafts, the generator and all 41 files (28 September 2026) re-derived every drawn number from this guide and the handbook, reproduced every file byte for byte from the source, and found one wiring error (the post-LN skip in Figure 20) and twenty smaller items: caption wording, notation, two label collisions and a clipped canvas, result numbers typed as literals in the generator, and this note's own description of the rendering checks; all were corrected and the changed files re-audited.
+**Figures.** The 24 figures in this guide are drawn by `figures/make_figures.rs`, a dependency-free Rust program compiled with `rustc --edition 2024` and run with the `figures` folder as its argument; running it again rewrites every `.svg` byte for byte. It computes every number it draws (the softmax values, the attention weights and outputs, the positional encodings, the receptive fields, the dilation offsets, the transposed-convolution stamp counts, the convolution output sizes and window positions, the BatchNorm fold and the backward example) from the same inputs as the programs above instead of copying them. Each file was checked to be well-formed XML with explicit colours and its own light background (so a dark theme leaves it readable), rendered at full width and inspected, and every number shown in it was compared with the ```text block or sentence beside it; the eight densest figures were also inspected at 380 pixels wide and two on a dark page. The figures are illustrations: no code block changed, so the block counts and checks of the paragraphs above are unchanged. An independent Fable 5.1 audit of the drafts, the generator and the 41 files then present (28 September 2026) re-derived every drawn number from this guide and the handbook, reproduced every file byte for byte from the source, and found one wiring error (the post-LN skip in the Transformer-block figure, now Figure 22) and twenty smaller items: caption wording, notation, two label collisions and a clipped canvas, result numbers typed as literals in the generator, and this note's own description of the rendering checks; all were corrected and the changed files re-audited. Two figures were added later the same day by the same program, the `output_padding` ambiguity of section 7.5 (Figure 9) and the SE placement of section 13.3 (Figure 18), bringing the folder to 45 files; each was re-derived from this text, rendered at full width, at 380 pixels wide and on a dark page, and audited separately by a fresh Fable 5.1 pass, which found no error; its wording and generator suggestions were applied and the changed files re-audited.
 
 ## 19. Where each old note went
 
