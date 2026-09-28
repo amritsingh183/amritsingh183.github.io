@@ -1,4 +1,4 @@
-/* A4 print stylesheet for the two documents in ml/.
+/* A4 print stylesheet for the two ML posts (_posts/2026-09-28-rust-candle-ml-guide.md, _posts/2026-09-28-rust-ml-handbook.md).
    make_print.rs inlines this file into the page it prints with headless Chrome and appends the
    generated @page rules that carry the running-head strings. Values follow the site's print block
    (assets/main.css, 2026-09-21) unless a comment gives the reason for a difference.

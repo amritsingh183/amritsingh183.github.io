@@ -1,5 +1,5 @@
-//! Draws the concept figures of the two ML documents (`00_rust_candle_ml_guide.md` and
-//! `01_RUST_AND_MACHINE_LEARNING_HANDBOOK.md`) as SVG files. Standard library only.
+//! Draws the concept figures of the two ML posts (`_posts/2026-09-28-rust-candle-ml-guide.md` and
+//! `_posts/2026-09-28-rust-ml-handbook.md`) as SVG files. Standard library only.
 //!
 //! Compile:  rustc --edition 2024 -O -o /tmp/make_figures make_figures.rs
 //! Run:      /tmp/make_figures ml/figures        (the argument is the output folder)

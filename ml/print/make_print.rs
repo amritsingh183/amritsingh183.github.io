@@ -1,11 +1,17 @@
-//! Prints the two ML documents (`00_rust_candle_ml_guide.md` and `01_RUST_AND_MACHINE_LEARNING_HANDBOOK.md`)
-//! as double-sided A4 PDFs. Standard library only.
+//! Prints the two ML posts (`_posts/2026-09-28-rust-candle-ml-guide.md` and `_posts/2026-09-28-rust-ml-handbook.md`) as
+//! double-sided A4 PDFs. Standard library only.
 //!
 //! Compile:  rustc --edition 2024 -O -o /tmp/make_print ml/print/make_print.rs
-//! Run:      /tmp/make_print ml/print ml/00_rust_candle_ml_guide.md ml/01_RUST_AND_MACHINE_LEARNING_HANDBOOK.md
+//! Run:      /tmp/make_print ml/print _posts/2026-09-28-rust-candle-ml-guide.md _posts/2026-09-28-rust-ml-handbook.md
 //!           (the first argument is the output folder, which holds print.css; each source becomes <stem>.pdf there)
 //!
-//! pandoc turns each source into HTML (maths as MathML, code highlighted); headless Google Chrome prints that HTML,
+//! Each source is a Jekyll post directly under the site's `_posts/` folder; the site root is the folder holding `_config.yml`.
+//! The build skips the front matter itself, resolves the posts' root-absolute image paths (`/ml/figures/…`) against the site
+//! root, removes the handbook's web-only MathJax line so that Chrome never touches the network, and prints the post's published
+//! address under Jekyll's default permalink (`/:categories/:year/:month/:day/:title.html`, in UTC as GitHub Pages builds) as the
+//! cover's Source line. It stops on any front matter, file name or `_config.yml` setting it cannot map to that address.
+//!
+//! pandoc turns the remaining Markdown into HTML (maths as MathML, code highlighted); headless Google Chrome prints that HTML,
 //! styled by print.css, to PDF. PRINT_PANDOC and PRINT_CHROME override the tool paths; PRINT_KEEP_TMP=1 keeps the
 //! working folder with every pass's HTML and PDF.
 //!
@@ -30,6 +36,11 @@ struct Fail(String);
 fn fail<T>(message: impl Into<String>) -> Result<T, Fail> {
     Err(Fail(message.into()))
 }
+
+/// The one web-only line a post may carry (MathJax for the handbook's maths on the site). It is removed byte for byte
+/// before pandoc so that the print needs no network; any other <script> stops the build.
+const WEB_SCRIPT: &str =
+    r#"<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>"#;
 
 /// Numbers that must agree with print.css, and the build's limits.
 mod page {
@@ -201,7 +212,7 @@ mod doc {
         (!id.contains('"')).then_some(id)
     }
 
-    pub fn prepare(pandoc: &str, src: &Path) -> Result<Doc, Fail> {
+    pub fn prepare(pandoc: &str, src: &Path, site: &Path) -> Result<Doc, Fail> {
         let name = src.display().to_string();
         let shape = |line: usize, what: &str| Fail(format!("{name}: {what} (pandoc HTML line {})", line + 1));
         if pandoc.contains(NUM_OPEN) || pandoc.contains(NUM_CLOSE) {
@@ -255,7 +266,7 @@ mod doc {
 
         let (mut html, retargeted) = retarget_links(&lines.join("\n"), &alias);
         html = code_blocks(&html, &name, &mut summary)?;
-        html = figures(&html, src, &mut summary)?;
+        html = figures(&html, src, site, &mut summary)?;
         html = mark_uri_links(&html, &mut summary);
         html = keep_short_tables(&html, &name, &mut summary)?;
         html = narrow_hats(&html, &mut summary);
@@ -662,9 +673,9 @@ mod doc {
         Ok(out)
     }
 
-    /// Figures are printed from the files next to the document; each must exist, and none is fetched from the web.
-    fn figures(html: &str, src: &Path, summary: &mut Vec<String>) -> Result<String, Fail> {
-        let dir = src.parent().unwrap_or(Path::new("."));
+    /// Figures are printed from the site's own files: every `<img src>` must be a root-absolute path such as
+    /// /ml/figures/x.svg, resolved against the folder holding _config.yml.
+    fn figures(html: &str, src: &Path, site: &Path, summary: &mut Vec<String>) -> Result<String, Fail> {
         let mut out = String::with_capacity(html.len());
         let mut rest = html;
         let mut n = 0;
@@ -675,13 +686,20 @@ mod doc {
                 .find('"')
                 .ok_or_else(|| Fail(format!("{}: unterminated <img src>", src.display())))?;
             let reference = text::decode(&rest[start..start + q]);
-            if reference.contains("://") || reference.starts_with('/') || reference.starts_with("data:") {
+            if reference.contains("://") || reference.starts_with("data:") || reference.starts_with("//") {
                 return fail(format!(
-                    "image {reference} in {} is not a path relative to the document",
+                    "image {reference} in {} is not a path on this site",
                     src.display()
                 ));
             }
-            let path = dir.join(&reference);
+            let Some(inside) = reference.strip_prefix('/') else {
+                return fail(format!(
+                    "image {reference} in {} is not root-absolute (/…): in a post a relative path would point at the \
+                     post's address, not at its folder",
+                    src.display()
+                ));
+            };
+            let path = site.join(inside);
             let absolute = std::fs::canonicalize(&path)
                 .ok()
                 .filter(|p| p.is_file())
@@ -692,6 +710,13 @@ mod doc {
                         src.display()
                     ))
                 })?;
+            if !absolute.starts_with(site) {
+                return fail(format!(
+                    "image {reference} in {} resolves outside the site {}",
+                    src.display(),
+                    site.display()
+                ));
+            }
             out.push_str(&text::escape(&text::file_url(&absolute)));
             n += 1;
             rest = &rest[start + q..];
@@ -1260,68 +1285,260 @@ fn find_tools() -> Result<(Tools, String, String), Fail> {
     Ok((Tools { pandoc, chrome }, pandoc_version, chrome_version))
 }
 
-fn pandoc(tools: &Tools, src: &Path) -> Result<String, Fail> {
-    let out = std::process::Command::new(&tools.pandoc)
+/// pandoc on a post's body, fed through stdin. The reader is GitHub-flavoured Markdown without YAML metadata blocks, so a
+/// front matter block that ever reached pandoc would print (and stop the build at the H1 rule) instead of vanishing.
+fn pandoc(tools: &Tools, body: &str, src: &Path) -> Result<String, Fail> {
+    use std::io::Write as _;
+    let mut child = std::process::Command::new(&tools.pandoc)
         .args([
             "-f",
-            "gfm",
+            "gfm-yaml_metadata_block",
             "-t",
             "html5",
             "--wrap=none",
             "--math-method=mathml",
             "--syntax-highlighting=default",
         ])
-        .arg(src)
-        .output()
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::piped())
+        .spawn()
+        .map_err(|e| Fail(format!("cannot run pandoc on {}: {e}", src.display())))?;
+    // pandoc reads all of its input before it writes anything, so writing the whole body first and collecting the output
+    // afterwards cannot block on a full pipe.
+    let mut stdin = child
+        .stdin
+        .take()
+        .ok_or_else(|| Fail(format!("pandoc's stdin is not captured for {}", src.display())))?;
+    let written = stdin.write_all(body.as_bytes());
+    drop(stdin);
+    let out = child
+        .wait_with_output()
         .map_err(|e| Fail(format!("cannot run pandoc on {}: {e}", src.display())))?;
     let stderr = String::from_utf8_lossy(&out.stderr);
     if !out.status.success() {
         return fail(format!("pandoc failed on {} ({}): {stderr}", src.display(), out.status));
     }
+    written.map_err(|e| Fail(format!("cannot pass {} to pandoc: {e}", src.display())))?;
     if !stderr.trim().is_empty() {
         return fail(format!("pandoc printed warnings for {}: {stderr}", src.display()));
     }
     String::from_utf8(out.stdout).map_err(|_| Fail(format!("pandoc wrote invalid UTF-8 for {}", src.display())))
 }
 
-/// `Source:` address for the cover: the site's `url` and `baseurl` from `_config.yml` above the document, then the
-/// document's path inside the site.
-fn source_url(src: &Path) -> Result<String, Fail> {
-    let absolute = std::fs::canonicalize(src).map_err(|e| Fail(format!("cannot resolve {}: {e}", src.display())))?;
-    let site = absolute
+/// The site root: the nearest folder above the source that holds `_config.yml`.
+fn site_root(absolute: &Path) -> Result<PathBuf, Fail> {
+    absolute
         .ancestors()
         .skip(1)
         .find(|dir| dir.join("_config.yml").is_file())
+        .map(Path::to_path_buf)
         .ok_or_else(|| {
             Fail(format!(
                 "no _config.yml above {}, so the site address is unknown",
                 absolute.display()
             ))
-        })?;
-    let config =
-        std::fs::read_to_string(site.join("_config.yml")).map_err(|e| Fail(format!("cannot read _config.yml: {e}")))?;
-    let value = |key: &str| {
-        config.lines().find_map(|l| l.strip_prefix(key)).map(|v| {
+        })
+}
+
+/// The key and the raw value of a YAML line that sets a top-level key: `key: value` from column 0, where YAML ignores
+/// spaces before the colon (`key : value` sets `key`). An indented line belongs to a nested mapping and gives nothing.
+fn top_level_key(line: &str) -> Option<(&str, &str)> {
+    if line.starts_with(char::is_whitespace) {
+        return None;
+    }
+    line.split_once(':').map(|(key, value)| (key.trim_end(), value))
+}
+
+/// The value of a top-level `key:` line of `_config.yml`, cut at ` #`, quotes trimmed.
+fn config_value(config: &str, key: &str) -> Option<String> {
+    config
+        .lines()
+        .find_map(|l| top_level_key(l).filter(|&(k, _)| k == key).map(|(_, v)| v))
+        .map(|v| {
             let v = v.split(" #").next().unwrap_or("").trim();
             v.trim_matches(|c| c == '"' || c == '\'').to_string()
         })
+}
+
+/// What the build reads from a post's front matter.
+struct Front {
+    date: String,
+    categories: Vec<String>,
+    /// Lines of the block, both `---` lines included.
+    lines: usize,
+}
+
+/// Splits a post into its front matter and the body after the closing `---`. Keys are `key:` lines at column 0; a key
+/// that gives the post another address, a missing date, or categories that are not words on one line stop the build.
+fn front_matter<'a>(text: &'a str, name: &str) -> Result<(Front, &'a str), Fail> {
+    let Some(block) = text.strip_prefix("---\n") else {
+        return fail(format!(
+            "{name}: expected the post to open with a front matter block (---)"
+        ));
     };
-    let url = value("url:")
+    let mut offset = "---\n".len();
+    let (mut date, mut categories) = (None, Vec::new());
+    // `lines` is the 1-based line number, the opening `---` being line 1.
+    for (lines, line) in (2..).zip(block.split_inclusive('\n')) {
+        offset += line.len();
+        let line = line.strip_suffix('\n').unwrap_or(line);
+        if line == "---" {
+            let date = date.ok_or_else(|| Fail(format!("{name}: front matter has no date:")))?;
+            return Ok((
+                Front {
+                    date,
+                    categories,
+                    lines,
+                },
+                &text[offset..],
+            ));
+        }
+        let Some((key, value)) = top_level_key(line) else {
+            continue;
+        };
+        match key {
+            "permalink" | "slug" | "category" => {
+                return fail(format!(
+                    "{name}: front matter sets {key}, which the build cannot map to Jekyll's default post address"
+                ));
+            }
+            "categories" => {
+                let value = value.trim();
+                if value.is_empty() || value.starts_with('[') {
+                    return fail(format!(
+                        "{name}: categories must be words on one line, as in `categories: rust concepts`"
+                    ));
+                }
+                categories = value.split_whitespace().map(str::to_string).collect();
+            }
+            "date" => date = Some(value.trim().to_string()),
+            _ => {}
+        }
+    }
+    fail(format!("{name}: front matter has no closing ---"))
+}
+
+/// Year, month and day of a `YYYY-MM-DD HH:MM:SS +HHMM` date that falls on the same day in UTC, where GitHub Pages builds.
+fn same_utc_day<'a>(date: &'a str, name: &str) -> Result<(&'a str, &'a str, &'a str), Fail> {
+    let b = date.as_bytes();
+    let shape = b.len() == 25
+        && [0, 1, 2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 21, 22, 23, 24]
+            .iter()
+            .all(|&i| b[i].is_ascii_digit())
+        && [(4, b'-'), (7, b'-'), (10, b' '), (13, b':'), (16, b':'), (19, b' ')]
+            .iter()
+            .all(|&(i, c)| b[i] == c)
+        && (b[20] == b'+' || b[20] == b'-');
+    if !shape {
+        return fail(format!("{name}: date \"{date}\" is not YYYY-MM-DD HH:MM:SS +HHMM"));
+    }
+    let number = |at: usize| i32::from(b[at] - b'0') * 10 + i32::from(b[at + 1] - b'0');
+    let sign = if b[20] == b'+' { 1 } else { -1 };
+    let minutes = number(11) * 60 + number(14) - sign * (number(21) * 60 + number(23));
+    if !(0..1440).contains(&minutes) {
+        return fail(format!(
+            "{name}: date {date} falls on another day in UTC, where GitHub Pages builds, so the address would carry \
+             another day"
+        ));
+    }
+    Ok((&date[0..4], &date[5..7], &date[8..10]))
+}
+
+/// The post's published address under Jekyll's default permalink `/:categories/:year/:month/:day/:title.html`, as GitHub
+/// Pages builds it (in UTC). Anything that would make Jekyll compute another address stops the build.
+fn post_url(site: &Path, absolute: &Path, front: &Front, name: &str) -> Result<String, Fail> {
+    let posts = site.join("_posts");
+    if absolute.parent() != Some(posts.as_path()) {
+        return fail(format!(
+            "{name}: not directly under the site's _posts folder ({})",
+            posts.display()
+        ));
+    }
+    let stem = absolute
+        .file_name()
+        .and_then(|f| f.to_str())
+        .and_then(|f| f.strip_suffix(".md"))
+        .unwrap_or("");
+    let b = stem.as_bytes();
+    let named = b.len() > 11
+        && [0, 1, 2, 3, 5, 6, 8, 9].iter().all(|&i| b[i].is_ascii_digit())
+        && [4, 7, 10].iter().all(|&i| b[i] == b'-')
+        && b[11..]
+            .iter()
+            .all(|&c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == b'-');
+    if !named {
+        return fail(format!(
+            "{name}: file name is not YYYY-MM-DD-slug.md with a slug of [a-z0-9-]"
+        ));
+    }
+    let (year, month, day) = same_utc_day(&front.date, name)?;
+    let file_day = &stem[..10];
+    if format!("{year}-{month}-{day}") != file_day {
+        return fail(format!(
+            "{name}: date {} does not fall on the file name's day {file_day}",
+            front.date
+        ));
+    }
+    let config =
+        std::fs::read_to_string(site.join("_config.yml")).map_err(|e| Fail(format!("cannot read _config.yml: {e}")))?;
+    for key in ["permalink", "collections", "timezone", "defaults"] {
+        if config_value(&config, key).is_some() {
+            return fail(format!(
+                "{}/_config.yml sets {key}; the build knows only Jekyll's default post address in UTC",
+                site.display()
+            ));
+        }
+    }
+    let url = config_value(&config, "url")
         .filter(|u| !u.is_empty())
         .ok_or_else(|| Fail(format!("no url: in {}/_config.yml", site.display())))?;
-    let base = value("baseurl:").unwrap_or_default();
-    let inside: Vec<String> = absolute
-        .strip_prefix(site)
-        .map_err(|_| Fail("internal: document outside its site".to_string()))?
-        .components()
-        .map(|c| c.as_os_str().to_string_lossy().into_owned())
-        .collect();
+    let base = config_value(&config, "baseurl").unwrap_or_default();
+    // Jekyll lower-cases the categories and keeps each once, in order of first appearance (a set).
+    let (mut categories, mut seen) = (String::new(), Vec::new());
+    for category in &front.categories {
+        let c = category.to_lowercase();
+        if !c
+            .bytes()
+            .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b"._-".contains(&b))
+        {
+            return fail(format!(
+                "{name}: category \"{category}\" has characters the build cannot map"
+            ));
+        }
+        if seen.contains(&c) {
+            continue;
+        }
+        categories.push_str(&c);
+        categories.push('/');
+        seen.push(c);
+    }
+    let slug = &stem[11..];
     Ok(format!(
-        "{}{}/{}",
+        "{}{}/{categories}{year}/{month}/{day}/{slug}.html",
         url.trim_end_matches('/'),
-        base.trim_end_matches('/'),
-        inside.join("/")
+        base.trim_end_matches('/')
     ))
+}
+
+/// The body without the lines equal to `WEB_SCRIPT`, and how many were removed; any other `<script` stops the build.
+fn drop_web_script(body: &str, name: &str) -> Result<(String, usize), Fail> {
+    let mut removed = 0;
+    let kept: Vec<&str> = body
+        .split('\n')
+        .filter(|line| {
+            let web = *line == WEB_SCRIPT;
+            removed += usize::from(web);
+            !web
+        })
+        .collect();
+    let rest = kept.join("\n");
+    if rest.to_ascii_lowercase().contains("<script") {
+        return fail(format!(
+            "{name}: contains a <script> the build does not know; only the MathJax line {WEB_SCRIPT} is removed"
+        ));
+    }
+    Ok((rest, removed))
 }
 
 /// One document: pandoc, reshaping, then passes until the printed numbers and blank pages settle.
@@ -1331,11 +1548,21 @@ fn build(tools: &Tools, css: &str, src: &Path, out_dir: &Path, work: &Path) -> R
         .map(|s| s.to_string_lossy().into_owned())
         .unwrap_or_default();
     println!("{}", src.display());
-    let d = doc::prepare(&pandoc(tools, src)?, src)?;
+    let name = src.display().to_string();
+    let text = std::fs::read_to_string(src).map_err(|e| Fail(format!("cannot read {}: {e}", src.display())))?;
+    let absolute = std::fs::canonicalize(src).map_err(|e| Fail(format!("cannot resolve {}: {e}", src.display())))?;
+    let site = site_root(&absolute)?;
+    let (front, body) = front_matter(&text, &name)?;
+    let (body, removed) = drop_web_script(body, &name)?;
+    let url = post_url(&site, &absolute, &front, &name)?;
+    let d = doc::prepare(&pandoc(tools, &body, src)?, src, &site)?;
     for line in &d.summary {
         println!("  {line}");
     }
-    let url = source_url(src)?;
+    println!(
+        "  post: {} front-matter lines skipped, {removed} web script line(s) removed; Source: {url}",
+        front.lines
+    );
     let mut numbers: HashMap<String, usize> = HashMap::new();
     let mut blanks: BTreeSet<usize> = BTreeSet::new();
     for pass in 1..=page::MAX_PASSES {
@@ -1445,7 +1672,7 @@ fn build(tools: &Tools, css: &str, src: &Path, out_dir: &Path, work: &Path) -> R
 fn run() -> Result<(), Fail> {
     let args: Vec<String> = std::env::args().skip(1).collect();
     if args.len() < 2 {
-        return fail("usage: make_print <out-dir> <source.md>...");
+        return fail("usage: make_print <out-dir> <_posts/YYYY-MM-DD-slug.md>...");
     }
     let out_dir = PathBuf::from(&args[0]);
     let css_path = out_dir.join("print.css");
