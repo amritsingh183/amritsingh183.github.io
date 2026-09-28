@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260" role="img" aria-labelledby="title desc">
+<title id="title">With fixed statistics BatchNorm is a per-channel scale and shift, so it folds into the convolution before it and both routes give the same output</title>
+<desc id="desc">Two lanes: convolution then BatchNorm, and the fused convolution with scaled weights and a new bias; a brace joins the two equal outputs.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="260" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="30" font-size="13" font-weight="600">conv, then BN (inference statistics)</text>
+<rect x="20" y="46" width="70" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="55" y="72" text-anchor="middle">x = 5</text>
+<rect x="120" y="46" width="140" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="190" y="65" text-anchor="middle">conv: z = 2x + 1</text>
+<text x="190" y="80" font-size="11" fill="#52514e" text-anchor="middle">z = 11</text>
+<rect x="290" y="46" width="310" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="445" y="65" text-anchor="middle">BN: mu 3, v 3, epsilon 1, gamma 4, beta −2</text>
+<text x="445" y="80" font-size="11" fill="#52514e" text-anchor="middle">y = 4·(11 − 3)/√(3 + 1) + (−2) = 14</text>
+<rect x="610" y="46" width="80" height="44" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1"/>
+<text x="650" y="72" text-anchor="middle">y = 14</text>
+<line x1="90" y1="68" x2="116" y2="68" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="260" y1="68" x2="286" y2="68" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="600" y1="68" x2="606" y2="68" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="340" y="108" text-anchor="middle">a = gamma/√(v + epsilon) = 4/√(3 + 1) = 2</text>
+<text x="340" y="124" text-anchor="middle">W&apos; = a·W = 4;   b&apos; = beta + a·(b − mu) = −2 + 2·(1 − 3) = −6</text>
+<text x="20" y="142" font-size="13" font-weight="600">fused: one convolution</text>
+<rect x="20" y="150" width="70" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="55" y="176" text-anchor="middle">x = 5</text>
+<rect x="120" y="150" width="480" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="360" y="169" text-anchor="middle">conv: y = 4x − 6</text>
+<text x="360" y="184" font-size="11" fill="#52514e" text-anchor="middle">4·5 − 6 = 14</text>
+<rect x="610" y="150" width="80" height="44" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1"/>
+<text x="650" y="176" text-anchor="middle">y = 14</text>
+<line x1="90" y1="172" x2="116" y2="172" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="600" y1="172" x2="606" y2="172" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M696 46 h6 V194 h-6" fill="none" stroke="#52514e" stroke-width="1"/>
+<text x="706" y="124" font-size="11" fill="#52514e"></text>
+<text x="650" y="124" font-size="11" fill="#52514e" text-anchor="middle">same output</text>
+<text x="360" y="232" font-size="11" fill="#52514e" text-anchor="middle">keeping epsilon inside the square root is what makes the two routes agree; with √3 instead of √4 they would not</text>
+</g>
+</svg>

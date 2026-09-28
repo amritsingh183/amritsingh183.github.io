@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Q·Kᵀ/√d_k scores every query against every key, softmax over each row gives weights that sum to 1, and each output row blends the value rows</title>
+<desc id="desc">Left to right: Q, K transposed, the score matrix, the scaled scores, the weight heatmap with row sums, V and the output; one row is outlined through every stage and its blend is written out.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="16" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="27" y="87" text-anchor="middle">1</text>
+<rect x="38" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="49" y="87" text-anchor="middle">0</text>
+<rect x="16" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="27" y="113" text-anchor="middle">0</text>
+<rect x="38" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="49" y="113" text-anchor="middle">1</text>
+<rect x="16" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="27" y="139" text-anchor="middle">1</text>
+<rect x="38" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="49" y="139" text-anchor="middle">1</text>
+<text x="38" y="60" text-anchor="middle">Q</text>
+<text x="68" y="113" fill="#52514e" text-anchor="middle">·</text>
+<rect x="76" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="87" y="87" text-anchor="middle">1</text>
+<rect x="98" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="109" y="87" text-anchor="middle">0</text>
+<rect x="120" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="87" text-anchor="middle">1</text>
+<rect x="76" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="87" y="113" text-anchor="middle">0</text>
+<rect x="98" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="109" y="113" text-anchor="middle">1</text>
+<rect x="120" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="113" text-anchor="middle">1</text>
+<text x="109" y="60" text-anchor="middle">Kᵀ</text>
+<text x="150" y="113" fill="#52514e" text-anchor="middle">=</text>
+<rect x="158" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="169" y="87" text-anchor="middle">1</text>
+<rect x="180" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="191" y="87" text-anchor="middle">0</text>
+<rect x="202" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="213" y="87" text-anchor="middle">1</text>
+<rect x="158" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="169" y="113" text-anchor="middle">0</text>
+<rect x="180" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="191" y="113" text-anchor="middle">1</text>
+<rect x="202" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="213" y="113" text-anchor="middle">1</text>
+<rect x="158" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="169" y="139" text-anchor="middle">1</text>
+<rect x="180" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="191" y="139" text-anchor="middle">1</text>
+<rect x="202" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="213" y="139" text-anchor="middle">2</text>
+<text x="191" y="60" text-anchor="middle">scores</text>
+<text x="244" y="113" fill="#52514e" text-anchor="middle">÷√2 →</text>
+<rect x="264" y="70" width="43" height="26" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285.5" y="87" text-anchor="middle">0.401</text>
+<rect x="307" y="70" width="43" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="328.5" y="87" text-anchor="middle">0.198</text>
+<rect x="350" y="70" width="43" height="26" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="371.5" y="87" text-anchor="middle">0.401</text>
+<rect x="264" y="96" width="43" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285.5" y="113" text-anchor="middle">0.198</text>
+<rect x="307" y="96" width="43" height="26" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="328.5" y="113" text-anchor="middle">0.401</text>
+<rect x="350" y="96" width="43" height="26" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="371.5" y="113" text-anchor="middle">0.401</text>
+<rect x="264" y="122" width="43" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285.5" y="139" text-anchor="middle">0.248</text>
+<rect x="307" y="122" width="43" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="328.5" y="139" text-anchor="middle">0.248</text>
+<rect x="350" y="122" width="43" height="26" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="371.5" y="139" text-anchor="middle">0.503</text>
+<text x="328.5" y="60" text-anchor="middle">weights</text>
+<text x="328.5" y="162" font-size="11" fill="#52514e" text-anchor="middle">softmax over each row</text>
+<rect x="397" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="408" y="87" text-anchor="middle">1</text>
+<rect x="397" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="408" y="113" text-anchor="middle">1</text>
+<rect x="397" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="408" y="139" text-anchor="middle">1</text>
+<text x="408" y="60" text-anchor="middle">Σ</text>
+<text x="427" y="113" fill="#52514e" text-anchor="middle">×</text>
+<rect x="435" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="446" y="87" text-anchor="middle">1</text>
+<rect x="457" y="70" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="468" y="87" text-anchor="middle">0</text>
+<rect x="435" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="446" y="113" text-anchor="middle">0</text>
+<rect x="457" y="96" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="468" y="113" text-anchor="middle">1</text>
+<rect x="435" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="446" y="139" text-anchor="middle">1</text>
+<rect x="457" y="122" width="22" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="468" y="139" text-anchor="middle">1</text>
+<text x="457" y="60" text-anchor="middle">V</text>
+<text x="487" y="113" fill="#52514e" text-anchor="middle">=</text>
+<rect x="495" y="70" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="516.5" y="87" text-anchor="middle">0.802</text>
+<rect x="538" y="70" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559.5" y="87" text-anchor="middle">0.599</text>
+<rect x="495" y="96" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="516.5" y="113" text-anchor="middle">0.599</text>
+<rect x="538" y="96" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559.5" y="113" text-anchor="middle">0.802</text>
+<rect x="495" y="122" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="516.5" y="139" text-anchor="middle">0.752</text>
+<rect x="538" y="122" width="43" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559.5" y="139" text-anchor="middle">0.752</text>
+<text x="538" y="60" text-anchor="middle">output</text>
+<rect x="13" y="67" width="571" height="32" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="360" y="196" text-anchor="middle">row 0: 0.401·[1, 0] + 0.198·[0, 1] + 0.401·[1, 1] = [0.802, 0.599]</text>
+<text x="360" y="224" font-size="11" fill="#52514e" text-anchor="middle">Q = K = V = X here so every number can be checked; a real layer projects X three ways (14.3)</text>
+<text x="360" y="244" font-size="11" fill="#52514e" text-anchor="middle">each output row is a weighted blend of the value rows, not a lookup; the weights of a row sum to 1</text>
+<text x="360" y="274" font-size="11" fill="#898781" text-anchor="middle">darker cell = larger weight (one hue, light to dark)</text>
+</g>
+</svg>

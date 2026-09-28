@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 272" width="720" height="272" role="img" aria-labelledby="title desc">
+<title id="title">Each dimension pair of the sinusoidal encoding is a sine and a cosine of pos / 10000^(2i/d): low pairs change quickly with position, high pairs slowly</title>
+<desc id="desc">Small multiples, one panel per dimension pair, plotting the sine and cosine values at positions 0 to 4, with the position-1 values labelled.</desc>
+<rect width="720" height="272" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="30" y1="26" x2="48" y2="26" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="39" cy="26" r="4" fill="#2a78d6"/>
+<text x="54" y="30" font-size="11" fill="#52514e">sin: dimension 2i</text>
+<line x1="180" y1="26" x2="198" y2="26" stroke="#eb6834" stroke-width="2"/>
+<circle cx="189" cy="26" r="4" fill="#eb6834"/>
+<text x="204" y="30" font-size="11" fill="#52514e">cos: dimension 2i + 1</text>
+<line x1="30" y1="130" x2="330" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="30" y1="60" x2="330" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="30" y1="200" x2="330" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="26" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="26" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="26" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="50" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="115" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="180" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="245" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="310" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="180" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 0: pos / 1</text>
+<path d="M50 130 L115 71.1 L180 66.3 L245 120.1 L310 183.0" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="50" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="115" cy="71.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="180" cy="66.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="245" cy="120.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="310" cy="183.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="121" y="86.1" font-size="11">0.841471</text>
+<path d="M50 60 L115 92.2 L180 159.1 L245 199.3 L310 175.8" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="50" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="115" cy="92.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="180" cy="159.1" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="245" cy="199.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="310" cy="175.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="108" y="85.2" font-size="11" text-anchor="end">0.540302</text>
+<line x1="390" y1="130" x2="690" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="390" y1="60" x2="690" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="390" y1="200" x2="690" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="386" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="386" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="386" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="410" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="475" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="540" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="605" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="670" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="540" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 1: pos / 100</text>
+<path d="M410 130 L475 129.3 L540 128.6 L605 127.9 L670 127.2" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="410" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="475" cy="129.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="540" cy="128.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="605" cy="127.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="670" cy="127.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="481" y="144.3" font-size="11">0.010000</text>
+<path d="M410 60 L475 60.0 L540 60.0 L605 60.0 L670 60.1" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="410" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="475" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="540" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="605" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="670" cy="60.1" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="468" y="53.0" font-size="11" text-anchor="end">0.999950</text>
+<text x="360" y="250" font-size="11" fill="#52514e" text-anchor="middle">position 0 gives [0, 1, 0, 1]; position 1 gives the four labelled values;</text>
+<text x="360" y="264" font-size="11" fill="#52514e" text-anchor="middle">the slower pair separates far-apart positions, the faster one separates neighbours</text>
+</g>
+</svg>

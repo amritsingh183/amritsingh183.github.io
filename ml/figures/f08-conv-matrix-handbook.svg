@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" width="720" height="240" role="img" aria-labelledby="title desc">
+<title id="title">As a matrix, each row gathers the inputs one output reads and each column lists the outputs one input feeds</title>
+<desc id="desc">The convolution matrix times the input vector equals the output vector, with one row shaded and one column outlined; the handbook variant adds the transposed matrix times the output, showing where two contributions add.</desc>
+<rect width="720" height="240" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="30" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="47" y="71" text-anchor="middle">1</text>
+<rect x="64" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="81" y="71" text-anchor="middle">2</text>
+<rect x="98" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="115" y="71" fill="#898781" text-anchor="middle">0</text>
+<rect x="30" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="47" y="105" fill="#898781" text-anchor="middle">0</text>
+<rect x="64" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="81" y="105" text-anchor="middle">1</text>
+<rect x="98" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="115" y="105" text-anchor="middle">2</text>
+<rect x="64" y="50" width="34" height="68" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="81" y="40" text-anchor="middle">A (2 × 3)</text>
+<text x="145" y="88" font-size="13" fill="#52514e" text-anchor="middle">·</text>
+<rect x="158" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="175" y="71" text-anchor="middle">1</text>
+<rect x="158" y="84" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="175" y="105" text-anchor="middle">2</text>
+<rect x="158" y="118" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="175" y="139" text-anchor="middle">3</text>
+<text x="175" y="40" text-anchor="middle">x</text>
+<text x="207" y="88" font-size="13" fill="#52514e" text-anchor="middle">=</text>
+<rect x="222" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="239" y="71" text-anchor="middle">5</text>
+<rect x="222" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="239" y="105" text-anchor="middle">8</text>
+<text x="239" y="40" text-anchor="middle">y</text>
+<text x="30" y="174" font-size="11" fill="#52514e">row 2 gathers x₂, x₃: 1·2 + 2·3 = 8</text>
+<text x="30" y="190" font-size="11" fill="#eb6834">column 2: x₂ feeds both outputs</text>
+<rect x="326" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="343" y="71" text-anchor="middle">1</text>
+<rect x="360" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="377" y="71" fill="#898781" text-anchor="middle">0</text>
+<rect x="326" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="343" y="105" text-anchor="middle">2</text>
+<rect x="360" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="377" y="105" text-anchor="middle">1</text>
+<rect x="326" y="118" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="343" y="139" fill="#898781" text-anchor="middle">0</text>
+<rect x="360" y="118" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="377" y="139" text-anchor="middle">2</text>
+<text x="360" y="40" text-anchor="middle">Aᵀ (3 × 2)</text>
+<text x="407" y="105" font-size="13" fill="#52514e" text-anchor="middle">·</text>
+<rect x="420" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="437" y="71" text-anchor="middle">5</text>
+<rect x="420" y="84" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="437" y="105" text-anchor="middle">8</text>
+<text x="437" y="40" text-anchor="middle">y</text>
+<text x="469" y="105" font-size="13" fill="#52514e" text-anchor="middle">=</text>
+<rect x="484" y="50" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="501" y="71" text-anchor="middle">5</text>
+<rect x="484" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="501" y="105" text-anchor="middle">18</text>
+<rect x="484" y="118" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="501" y="139" text-anchor="middle">16</text>
+<text x="501" y="40" text-anchor="middle">Aᵀ·y</text>
+<text x="326" y="174" font-size="11" fill="#52514e">middle entry: 2·5 + 1·8 = 18: two outputs contribute</text>
+<text x="326" y="190" font-size="11" fill="#52514e">the same weights, used column-wise: scatter and add</text>
+<text x="360" y="226" font-size="11" fill="#898781" text-anchor="middle">Aᵀ·y = [5, 18, 16] is not x = [1, 2, 3]: the transpose reverses connections, not information</text>
+</g>
+</svg>

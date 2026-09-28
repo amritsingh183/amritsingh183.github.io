@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">The layer&apos;s tensor, the VarMap&apos;s Var and the optimizer&apos;s Var are three handles to one storage</title>
+<desc id="desc">A storage box in the centre with three handle boxes pointing into it, and below it the forward output before and after one SGD step overwrites the storage in place.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="280" y="100" width="160" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="360" y="126" font-size="13" text-anchor="middle">one storage</text>
+<text x="360" y="146" fill="#52514e" text-anchor="middle">readout.weight [1, 2]</text>
+<rect x="40" y="100" width="180" height="64" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="130" y="129" text-anchor="middle">model field</text>
+<text x="130" y="144" font-size="11" fill="#52514e" text-anchor="middle">Tensor from get_with_hints</text>
+<rect x="280" y="16" width="160" height="52" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="360" y="39" text-anchor="middle">VarMap entry</text>
+<text x="360" y="54" font-size="11" fill="#52514e" text-anchor="middle">&quot;readout.weight&quot; → Var</text>
+<rect x="500" y="100" width="180" height="64" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="590" y="129" text-anchor="middle">optimizer</text>
+<text x="590" y="144" font-size="11" fill="#52514e" text-anchor="middle">all_vars(): Vec&lt;Var&gt;</text>
+<line x1="220" y1="132" x2="276" y2="132" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="248" y="127" font-size="11" fill="#52514e" text-anchor="middle">get_with_hints</text>
+<line x1="360" y1="68" x2="360" y2="96" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="368" y="88" font-size="11" fill="#52514e">all_vars()</text>
+<line x1="500" y1="132" x2="444" y2="132" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="472" y="127" font-size="11" fill="#52514e" text-anchor="middle">backward_step writes</text>
+<rect x="40" y="220" width="200" height="48" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="140" y="241" text-anchor="middle">before the step</text>
+<text x="140" y="256" font-size="11" fill="#52514e" text-anchor="middle">model.forward(x) reads the storage</text>
+<rect x="480" y="220" width="200" height="48" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="580" y="241" text-anchor="middle">after the step</text>
+<text x="580" y="256" font-size="11" fill="#52514e" text-anchor="middle">the same handle, new values</text>
+<line x1="240" y1="244" x2="476" y2="244" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="358" y="239" font-size="11" fill="#52514e" text-anchor="middle">optimizer.backward_step(&amp;loss)</text>
+<text x="360" y="286" font-size="11" fill="#52514e" text-anchor="middle">the map, the model and the optimizer see the update at once</text>
+<text x="360" y="184" font-size="11" fill="#52514e" text-anchor="middle">moving vb into build_model moved a handle, not the map</text>
+</g>
+</svg>

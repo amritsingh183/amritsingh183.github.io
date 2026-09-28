@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 272" width="720" height="272" role="img" aria-labelledby="title desc">
+<title id="title">Each dimension pair of the sinusoidal encoding is a sine and a cosine of pos / 10000^(2i/d): low pairs change quickly with position, high pairs slowly</title>
+<desc id="desc">Small multiples, one panel per dimension pair, plotting the sine and cosine values at positions 0 to 4, with the position-1 values labelled.</desc>
+<rect width="720" height="272" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="19" y1="26" x2="37" y2="26" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="28" cy="26" r="4" fill="#2a78d6"/>
+<text x="43" y="30" font-size="11" fill="#52514e">sin: dimension 2i</text>
+<line x1="169" y1="26" x2="187" y2="26" stroke="#eb6834" stroke-width="2"/>
+<circle cx="178" cy="26" r="4" fill="#eb6834"/>
+<text x="193" y="30" font-size="11" fill="#52514e">cos: dimension 2i + 1</text>
+<line x1="19" y1="130" x2="179" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="19" y1="60" x2="179" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="19" y1="200" x2="179" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="15" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="15" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="15" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="39" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="69" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="99" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="129" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="159" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="99" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 0: pos / 1</text>
+<path d="M39 130 L69 71.1 L99 66.3 L129 120.1 L159 183.0" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="39" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="69" cy="71.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="99" cy="66.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="129" cy="120.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="159" cy="183.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="75" y="86.1" font-size="11">0.841</text>
+<path d="M39 60 L69 92.2 L99 159.1 L129 199.3 L159 175.8" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="39" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="69" cy="92.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="99" cy="159.1" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="129" cy="199.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="159" cy="175.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="62" y="85.2" font-size="11" text-anchor="end">0.540</text>
+<line x1="193" y1="130" x2="353" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="193" y1="60" x2="353" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="193" y1="200" x2="353" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="189" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="189" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="189" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="213" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="243" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="273" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="303" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="333" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="273" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 1: pos / 10</text>
+<path d="M213 130 L243 123.0 L273 116.1 L303 109.3 L333 102.7" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="213" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="243" cy="123.0" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="273" cy="116.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="303" cy="109.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="333" cy="102.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="249" y="138.0" font-size="11">0.100</text>
+<path d="M213 60 L243 60.3 L273 61.4 L303 63.1 L333 65.5" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="213" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="243" cy="60.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="273" cy="61.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="303" cy="63.1" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="333" cy="65.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="236" y="53.3" font-size="11" text-anchor="end">0.995</text>
+<line x1="367" y1="130" x2="527" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="367" y1="60" x2="527" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="367" y1="200" x2="527" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="363" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="363" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="363" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="387" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="417" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="447" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="477" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="507" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="447" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 2: pos / 100</text>
+<path d="M387 130 L417 129.3 L447 128.6 L477 127.9 L507 127.2" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="387" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="417" cy="129.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="447" cy="128.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="477" cy="127.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="507" cy="127.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="423" y="144.3" font-size="11">0.010</text>
+<path d="M387 60 L417 60.0 L447 60.0 L477 60.0 L507 60.1" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="387" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="417" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="447" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="477" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="507" cy="60.1" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="410" y="53.0" font-size="11" text-anchor="end">1.000</text>
+<line x1="541" y1="130" x2="701" y2="130" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="541" y1="60" x2="701" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="541" y1="200" x2="701" y2="200" stroke="#e1e0d9" stroke-width="1"/>
+<text x="537" y="64" font-size="11" fill="#898781" text-anchor="end">1</text>
+<text x="537" y="134" font-size="11" fill="#898781" text-anchor="end">0</text>
+<text x="537" y="204" font-size="11" fill="#898781" text-anchor="end">−1</text>
+<text x="561" y="216" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="591" y="216" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="621" y="216" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="651" y="216" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="681" y="216" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="621" y="230" font-size="11" fill="#52514e" text-anchor="middle">pair i = 3: pos / 1000</text>
+<path d="M561 130 L591 129.9 L621 129.9 L651 129.8 L681 129.7" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="561" cy="130" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="591" cy="129.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="621" cy="129.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="651" cy="129.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="681" cy="129.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="597" y="144.9" font-size="11">0.001</text>
+<path d="M561 60 L591 60.0 L621 60.0 L651 60.0 L681 60.0" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="561" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="591" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="621" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="651" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="681" cy="60.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="584" y="53.0" font-size="11" text-anchor="end">1.000</text>
+<text x="360" y="250" font-size="11" fill="#52514e" text-anchor="middle">position 0 is 0, 1, 0, 1, … in every pair (sin 0 = 0, cos 0 = 1);</text>
+<text x="360" y="264" font-size="11" fill="#52514e" text-anchor="middle">pair 0 moves fastest, pair 3 barely moves across these five positions</text>
+</g>
+</svg>

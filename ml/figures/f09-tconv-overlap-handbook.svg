@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262" width="720" height="262" role="img" aria-labelledby="title desc">
+<title id="title">Upsampling two samples at stride 2 stamps the kernel twice: the middle output collects two terms, its neighbours one</title>
+<desc id="desc">Two panels: kernel [u, v, w] at stride 2 gives five outputs whose middle entry is a·w + b·u; kernel [u, v] at stride 2 gives four outputs with one term each.</desc>
+<rect width="720" height="262" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="24" font-size="13" font-weight="600">kernel [u, v, w], stride 2, inputs a, b</text>
+<rect x="30" y="34" width="276" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="168" y="46" font-size="11" fill="#52514e" text-anchor="middle">input a × kernel</text>
+<rect x="214" y="53" width="276" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="352" y="65" font-size="11" fill="#52514e" text-anchor="middle">input b × kernel</text>
+<rect x="30" y="78" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="95" text-anchor="middle">a·u</text>
+<rect x="122" y="78" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="168" y="95" text-anchor="middle">a·v</text>
+<rect x="214" y="78" width="92" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="260" y="95" text-anchor="middle">a·w + b·u</text>
+<rect x="306" y="78" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="352" y="95" text-anchor="middle">b·v</text>
+<rect x="398" y="78" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="444" y="95" text-anchor="middle">b·w</text>
+<text x="500" y="95" font-size="11" fill="#52514e">5 outputs</text>
+<text x="30" y="120" font-size="11" fill="#52514e">five outputs from (2 − 1)·2 + 3; the middle one adds two stamps (outlined)</text>
+<text x="30" y="144" font-size="13" font-weight="600">kernel [u, v], stride 2 (width divisible by the stride)</text>
+<rect x="30" y="154" width="184" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="122" y="166" font-size="11" fill="#52514e" text-anchor="middle">input a × kernel</text>
+<rect x="214" y="173" width="184" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="306" y="185" font-size="11" fill="#52514e" text-anchor="middle">input b × kernel</text>
+<rect x="30" y="198" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="215" text-anchor="middle">a·u</text>
+<rect x="122" y="198" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="168" y="215" text-anchor="middle">a·v</text>
+<rect x="214" y="198" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="215" text-anchor="middle">b·u</text>
+<rect x="306" y="198" width="92" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="352" y="215" text-anchor="middle">b·v</text>
+<text x="408" y="215" font-size="11" fill="#52514e">4 outputs</text>
+<text x="30" y="240" font-size="11" fill="#52514e">four outputs, one term each: no uneven overlap</text>
+</g>
+</svg>

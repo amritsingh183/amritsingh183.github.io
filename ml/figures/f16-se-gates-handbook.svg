@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Squeeze averages each channel to one number, a tiny network turns those numbers into one gate per channel, and every position of a channel is multiplied by its gate</title>
+<desc id="desc">Feature maps on the left, the squeezed column, the hidden column, the gate bars with their values, and the scaled output maps on the right; each stage carries its formula beneath it; no pixel moves.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="56" font-size="11" fill="#52514e">channel 1</text>
+<rect x="20" y="64" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="81" font-size="11" text-anchor="middle">1</text>
+<rect x="46" y="64" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="81" font-size="11" text-anchor="middle">3</text>
+<rect x="20" y="90" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="107" font-size="11" text-anchor="middle">1</text>
+<rect x="46" y="90" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="107" font-size="11" text-anchor="middle">3</text>
+<text x="20" y="130" font-size="11" fill="#52514e">channel 2</text>
+<rect x="20" y="138" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="155" font-size="11" text-anchor="middle">0</text>
+<rect x="46" y="138" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="155" font-size="11" text-anchor="middle">2</text>
+<rect x="20" y="164" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="181" font-size="11" text-anchor="middle">0</text>
+<rect x="46" y="164" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="181" font-size="11" text-anchor="middle">2</text>
+<text x="46" y="36" text-anchor="middle">X [1, 2, 2, 2]</text>
+<line x1="78" y1="128" x2="110" y2="128" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="116" y="98" width="40" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="136" y="117" text-anchor="middle">2</text>
+<rect x="116" y="128" width="40" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="136" y="147" text-anchor="middle">1</text>
+<text x="136" y="36" text-anchor="middle">s [1, 2]</text>
+<text x="136" y="178" font-size="11" fill="#52514e" text-anchor="middle">mean over</text>
+<text x="136" y="192" font-size="11" fill="#52514e" text-anchor="middle">H, W</text>
+<line x1="162" y1="128" x2="214" y2="128" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="220" y="113" width="40" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="240" y="132" text-anchor="middle">1</text>
+<text x="240" y="36" text-anchor="middle">hidden</text>
+<text x="240" y="178" font-size="11" fill="#52514e" text-anchor="middle">ReLU(W₁·s), W₁ = [1, −1]:</text>
+<text x="240" y="192" font-size="11" fill="#52514e" text-anchor="middle">ReLU(2 − 1) = 1</text>
+<line x1="266" y1="128" x2="324" y2="128" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="380" y="36" text-anchor="middle">gates in (0, 1)</text>
+<rect x="330" y="94" width="100" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="330" y="94" width="75" height="22" rx="2" fill="#2a78d6"/>
+<text x="436" y="109" font-size="11" fill="#52514e">0.75 = σ(+ln 3)</text>
+<rect x="330" y="128" width="100" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="330" y="128" width="25" height="22" rx="2" fill="#2a78d6"/>
+<text x="436" y="143" font-size="11" fill="#52514e">0.25 = σ(−ln 3)</text>
+<text x="420" y="178" font-size="11" fill="#52514e" text-anchor="middle">σ(W₂·h), W₂ = ±ln 3</text>
+<text x="420" y="192" font-size="11" fill="#52514e" text-anchor="middle">one gate per channel</text>
+<line x1="530" y1="128" x2="608" y2="128" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="569" y="123" font-size="11" fill="#52514e" text-anchor="middle">× per channel</text>
+<text x="614" y="56" font-size="11" fill="#52514e">× 0.75</text>
+<rect x="614" y="64" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="627" y="81" font-size="11" text-anchor="middle">0.75</text>
+<rect x="640" y="64" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="653" y="81" font-size="11" text-anchor="middle">2.25</text>
+<rect x="614" y="90" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="627" y="107" font-size="11" text-anchor="middle">0.75</text>
+<rect x="640" y="90" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="653" y="107" font-size="11" text-anchor="middle">2.25</text>
+<text x="614" y="130" font-size="11" fill="#52514e">× 0.25</text>
+<rect x="614" y="138" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="627" y="155" font-size="11" text-anchor="middle">0</text>
+<rect x="640" y="138" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="653" y="155" font-size="11" text-anchor="middle">0.5</text>
+<rect x="614" y="164" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="627" y="181" font-size="11" text-anchor="middle">0</text>
+<rect x="640" y="164" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="653" y="181" font-size="11" text-anchor="middle">0.5</text>
+<text x="640" y="36" text-anchor="middle">Y [1, 2, 2, 2]</text>
+<text x="360" y="276" font-size="11" fill="#52514e" text-anchor="middle">one number per channel scales every position of that channel; the gates need not sum to one</text>
+</g>
+</svg>

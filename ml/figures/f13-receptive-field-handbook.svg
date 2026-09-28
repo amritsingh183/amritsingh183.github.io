@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="title desc">
+<title id="title">The receptive field grows by (k − 1)·d·jump per layer: linear for a plain stack, doubling with doubled dilations, multiplied by every stride</title>
+<desc id="desc">A line chart of receptive field against layer index for three stacks, each series direct-labelled with its final value.</desc>
+<rect width="720" height="320" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="70" y1="229.4" x2="560" y2="229.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="233.4" font-size="11" fill="#898781" text-anchor="end">10</text>
+<line x1="70" y1="196.8" x2="560" y2="196.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="200.8" font-size="11" fill="#898781" text-anchor="end">20</text>
+<line x1="70" y1="164.2" x2="560" y2="164.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="168.2" font-size="11" fill="#898781" text-anchor="end">30</text>
+<line x1="70" y1="131.5" x2="560" y2="131.5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="135.5" font-size="11" fill="#898781" text-anchor="end">40</text>
+<line x1="70" y1="98.9" x2="560" y2="98.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="102.9" font-size="11" fill="#898781" text-anchor="end">50</text>
+<line x1="70" y1="66.3" x2="560" y2="66.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="70.3" font-size="11" fill="#898781" text-anchor="end">60</text>
+<line x1="70" y1="262" x2="560" y2="262" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="70" y1="262" x2="70" y2="50" stroke="#c3c2b7" stroke-width="1"/>
+<text x="70" y="278" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="192.5" y="278" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="315" y="278" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="437.5" y="278" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="560" y="278" font-size="11" fill="#898781" text-anchor="middle">5</text>
+<text x="315" y="296" font-size="11" fill="#52514e" text-anchor="middle">layer</text>
+<text x="62" y="44" font-size="11" fill="#52514e">receptive field (input pixels)</text>
+<line x1="70" y1="18" x2="88" y2="18" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="79" cy="18" r="4" fill="#2a78d6"/>
+<text x="94" y="22" font-size="11" fill="#52514e">dilations 1, 2, 4, 8, 16</text>
+<line x1="267.8" y1="18" x2="285.8" y2="18" stroke="#eb6834" stroke-width="2"/>
+<circle cx="276.8" cy="18" r="4" fill="#eb6834"/>
+<text x="291.8" y="22" font-size="11" fill="#52514e">d = 1, 2, 4, 8, stride 2 in layer 2</text>
+<line x1="533.4" y1="18" x2="551.4" y2="18" stroke="#1baf7a" stroke-width="2"/>
+<circle cx="542.4" cy="18" r="4" fill="#1baf7a"/>
+<text x="557.4" y="22" font-size="11" fill="#52514e">dilation 2 repeated</text>
+<path d="M70 252.2 L192.5 239.2 L315 213.1 L437.5 160.9 L560 56.5" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="70" cy="252.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="192.5" cy="239.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="315" cy="213.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="437.5" cy="160.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="560" cy="56.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="570" y="60.5" font-size="11">3, 7, 15, 31, 63</text>
+<path d="M70 252.2 L192.5 239.2 L315 187.0 L437.5 82.6" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="70" cy="252.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="192.5" cy="239.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="315" cy="187.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="437.5" cy="82.6" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="447.5" y="98.6" font-size="11">3, 7, 23, 55</text>
+<path d="M70 245.7 L192.5 232.6 L315 219.6" fill="none" stroke="#1baf7a" stroke-width="2"/>
+<circle cx="70" cy="245.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="192.5" cy="232.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="315" cy="219.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="325" y="235.6" font-size="11">5, 9, 13</text>
+</g>
+</svg>

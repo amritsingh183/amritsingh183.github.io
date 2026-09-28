@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" width="720" height="240" role="img" aria-labelledby="title desc">
+<title id="title">As a matrix, each row gathers the inputs one output reads and each column lists the outputs one input feeds</title>
+<desc id="desc">The convolution matrix times the input vector equals the output vector, with one row shaded and one column outlined; the handbook variant adds the transposed matrix times the output, showing where two contributions add.</desc>
+<rect width="720" height="240" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="60" y="44" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="77" y="65" text-anchor="middle">10</text>
+<rect x="94" y="44" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="111" y="65" fill="#898781" text-anchor="middle">0</text>
+<rect x="128" y="44" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="65" fill="#898781" text-anchor="middle">0</text>
+<rect x="60" y="78" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="77" y="99" text-anchor="middle">1</text>
+<rect x="94" y="78" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="111" y="99" text-anchor="middle">10</text>
+<rect x="128" y="78" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="99" fill="#898781" text-anchor="middle">0</text>
+<rect x="60" y="112" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="77" y="133" fill="#898781" text-anchor="middle">0</text>
+<rect x="94" y="112" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="111" y="133" text-anchor="middle">1</text>
+<rect x="128" y="112" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="133" text-anchor="middle">10</text>
+<rect x="60" y="146" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="77" y="167" fill="#898781" text-anchor="middle">0</text>
+<rect x="94" y="146" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="111" y="167" fill="#898781" text-anchor="middle">0</text>
+<rect x="128" y="146" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="167" text-anchor="middle">1</text>
+<rect x="94" y="44" width="34" height="136" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="111" y="34" text-anchor="middle">C (4 × 3)</text>
+<text x="175" y="116" font-size="13" fill="#52514e" text-anchor="middle">·</text>
+<rect x="188" y="44" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="205" y="65" text-anchor="middle">1</text>
+<rect x="188" y="78" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="205" y="99" text-anchor="middle">2</text>
+<rect x="188" y="112" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="205" y="133" text-anchor="middle">3</text>
+<text x="205" y="34" text-anchor="middle">x</text>
+<text x="237" y="116" font-size="13" fill="#52514e" text-anchor="middle">=</text>
+<rect x="252" y="44" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="65" text-anchor="middle">10</text>
+<rect x="252" y="78" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="99" text-anchor="middle">21</text>
+<rect x="252" y="112" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="133" text-anchor="middle">32</text>
+<rect x="252" y="146" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="167" text-anchor="middle">3</text>
+<text x="269" y="34" text-anchor="middle">y = C·x</text>
+<text x="316" y="99">row 2 gathers x₁ and x₂: y₂ = 1·1 + 10·2 = 21</text>
+<text x="316" y="150" font-size="11" fill="#eb6834">column 2: x₂ feeds y₂ and y₃, the outputs whose window holds it</text>
+<text x="316" y="168" font-size="11" fill="#52514e">kernel h = [10, 1]: the same two weights on every diagonal</text>
+<text x="360" y="216" font-size="11" fill="#52514e" text-anchor="middle">Cᵀ (section 7.3) reads the same entries column by column: a column scatters one input to its outputs</text>
+</g>
+</svg>

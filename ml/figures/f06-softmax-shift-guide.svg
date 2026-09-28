@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260" role="img" aria-labelledby="title desc">
+<title id="title">Subtracting the maximum before exponentiating leaves the probabilities unchanged and prevents overflow</title>
+<desc id="desc">Two lanes of stage boxes: the textbook formula overflows to infinity and ends in NaN; the shifted lane subtracts the maximum, so every exponent is at most zero and the denominator is at least one.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="260" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="30" font-size="13" font-weight="600">textbook: exp(z) / Σ exp(z)</text>
+<rect x="20" y="56" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="79" y="73" font-size="11" fill="#52514e" text-anchor="middle">logits z</text>
+<text x="79" y="90" text-anchor="middle">[1000, 1005, 1002]</text>
+<rect x="150" y="56" width="118" height="44" rx="2" fill="none" stroke="#e1e0d9" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="209" y="82" font-size="11" fill="#898781" text-anchor="middle">(no shift)</text>
+<rect x="280" y="56" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="339" y="73" font-size="11" fill="#52514e" text-anchor="middle">exp</text>
+<text x="339" y="90" text-anchor="middle">[∞, ∞, ∞]</text>
+<rect x="410" y="56" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="469" y="73" font-size="11" fill="#52514e" text-anchor="middle">Σ</text>
+<text x="469" y="90" text-anchor="middle">∞</text>
+<rect x="560" y="56" width="138" height="44" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="629" y="73" font-size="11" fill="#52514e" text-anchor="middle">÷</text>
+<text x="629" y="90" text-anchor="middle">∞/∞ = NaN</text>
+<text x="339" y="114" font-size="11" fill="#eb6834" text-anchor="middle">exp(709.8) is already ∞ in f64</text>
+<line x1="140" y1="78" x2="276" y2="78" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="400" y1="78" x2="406" y2="78" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="530" y1="78" x2="556" y2="78" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="20" y="142" font-size="13" font-weight="600">shifted: exp(z − m) / Σ exp(z − m), m = max(z) = 1005</text>
+<rect x="20" y="166" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="79" y="183" font-size="11" fill="#52514e" text-anchor="middle">logits z</text>
+<text x="79" y="200" text-anchor="middle">[1000, 1005, 1002]</text>
+<rect x="150" y="166" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="209" y="183" font-size="11" fill="#52514e" text-anchor="middle">− m</text>
+<text x="209" y="200" text-anchor="middle">[−5, 0, −3]</text>
+<rect x="280" y="166" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="339" y="183" font-size="11" fill="#52514e" text-anchor="middle">exp</text>
+<text x="339" y="200" text-anchor="middle">[0.0067, 1, 0.0498]</text>
+<rect x="410" y="166" width="118" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="469" y="183" font-size="11" fill="#52514e" text-anchor="middle">Σ</text>
+<text x="469" y="200" text-anchor="middle">1.0565</text>
+<rect x="560" y="166" width="138" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="629" y="183" font-size="11" fill="#52514e" text-anchor="middle">÷</text>
+<text x="629" y="200" text-anchor="middle">[0.0064, 0.9465, 0.0471]</text>
+<line x1="140" y1="188" x2="146" y2="188" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="270" y1="188" x2="276" y2="188" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="400" y1="188" x2="406" y2="188" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="530" y1="188" x2="556" y2="188" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="209" y="224" font-size="11" fill="#52514e" text-anchor="middle">all ≤ 0</text>
+<text x="339" y="224" font-size="11" fill="#52514e" text-anchor="middle">all in (0, 1]</text>
+<text x="469" y="224" font-size="11" fill="#52514e" text-anchor="middle">≥ 1, never 0</text>
+<text x="629" y="224" font-size="11" fill="#52514e" text-anchor="middle">what the textbook defines</text>
+</g>
+</svg>

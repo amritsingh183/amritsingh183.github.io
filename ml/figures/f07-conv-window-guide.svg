@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="title desc">
+<title id="title">One output value is the kernel laid on one window, multiplied cell by cell and summed, without flipping</title>
+<desc id="desc">Input grid with the top-left window highlighted and a dashed next window, the kernel grid, the product line with every term, and the output grid with its first cell highlighted; the guide variant adds row 1 of the convolution matrix.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="320" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="30" y="50" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="69" text-anchor="middle">1</text>
+<rect x="60" y="50" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="69" text-anchor="middle">2</text>
+<rect x="90" y="50" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="69" text-anchor="middle">3</text>
+<rect x="120" y="50" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="135" y="69" text-anchor="middle">4</text>
+<rect x="30" y="80" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="99" text-anchor="middle">5</text>
+<rect x="60" y="80" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="99" text-anchor="middle">6</text>
+<rect x="90" y="80" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="99" text-anchor="middle">7</text>
+<rect x="120" y="80" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="135" y="99" text-anchor="middle">8</text>
+<rect x="30" y="110" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="129" text-anchor="middle">9</text>
+<rect x="60" y="110" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="129" text-anchor="middle">10</text>
+<rect x="90" y="110" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="129" text-anchor="middle">11</text>
+<rect x="120" y="110" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="135" y="129" text-anchor="middle">12</text>
+<rect x="30" y="140" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="159" text-anchor="middle">13</text>
+<rect x="60" y="140" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="159" text-anchor="middle">14</text>
+<rect x="90" y="140" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="159" text-anchor="middle">15</text>
+<rect x="120" y="140" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="135" y="159" text-anchor="middle">16</text>
+<rect x="30" y="50" width="90" height="90" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="60" y="50" width="90" height="90" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="30" y="38">input 4 × 4 (one channel)</text>
+<text x="30" y="186" font-size="11" fill="#2a78d6">solid: this output&apos;s window</text>
+<text x="30" y="200" font-size="11" fill="#eb6834">dashed: the next output&apos;s window</text>
+<text x="210" y="38">kernel (not flipped)</text>
+<rect x="210" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="77" text-anchor="middle">0</text>
+<rect x="240" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="77" text-anchor="middle">−1</text>
+<rect x="270" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="77" text-anchor="middle">0</text>
+<rect x="210" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="107" text-anchor="middle">−1</text>
+<rect x="240" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="107" text-anchor="middle">5</text>
+<rect x="270" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="107" text-anchor="middle">−1</text>
+<rect x="210" y="118" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="137" text-anchor="middle">0</text>
+<rect x="240" y="118" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="137" text-anchor="middle">−1</text>
+<rect x="270" y="118" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="137" text-anchor="middle">0</text>
+<text x="180" y="107" font-size="13" fill="#52514e" text-anchor="middle">×</text>
+<text x="560" y="38">output 2 × 2</text>
+<rect x="560" y="58" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="77" text-anchor="middle">6</text>
+<rect x="590" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="77" text-anchor="middle">7</text>
+<rect x="560" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="107" text-anchor="middle">10</text>
+<rect x="590" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="107" text-anchor="middle">11</text>
+<rect x="560" y="58" width="30" height="30" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="360" y="232" text-anchor="middle">0·1 + (−1)·2 + 0·3 + (−1)·5 + 5·6 + (−1)·7 + 0·9 + (−1)·10 + 0·11 = 6</text>
+<line x1="255" y1="154" x2="300" y2="216" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="346" y="170" font-size="11" fill="#52514e">multiply matching cells</text>
+<line x1="597.8" y1="222" x2="556" y2="79" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="585.9" y="202" font-size="11" fill="#52514e" text-anchor="middle">add → one output</text>
+<text x="30" y="266">row 1 of the 4 × 16 matrix C: the nine weights at this window&apos;s pixels, zeros elsewhere</text>
+<rect x="30" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="50" y="292" font-size="11" text-anchor="middle">0</text>
+<rect x="70" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="90" y="292" font-size="11" text-anchor="middle">−1</text>
+<rect x="110" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="130" y="292" font-size="11" text-anchor="middle">0</text>
+<rect x="150" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="170" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="190" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="210" y="292" font-size="11" text-anchor="middle">−1</text>
+<rect x="230" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="250" y="292" font-size="11" text-anchor="middle">5</text>
+<rect x="270" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="290" y="292" font-size="11" text-anchor="middle">−1</text>
+<rect x="310" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="350" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="370" y="292" font-size="11" text-anchor="middle">0</text>
+<rect x="390" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="410" y="292" font-size="11" text-anchor="middle">−1</text>
+<rect x="430" y="276" width="40" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="450" y="292" font-size="11" text-anchor="middle">0</text>
+<rect x="470" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="490" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="510" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="530" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="550" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="570" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="590" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<rect x="630" y="276" width="40" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="650" y="292" font-size="11" fill="#898781" text-anchor="middle">0</text>
+<text x="50" y="314" font-size="11" fill="#898781" text-anchor="middle">1</text>
+<text x="90" y="314" font-size="11" fill="#898781" text-anchor="middle">2</text>
+<text x="130" y="314" font-size="11" fill="#898781" text-anchor="middle">3</text>
+<text x="170" y="314" font-size="11" fill="#898781" text-anchor="middle">4</text>
+<text x="210" y="314" font-size="11" fill="#898781" text-anchor="middle">5</text>
+<text x="250" y="314" font-size="11" fill="#898781" text-anchor="middle">6</text>
+<text x="290" y="314" font-size="11" fill="#898781" text-anchor="middle">7</text>
+<text x="330" y="314" font-size="11" fill="#898781" text-anchor="middle">8</text>
+<text x="370" y="314" font-size="11" fill="#898781" text-anchor="middle">9</text>
+<text x="410" y="314" font-size="11" fill="#898781" text-anchor="middle">10</text>
+<text x="450" y="314" font-size="11" fill="#898781" text-anchor="middle">11</text>
+<text x="490" y="314" font-size="11" fill="#898781" text-anchor="middle">12</text>
+<text x="530" y="314" font-size="11" fill="#898781" text-anchor="middle">13</text>
+<text x="570" y="314" font-size="11" fill="#898781" text-anchor="middle">14</text>
+<text x="610" y="314" font-size="11" fill="#898781" text-anchor="middle">15</text>
+<text x="650" y="314" font-size="11" fill="#898781" text-anchor="middle">16</text>
+<text x="678" y="314" font-size="11" fill="#898781">pixel</text>
+</g>
+</svg>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 392" width="720" height="392" role="img" aria-labelledby="title desc">
+<title id="title">A mask names the keys a query may not read: their scores become −∞ before softmax, so their weights are exactly 0 and each row still sums to 1</title>
+<desc id="desc">Three 4 by 4 grids: the causal U8 mask with 1 above the diagonal, the scores with −∞ in the forbidden cells, and the weights with 0 there; a second strip shows the padding mask zeroing the last key column.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="392" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="40" y="56" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="55" y="75" text-anchor="middle">0</text>
+<rect x="70" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="85" y="75" text-anchor="middle">1</text>
+<rect x="100" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="115" y="75" text-anchor="middle">1</text>
+<rect x="130" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="75" text-anchor="middle">1</text>
+<rect x="40" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="55" y="105" text-anchor="middle">0</text>
+<rect x="70" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="105" text-anchor="middle">0</text>
+<rect x="100" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="115" y="105" text-anchor="middle">1</text>
+<rect x="130" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="105" text-anchor="middle">1</text>
+<rect x="40" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="55" y="135" text-anchor="middle">0</text>
+<rect x="70" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="135" text-anchor="middle">0</text>
+<rect x="100" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="115" y="135" text-anchor="middle">0</text>
+<rect x="130" y="116" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="135" text-anchor="middle">1</text>
+<rect x="40" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="55" y="165" text-anchor="middle">0</text>
+<rect x="70" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="165" text-anchor="middle">0</text>
+<rect x="100" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="115" y="165" text-anchor="middle">0</text>
+<rect x="130" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="165" text-anchor="middle">0</text>
+<text x="100" y="46" text-anchor="middle">mask (U8): 1 = forbidden</text>
+<rect x="270" y="56" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="75" text-anchor="middle">s₀₀</text>
+<rect x="300" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="315" y="75" text-anchor="middle">−∞</text>
+<rect x="330" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="345" y="75" text-anchor="middle">−∞</text>
+<rect x="360" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="375" y="75" text-anchor="middle">−∞</text>
+<rect x="270" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="105" text-anchor="middle">s₁₀</text>
+<rect x="300" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="315" y="105" text-anchor="middle">s₁₁</text>
+<rect x="330" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="345" y="105" text-anchor="middle">−∞</text>
+<rect x="360" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="375" y="105" text-anchor="middle">−∞</text>
+<rect x="270" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="135" text-anchor="middle">s₂₀</text>
+<rect x="300" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="315" y="135" text-anchor="middle">s₂₁</text>
+<rect x="330" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="345" y="135" text-anchor="middle">s₂₂</text>
+<rect x="360" y="116" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="375" y="135" text-anchor="middle">−∞</text>
+<rect x="270" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="165" text-anchor="middle">s₃₀</text>
+<rect x="300" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="315" y="165" text-anchor="middle">s₃₁</text>
+<rect x="330" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="345" y="165" text-anchor="middle">s₃₂</text>
+<rect x="360" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="375" y="165" text-anchor="middle">s₃₃</text>
+<text x="330" y="46" text-anchor="middle">scores after where_cond</text>
+<rect x="500" y="56" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="75" text-anchor="middle">w₀₀</text>
+<rect x="530" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="545" y="75" text-anchor="middle">0</text>
+<rect x="560" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="575" y="75" text-anchor="middle">0</text>
+<rect x="590" y="56" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="605" y="75" text-anchor="middle">0</text>
+<rect x="500" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="105" text-anchor="middle">w₁₀</text>
+<rect x="530" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="105" text-anchor="middle">w₁₁</text>
+<rect x="560" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="575" y="105" text-anchor="middle">0</text>
+<rect x="590" y="86" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="605" y="105" text-anchor="middle">0</text>
+<rect x="500" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="135" text-anchor="middle">w₂₀</text>
+<rect x="530" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="135" text-anchor="middle">w₂₁</text>
+<rect x="560" y="116" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="135" text-anchor="middle">w₂₂</text>
+<rect x="590" y="116" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="605" y="135" text-anchor="middle">0</text>
+<rect x="500" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="165" text-anchor="middle">w₃₀</text>
+<rect x="530" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="165" text-anchor="middle">w₃₁</text>
+<rect x="560" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="165" text-anchor="middle">w₃₂</text>
+<rect x="590" y="146" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="165" text-anchor="middle">w₃₃</text>
+<text x="560" y="46" text-anchor="middle">weights after softmax</text>
+<text x="100" y="190" font-size="11" fill="#898781" text-anchor="middle">rows: queries; columns: keys</text>
+<line x1="166" y1="116" x2="264" y2="116" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="215" y="111" font-size="11" fill="#52514e" text-anchor="middle">mask → −∞</text>
+<line x1="396" y1="116" x2="494" y2="116" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="445" y="111" font-size="11" fill="#52514e" text-anchor="middle">softmax</text>
+<rect x="37" y="83" width="126" height="36" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="497" y="83" width="126" height="36" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="560" y="190" font-size="11" fill="#52514e" text-anchor="middle">row 1: w₁₀ + w₁₁ = 1; every row sums to 1</text>
+<text x="40" y="234">padding mask (1, 1, 1, 4) = [0, 0, 0, 1]: the last word is padding</text>
+<rect x="40" y="244" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="55" y="263" text-anchor="middle">0</text>
+<rect x="70" y="244" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="263" text-anchor="middle">0</text>
+<rect x="100" y="244" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="115" y="263" text-anchor="middle">0</text>
+<rect x="130" y="244" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="263" text-anchor="middle">1</text>
+<text x="170" y="263" font-size="11" fill="#52514e">broadcasts over batch, heads and queries</text>
+<rect x="440" y="238" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="455" y="257" text-anchor="middle">w₀₀</text>
+<rect x="470" y="238" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="257" text-anchor="middle">w₀₁</text>
+<rect x="500" y="238" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="257" text-anchor="middle">w₀₂</text>
+<rect x="530" y="238" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="545" y="257" text-anchor="middle">0.0</text>
+<rect x="440" y="268" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="455" y="287" text-anchor="middle">w₁₀</text>
+<rect x="470" y="268" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="287" text-anchor="middle">w₁₁</text>
+<rect x="500" y="268" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="287" text-anchor="middle">w₁₂</text>
+<rect x="530" y="268" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="545" y="287" text-anchor="middle">0.0</text>
+<rect x="440" y="298" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="455" y="317" text-anchor="middle">w₂₀</text>
+<rect x="470" y="298" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="317" text-anchor="middle">w₂₁</text>
+<rect x="500" y="298" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="317" text-anchor="middle">w₂₂</text>
+<rect x="530" y="298" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="545" y="317" text-anchor="middle">0.0</text>
+<rect x="440" y="328" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="455" y="347" text-anchor="middle">w₃₀</text>
+<rect x="470" y="328" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="347" text-anchor="middle">w₃₁</text>
+<rect x="500" y="328" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="347" text-anchor="middle">w₃₂</text>
+<rect x="530" y="328" width="30" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="545" y="347" text-anchor="middle">0.0</text>
+<text x="500" y="228" font-size="11" fill="#52514e" text-anchor="middle">nobody attends to the padded word</text>
+<text x="360" y="384" font-size="11" fill="#eb6834" text-anchor="middle">a row of nothing but −∞ gives NaN (−∞ − (−∞)): never mask every key of a query</text>
+</g>
+</svg>

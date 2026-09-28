@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" width="720" height="280" role="img" aria-labelledby="title desc">
+<title id="title">Groups decide which input channels a filter can read; depthwise means one channel each, and only the 1×1 that follows mixes again</title>
+<desc id="desc">Three wiring panels: every input to every filter; two groups with separate colours; one channel per filter followed by a pointwise stage. The weight shape is written under each panel.</desc>
+<rect width="720" height="280" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="130" y="30" font-size="13" text-anchor="middle" font-weight="600">groups = 1</text>
+<line x1="40" y1="76.2" x2="130" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="108.8" x2="130" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="141.2" x2="130" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="173.8" x2="130" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<rect x="122" y="70.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="138" y1="76.2" x2="215" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="220" cy="76.2" r="4" fill="#2a78d6"/>
+<line x1="40" y1="76.2" x2="130" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="108.8" x2="130" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="141.2" x2="130" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="173.8" x2="130" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<rect x="122" y="102.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="138" y1="108.8" x2="215" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="220" cy="108.8" r="4" fill="#2a78d6"/>
+<line x1="40" y1="76.2" x2="130" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="108.8" x2="130" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="141.2" x2="130" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="173.8" x2="130" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<rect x="122" y="135.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="138" y1="141.2" x2="215" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="220" cy="141.2" r="4" fill="#2a78d6"/>
+<line x1="40" y1="76.2" x2="130" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="108.8" x2="130" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="141.2" x2="130" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="40" y1="173.8" x2="130" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<rect x="122" y="167.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="138" y1="173.8" x2="215" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="220" cy="173.8" r="4" fill="#2a78d6"/>
+<circle cx="40" cy="76.2" r="4" fill="#2a78d6"/>
+<circle cx="40" cy="108.8" r="4" fill="#2a78d6"/>
+<circle cx="40" cy="141.2" r="4" fill="#2a78d6"/>
+<circle cx="40" cy="173.8" r="4" fill="#2a78d6"/>
+<text x="40" y="52" font-size="11" fill="#898781" text-anchor="middle">in</text>
+<text x="130" y="52" font-size="11" fill="#898781" text-anchor="middle">filters</text>
+<text x="220" y="52" font-size="11" fill="#898781" text-anchor="middle">out</text>
+<text x="130" y="214" text-anchor="middle">weight (4, 4, k, k)</text>
+<text x="360" y="30" font-size="13" text-anchor="middle" font-weight="600">groups = 2</text>
+<line x1="270" y1="76.2" x2="360" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="270" y1="108.8" x2="360" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<rect x="352" y="70.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="368" y1="76.2" x2="445" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="450" cy="76.2" r="4" fill="#2a78d6"/>
+<line x1="270" y1="76.2" x2="360" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<line x1="270" y1="108.8" x2="360" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<rect x="352" y="102.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="368" y1="108.8" x2="445" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="450" cy="108.8" r="4" fill="#2a78d6"/>
+<line x1="270" y1="141.2" x2="360" y2="141.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="270" y1="173.8" x2="360" y2="141.2" stroke="#eb6834" stroke-width="1"/>
+<rect x="352" y="135.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1"/>
+<line x1="368" y1="141.2" x2="445" y2="141.2" stroke="#eb6834" stroke-width="1"/>
+<circle cx="450" cy="141.2" r="4" fill="#eb6834"/>
+<line x1="270" y1="141.2" x2="360" y2="173.8" stroke="#eb6834" stroke-width="1"/>
+<line x1="270" y1="173.8" x2="360" y2="173.8" stroke="#eb6834" stroke-width="1"/>
+<rect x="352" y="167.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1"/>
+<line x1="368" y1="173.8" x2="445" y2="173.8" stroke="#eb6834" stroke-width="1"/>
+<circle cx="450" cy="173.8" r="4" fill="#eb6834"/>
+<circle cx="270" cy="76.2" r="4" fill="#2a78d6"/>
+<circle cx="270" cy="108.8" r="4" fill="#2a78d6"/>
+<circle cx="270" cy="141.2" r="4" fill="#eb6834"/>
+<circle cx="270" cy="173.8" r="4" fill="#eb6834"/>
+<text x="270" y="52" font-size="11" fill="#898781" text-anchor="middle">in</text>
+<text x="360" y="52" font-size="11" fill="#898781" text-anchor="middle">filters</text>
+<text x="450" y="52" font-size="11" fill="#898781" text-anchor="middle">out</text>
+<text x="360" y="214" text-anchor="middle">weight (4, 2, k, k)</text>
+<text x="590" y="30" font-size="13" text-anchor="middle" font-weight="600">groups = 4 (depthwise)</text>
+<line x1="500" y1="76.2" x2="590" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<rect x="582" y="70.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="598" y1="76.2" x2="675" y2="76.2" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="680" cy="76.2" r="4" fill="#2a78d6"/>
+<line x1="500" y1="108.8" x2="590" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<rect x="582" y="102.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="598" y1="108.8" x2="675" y2="108.8" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="680" cy="108.8" r="4" fill="#2a78d6"/>
+<line x1="500" y1="141.2" x2="590" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<rect x="582" y="135.2" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="598" y1="141.2" x2="675" y2="141.2" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="680" cy="141.2" r="4" fill="#2a78d6"/>
+<line x1="500" y1="173.8" x2="590" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<rect x="582" y="167.8" width="16" height="12" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<line x1="598" y1="173.8" x2="675" y2="173.8" stroke="#2a78d6" stroke-width="1"/>
+<circle cx="680" cy="173.8" r="4" fill="#2a78d6"/>
+<circle cx="500" cy="76.2" r="4" fill="#2a78d6"/>
+<circle cx="500" cy="108.8" r="4" fill="#2a78d6"/>
+<circle cx="500" cy="141.2" r="4" fill="#2a78d6"/>
+<circle cx="500" cy="173.8" r="4" fill="#2a78d6"/>
+<text x="500" y="52" font-size="11" fill="#898781" text-anchor="middle">in</text>
+<text x="590" y="52" font-size="11" fill="#898781" text-anchor="middle">filters</text>
+<text x="680" y="52" font-size="11" fill="#898781" text-anchor="middle">out</text>
+<text x="590" y="214" text-anchor="middle">weight (4, 1, k, k)</text>
+<text x="130" y="232" font-size="11" fill="#52514e" text-anchor="middle">each filter reads all 4 channels</text>
+<text x="360" y="232" font-size="11" fill="#52514e" text-anchor="middle">each filter reads its own pair</text>
+<text x="590" y="232" font-size="11" fill="#52514e" text-anchor="middle">each filter reads one channel</text>
+<text x="360" y="262" font-size="11" fill="#52514e" text-anchor="middle">after a depthwise layer the channels have not met: the pointwise 1×1, weight (M, 4, 1, 1), is where they mix</text>
+</g>
+</svg>

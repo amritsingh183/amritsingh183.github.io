@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="title desc">
+<title id="title">Broadcasting aligns shapes from the right</title>
+<desc id="desc">Two panels of shape rulers. Left: a size-1 axis stretches to match the other operand. Right: a one-dimensional per-channel vector aligned from the right lands on the last axis unless it is reshaped to put its length on the channel axis.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="250" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="24" font-size="13" font-weight="600">asked for: broadcast</text>
+<text x="151" y="46" font-size="11" fill="#898781" text-anchor="middle">batch</text>
+<text x="203" y="46" font-size="11" fill="#898781" text-anchor="middle">channels</text>
+<text x="255" y="46" font-size="11" fill="#898781" text-anchor="middle">height</text>
+<text x="307" y="46" font-size="11" fill="#898781" text-anchor="middle">width</text>
+<text x="118" y="71" fill="#52514e" text-anchor="end">image</text>
+<rect x="128" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="151" y="71" text-anchor="middle">1</text>
+<rect x="180" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="203" y="71" text-anchor="middle">2</text>
+<rect x="232" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="71" text-anchor="middle">2</text>
+<rect x="284" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307" y="71" text-anchor="middle">2</text>
+<text x="118" y="113" fill="#52514e" text-anchor="end">gate</text>
+<rect x="128" y="96" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="151" y="113" text-anchor="middle">1</text>
+<rect x="180" y="96" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="203" y="113" text-anchor="middle">2</text>
+<rect x="232" y="96" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="232" y="96" width="46" height="26" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="255" y="113" text-anchor="middle">1</text>
+<rect x="284" y="96" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="284" y="96" width="46" height="26" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="307" y="113" text-anchor="middle">1</text>
+<line x1="255" y1="124" x2="255" y2="148" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="307" y1="124" x2="307" y2="148" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="258" y="140" font-size="11" fill="#52514e" text-anchor="middle">stretched</text>
+<text x="118" y="169" fill="#52514e" text-anchor="end">result</text>
+<rect x="128" y="152" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="151" y="169" text-anchor="middle">1</text>
+<rect x="180" y="152" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="203" y="169" text-anchor="middle">2</text>
+<rect x="232" y="152" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="169" text-anchor="middle">2</text>
+<rect x="284" y="152" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307" y="169" text-anchor="middle">2</text>
+<text x="229" y="206" font-size="11" fill="#52514e" text-anchor="middle">broadcast_mul: sizes 1 grow to 2 and 2; plain * refuses</text>
+<line x1="356" y1="16" x2="356" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+<text x="380" y="24" font-size="13" font-weight="600">the trap: a bare per-channel vector</text>
+<text x="511" y="46" font-size="11" fill="#898781" text-anchor="middle">out</text>
+<text x="563" y="46" font-size="11" fill="#898781" text-anchor="middle">in</text>
+<text x="615" y="46" font-size="11" fill="#898781" text-anchor="middle">kh</text>
+<text x="667" y="46" font-size="11" fill="#898781" text-anchor="middle">kw</text>
+<text x="478" y="71" fill="#52514e" text-anchor="end">weight</text>
+<rect x="488" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="511" y="71" text-anchor="middle">3</text>
+<rect x="540" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="563" y="71" text-anchor="middle">2</text>
+<rect x="592" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="615" y="71" text-anchor="middle">3</text>
+<rect x="644" y="54" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="667" y="71" text-anchor="middle">3</text>
+<text x="634" y="113" fill="#52514e" text-anchor="end">α (3,)</text>
+<rect x="644" y="96" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="667" y="113" text-anchor="middle">3</text>
+<text x="690" y="136" font-size="11" fill="#eb6834" text-anchor="end">lands on kw: the kernel columns</text>
+<text x="690" y="149" font-size="11" fill="#52514e" text-anchor="end">(aligned from the right)</text>
+<text x="478" y="177" fill="#52514e" text-anchor="end">α reshaped</text>
+<rect x="488" y="160" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="511" y="177" text-anchor="middle">3</text>
+<rect x="540" y="160" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="563" y="177" text-anchor="middle">1</text>
+<rect x="592" y="160" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="615" y="177" text-anchor="middle">1</text>
+<rect x="644" y="160" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="667" y="177" text-anchor="middle">1</text>
+<text x="589" y="206" font-size="11" fill="#52514e" text-anchor="middle">reshape first: one α per output channel</text>
+<text x="360" y="236" font-size="11" fill="#898781" text-anchor="middle">size 1 stretches; a (3,) vector aligns with the last axis</text>
+</g>
+</svg>

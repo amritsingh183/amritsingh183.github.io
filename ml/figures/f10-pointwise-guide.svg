@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260" role="img" aria-labelledby="title desc">
+<title id="title">A 1×1 convolution reads one pixel at a time but all of its channels, and applies the same matrix at every pixel</title>
+<desc id="desc">Input channel planes with one pixel marked, that pixel&apos;s channel vector, the shared weight matrix, the output vector and the output planes with the same pixel marked; height and width are unchanged.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="260" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="48" y="52" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="39" y="61" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="30" y="70" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="70" y="104" width="12" height="12" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="85" y="178" font-size="11" fill="#52514e" text-anchor="middle">C_in = 64 channels, 32 × 32</text>
+<rect x="578" y="52" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="569" y="61" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="560" y="70" width="110" height="90" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="600" y="104" width="12" height="12" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="615" y="178" font-size="11" fill="#52514e" text-anchor="middle">C_out = 128 channels, 32 × 32</text>
+<line x1="82" y1="110" x2="209" y2="68" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="150" y="58" font-size="11" fill="#52514e" text-anchor="middle">one pixel,</text>
+<text x="150" y="72" font-size="11" fill="#52514e" text-anchor="middle">all channels</text>
+<rect x="215" y="60" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="232" y="81" text-anchor="middle">c₁</text>
+<rect x="215" y="94" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="232" y="115" text-anchor="middle">c₂</text>
+<rect x="215" y="128" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#fcfcfb" stroke-width="1"/>
+<text x="232" y="149" text-anchor="middle">⋮</text>
+<rect x="215" y="162" width="34" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="232" y="183" text-anchor="middle">c₆₄</text>
+<text x="232" y="212" font-size="11" fill="#52514e" text-anchor="middle">(64,)</text>
+<rect x="300" y="60" width="190" height="136" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="395" y="100" text-anchor="middle">weight (128, 64, 1, 1)</text>
+<text x="395" y="120" text-anchor="middle">= a (128, 64) matrix</text>
+<text x="395" y="144" font-size="11" fill="#52514e" text-anchor="middle">the same matrix</text>
+<text x="395" y="158" font-size="11" fill="#52514e" text-anchor="middle">at every pixel</text>
+<text x="395" y="180" font-size="11" fill="#52514e" text-anchor="middle">+ bias (128,)</text>
+<line x1="253" y1="128" x2="296" y2="128" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="494" y1="128" x2="556" y2="110" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="360" y="226" text-anchor="middle">(1, 64, 32, 32) → (1, 128, 32, 32): the map stays 32 × 32; parameters 128·64 + 128 = 8,320</text>
+<text x="360" y="244" font-size="11" fill="#52514e" text-anchor="middle">a 3×3 kernel would also read the eight neighbours; a 1×1 never does</text>
+</g>
+</svg>

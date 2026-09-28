@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" width="720" height="430" role="img" aria-labelledby="title desc">
+<title id="title">A transposed convolution stamps its kernel once per input, stride positions apart, and adds: uneven overlap is the checkerboard</title>
+<desc id="desc">Three panels for kernel widths 3, 4 and 2 at stride 2 with three inputs: each panel shows one stamp bar per input and the output strip with the number of stamps each position receives.</desc>
+<rect width="720" height="430" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="24" font-size="13" font-weight="600">kernel 3, stride 2, 3 inputs</text>
+<rect x="30" y="34" width="132" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="96" y="46" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 1</text>
+<rect x="118" y="53" width="132" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="184" y="65" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 2</text>
+<rect x="206" y="72" width="132" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="272" y="84" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 3</text>
+<rect x="30" y="97" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="52" y="114" text-anchor="middle">1</text>
+<rect x="74" y="97" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="96" y="114" text-anchor="middle">1</text>
+<rect x="118" y="97" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="140" y="114" text-anchor="middle">2</text>
+<rect x="162" y="97" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="184" y="114" text-anchor="middle">1</text>
+<rect x="206" y="97" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="228" y="114" text-anchor="middle">2</text>
+<rect x="250" y="97" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="272" y="114" text-anchor="middle">1</text>
+<rect x="294" y="97" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="316" y="114" text-anchor="middle">1</text>
+<text x="348" y="114" font-size="11" fill="#52514e">7 outputs</text>
+<text x="30" y="139" font-size="11" fill="#52514e">1, 1, 2, 1, 2, 1, 1: the pattern behind the checkerboard</text>
+<text x="30" y="159" font-size="13" font-weight="600">kernel 4, stride 2, 3 inputs</text>
+<rect x="30" y="169" width="176" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="118" y="181" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 1</text>
+<rect x="118" y="188" width="176" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="206" y="200" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 2</text>
+<rect x="206" y="207" width="176" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="294" y="219" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 3</text>
+<rect x="30" y="232" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="52" y="249" text-anchor="middle">1</text>
+<rect x="74" y="232" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="96" y="249" text-anchor="middle">1</text>
+<rect x="118" y="232" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="140" y="249" text-anchor="middle">2</text>
+<rect x="162" y="232" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="184" y="249" text-anchor="middle">2</text>
+<rect x="206" y="232" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="228" y="249" text-anchor="middle">2</text>
+<rect x="250" y="232" width="44" height="26" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="272" y="249" text-anchor="middle">2</text>
+<rect x="294" y="232" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="316" y="249" text-anchor="middle">1</text>
+<rect x="338" y="232" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="360" y="249" text-anchor="middle">1</text>
+<text x="392" y="249" font-size="11" fill="#52514e">8 outputs</text>
+<text x="30" y="274" font-size="11" fill="#52514e">even away from the borders; the 2-D middle row printed above is 2 × these: 2 2 4 4 4 4 2 2</text>
+<text x="30" y="294" font-size="13" font-weight="600">kernel 2, stride 2, 3 inputs</text>
+<rect x="30" y="304" width="88" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="74" y="316" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 1</text>
+<rect x="118" y="323" width="88" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="162" y="335" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 2</text>
+<rect x="206" y="342" width="88" height="16" rx="2" fill="#b7d3f6" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="250" y="354" font-size="11" fill="#52514e" text-anchor="middle">stamp of input 3</text>
+<rect x="30" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="52" y="384" text-anchor="middle">1</text>
+<rect x="74" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="96" y="384" text-anchor="middle">1</text>
+<rect x="118" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="140" y="384" text-anchor="middle">1</text>
+<rect x="162" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="184" y="384" text-anchor="middle">1</text>
+<rect x="206" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="228" y="384" text-anchor="middle">1</text>
+<rect x="250" y="367" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="272" y="384" text-anchor="middle">1</text>
+<text x="304" y="384" font-size="11" fill="#52514e">6 outputs</text>
+<text x="30" y="409" font-size="11" fill="#52514e">every output exactly once</text>
+<text x="600" y="40" font-size="11" fill="#eb6834" text-anchor="middle">cells outlined in orange</text>
+<text x="600" y="54" font-size="11" fill="#eb6834" text-anchor="middle">receive two stamps</text>
+</g>
+</svg>

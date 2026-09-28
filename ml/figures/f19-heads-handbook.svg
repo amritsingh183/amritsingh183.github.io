@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 284" width="720" height="284" role="img" aria-labelledby="title desc">
+<title id="title">reshape splits the feature axis into (heads, d_k) and transpose(1, 2) moves the head axis in front so one batched matmul runs every head</title>
+<desc id="desc">A row of shape drawings: the projected tensor with head 0&apos;s columns shaded and head 1&apos;s outlined, the reshaped tensor with the columns regrouped per token, the transposed tensor as two stacked per-head blocks, and the shapes under each stage.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="284" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="50" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="66" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="98" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="114" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="130" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="146" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="50" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="66" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="98" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="114" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="130" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="146" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="50" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="66" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="98" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="114" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="130" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="146" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="114" y="70" width="64" height="48" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="114" y="58" text-anchor="middle">after one Linear</text>
+<text x="82" y="132" font-size="11" fill="#52514e" text-anchor="middle">head 0</text>
+<text x="146" y="132" font-size="11" fill="#eb6834" text-anchor="middle">head 1</text>
+<text x="114" y="150" text-anchor="middle">[2,3,8]</text>
+<text x="46" y="98" font-size="11" fill="#898781" text-anchor="end">tokens</text>
+<line x1="186" y1="94" x2="262" y2="94" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="224" y="89" font-size="11" fill="#52514e" text-anchor="middle">reshape</text>
+<rect x="270" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="286" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="302" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="318" y="70" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="270" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="286" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="302" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="318" y="86" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="270" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="286" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="302" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="318" y="102" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="342" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="358" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="374" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="390" y="70" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="342" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="358" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="374" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="390" y="86" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="342" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="358" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="374" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="390" y="102" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="342" y="70" width="64" height="48" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="338" y="58" text-anchor="middle">(…, heads, d_k)</text>
+<text x="338" y="150" text-anchor="middle">[2,3,2,4]</text>
+<text x="338" y="132" font-size="11" fill="#52514e" text-anchor="middle">same numbers, regrouped</text>
+<line x1="414" y1="94" x2="508" y2="94" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="461" y="89" font-size="11" fill="#52514e" text-anchor="middle">transpose(1, 2)</text>
+<rect x="516" y="60" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="60" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="60" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="60" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="516" y="76" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="76" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="76" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="76" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="516" y="92" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="92" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="92" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="92" width="16" height="16" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="586" y="88" font-size="11" fill="#52514e">head 0: 3 × 4</text>
+<rect x="516" y="122" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="122" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="122" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="122" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="516" y="138" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="138" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="138" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="138" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="516" y="154" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="532" y="154" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="548" y="154" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="564" y="154" width="16" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="516" y="122" width="64" height="48" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="586" y="150" font-size="11" fill="#52514e">head 1: 3 × 4</text>
+<text x="578" y="46" text-anchor="middle">(…, heads, tokens, d_k)</text>
+<text x="578" y="188" text-anchor="middle">[2,2,3,4]</text>
+<text x="360" y="244" font-size="11" fill="#52514e" text-anchor="middle">Kᵀ [2,2,4,3] → scores [2,2,3,3] → softmax → A@V [2,2,3,4] → transpose(1, 2) [2,3,2,4] → merge [2,3,8]</text>
+<text x="360" y="258" font-size="11" fill="#52514e" text-anchor="middle">reshape separates a feature index into (head, feature in head);</text>
+<text x="360" y="272" font-size="11" fill="#52514e" text-anchor="middle">transpose puts heads where batched matrix multiplication expects them</text>
+</g>
+</svg>

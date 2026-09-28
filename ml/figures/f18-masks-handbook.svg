@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262" width="720" height="262" role="img" aria-labelledby="title desc">
+<title id="title">Adding the causal mask replaces forbidden scores with −∞: their weights are exactly 0 and the rest of the row renormalises to 1</title>
+<desc id="desc">Three 3 by 3 grids: the additive mask, the masked scaled scores, and the weights; row 2 is outlined and its arithmetic written beneath.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="262" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="30" y="60" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="53" y="87" text-anchor="middle">0</text>
+<rect x="76" y="60" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="99" y="87" text-anchor="middle">−∞</text>
+<rect x="122" y="60" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="87" text-anchor="middle">−∞</text>
+<rect x="30" y="106" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="53" y="133" text-anchor="middle">0</text>
+<rect x="76" y="106" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="99" y="133" text-anchor="middle">0</text>
+<rect x="122" y="106" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="145" y="133" text-anchor="middle">−∞</text>
+<rect x="30" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="53" y="179" text-anchor="middle">0</text>
+<rect x="76" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="99" y="179" text-anchor="middle">0</text>
+<rect x="122" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="179" text-anchor="middle">0</text>
+<text x="99" y="50" text-anchor="middle">additive mask M</text>
+<rect x="230" y="60" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="253" y="87" text-anchor="middle">0</text>
+<rect x="276" y="60" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="299" y="87" text-anchor="middle">−∞</text>
+<rect x="322" y="60" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="345" y="87" text-anchor="middle">−∞</text>
+<rect x="230" y="106" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="253" y="133" text-anchor="middle">a</text>
+<rect x="276" y="106" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="133" text-anchor="middle">0</text>
+<rect x="322" y="106" width="46" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="345" y="133" text-anchor="middle">−∞</text>
+<rect x="230" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="253" y="179" text-anchor="middle">a</text>
+<rect x="276" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="179" text-anchor="middle">a</text>
+<rect x="322" y="152" width="46" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="345" y="179" text-anchor="middle">2a</text>
+<text x="299" y="50" text-anchor="middle">S = QKᵀ/√2 + M   (a = 1/√2)</text>
+<rect x="470" y="60" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="500" y="87" text-anchor="middle">1</text>
+<rect x="530" y="60" width="60" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="560" y="87" text-anchor="middle">0</text>
+<rect x="590" y="60" width="60" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="620" y="87" text-anchor="middle">0</text>
+<rect x="470" y="106" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="500" y="133" text-anchor="middle">0.669762</text>
+<rect x="530" y="106" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="133" text-anchor="middle">0.330238</text>
+<rect x="590" y="106" width="60" height="46" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="620" y="133" text-anchor="middle">0</text>
+<rect x="470" y="152" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="500" y="179" text-anchor="middle">0.248255</text>
+<rect x="530" y="152" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="179" text-anchor="middle">0.248255</text>
+<rect x="590" y="152" width="60" height="46" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="620" y="179" text-anchor="middle">0.503490</text>
+<text x="560" y="50" text-anchor="middle">weights: softmax over each row</text>
+<line x1="174" y1="129" x2="224" y2="129" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="199" y="212" font-size="11" fill="#52514e" text-anchor="middle">add to the scores</text>
+<line x1="374" y1="129" x2="464" y2="129" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="419" y="212" font-size="11" fill="#52514e" text-anchor="middle">softmax</text>
+<rect x="27" y="103" width="144" height="52" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="467" y="103" width="186" height="52" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="360" y="226" font-size="11" text-anchor="middle">row 2: [a, 0, −∞] → weights [0.669762, 0.330238, 0] → output 0.669762·[2, 0] + 0.330238·[0, 1] = [1.339523, 0.330238]</text>
+<text x="360" y="241" font-size="11" fill="#52514e" text-anchor="middle">U8 1 = blocked in this handbook&apos;s Candle fragment; PyTorch&apos;s boolean SDPA mask uses True = allowed</text>
+<text x="360" y="254" font-size="11" fill="#eb6834" text-anchor="middle">a row of only −∞ gives NaN: never mask every key of a query</text>
+</g>
+</svg>

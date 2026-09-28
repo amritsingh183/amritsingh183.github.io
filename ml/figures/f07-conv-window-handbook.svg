@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230" width="720" height="230" role="img" aria-labelledby="title desc">
+<title id="title">One output value is the kernel laid on one window, multiplied cell by cell and summed, without flipping</title>
+<desc id="desc">Input grid with the top-left window highlighted and a dashed next window, the kernel grid, the product line with every term, and the output grid with its first cell highlighted; the guide variant adds row 1 of the convolution matrix.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="230" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="30" y="50" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="69" text-anchor="middle">1</text>
+<rect x="60" y="50" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="69" text-anchor="middle">2</text>
+<rect x="90" y="50" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="69" text-anchor="middle">3</text>
+<rect x="30" y="80" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="99" text-anchor="middle">4</text>
+<rect x="60" y="80" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="99" text-anchor="middle">5</text>
+<rect x="90" y="80" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="99" text-anchor="middle">6</text>
+<rect x="30" y="110" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="129" text-anchor="middle">7</text>
+<rect x="60" y="110" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="129" text-anchor="middle">8</text>
+<rect x="90" y="110" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="105" y="129" text-anchor="middle">9</text>
+<rect x="30" y="50" width="60" height="60" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="60" y="50" width="60" height="60" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5" stroke-dasharray="4 2"/>
+<text x="30" y="38">input 3 × 3</text>
+<text x="30" y="156" font-size="11" fill="#2a78d6">solid: this output&apos;s window</text>
+<text x="30" y="170" font-size="11" fill="#eb6834">dashed: the next output&apos;s window</text>
+<text x="180" y="38">kernel (not flipped)</text>
+<rect x="180" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="77" text-anchor="middle">1</text>
+<rect x="210" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="77" text-anchor="middle">2</text>
+<rect x="180" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="107" text-anchor="middle">0</text>
+<rect x="210" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="107" text-anchor="middle">−1</text>
+<text x="150" y="92" font-size="13" fill="#52514e" text-anchor="middle">×</text>
+<text x="560" y="38">output 2 × 2</text>
+<rect x="560" y="58" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="77" text-anchor="middle">0</text>
+<rect x="590" y="58" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="77" text-anchor="middle">2</text>
+<rect x="560" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="107" text-anchor="middle">6</text>
+<rect x="590" y="88" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="107" text-anchor="middle">8</text>
+<rect x="560" y="58" width="30" height="30" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="360" y="202" text-anchor="middle">1·1 + 2·2 + 0·4 + (−1)·5 = 0</text>
+<line x1="210" y1="124" x2="300" y2="186" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="286" y="140" font-size="11" fill="#52514e">multiply matching cells</text>
+<line x1="460.1" y1="192" x2="556" y2="79" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="517.0" y="172" font-size="11" fill="#52514e" text-anchor="middle">add → one output</text>
+</g>
+</svg>
