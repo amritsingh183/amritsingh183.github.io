@@ -3,7 +3,7 @@ layout: post
 title: "Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide"
 date: 2025-01-01 11:23:00 +0530
 categories: rust concepts
-last_updated: 2026-09-24
+last_updated: 2026-09-29
 ---
 # Mastering Variables, Constants and Lifetimes in Rust: A Complete Guide
 
@@ -91,7 +91,21 @@ Rust applies this rule to every piece of data. At any moment you may have either
 
 but never both at once. The borrow checker enforces the rule before your program runs. The formal name is **aliasing XOR mutability**: data may be aliased (reachable under several names) or mutable (changed through a name), but not both at the same moment.
 
-The rule is not only about threads. In a single thread it stops you from adding to a list while you are in the middle of walking through it, a classic crash in C++ and a classic surprise in Java and Python. It also lets the compiler optimise hard, because an exclusive reference really is exclusive: nothing else can change the data behind your back.
+The rule is not only about threads. In a single thread it stops you from adding to a list while you are in the middle of walking through it, a classic crash in C++ and a classic surprise in Java and Python:
+
+```rust
+// ✗ Does not compile. Error: E0502 cannot borrow `orders` as mutable because it is also borrowed as immutable
+fn main() {
+    let mut orders = vec![String::from("latte"), String::from("mocha")];
+    for order in &orders {                             // walking through the list borrows it...
+        if order == "latte" {
+            orders.push(String::from("extra shot"));   // ...so adding to it here is refused
+        }
+    }
+}
+```
+
+The same rule also lets the compiler optimise hard, because an exclusive reference really is exclusive: nothing else can change the data behind your back.
 
 **Where raw pointers fit.** `*const T` and `*mut T` are exempt from the compile-time check and may alias freely; that is what `unsafe` code uses them for. What must still never happen is contradicting a *reference* that is alive: writing to memory that a live `&T` points at, or touching memory that a live `&mut T` owns through any other path. Do that and the program has undefined behaviour, whether the write came through a raw pointer or not. The one sanctioned exception is memory that a type has wrapped in `UnsafeCell`; that is the foundation of interior mutability, which Part Nine explains, and it is how a `Mutex` can change data behind a shared reference without breaking the rule. Keep this in mind for the `static mut` section in Part Three.
 
@@ -143,7 +157,7 @@ fn main() {
 
 ### `mut` belongs to the name, not the value
 
-`mut` on a binding is a promise about the *name*, not about the value. You can move a value out of an immutable binding into a mutable one and change it there; the value was never "immutable", only its first name was:
+`mut` on a binding is a promise about the *name*, not about the value. You can not change the value through that name (mutable binding). You can move a value out of an immutable binding into a mutable one and change it there; the value was never "immutable", only its first name was:
 
 ```rust
 fn main() {
@@ -214,7 +228,31 @@ fn main() {
 
 ### Shadowing: two things to know
 
-**It hurts readability when overused.** Four transformations all called `config` bury what is happening; distinct names show the flow. Shadow when a value changes type or meaning once and the old binding is not needed again nearby.
+**It hurts readability when overused.** Four transformations all called `config` bury what is happening; distinct names show the flow:
+
+```rust
+fn main() {
+    let raw_line = "  tax_rate = 0.05  ";   // one line from the till's settings file
+
+    // Hard to follow: four different things, all called `config`.
+    let config = raw_line.trim();                                // 1. trimmed text
+    let config = config.split_once('=').expect("key = value");   // 2. a (key, value) pair of text
+    let config = config.1.trim();                                // 3. the value's text
+    let config: f64 = config.parse().expect("a number");         // 4. a number
+    println!("{config}");                                        // which `config` is this, again?
+
+    // Easy to follow: each name says what it holds.
+    let line = raw_line.trim();
+    let (key, value_text) = line.split_once('=').expect("key = value");
+    let tax_rate: f64 = value_text.trim().parse().expect("a number");
+    println!("{} = {tax_rate}", key.trim());
+}
+// Output:
+// 0.05
+// tax_rate = 0.05
+```
+
+Shadow when a value changes type or meaning once and the old binding is not needed again nearby.
 
 **The shadowed value is not dropped.** Hiding a name does not end the value's life; it lives until the end of its scope. With a lock guard that means the lock stays held:
 
@@ -308,7 +346,36 @@ fn main() {
 // dropped first local
 ```
 
-Rule 3 has two refinements. Some temporaries die even *earlier* than the end of the statement: the condition of a plain `if` or `while` (an `if let` is different: the value it matches on lives through the body, as the next section shows), the body of a loop and the body of each `match` arm are scopes of their own, so a temporary made there dies when that part finishes. The value you `match` on is not one of them: a guard created in a `match` scrutinee lives through every arm. And one shape lives *longer*: when a `let` binds a **reference** to a temporary, the temporary is kept alive as long as the binding. This is called temporary lifetime extension, and it is why `let r = &String::from("x");` is fine:
+Rule 3 has two refinements. Some temporaries die even *earlier* than the end of the statement: the condition of a plain `if` or `while` (an `if let` is different: the value it matches on lives through the body, as the next section shows), the body of a loop and the body of each `match` arm are scopes of their own, so a temporary made there dies when that part finishes. The value you `match` on is not one of them: a guard created in a `match` scrutinee lives through every arm. Both rules in one program:
+
+```rust
+struct Noisy(&'static str);
+
+impl Drop for Noisy {
+    fn drop(&mut self) {
+        println!("dropped {}", self.0);
+    }
+}
+
+fn main() {
+    if Noisy("if condition").0.starts_with('i') {   // the condition's temporary dies before the body runs
+        println!("inside the if body");
+    }
+    match Noisy("match scrutinee").0.len() {        // the scrutinee's temporary lives through every arm
+        0 => println!("empty"),
+        n => println!("inside the match arm: {n} letters"),
+    }
+    println!("end of main");
+}
+// Output:
+// dropped if condition
+// inside the if body
+// inside the match arm: 15 letters
+// dropped match scrutinee
+// end of main
+```
+
+And one shape lives *longer*: when a `let` binds a **reference** to a temporary, the temporary is kept alive as long as the binding. This is called temporary lifetime extension, and it is why `let r = &String::from("x");` is fine:
 
 ```rust
 struct Noisy(&'static str);
@@ -992,7 +1059,33 @@ impl Drop for Drawer {
 fn main() {}
 ```
 
-Notice what the rules do **not** say. They do not say "no heap": a struct holding a raw pointer to heap memory can be `Copy`, and a `Copy` value can sit on the heap inside a `Box`. They do not say "small": a `[u8; 4096]` is `Copy`. The only question is whether copying the bytes copies any *ownership*.
+Notice what the rules do **not** say. They do not say "no heap": a struct holding a raw pointer to heap memory can be `Copy`, and a `Copy` value can sit on the heap inside a `Box`. They do not say "small": a `[u8; 4096]` is `Copy`. The only question is whether copying the bytes copies any *ownership*. All three in one program:
+
+```rust
+#[derive(Clone, Copy)]
+struct Bookmark {
+    at: *const u8,   // a raw pointer owns nothing, so copying it copies no ownership
+}
+
+fn main() {
+    let menu = String::from("latte");            // `menu` owns the heap buffer
+    let a = Bookmark { at: menu.as_ptr() };      // points into that heap buffer
+    let b = a;                                   // copied: `a` is still usable
+    println!("same place? {}", a.at == b.at);
+
+    let boxed = Box::new(a);                     // a Copy value living on the heap
+    let c = *boxed;                              // copied out of the box; `boxed` is still usable
+    println!("box still usable? {}", boxed.at == c.at);
+
+    let receipt_roll = [0u8; 4096];              // 4 KiB of bytes, and still Copy
+    let spare = receipt_roll;                    // all 4096 bytes are copied
+    println!("{} {}", receipt_roll.len(), spare.len());
+}
+// Output:
+// same place? true
+// box still usable? true
+// 4096 4096
+```
 
 #### Why `&T` is `Copy` and `&mut T` is not
 
@@ -1568,6 +1661,23 @@ fn main() {
 }
 ```
 
+Take the `move` off the second `spawn` and the compiler refuses:
+
+```rust
+// ✗ Does not compile. Error: E0373 closure may outlive the current function, but it borrows `orders`, which is owned by the current function
+use std::thread;
+
+fn main() {
+    let orders = vec![String::from("espresso")];
+    let kitchen = thread::spawn(|| {    // no `move`: the closure only borrows `orders`
+        for o in &orders {
+            println!("making {o}");
+        }
+    });
+    kitchen.join().unwrap();
+}
+```
+
 Two details experts rely on: `move` on a `Copy` value copies it, so the original stays usable; and since edition 2021 a closure captures individual *fields* (`order.items`) rather than whole variables, which makes many more closures compile:
 
 ```rust
@@ -1577,12 +1687,22 @@ struct Order {
 }
 
 fn main() {
+    let ticket = 17;                                             // an integer is Copy
+    let show = move || println!("closure has ticket {ticket}");  // `move` copies it into the closure...
+    show();
+    println!("main still has ticket {ticket}");                  // ...so the original stays usable
+
     let mut order = Order { items: vec![], note: String::from("no sugar") };
     let mut add = || order.items.push(String::from("latte"));   // edition 2021+: captures only `order.items`
     println!("note: {}", order.note);                            // reading another field meanwhile is fine
     add();
     println!("{} item(s)", order.items.len());
 }
+// Output:
+// closure has ticket 17
+// main still has ticket 17
+// note: no sugar
+// 1 item(s)
 ```
 
 Compiled as edition 2018, the same program fails with E0502, *cannot borrow `order.note` as immutable because it is also borrowed as mutable*: the closure captured the whole of `order`.
@@ -1886,6 +2006,24 @@ fn main() {
 }
 ```
 
+And `force_mut`, on a lazy value you own:
+
+```rust
+use std::sync::LazyLock;
+
+fn main() {
+    let mut specials = LazyLock::new(|| {
+        println!("building the specials");
+        vec![String::from("flat white")]
+    });
+    LazyLock::force_mut(&mut specials).push(String::from("mocha"));   // runs the closure, then lends it mutably
+    println!("{:?}", *specials);
+}
+// Output:
+// building the specials
+// ["flat white", "mocha"]
+```
+
 ### LazyCell and `thread_local!`
 
 `LazyCell` is the single-thread twin of `LazyLock`. Because it is not `Sync`, the compiler simply refuses to put it in a `static`; there is no run-time hazard to worry about, only a compile error:
@@ -2064,7 +2202,25 @@ fn main() {
 }
 ```
 
-Take what you need out of the borrow first (clone the item, or copy its length), or do the push before you take the reference.
+Take what you need out of the borrow first (clone the item, or copy its length), or do the push before you take the reference:
+
+```rust
+fn main() {
+    let mut board = vec![String::from("latte")];
+
+    let first = board[0].clone();          // take what you need out of the borrow first: a clone...
+    let first_len = board[0].len();        // ...or just a Copy value, such as its length
+    board.push(String::from("mocha"));     // no borrow of `board` is alive during the push
+    println!("{first} ({first_len} letters)");
+
+    board.push(String::from("espresso"));  // or do the push first...
+    let first_now = &board[0];             // ...and take the reference afterwards
+    println!("{first_now} of {}", board.len());
+}
+// Output:
+// latte (5 letters)
+// latte of 3
+```
 
 **Pitfall 3: `static mut` when a safe type exists.** Since Rust 1.63 `Mutex::new` is usable in a static, and the atomics' constructors have been since Rust 1.24 (the sized ones such as `AtomicU64` arrived in Rust 1.34, const from the start); there is no reason left for a `static mut` outside C interop (Part Three).
 
