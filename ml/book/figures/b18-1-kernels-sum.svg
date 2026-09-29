@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="title desc">
+<title id="title">One filter is three kernels, one per input channel; their three maps are added into one</title>
+<desc id="desc">Three rows, one per colour plane: the 4 by 4 plane, its own 3 by 3 kernel, and the resulting 2 by 2 map; arrows join the three maps into their 2 by 2 sum on the right.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="420" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="24" fill="#52514e">input plane</text>
+<text x="196" y="24" fill="#52514e">this filter&apos;s kernel for it</text>
+<text x="372" y="24" fill="#52514e">per-plane map</text>
+<text x="30" y="48" fill="#eb6834" font-weight="600">red</text>
+<rect x="30" y="56" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="71" text-anchor="middle">2</text>
+<rect x="52" y="56" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="71" text-anchor="middle">0</text>
+<rect x="74" y="56" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="71" text-anchor="middle">1</text>
+<rect x="96" y="56" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="71" text-anchor="middle">3</text>
+<rect x="30" y="78" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="93" text-anchor="middle">1</text>
+<rect x="52" y="78" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="93" text-anchor="middle">3</text>
+<rect x="74" y="78" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="93" text-anchor="middle">0</text>
+<rect x="96" y="78" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="93" text-anchor="middle">2</text>
+<rect x="30" y="100" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="115" text-anchor="middle">0</text>
+<rect x="52" y="100" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="115" text-anchor="middle">2</text>
+<rect x="74" y="100" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="115" text-anchor="middle">2</text>
+<rect x="96" y="100" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="115" text-anchor="middle">1</text>
+<rect x="30" y="122" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="137" text-anchor="middle">3</text>
+<rect x="52" y="122" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="137" text-anchor="middle">1</text>
+<rect x="74" y="122" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="137" text-anchor="middle">0</text>
+<rect x="96" y="122" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="137" text-anchor="middle">0</text>
+<rect x="30" y="56" width="88" height="88" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="150" y="104" font-size="16" fill="#52514e" text-anchor="middle">⊛</text>
+<rect x="196" y="67" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="82" text-anchor="middle">1</text>
+<rect x="218" y="67" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="82" text-anchor="middle">0</text>
+<rect x="240" y="67" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="82" text-anchor="middle">−1</text>
+<rect x="196" y="89" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="104" text-anchor="middle">1</text>
+<rect x="218" y="89" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="104" text-anchor="middle">0</text>
+<rect x="240" y="89" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="104" text-anchor="middle">−1</text>
+<rect x="196" y="111" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="126" text-anchor="middle">1</text>
+<rect x="218" y="111" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="126" text-anchor="middle">0</text>
+<rect x="240" y="111" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="126" text-anchor="middle">−1</text>
+<rect x="196" y="67" width="66" height="66" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="300" y="104" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="372" y="70" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="89" fill="#898781" text-anchor="middle">0</text>
+<rect x="402" y="70" width="30" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="89" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="372" y="100" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="119" text-anchor="middle">2</text>
+<rect x="402" y="100" width="30" height="30" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="119" text-anchor="middle">3</text>
+<line x1="438" y1="100" x2="540" y2="178" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="30" y="168" fill="#1baf7a" font-weight="600">green</text>
+<rect x="30" y="176" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="191" text-anchor="middle">1</text>
+<rect x="52" y="176" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="191" text-anchor="middle">1</text>
+<rect x="74" y="176" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="191" text-anchor="middle">0</text>
+<rect x="96" y="176" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="191" text-anchor="middle">2</text>
+<rect x="30" y="198" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="213" text-anchor="middle">0</text>
+<rect x="52" y="198" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="213" text-anchor="middle">2</text>
+<rect x="74" y="198" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="213" text-anchor="middle">1</text>
+<rect x="96" y="198" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="213" text-anchor="middle">1</text>
+<rect x="30" y="220" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="235" text-anchor="middle">2</text>
+<rect x="52" y="220" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="235" text-anchor="middle">0</text>
+<rect x="74" y="220" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="235" text-anchor="middle">1</text>
+<rect x="96" y="220" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="235" text-anchor="middle">3</text>
+<rect x="30" y="242" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="257" text-anchor="middle">1</text>
+<rect x="52" y="242" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="257" text-anchor="middle">0</text>
+<rect x="74" y="242" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="257" text-anchor="middle">2</text>
+<rect x="96" y="242" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="257" text-anchor="middle">1</text>
+<rect x="30" y="176" width="88" height="88" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<text x="150" y="224" font-size="16" fill="#52514e" text-anchor="middle">⊛</text>
+<rect x="196" y="187" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="202" text-anchor="middle">0</text>
+<rect x="218" y="187" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="202" text-anchor="middle">1</text>
+<rect x="240" y="187" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="202" text-anchor="middle">0</text>
+<rect x="196" y="209" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="224" text-anchor="middle">1</text>
+<rect x="218" y="209" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="224" text-anchor="middle">−2</text>
+<rect x="240" y="209" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="224" text-anchor="middle">1</text>
+<rect x="196" y="231" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="246" text-anchor="middle">0</text>
+<rect x="218" y="231" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="246" text-anchor="middle">1</text>
+<rect x="240" y="231" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="246" text-anchor="middle">0</text>
+<rect x="196" y="187" width="66" height="66" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<text x="300" y="224" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="372" y="190" width="30" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="209" fill="#eb6834" text-anchor="middle">−2</text>
+<rect x="402" y="190" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="209" text-anchor="middle">2</text>
+<rect x="372" y="220" width="30" height="30" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="239" text-anchor="middle">5</text>
+<rect x="402" y="220" width="30" height="30" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="239" text-anchor="middle">4</text>
+<line x1="438" y1="220" x2="540" y2="190" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="30" y="288" fill="#2a78d6" font-weight="600">blue</text>
+<rect x="30" y="296" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="311" text-anchor="middle">0</text>
+<rect x="52" y="296" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="311" text-anchor="middle">2</text>
+<rect x="74" y="296" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="311" text-anchor="middle">1</text>
+<rect x="96" y="296" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="311" text-anchor="middle">0</text>
+<rect x="30" y="318" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="333" text-anchor="middle">3</text>
+<rect x="52" y="318" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="333" text-anchor="middle">0</text>
+<rect x="74" y="318" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="333" text-anchor="middle">1</text>
+<rect x="96" y="318" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="333" text-anchor="middle">2</text>
+<rect x="30" y="340" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="355" text-anchor="middle">1</text>
+<rect x="52" y="340" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="355" text-anchor="middle">1</text>
+<rect x="74" y="340" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="355" text-anchor="middle">0</text>
+<rect x="96" y="340" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="355" text-anchor="middle">2</text>
+<rect x="30" y="362" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41" y="377" text-anchor="middle">0</text>
+<rect x="52" y="362" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="377" text-anchor="middle">3</text>
+<rect x="74" y="362" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="85" y="377" text-anchor="middle">1</text>
+<rect x="96" y="362" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="107" y="377" text-anchor="middle">1</text>
+<rect x="30" y="296" width="88" height="88" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="150" y="344" font-size="16" fill="#52514e" text-anchor="middle">⊛</text>
+<rect x="196" y="307" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="322" text-anchor="middle">1</text>
+<rect x="218" y="307" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="322" text-anchor="middle">1</text>
+<rect x="240" y="307" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="322" text-anchor="middle">1</text>
+<rect x="196" y="329" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="344" text-anchor="middle">0</text>
+<rect x="218" y="329" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="344" text-anchor="middle">0</text>
+<rect x="240" y="329" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="344" text-anchor="middle">0</text>
+<rect x="196" y="351" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="366" text-anchor="middle">−1</text>
+<rect x="218" y="351" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="229" y="366" text-anchor="middle">−1</text>
+<rect x="240" y="351" width="22" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="251" y="366" text-anchor="middle">−1</text>
+<rect x="196" y="307" width="66" height="66" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="300" y="344" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="372" y="310" width="30" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="329" text-anchor="middle">1</text>
+<rect x="402" y="310" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="329" fill="#898781" text-anchor="middle">0</text>
+<rect x="372" y="340" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="387" y="359" fill="#898781" text-anchor="middle">0</text>
+<rect x="402" y="340" width="30" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="359" fill="#eb6834" text-anchor="middle">−2</text>
+<line x1="438" y1="340" x2="540" y2="202" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="550" y="150" font-weight="600">sum of the three maps</text>
+<rect x="560" y="160" width="44" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="582" y="186" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="604" y="160" width="44" height="44" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="626" y="186" text-anchor="middle">1</text>
+<rect x="560" y="204" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="582" y="230" text-anchor="middle">7</text>
+<rect x="604" y="204" width="44" height="44" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="626" y="230" text-anchor="middle">5</text>
+<text x="560" y="272" fill="#52514e">one output channel</text>
+<text x="560" y="286" fill="#52514e">(the bias comes next,</text>
+<text x="560" y="300" fill="#52514e">in Figure 18.2)</text>
+<text x="30" y="408" fill="#52514e">⊛ means slide and multiply-add, as in Figure 17.2. Grey cells with orange numbers are negative.</text>
+</g>
+</svg>

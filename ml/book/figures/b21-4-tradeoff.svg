@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 310" width="720" height="310" role="img" aria-labelledby="title desc">
+<title id="title">Stacks of small kernels see as far as one large kernel with fewer weights and more nonlinearities</title>
+<desc id="desc">A four-row table comparing one 5 by 5 layer with two 3 by 3 layers and one 7 by 7 layer with three 3 by 3 layers: the receptive field, weights per channel pair, weights for 64 channels in and out drawn as bars, and the number of nonlinearities.</desc>
+<rect width="720" height="310" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="40" fill="#52514e" font-weight="600">stack</text>
+<text x="200" y="40" fill="#52514e" font-weight="600">sees</text>
+<text x="262" y="40" fill="#52514e" font-weight="600">weights per</text>
+<text x="380" y="40" fill="#52514e" font-weight="600">weights, 64 channels in and out</text>
+<text x="640" y="40" fill="#52514e" font-weight="600">ReLUs</text>
+<text x="262" y="54" fill="#52514e" font-weight="600">channel pair</text>
+<line x1="30" y1="62" x2="700" y2="62" stroke="#c3c2b7" stroke-width="1"/>
+<text x="30" y="92">one 5 × 5 layer</text>
+<text x="200" y="92">5 × 5</text>
+<text x="262" y="92">25</text>
+<rect x="380" y="78" width="76.5" height="20" rx="2" fill="#eb6834"/>
+<text x="464.5" y="92">102,400</text>
+<text x="640" y="92">1</text>
+<text x="30" y="136">two 3 × 3 layers</text>
+<text x="200" y="136">5 × 5</text>
+<text x="262" y="136">18</text>
+<rect x="380" y="122" width="55.1" height="20" rx="2" fill="#2a78d6"/>
+<text x="443.1" y="136">73,728</text>
+<text x="640" y="136">2</text>
+<text x="30" y="194">one 7 × 7 layer</text>
+<text x="200" y="194">7 × 7</text>
+<text x="262" y="194">49</text>
+<rect x="380" y="180" width="150" height="20" rx="2" fill="#eb6834"/>
+<text x="538" y="194">200,704</text>
+<text x="640" y="194">1</text>
+<text x="30" y="238">three 3 × 3 layers</text>
+<text x="200" y="238">7 × 7</text>
+<text x="262" y="238">27</text>
+<rect x="380" y="224" width="82.7" height="20" rx="2" fill="#2a78d6"/>
+<text x="470.7" y="238">110,592</text>
+<text x="640" y="238">3</text>
+<text x="30" y="266" fill="#52514e">Two 3 × 3 layers use 28% fewer weights than one 5 × 5; one 7 × 7 needs 81% more</text>
+<text x="30" y="280" fill="#52514e">than three 3 × 3 (the VGG paper&apos;s figure). Each extra layer also adds a ReLU,</text>
+<text x="30" y="294" fill="#52514e">so the stack can bend its response more than one layer can.</text>
+</g>
+</svg>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 392" width="720" height="392" role="img" aria-labelledby="title desc">
+<title id="title">An autoencoder squeezes a long input through a narrow code and is trained to rebuild the input from the code alone</title>
+<desc id="desc">An hourglass drawn left to right: a column of eighteen cells holding the word counts of blurb B2, an encoder narrowing to a code of two empty cells, a decoder widening to eighteen empty reconstruction cells.</desc>
+<rect width="720" height="392" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="84" y="48" width="26" height="16" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="60" text-anchor="middle">2</text>
+<rect x="84" y="64" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="76" text-anchor="middle">1</text>
+<rect x="84" y="80" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="96" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="108" text-anchor="middle">1</text>
+<rect x="84" y="112" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="128" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="144" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="160" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="176" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="188" text-anchor="middle">1</text>
+<rect x="84" y="192" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="204" text-anchor="middle">1</text>
+<rect x="84" y="208" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="224" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="240" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="256" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="268" text-anchor="middle">1</text>
+<rect x="84" y="272" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="288" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="84" y="304" width="26" height="16" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="316" text-anchor="middle">1</text>
+<rect x="84" y="320" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="78" y="59" text-anchor="end">a</text>
+<text x="78" y="75" text-anchor="end">and</text>
+<text x="78" y="91" text-anchor="end">bicycle</text>
+<text x="78" y="107" text-anchor="end">detective</text>
+<text x="78" y="123" text-anchor="end">from</text>
+<text x="78" y="139" text-anchor="end">how</text>
+<text x="78" y="155" text-anchor="end">in</text>
+<text x="78" y="171" text-anchor="end">kitchen</text>
+<text x="78" y="187" text-anchor="end">mystery</text>
+<text x="78" y="203" text-anchor="end">quiet</text>
+<text x="78" y="219" text-anchor="end">recipes</text>
+<text x="78" y="235" text-anchor="end">repair</text>
+<text x="78" y="251" text-anchor="end">returns</text>
+<text x="78" y="267" text-anchor="end">small</text>
+<text x="78" y="283" text-anchor="end">the</text>
+<text x="78" y="299" text-anchor="end">to</text>
+<text x="78" y="315" text-anchor="end">town</text>
+<text x="78" y="331" text-anchor="end">village</text>
+<text x="97" y="38" fill="#52514e" text-anchor="middle">input: B2</text>
+<path d="M120 48 L304 174 L304 210 L120 336 Z" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="212" y="196" text-anchor="middle">encoder</text>
+<rect x="316" y="178" width="26" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="316" y="192" width="26" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="329" y="168" text-anchor="middle">code</text>
+<text x="329" y="224" fill="#52514e" text-anchor="middle">2 numbers</text>
+<path d="M354 174 L540 48 L540 336 L354 210 Z" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="447" y="196" text-anchor="middle">decoder</text>
+<rect x="552" y="48" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="64" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="80" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="96" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="112" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="128" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="144" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="160" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="176" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="192" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="208" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="224" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="240" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="256" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="272" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="288" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="304" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="552" y="320" width="26" height="16" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="565" y="38" fill="#52514e" text-anchor="middle">rebuilt input</text>
+<text x="594" y="184" fill="#52514e">training makes</text>
+<text x="594" y="200" fill="#52514e">right match left</text>
+<text x="360" y="358" fill="#52514e" text-anchor="middle">with a straight-line decoder and squared error it finds the same subspace as PCA;</text>
+<text x="360" y="376" fill="#52514e" text-anchor="middle">bent, non-linear layers can follow curves that PCA misses</text>
+</g>
+</svg>

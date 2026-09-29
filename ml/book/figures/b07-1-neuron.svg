@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">One neuron: weigh, add, bend</title>
+<desc id="desc">A neuron with two inputs, a book&apos;s pages in hundreds and its age in decades, weights 0.9 and −1.2 and bias 0.3. For the first book the weighted sum is 0.6 and ReLU passes it; for the second the sum is −1.2 and ReLU outputs 0. The weight −1.2 stays negative.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<circle cx="70" cy="70" r="26" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<circle cx="70" cy="170" r="26" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="70" y="74" text-anchor="middle">x₁ = 3</text>
+<text x="70" y="174" text-anchor="middle">x₂ = 2</text>
+<text x="70" y="36" fill="#52514e" text-anchor="middle">pages (hundreds)</text>
+<text x="70" y="212" fill="#52514e" text-anchor="middle">age (decades)</text>
+<circle cx="300" cy="120" r="48" fill="#f0efec" stroke="#52514e" stroke-width="1.5"/>
+<text x="300" y="116" fill="#52514e" text-anchor="middle">weighted sum</text>
+<text x="300" y="132" text-anchor="middle">z = 0.6</text>
+<line x1="98" y1="76" x2="251" y2="108" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="98" y1="164" x2="251" y2="132" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="170" y="78" fill="#1baf7a" text-anchor="middle">w₁ = 0.9</text>
+<text x="170" y="176" fill="#eb6834" text-anchor="middle">w₂ = −1.2</text>
+<line x1="300" y1="30" x2="300" y2="70" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="308" y="40">bias b = 0.3</text>
+<rect x="410" y="96" width="110" height="48" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="465" y="117" text-anchor="middle">ReLU</text>
+<text x="465" y="132" fill="#52514e" text-anchor="middle">negative → 0</text>
+<line x1="350" y1="120" x2="408" y2="120" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<circle cx="620" cy="120" r="34" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="620" y="118" fill="#52514e" text-anchor="middle">output</text>
+<text x="620" y="134" text-anchor="middle">a = 0.6</text>
+<line x1="522" y1="120" x2="584" y2="120" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="130" y="236" width="70" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="253" text-anchor="middle">book</text>
+<rect x="200" y="236" width="50" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="253" text-anchor="middle">x₁</text>
+<rect x="250" y="236" width="50" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="275" y="253" text-anchor="middle">x₂</text>
+<rect x="300" y="236" width="260" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="430" y="253" text-anchor="middle">z = w₁x₁ + w₂x₂ + b</text>
+<rect x="560" y="236" width="90" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="253" text-anchor="middle">ReLU(z)</text>
+<rect x="130" y="262" width="70" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="279" text-anchor="middle">first</text>
+<rect x="200" y="262" width="50" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="279" text-anchor="middle">3</text>
+<rect x="250" y="262" width="50" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="275" y="279" text-anchor="middle">2</text>
+<rect x="300" y="262" width="260" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="430" y="279" text-anchor="middle">0.9×3 + (−1.2)×2 + 0.3 = 0.6</text>
+<rect x="560" y="262" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="279" text-anchor="middle">0.6</text>
+<rect x="130" y="288" width="70" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="305" text-anchor="middle">second</text>
+<rect x="200" y="288" width="50" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="225" y="305" text-anchor="middle">1</text>
+<rect x="250" y="288" width="50" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="275" y="305" text-anchor="middle">2</text>
+<rect x="300" y="288" width="260" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="430" y="305" text-anchor="middle">0.9×1 + (−1.2)×2 + 0.3 = −1.2</text>
+<rect x="560" y="288" width="90" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="305" text-anchor="middle">0</text>
+</g>
+</svg>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="title desc">
+<title id="title">A Transformer encoder block: self-attention, then a small feed-forward network, each wrapped in a skip connection and a normalisation; the block is stacked many times</title>
+<desc id="desc">A vertical flow: word embeddings plus position codes, multi-head self-attention, add and normalise with a skip connection curving around the attention, a feed-forward network, add and normalise with a second skip connection, and the output; a bracket marks the repeated block. A table lists the sizes of three published models.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="420" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="76" y="40" width="216" height="30" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="184" y="59" text-anchor="middle">word embeddings + position codes</text>
+<line x1="184" y1="72" x2="184" y2="96" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="76" y="98" width="216" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="184" y="117" text-anchor="middle">multi-head self-attention</text>
+<line x1="184" y1="130" x2="184" y2="154" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="76" y="156" width="216" height="30" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="184" y="175" text-anchor="middle">add, then normalise</text>
+<line x1="184" y1="188" x2="184" y2="212" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="76" y="214" width="216" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="184" y="233" text-anchor="middle">feed-forward network</text>
+<line x1="184" y1="246" x2="184" y2="270" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="76" y="272" width="216" height="30" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="184" y="291" text-anchor="middle">add, then normalise</text>
+<line x1="184" y1="304" x2="184" y2="328" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="76" y="330" width="216" height="30" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="184" y="349" text-anchor="middle">one vector per word, out</text>
+<path d="M74 80 C34 80 34 171 74 171" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="40" y="129.5" fill="#52514e" text-anchor="end">skip</text>
+<path d="M74 196 C34 196 34 287 74 287" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="40" y="245.5" fill="#52514e" text-anchor="end">skip</text>
+<path d="M300 92 h6 V308 h-6" fill="none" stroke="#52514e" stroke-width="1"/>
+<text x="310" y="204" fill="#52514e">one block,</text>
+<text x="310" y="220" fill="#52514e">repeated</text>
+<text x="378" y="70" font-weight="600">sizes in the papers</text>
+<text x="518" y="96" fill="#52514e" text-anchor="middle">blocks</text>
+<text x="562" y="96" fill="#52514e" text-anchor="middle">vector</text>
+<text x="602" y="96" fill="#52514e" text-anchor="middle">heads</text>
+<text x="642" y="96" fill="#52514e" text-anchor="middle">inner</text>
+<text x="684" y="96" fill="#52514e" text-anchor="middle">params</text>
+<rect x="372" y="104" width="328" height="26" rx="2" fill="#f0efec"/>
+<text x="378" y="122">Transformer 2017</text>
+<text x="518" y="122" text-anchor="middle">6 + 6</text>
+<text x="562" y="122" text-anchor="middle">512</text>
+<text x="602" y="122" text-anchor="middle">8</text>
+<text x="642" y="122" text-anchor="middle">2,048</text>
+<text x="684" y="122" text-anchor="middle">65M</text>
+<text x="378" y="152">BERT-Base 2018</text>
+<text x="518" y="152" text-anchor="middle">12</text>
+<text x="562" y="152" text-anchor="middle">768</text>
+<text x="602" y="152" text-anchor="middle">12</text>
+<text x="642" y="152" text-anchor="middle">3,072</text>
+<text x="684" y="152" text-anchor="middle">110M</text>
+<rect x="372" y="164" width="328" height="26" rx="2" fill="#f0efec"/>
+<text x="378" y="182">BERT-Large 2018</text>
+<text x="518" y="182" text-anchor="middle">24</text>
+<text x="562" y="182" text-anchor="middle">1,024</text>
+<text x="602" y="182" text-anchor="middle">16</text>
+<text x="642" y="182" text-anchor="middle">4,096</text>
+<text x="684" y="182" text-anchor="middle">340M</text>
+<text x="378" y="232" fill="#52514e">vector: numbers per word inside the model</text>
+<text x="378" y="248" fill="#52514e">inner: width of the feed-forward layer</text>
+<text x="378" y="264" fill="#52514e">params: parameters; M: million</text>
+<text x="378" y="280" fill="#52514e">the 2017 model: 6 encoder and 6 decoder blocks;</text>
+<text x="378" y="296" fill="#52514e">BERT keeps only the encoder side</text>
+<text x="378" y="330" fill="#898781">sources: Vaswani et al. 2017, Table 3;</text>
+<text x="378" y="346" fill="#898781">Devlin et al. 2019, section 3</text>
+</g>
+</svg>

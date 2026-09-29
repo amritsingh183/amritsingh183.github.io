@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Finding the closest pair among 10,000 sentences: about 65 hours with a cross-encoder, about 5 seconds with SBERT plus a hundredth of a second of cosines</title>
+<desc id="desc">Horizontal bars on a logarithmic time axis from a hundredth of a second to a million seconds: the cross-encoder bar reaches 234,000 seconds, the SBERT embedding bar 5 seconds and the cosine bar 0.01 seconds.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="250" y1="60" x2="250" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="250" y="212" fill="#898781" text-anchor="middle">0.001 s</text>
+<line x1="376.7" y1="60" x2="376.7" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="376.7" y="212" fill="#898781" text-anchor="middle">1 s</text>
+<line x1="451.7" y1="60" x2="451.7" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="451.7" y="212" fill="#898781" text-anchor="middle">1 min</text>
+<line x1="526.8" y1="60" x2="526.8" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="526.8" y="212" fill="#898781" text-anchor="middle">1 h</text>
+<line x1="585.1" y1="60" x2="585.1" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="585.1" y="212" fill="#898781" text-anchor="middle">1 day</text>
+<line x1="630" y1="60" x2="630" y2="196" stroke="#e1e0d9" stroke-width="1"/>
+<text x="630" y="212" fill="#898781" text-anchor="middle">10⁶ s</text>
+<text x="240" y="87" text-anchor="end">cross-encoder: 49,995,000 pairs</text>
+<rect x="250" y="74" width="353.4" height="20" rx="2" fill="#eb6834"/>
+<text x="609.4" y="88">about 65 hours</text>
+<text x="240" y="129" text-anchor="end">SBERT: embed 10,000 sentences</text>
+<rect x="250" y="116" width="156.2" height="20" rx="2" fill="#2a78d6"/>
+<text x="412.2" y="130">about 5 s</text>
+<text x="240" y="171" text-anchor="end">then all the cosines</text>
+<rect x="250" y="158" width="42.2" height="20" rx="2" fill="#1baf7a"/>
+<text x="298.2" y="172">about 0.01 s</text>
+<text x="360" y="244" fill="#52514e" text-anchor="middle">n sentences make n × (n − 1) ÷ 2 pairs: 10,000 sentences make 49,995,000; our five blurbs make 10</text>
+<text x="360" y="262" fill="#52514e" text-anchor="middle">65 hours is 234,000 seconds, about 46,800 times the 5 seconds</text>
+<text x="360" y="284" fill="#898781" text-anchor="middle">times from Reimers and Gurevych (2019), measured on a V100 GPU</text>
+</g>
+</svg>

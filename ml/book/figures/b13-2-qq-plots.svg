@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Probability plots of the page counts against four fitted distributions</title>
+<desc id="desc">Four square panels; in each, the sorted page counts are plotted against the fitted distribution&apos;s quantiles over a pale fat-pencil band; the normal panel bends, the lognormal and gamma panels stay straight, the Weibull panel bends slightly at the top.</desc>
+<rect width="700" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="126" y="28" text-anchor="middle">Normal</text>
+<text x="126" y="46" fill="#52514e" text-anchor="middle">A² = 1.11, p = 0.006</text>
+<line x1="62" y1="179.8" x2="190" y2="179.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="183.8" fill="#898781" text-anchor="end">0</text>
+<line x1="62" y1="137.1" x2="190" y2="137.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="141.1" fill="#898781" text-anchor="end">300</text>
+<line x1="62" y1="94.4" x2="190" y2="94.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="56" y="98.4" fill="#898781" text-anchor="end">600</text>
+<line x1="62" y1="194" x2="190" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="62" y1="66" x2="62" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="76.2" y1="194" x2="76.2" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="76.2" y="210" fill="#898781" text-anchor="middle">0</text>
+<line x1="118.9" y1="194" x2="118.9" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="118.9" y="210" fill="#898781" text-anchor="middle">300</text>
+<line x1="161.6" y1="194" x2="161.6" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="161.6" y="210" fill="#898781" text-anchor="middle">600</text>
+<text x="126" y="226" fill="#52514e" text-anchor="middle">model quantile</text>
+<line x1="62" y1="194" x2="190" y2="66" stroke="#cde2fb" stroke-width="14"/>
+<line x1="62" y1="194" x2="190" y2="66" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="74.0" cy="169.7" r="2.4" fill="#2a78d6"/>
+<circle cx="80.7" cy="168.8" r="2.4" fill="#2a78d6"/>
+<circle cx="84.6" cy="167.3" r="2.4" fill="#2a78d6"/>
+<circle cx="87.5" cy="163.8" r="2.4" fill="#2a78d6"/>
+<circle cx="89.8" cy="159.6" r="2.4" fill="#2a78d6"/>
+<circle cx="91.8" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="93.5" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="95.1" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="96.5" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="97.8" cy="156.3" r="2.4" fill="#2a78d6"/>
+<circle cx="99.0" cy="156.2" r="2.4" fill="#2a78d6"/>
+<circle cx="100.1" cy="155.3" r="2.4" fill="#2a78d6"/>
+<circle cx="101.2" cy="155.0" r="2.4" fill="#2a78d6"/>
+<circle cx="102.3" cy="154.5" r="2.4" fill="#2a78d6"/>
+<circle cx="103.3" cy="152.6" r="2.4" fill="#2a78d6"/>
+<circle cx="104.2" cy="152.3" r="2.4" fill="#2a78d6"/>
+<circle cx="105.2" cy="152.2" r="2.4" fill="#2a78d6"/>
+<circle cx="106.1" cy="152.0" r="2.4" fill="#2a78d6"/>
+<circle cx="107.0" cy="151.6" r="2.4" fill="#2a78d6"/>
+<circle cx="107.8" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="108.7" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="109.5" cy="149.2" r="2.4" fill="#2a78d6"/>
+<circle cx="110.3" cy="147.6" r="2.4" fill="#2a78d6"/>
+<circle cx="111.1" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="111.9" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="112.7" cy="146.9" r="2.4" fill="#2a78d6"/>
+<circle cx="113.5" cy="146.4" r="2.4" fill="#2a78d6"/>
+<circle cx="114.2" cy="145.2" r="2.4" fill="#2a78d6"/>
+<circle cx="115.0" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="115.8" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="116.6" cy="143.1" r="2.4" fill="#2a78d6"/>
+<circle cx="117.3" cy="141.5" r="2.4" fill="#2a78d6"/>
+<circle cx="118.1" cy="141.1" r="2.4" fill="#2a78d6"/>
+<circle cx="118.9" cy="140.7" r="2.4" fill="#2a78d6"/>
+<circle cx="119.7" cy="140.0" r="2.4" fill="#2a78d6"/>
+<circle cx="120.4" cy="139.7" r="2.4" fill="#2a78d6"/>
+<circle cx="121.2" cy="138.8" r="2.4" fill="#2a78d6"/>
+<circle cx="122.0" cy="138.4" r="2.4" fill="#2a78d6"/>
+<circle cx="122.9" cy="136.5" r="2.4" fill="#2a78d6"/>
+<circle cx="123.7" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="124.5" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="125.4" cy="134.1" r="2.4" fill="#2a78d6"/>
+<circle cx="126.3" cy="134.0" r="2.4" fill="#2a78d6"/>
+<circle cx="127.2" cy="133.3" r="2.4" fill="#2a78d6"/>
+<circle cx="128.1" cy="129.9" r="2.4" fill="#2a78d6"/>
+<circle cx="129.1" cy="128.9" r="2.4" fill="#2a78d6"/>
+<circle cx="130.1" cy="128.6" r="2.4" fill="#2a78d6"/>
+<circle cx="131.1" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="132.2" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="133.4" cy="124.5" r="2.4" fill="#2a78d6"/>
+<circle cx="134.6" cy="119.8" r="2.4" fill="#2a78d6"/>
+<circle cx="135.9" cy="117.5" r="2.4" fill="#2a78d6"/>
+<circle cx="137.3" cy="117.3" r="2.4" fill="#2a78d6"/>
+<circle cx="138.8" cy="112.2" r="2.4" fill="#2a78d6"/>
+<circle cx="140.6" cy="109.7" r="2.4" fill="#2a78d6"/>
+<circle cx="142.5" cy="109.5" r="2.4" fill="#2a78d6"/>
+<circle cx="144.8" cy="105.5" r="2.4" fill="#2a78d6"/>
+<circle cx="147.7" cy="97.7" r="2.4" fill="#2a78d6"/>
+<circle cx="151.6" cy="95.4" r="2.4" fill="#2a78d6"/>
+<circle cx="158.3" cy="86.2" r="2.4" fill="#2a78d6"/>
+<text x="290" y="28" text-anchor="middle">Lognormal</text>
+<text x="290" y="46" fill="#52514e" text-anchor="middle">A² = 0.25, p = 0.74</text>
+<line x1="226" y1="179.8" x2="354" y2="179.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="220" y="183.8" fill="#898781" text-anchor="end">0</text>
+<line x1="226" y1="137.1" x2="354" y2="137.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="220" y="141.1" fill="#898781" text-anchor="end">300</text>
+<line x1="226" y1="94.4" x2="354" y2="94.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="220" y="98.4" fill="#898781" text-anchor="end">600</text>
+<line x1="226" y1="194" x2="354" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="226" y1="66" x2="226" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="240.2" y1="194" x2="240.2" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="240.2" y="210" fill="#898781" text-anchor="middle">0</text>
+<line x1="282.9" y1="194" x2="282.9" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="282.9" y="210" fill="#898781" text-anchor="middle">300</text>
+<line x1="325.6" y1="194" x2="325.6" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="325.6" y="210" fill="#898781" text-anchor="middle">600</text>
+<text x="290" y="226" fill="#52514e" text-anchor="middle">model quantile</text>
+<line x1="226" y1="194" x2="354" y2="66" stroke="#cde2fb" stroke-width="14"/>
+<line x1="226" y1="194" x2="354" y2="66" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="252.2" cy="169.7" r="2.4" fill="#2a78d6"/>
+<circle cx="254.5" cy="168.8" r="2.4" fill="#2a78d6"/>
+<circle cx="256.1" cy="167.3" r="2.4" fill="#2a78d6"/>
+<circle cx="257.3" cy="163.8" r="2.4" fill="#2a78d6"/>
+<circle cx="258.3" cy="159.6" r="2.4" fill="#2a78d6"/>
+<circle cx="259.3" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="260.2" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="261.0" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="261.7" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="262.5" cy="156.3" r="2.4" fill="#2a78d6"/>
+<circle cx="263.2" cy="156.2" r="2.4" fill="#2a78d6"/>
+<circle cx="263.9" cy="155.3" r="2.4" fill="#2a78d6"/>
+<circle cx="264.6" cy="155.0" r="2.4" fill="#2a78d6"/>
+<circle cx="265.2" cy="154.5" r="2.4" fill="#2a78d6"/>
+<circle cx="265.9" cy="152.6" r="2.4" fill="#2a78d6"/>
+<circle cx="266.6" cy="152.3" r="2.4" fill="#2a78d6"/>
+<circle cx="267.2" cy="152.2" r="2.4" fill="#2a78d6"/>
+<circle cx="267.8" cy="152.0" r="2.4" fill="#2a78d6"/>
+<circle cx="268.5" cy="151.6" r="2.4" fill="#2a78d6"/>
+<circle cx="269.1" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="269.8" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="270.4" cy="149.2" r="2.4" fill="#2a78d6"/>
+<circle cx="271.0" cy="147.6" r="2.4" fill="#2a78d6"/>
+<circle cx="271.7" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="272.3" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="273.0" cy="146.9" r="2.4" fill="#2a78d6"/>
+<circle cx="273.7" cy="146.4" r="2.4" fill="#2a78d6"/>
+<circle cx="274.4" cy="145.2" r="2.4" fill="#2a78d6"/>
+<circle cx="275.0" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="275.8" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="276.5" cy="143.1" r="2.4" fill="#2a78d6"/>
+<circle cx="277.2" cy="141.5" r="2.4" fill="#2a78d6"/>
+<circle cx="277.9" cy="141.1" r="2.4" fill="#2a78d6"/>
+<circle cx="278.7" cy="140.7" r="2.4" fill="#2a78d6"/>
+<circle cx="279.5" cy="140.0" r="2.4" fill="#2a78d6"/>
+<circle cx="280.3" cy="139.7" r="2.4" fill="#2a78d6"/>
+<circle cx="281.1" cy="138.8" r="2.4" fill="#2a78d6"/>
+<circle cx="282.0" cy="138.4" r="2.4" fill="#2a78d6"/>
+<circle cx="282.9" cy="136.5" r="2.4" fill="#2a78d6"/>
+<circle cx="283.8" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="284.8" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="285.8" cy="134.1" r="2.4" fill="#2a78d6"/>
+<circle cx="286.9" cy="134.0" r="2.4" fill="#2a78d6"/>
+<circle cx="288.0" cy="133.3" r="2.4" fill="#2a78d6"/>
+<circle cx="289.1" cy="129.9" r="2.4" fill="#2a78d6"/>
+<circle cx="290.4" cy="128.9" r="2.4" fill="#2a78d6"/>
+<circle cx="291.7" cy="128.6" r="2.4" fill="#2a78d6"/>
+<circle cx="293.1" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="294.6" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="296.3" cy="124.5" r="2.4" fill="#2a78d6"/>
+<circle cx="298.1" cy="119.8" r="2.4" fill="#2a78d6"/>
+<circle cx="300.0" cy="117.5" r="2.4" fill="#2a78d6"/>
+<circle cx="302.3" cy="117.3" r="2.4" fill="#2a78d6"/>
+<circle cx="304.8" cy="112.2" r="2.4" fill="#2a78d6"/>
+<circle cx="307.8" cy="109.7" r="2.4" fill="#2a78d6"/>
+<circle cx="311.3" cy="109.5" r="2.4" fill="#2a78d6"/>
+<circle cx="315.7" cy="105.5" r="2.4" fill="#2a78d6"/>
+<circle cx="321.5" cy="97.7" r="2.4" fill="#2a78d6"/>
+<circle cx="330.2" cy="95.4" r="2.4" fill="#2a78d6"/>
+<circle cx="347.3" cy="86.2" r="2.4" fill="#2a78d6"/>
+<text x="454" y="28" text-anchor="middle">Gamma</text>
+<text x="454" y="46" fill="#52514e" text-anchor="middle">A² = 0.23</text>
+<line x1="390" y1="179.8" x2="518" y2="179.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="384" y="183.8" fill="#898781" text-anchor="end">0</text>
+<line x1="390" y1="137.1" x2="518" y2="137.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="384" y="141.1" fill="#898781" text-anchor="end">300</text>
+<line x1="390" y1="94.4" x2="518" y2="94.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="384" y="98.4" fill="#898781" text-anchor="end">600</text>
+<line x1="390" y1="194" x2="518" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="390" y1="66" x2="390" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="404.2" y1="194" x2="404.2" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="404.2" y="210" fill="#898781" text-anchor="middle">0</text>
+<line x1="446.9" y1="194" x2="446.9" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="446.9" y="210" fill="#898781" text-anchor="middle">300</text>
+<line x1="489.6" y1="194" x2="489.6" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="489.6" y="210" fill="#898781" text-anchor="middle">600</text>
+<text x="454" y="226" fill="#52514e" text-anchor="middle">model quantile</text>
+<line x1="390" y1="194" x2="518" y2="66" stroke="#cde2fb" stroke-width="14"/>
+<line x1="390" y1="194" x2="518" y2="66" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="414.5" cy="169.7" r="2.4" fill="#2a78d6"/>
+<circle cx="417.2" cy="168.8" r="2.4" fill="#2a78d6"/>
+<circle cx="419.1" cy="167.3" r="2.4" fill="#2a78d6"/>
+<circle cx="420.6" cy="163.8" r="2.4" fill="#2a78d6"/>
+<circle cx="421.8" cy="159.6" r="2.4" fill="#2a78d6"/>
+<circle cx="423.0" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="424.0" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="424.9" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="425.8" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="426.7" cy="156.3" r="2.4" fill="#2a78d6"/>
+<circle cx="427.5" cy="156.2" r="2.4" fill="#2a78d6"/>
+<circle cx="428.3" cy="155.3" r="2.4" fill="#2a78d6"/>
+<circle cx="429.1" cy="155.0" r="2.4" fill="#2a78d6"/>
+<circle cx="429.8" cy="154.5" r="2.4" fill="#2a78d6"/>
+<circle cx="430.6" cy="152.6" r="2.4" fill="#2a78d6"/>
+<circle cx="431.3" cy="152.3" r="2.4" fill="#2a78d6"/>
+<circle cx="432.0" cy="152.2" r="2.4" fill="#2a78d6"/>
+<circle cx="432.7" cy="152.0" r="2.4" fill="#2a78d6"/>
+<circle cx="433.4" cy="151.6" r="2.4" fill="#2a78d6"/>
+<circle cx="434.1" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="434.8" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="435.5" cy="149.2" r="2.4" fill="#2a78d6"/>
+<circle cx="436.2" cy="147.6" r="2.4" fill="#2a78d6"/>
+<circle cx="436.9" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="437.6" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="438.3" cy="146.9" r="2.4" fill="#2a78d6"/>
+<circle cx="439.0" cy="146.4" r="2.4" fill="#2a78d6"/>
+<circle cx="439.7" cy="145.2" r="2.4" fill="#2a78d6"/>
+<circle cx="440.4" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="441.1" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="441.8" cy="143.1" r="2.4" fill="#2a78d6"/>
+<circle cx="442.5" cy="141.5" r="2.4" fill="#2a78d6"/>
+<circle cx="443.3" cy="141.1" r="2.4" fill="#2a78d6"/>
+<circle cx="444.1" cy="140.7" r="2.4" fill="#2a78d6"/>
+<circle cx="444.8" cy="140.0" r="2.4" fill="#2a78d6"/>
+<circle cx="445.6" cy="139.7" r="2.4" fill="#2a78d6"/>
+<circle cx="446.4" cy="138.8" r="2.4" fill="#2a78d6"/>
+<circle cx="447.3" cy="138.4" r="2.4" fill="#2a78d6"/>
+<circle cx="448.1" cy="136.5" r="2.4" fill="#2a78d6"/>
+<circle cx="449.0" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="449.9" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="450.8" cy="134.1" r="2.4" fill="#2a78d6"/>
+<circle cx="451.8" cy="134.0" r="2.4" fill="#2a78d6"/>
+<circle cx="452.8" cy="133.3" r="2.4" fill="#2a78d6"/>
+<circle cx="453.9" cy="129.9" r="2.4" fill="#2a78d6"/>
+<circle cx="455.0" cy="128.9" r="2.4" fill="#2a78d6"/>
+<circle cx="456.1" cy="128.6" r="2.4" fill="#2a78d6"/>
+<circle cx="457.4" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="458.7" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="460.1" cy="124.5" r="2.4" fill="#2a78d6"/>
+<circle cx="461.6" cy="119.8" r="2.4" fill="#2a78d6"/>
+<circle cx="463.3" cy="117.5" r="2.4" fill="#2a78d6"/>
+<circle cx="465.1" cy="117.3" r="2.4" fill="#2a78d6"/>
+<circle cx="467.1" cy="112.2" r="2.4" fill="#2a78d6"/>
+<circle cx="469.4" cy="109.7" r="2.4" fill="#2a78d6"/>
+<circle cx="472.1" cy="109.5" r="2.4" fill="#2a78d6"/>
+<circle cx="475.4" cy="105.5" r="2.4" fill="#2a78d6"/>
+<circle cx="479.6" cy="97.7" r="2.4" fill="#2a78d6"/>
+<circle cx="485.6" cy="95.4" r="2.4" fill="#2a78d6"/>
+<circle cx="496.5" cy="86.2" r="2.4" fill="#2a78d6"/>
+<text x="618" y="28" text-anchor="middle">Weibull</text>
+<text x="618" y="46" fill="#52514e" text-anchor="middle">A² = 0.59</text>
+<line x1="554" y1="179.8" x2="682" y2="179.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="548" y="183.8" fill="#898781" text-anchor="end">0</text>
+<line x1="554" y1="137.1" x2="682" y2="137.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="548" y="141.1" fill="#898781" text-anchor="end">300</text>
+<line x1="554" y1="94.4" x2="682" y2="94.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="548" y="98.4" fill="#898781" text-anchor="end">600</text>
+<line x1="554" y1="194" x2="682" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="554" y1="66" x2="554" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="568.2" y1="194" x2="568.2" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="568.2" y="210" fill="#898781" text-anchor="middle">0</text>
+<line x1="610.9" y1="194" x2="610.9" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="610.9" y="210" fill="#898781" text-anchor="middle">300</text>
+<line x1="653.6" y1="194" x2="653.6" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<text x="653.6" y="210" fill="#898781" text-anchor="middle">600</text>
+<text x="618" y="226" fill="#52514e" text-anchor="middle">model quantile</text>
+<line x1="554" y1="194" x2="682" y2="66" stroke="#cde2fb" stroke-width="14"/>
+<line x1="554" y1="194" x2="682" y2="66" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="574.8" cy="169.7" r="2.4" fill="#2a78d6"/>
+<circle cx="577.9" cy="168.8" r="2.4" fill="#2a78d6"/>
+<circle cx="580.1" cy="167.3" r="2.4" fill="#2a78d6"/>
+<circle cx="581.9" cy="163.8" r="2.4" fill="#2a78d6"/>
+<circle cx="583.5" cy="159.6" r="2.4" fill="#2a78d6"/>
+<circle cx="584.9" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="586.1" cy="159.2" r="2.4" fill="#2a78d6"/>
+<circle cx="587.3" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="588.4" cy="156.5" r="2.4" fill="#2a78d6"/>
+<circle cx="589.5" cy="156.3" r="2.4" fill="#2a78d6"/>
+<circle cx="590.5" cy="156.2" r="2.4" fill="#2a78d6"/>
+<circle cx="591.5" cy="155.3" r="2.4" fill="#2a78d6"/>
+<circle cx="592.4" cy="155.0" r="2.4" fill="#2a78d6"/>
+<circle cx="593.4" cy="154.5" r="2.4" fill="#2a78d6"/>
+<circle cx="594.3" cy="152.6" r="2.4" fill="#2a78d6"/>
+<circle cx="595.1" cy="152.3" r="2.4" fill="#2a78d6"/>
+<circle cx="596.0" cy="152.2" r="2.4" fill="#2a78d6"/>
+<circle cx="596.8" cy="152.0" r="2.4" fill="#2a78d6"/>
+<circle cx="597.7" cy="151.6" r="2.4" fill="#2a78d6"/>
+<circle cx="598.5" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="599.3" cy="151.3" r="2.4" fill="#2a78d6"/>
+<circle cx="600.1" cy="149.2" r="2.4" fill="#2a78d6"/>
+<circle cx="600.9" cy="147.6" r="2.4" fill="#2a78d6"/>
+<circle cx="601.7" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="602.5" cy="147.1" r="2.4" fill="#2a78d6"/>
+<circle cx="603.3" cy="146.9" r="2.4" fill="#2a78d6"/>
+<circle cx="604.0" cy="146.4" r="2.4" fill="#2a78d6"/>
+<circle cx="604.8" cy="145.2" r="2.4" fill="#2a78d6"/>
+<circle cx="605.6" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="606.4" cy="144.1" r="2.4" fill="#2a78d6"/>
+<circle cx="607.2" cy="143.1" r="2.4" fill="#2a78d6"/>
+<circle cx="608.0" cy="141.5" r="2.4" fill="#2a78d6"/>
+<circle cx="608.8" cy="141.1" r="2.4" fill="#2a78d6"/>
+<circle cx="609.6" cy="140.7" r="2.4" fill="#2a78d6"/>
+<circle cx="610.5" cy="140.0" r="2.4" fill="#2a78d6"/>
+<circle cx="611.3" cy="139.7" r="2.4" fill="#2a78d6"/>
+<circle cx="612.2" cy="138.8" r="2.4" fill="#2a78d6"/>
+<circle cx="613.0" cy="138.4" r="2.4" fill="#2a78d6"/>
+<circle cx="613.9" cy="136.5" r="2.4" fill="#2a78d6"/>
+<circle cx="614.8" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="615.7" cy="136.4" r="2.4" fill="#2a78d6"/>
+<circle cx="616.7" cy="134.1" r="2.4" fill="#2a78d6"/>
+<circle cx="617.6" cy="134.0" r="2.4" fill="#2a78d6"/>
+<circle cx="618.6" cy="133.3" r="2.4" fill="#2a78d6"/>
+<circle cx="619.7" cy="129.9" r="2.4" fill="#2a78d6"/>
+<circle cx="620.7" cy="128.9" r="2.4" fill="#2a78d6"/>
+<circle cx="621.9" cy="128.6" r="2.4" fill="#2a78d6"/>
+<circle cx="623.0" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="624.3" cy="127.0" r="2.4" fill="#2a78d6"/>
+<circle cx="625.6" cy="124.5" r="2.4" fill="#2a78d6"/>
+<circle cx="626.9" cy="119.8" r="2.4" fill="#2a78d6"/>
+<circle cx="628.4" cy="117.5" r="2.4" fill="#2a78d6"/>
+<circle cx="630.0" cy="117.3" r="2.4" fill="#2a78d6"/>
+<circle cx="631.8" cy="112.2" r="2.4" fill="#2a78d6"/>
+<circle cx="633.8" cy="109.7" r="2.4" fill="#2a78d6"/>
+<circle cx="636.1" cy="109.5" r="2.4" fill="#2a78d6"/>
+<circle cx="638.8" cy="105.5" r="2.4" fill="#2a78d6"/>
+<circle cx="642.1" cy="97.7" r="2.4" fill="#2a78d6"/>
+<circle cx="646.7" cy="95.4" r="2.4" fill="#2a78d6"/>
+<circle cx="654.6" cy="86.2" r="2.4" fill="#2a78d6"/>
+<text x="350" y="268" fill="#52514e" text-anchor="middle">Each dot is one book: its page count (up) against where the fitted model puts the same rank (across).</text>
+<text x="350" y="283" fill="#52514e" text-anchor="middle">The pale band is the fat pencil: dots that stay inside it fit.</text>
+</g>
+</svg>

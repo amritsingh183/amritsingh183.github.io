@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320" width="700" height="320" role="img" aria-labelledby="title desc">
+<title id="title">Cumulative distribution functions: a staircase for books bought and a smooth rise for page counts</title>
+<desc id="desc">Left, the cumulative probabilities of books bought per visit as a blue staircase with P(X ≤ 4) marked; right, the sample&apos;s cumulative fraction of page counts as a blue step line and the lognormal CDF as an orange curve with the value at 300 pages marked.</desc>
+<rect width="700" height="320" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="60" y1="236" x2="310" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+<text x="54" y="240" fill="#898781" text-anchor="end">0</text>
+<line x1="60" y1="191" x2="310" y2="191" stroke="#e1e0d9" stroke-width="1"/>
+<text x="54" y="195" fill="#898781" text-anchor="end">0.25</text>
+<line x1="60" y1="146" x2="310" y2="146" stroke="#e1e0d9" stroke-width="1"/>
+<text x="54" y="150" fill="#898781" text-anchor="end">0.5</text>
+<line x1="60" y1="101" x2="310" y2="101" stroke="#e1e0d9" stroke-width="1"/>
+<text x="54" y="105" fill="#898781" text-anchor="end">0.75</text>
+<line x1="60" y1="56" x2="310" y2="56" stroke="#e1e0d9" stroke-width="1"/>
+<text x="54" y="60" fill="#898781" text-anchor="end">1</text>
+<line x1="60" y1="236" x2="310" y2="236" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="60" y1="56" x2="60" y2="236" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="95.7" y1="236" x2="95.7" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="95.7" y="252" fill="#898781" text-anchor="middle">1</text>
+<line x1="131.4" y1="236" x2="131.4" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="131.4" y="252" fill="#898781" text-anchor="middle">2</text>
+<line x1="167.1" y1="236" x2="167.1" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="167.1" y="252" fill="#898781" text-anchor="middle">3</text>
+<line x1="202.9" y1="236" x2="202.9" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="202.9" y="252" fill="#898781" text-anchor="middle">4</text>
+<line x1="238.6" y1="236" x2="238.6" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="238.6" y="252" fill="#898781" text-anchor="middle">5</text>
+<line x1="274.3" y1="236" x2="274.3" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="274.3" y="252" fill="#898781" text-anchor="middle">6</text>
+<text x="185" y="268" fill="#52514e" text-anchor="middle">books bought</text>
+<text x="54" y="44" fill="#52514e">P(X ≤ x)</text>
+<text x="60" y="24">Books per visit: a staircase</text>
+<line x1="60" y1="236" x2="95.7" y2="236" stroke="#2a78d6" stroke-width="2"/>
+<line x1="95.7" y1="173" x2="131.4" y2="173" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="95.7" cy="173" r="3.5" fill="#2a78d6"/>
+<line x1="131.4" y1="123.5" x2="167.1" y2="123.5" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="131.4" cy="123.5" r="3.5" fill="#2a78d6"/>
+<line x1="167.1" y1="92" x2="202.9" y2="92" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="167.1" cy="92" r="3.5" fill="#2a78d6"/>
+<line x1="202.9" y1="74" x2="238.6" y2="74" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="202.9" cy="74" r="3.5" fill="#2a78d6"/>
+<line x1="238.6" y1="65" x2="274.3" y2="65" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="238.6" cy="65" r="3.5" fill="#2a78d6"/>
+<line x1="274.3" y1="56" x2="310" y2="56" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="274.3" cy="56" r="3.5" fill="#2a78d6"/>
+<line x1="60" y1="74" x2="65" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="69" y1="74" x2="74" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="78" y1="74" x2="83" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="87" y1="74" x2="92" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="96" y1="74" x2="101" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="105" y1="74" x2="110" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="114" y1="74" x2="119" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="123" y1="74" x2="128" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="132" y1="74" x2="137" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="141" y1="74" x2="146" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="150" y1="74" x2="155" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="159" y1="74" x2="164" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="168" y1="74" x2="173" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="177" y1="74" x2="182" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="186" y1="74" x2="191" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="195" y1="74" x2="200" y2="74" stroke="#eb6834" stroke-width="1.5"/>
+<text x="210.9" y="102">P(X ≤ 4) = 0.9</text>
+<text x="210.9" y="118" fill="#52514e">= the first four bars</text>
+<text x="210.9" y="132" fill="#52514e">of Figure 12.1 added</text>
+<line x1="410" y1="236" x2="670" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+<text x="404" y="240" fill="#898781" text-anchor="end">0</text>
+<line x1="410" y1="191" x2="670" y2="191" stroke="#e1e0d9" stroke-width="1"/>
+<text x="404" y="195" fill="#898781" text-anchor="end">0.25</text>
+<line x1="410" y1="146" x2="670" y2="146" stroke="#e1e0d9" stroke-width="1"/>
+<text x="404" y="150" fill="#898781" text-anchor="end">0.5</text>
+<line x1="410" y1="101" x2="670" y2="101" stroke="#e1e0d9" stroke-width="1"/>
+<text x="404" y="105" fill="#898781" text-anchor="end">0.75</text>
+<line x1="410" y1="56" x2="670" y2="56" stroke="#e1e0d9" stroke-width="1"/>
+<text x="404" y="60" fill="#898781" text-anchor="end">1</text>
+<line x1="410" y1="236" x2="670" y2="236" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="410" y1="56" x2="410" y2="236" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="410" y1="236" x2="410" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="410" y="252" fill="#898781" text-anchor="middle">0</text>
+<line x1="484.3" y1="236" x2="484.3" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="484.3" y="252" fill="#898781" text-anchor="middle">200</text>
+<line x1="558.6" y1="236" x2="558.6" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="558.6" y="252" fill="#898781" text-anchor="middle">400</text>
+<line x1="632.9" y1="236" x2="632.9" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<text x="632.9" y="252" fill="#898781" text-anchor="middle">600</text>
+<text x="540" y="268" fill="#52514e" text-anchor="middle">pages</text>
+<text x="404" y="44" fill="#52514e">P(pages ≤ x)</text>
+<text x="410" y="24">Page counts: a smooth rise</text>
+<path d="M410 236 L436.4 236 L436.4 233 L438.6 233 L438.6 230 L442.7 230 L442.7 227 L451.6 227 L451.6 224 L462.7 224 L462.7 221 L463.9 221 L463.9 218 L463.9 218 L463.9 215 L470.9 215 L470.9 212 L470.9 212 L470.9 209 L471.3 209 L471.3 206 L471.7 206 L471.7 203 L473.9 203 L473.9 200 L474.6 200 L474.6 197 L476.1 197 L476.1 194 L480.9 194 L480.9 191 L481.7 191 L481.7 188 L482.1 188 L482.1 185 L482.4 185 L482.4 182 L483.5 182 L483.5 179 L484.3 179 L484.3 176 L484.3 176 L484.3 173 L489.9 173 L489.9 170 L493.9 170 L493.9 167 L495.4 167 L495.4 164 L495.4 164 L495.4 161 L495.8 161 L495.8 158 L497.3 158 L497.3 155 L500.3 155 L500.3 152 L503.2 152 L503.2 149 L503.2 149 L503.2 146 L505.8 146 L505.8 143 L509.9 143 L509.9 140 L511.0 140 L511.0 137 L512.1 137 L512.1 134 L514 134 L514 131 L514.7 131 L514.7 128 L517.0 128 L517.0 125 L518.1 125 L518.1 122 L522.9 122 L522.9 119 L523.3 119 L523.3 116 L523.3 116 L523.3 113 L529.2 113 L529.2 110 L529.6 110 L529.6 107 L531.5 107 L531.5 104 L540.4 104 L540.4 101 L543.0 101 L543.0 98 L543.7 98 L543.7 95 L547.8 95 L547.8 92 L547.8 92 L547.8 89 L554.5 89 L554.5 86 L566.7 86 L566.7 83 L572.7 83 L572.7 80 L573.1 80 L573.1 77 L586.4 77 L586.4 74 L593.1 74 L593.1 71 L593.5 71 L593.5 68 L603.9 68 L603.9 65 L624.3 65 L624.3 62 L630.3 62 L630.3 59 L654.4 59 L654.4 56 L670 56" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<path d="M410.4 236 L411.7 236 L413.0 236 L414.3 236.0 L415.6 236.0 L416.9 236.0 L418.2 236.0 L419.5 236.0 L420.8 236.0 L422.1 236.0 L423.4 236.0 L424.7 236.0 L425.9 236.0 L427.2 236.0 L428.5 236.0 L429.8 235.9 L431.1 235.9 L432.4 235.8 L433.7 235.7 L435.0 235.6 L436.3 235.4 L437.6 235.2 L438.9 234.9 L440.2 234.5 L441.5 234.1 L442.8 233.6 L444.1 233.0 L445.4 232.4 L446.7 231.6 L448.0 230.8 L449.3 229.8 L450.6 228.7 L451.9 227.6 L453.2 226.3 L454.5 225.0 L455.8 223.5 L457.1 221.9 L458.4 220.3 L459.7 218.5 L461.0 216.7 L462.3 214.8 L463.6 212.8 L464.9 210.7 L466.2 208.5 L467.5 206.3 L468.8 204.1 L470.1 201.7 L471.4 199.4 L472.7 197.0 L474.0 194.5 L475.3 192.0 L476.6 189.5 L477.9 187.0 L479.2 184.4 L480.5 181.9 L481.8 179.3 L483.1 176.7 L484.4 174.2 L485.7 171.6 L487.0 169.0 L488.3 166.5 L489.6 164.0 L490.9 161.4 L492.2 159.0 L493.5 156.5 L494.8 154.0 L496.0 151.6 L497.3 149.2 L498.6 146.9 L499.9 144.6 L501.2 142.3 L502.5 140.0 L503.8 137.8 L505.1 135.7 L506.4 133.5 L507.7 131.4 L509.0 129.4 L510.3 127.4 L511.6 125.4 L512.9 123.4 L514.2 121.6 L515.5 119.7 L516.8 117.9 L518.1 116.1 L519.4 114.4 L520.7 112.7 L522.0 111.1 L523.3 109.5 L524.6 107.9 L525.9 106.4 L527.2 104.9 L528.5 103.4 L529.8 102.0 L531.1 100.6 L532.4 99.3 L533.7 98.0 L535.0 96.7 L536.3 95.5 L537.6 94.3 L538.9 93.1 L540.2 92.0 L541.5 90.9 L542.8 89.8 L544.1 88.8 L545.4 87.8 L546.7 86.8 L548.0 85.9 L549.3 84.9 L550.6 84.0 L551.9 83.2 L553.2 82.3 L554.5 81.5 L555.8 80.7 L557.1 79.9 L558.4 79.2 L559.7 78.5 L561.0 77.8 L562.3 77.1 L563.6 76.4 L564.9 75.8 L566.1 75.2 L567.4 74.6 L568.7 74.0 L570.0 73.4 L571.3 72.9 L572.6 72.3 L573.9 71.8 L575.2 71.3 L576.5 70.8 L577.8 70.4 L579.1 69.9 L580.4 69.5 L581.7 69.1 L583.0 68.6 L584.3 68.3 L585.6 67.9 L586.9 67.5 L588.2 67.1 L589.5 66.8 L590.8 66.4 L592.1 66.1 L593.4 65.8 L594.7 65.5 L596.0 65.2 L597.3 64.9 L598.6 64.6 L599.9 64.4 L601.2 64.1 L602.5 63.8 L603.8 63.6 L605.1 63.4 L606.4 63.1 L607.7 62.9 L609.0 62.7 L610.3 62.5 L611.6 62.3 L612.9 62.1 L614.2 61.9 L615.5 61.7 L616.8 61.5 L618.1 61.4 L619.4 61.2 L620.7 61.0 L622.0 60.9 L623.3 60.7 L624.6 60.6 L625.9 60.4 L627.2 60.3 L628.5 60.2 L629.8 60.0 L631.1 59.9 L632.4 59.8 L633.7 59.7 L635.0 59.6 L636.2 59.5 L637.5 59.4 L638.8 59.3 L640.1 59.2 L641.4 59.1 L642.7 59.0 L644.0 58.9 L645.3 58.8 L646.6 58.7 L647.9 58.6 L649.2 58.5 L650.5 58.5 L651.8 58.4 L653.1 58.3 L654.4 58.2 L655.7 58.2 L657.0 58.1 L658.3 58.1 L659.6 58.0 L660.9 57.9 L662.2 57.9 L663.5 57.8 L664.8 57.8 L666.1 57.7 L667.4 57.7 L668.7 57.6 L670 57.6" fill="none" stroke="#eb6834" stroke-width="2"/>
+<line x1="521.4" y1="111.8" x2="521.4" y2="116.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="120.8" x2="521.4" y2="125.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="129.8" x2="521.4" y2="134.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="138.8" x2="521.4" y2="143.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="147.8" x2="521.4" y2="152.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="156.8" x2="521.4" y2="161.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="165.8" x2="521.4" y2="170.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="174.8" x2="521.4" y2="179.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="183.8" x2="521.4" y2="188.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="192.8" x2="521.4" y2="197.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="201.8" x2="521.4" y2="206.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="210.8" x2="521.4" y2="215.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="219.8" x2="521.4" y2="224.8" stroke="#52514e" stroke-width="1.5"/>
+<line x1="521.4" y1="228.8" x2="521.4" y2="233.8" stroke="#52514e" stroke-width="1.5"/>
+<circle cx="521.4" cy="111.8" r="3.5" fill="#eb6834"/>
+<text x="529.4" y="145.8" fill="#eb6834">curve at 300: 0.690</text>
+<text x="529.4" y="161.8" fill="#2a78d6">sample: 38/60 = 0.633</text>
+</g>
+</svg>

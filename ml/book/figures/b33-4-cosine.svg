@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="title desc">
+<title id="title">Word counts say B1 and B4 have nothing in common; averaged word vectors say they are close, because both are about crime in a small place</title>
+<desc id="desc">Two five by five heat maps of cosine similarity between the blurbs: the left from word counts, the right from mean-pooled made-up feature vectors; the B1 and B4 cells are outlined in both.</desc>
+<rect width="720" height="340" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="195" y="34" font-size="13" text-anchor="middle" font-weight="600">cosine of word counts</text>
+<rect x="70" y="76" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="97" text-anchor="middle">1.00</text>
+<rect x="120" y="76" width="50" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="97" text-anchor="middle">0.84</text>
+<rect x="170" y="76" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="97" text-anchor="middle">0.30</text>
+<rect x="220" y="76" width="50" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="245" y="97" fill="#898781" text-anchor="middle">0</text>
+<rect x="270" y="76" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="97" text-anchor="middle">0.30</text>
+<rect x="70" y="110" width="50" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="131" text-anchor="middle">0.84</text>
+<rect x="120" y="110" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="131" text-anchor="middle">1.00</text>
+<rect x="170" y="110" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="131" text-anchor="middle">0.28</text>
+<rect x="220" y="110" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="245" y="131" text-anchor="middle">0.11</text>
+<rect x="270" y="110" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="131" text-anchor="middle">0.28</text>
+<rect x="70" y="144" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="165" text-anchor="middle">0.30</text>
+<rect x="120" y="144" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="165" text-anchor="middle">0.28</text>
+<rect x="170" y="144" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="165" text-anchor="middle">1.00</text>
+<rect x="220" y="144" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="245" y="165" text-anchor="middle">0.16</text>
+<rect x="270" y="144" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="165" text-anchor="middle">0.20</text>
+<rect x="70" y="178" width="50" height="34" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="199" fill="#898781" text-anchor="middle">0</text>
+<rect x="120" y="178" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="199" text-anchor="middle">0.11</text>
+<rect x="170" y="178" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="199" text-anchor="middle">0.16</text>
+<rect x="220" y="178" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="245" y="199" text-anchor="middle">1.00</text>
+<rect x="270" y="178" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="199" text-anchor="middle">0.16</text>
+<rect x="70" y="212" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="233" text-anchor="middle">0.30</text>
+<rect x="120" y="212" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="145" y="233" text-anchor="middle">0.28</text>
+<rect x="170" y="212" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="195" y="233" text-anchor="middle">0.20</text>
+<rect x="220" y="212" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="245" y="233" text-anchor="middle">0.16</text>
+<rect x="270" y="212" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="233" text-anchor="middle">1.00</text>
+<text x="62" y="92.5" text-anchor="end">B1</text>
+<text x="62" y="126.5" text-anchor="end">B2</text>
+<text x="62" y="160.5" text-anchor="end">B3</text>
+<text x="62" y="194.5" text-anchor="end">B4</text>
+<text x="62" y="228.5" text-anchor="end">B5</text>
+<text x="95" y="66" fill="#52514e" text-anchor="middle">B1</text>
+<text x="145" y="66" fill="#52514e" text-anchor="middle">B2</text>
+<text x="195" y="66" fill="#52514e" text-anchor="middle">B3</text>
+<text x="245" y="66" fill="#52514e" text-anchor="middle">B4</text>
+<text x="295" y="66" fill="#52514e" text-anchor="middle">B5</text>
+<rect x="220" y="76" width="50" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="70" y="178" width="50" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="545" y="34" font-size="13" text-anchor="middle" font-weight="600">cosine of averaged word vectors</text>
+<rect x="420" y="76" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="445" y="97" text-anchor="middle">1.00</text>
+<rect x="470" y="76" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="97" text-anchor="middle">0.98</text>
+<rect x="520" y="76" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="97" text-anchor="middle">0.43</text>
+<rect x="570" y="76" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="595" y="97" text-anchor="middle">0.98</text>
+<rect x="620" y="76" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="645" y="97" text-anchor="middle">0.09</text>
+<rect x="420" y="110" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="445" y="131" text-anchor="middle">0.98</text>
+<rect x="470" y="110" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="131" text-anchor="middle">1.00</text>
+<rect x="520" y="110" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="131" text-anchor="middle">0.36</text>
+<rect x="570" y="110" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="595" y="131" text-anchor="middle">0.99</text>
+<rect x="620" y="110" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="645" y="131" text-anchor="middle">0.10</text>
+<rect x="420" y="144" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="445" y="165" text-anchor="middle">0.43</text>
+<rect x="470" y="144" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="165" text-anchor="middle">0.36</text>
+<rect x="520" y="144" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="165" text-anchor="middle">1.00</text>
+<rect x="570" y="144" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="595" y="165" text-anchor="middle">0.49</text>
+<rect x="620" y="144" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="645" y="165" text-anchor="middle">0.22</text>
+<rect x="420" y="178" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="445" y="199" text-anchor="middle">0.98</text>
+<rect x="470" y="178" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="199" text-anchor="middle">0.99</text>
+<rect x="520" y="178" width="50" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="199" text-anchor="middle">0.49</text>
+<rect x="570" y="178" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="595" y="199" text-anchor="middle">1.00</text>
+<rect x="620" y="178" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="645" y="199" text-anchor="middle">0.21</text>
+<rect x="420" y="212" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="445" y="233" text-anchor="middle">0.09</text>
+<rect x="470" y="212" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="233" text-anchor="middle">0.10</text>
+<rect x="520" y="212" width="50" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="545" y="233" text-anchor="middle">0.22</text>
+<rect x="570" y="212" width="50" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="595" y="233" text-anchor="middle">0.21</text>
+<rect x="620" y="212" width="50" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="645" y="233" text-anchor="middle">1.00</text>
+<text x="412" y="92.5" text-anchor="end">B1</text>
+<text x="412" y="126.5" text-anchor="end">B2</text>
+<text x="412" y="160.5" text-anchor="end">B3</text>
+<text x="412" y="194.5" text-anchor="end">B4</text>
+<text x="412" y="228.5" text-anchor="end">B5</text>
+<text x="445" y="66" fill="#52514e" text-anchor="middle">B1</text>
+<text x="495" y="66" fill="#52514e" text-anchor="middle">B2</text>
+<text x="545" y="66" fill="#52514e" text-anchor="middle">B3</text>
+<text x="595" y="66" fill="#52514e" text-anchor="middle">B4</text>
+<text x="645" y="66" fill="#52514e" text-anchor="middle">B5</text>
+<rect x="570" y="76" width="50" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="420" y="178" width="50" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="360" y="276" text-anchor="middle">B1 and B4 share no word: 0.00 by counts, 0.98 by averaged vectors</text>
+<text x="360" y="294" fill="#52514e" text-anchor="middle">the bicycle blurb B5 stays apart: 0.09 with B1 by averaged vectors</text>
+<text x="360" y="312" fill="#898781" text-anchor="middle">word vectors: the made-up table of Figure 25.1, averaged over every word of a blurb</text>
+</g>
+</svg>

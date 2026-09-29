@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 330" width="700" height="330" role="img" aria-labelledby="title desc">
+<title id="title">The addition test: a column is a number only if adding two of its values means something</title>
+<desc id="desc">A six-row table of bookshop columns with example values, the result of adding two values, and the verdict; pages, copies and price add up meaningfully, while condition, genre code and ISBN do not.</desc>
+<rect width="700" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="24" y="34" font-weight="600">column</text>
+<text x="150" y="34" font-weight="600">values you see</text>
+<text x="350" y="34" font-weight="600">add two of them</text>
+<text x="522" y="34" font-weight="600">so it is</text>
+<line x1="20" y1="44" x2="680" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="20" y="50" width="660" height="36" rx="2" fill="#cde2fb"/>
+<text x="24" y="73">pages</text>
+<text x="150" y="73" fill="#52514e">312, 148, 96, …</text>
+<text x="350" y="73">312 + 148 = 460 pages</text>
+<text x="522" y="73" fill="#2a78d6" font-weight="600">a number</text>
+<rect x="20" y="92" width="660" height="36" rx="2" fill="#cde2fb"/>
+<text x="24" y="115">copies in stock</text>
+<text x="150" y="115" fill="#52514e">0, 1, 2, 3</text>
+<text x="350" y="115">3 + 2 = 5 copies</text>
+<text x="522" y="115" fill="#2a78d6" font-weight="600">a number (few values)</text>
+<rect x="20" y="134" width="660" height="36" rx="2" fill="#cde2fb"/>
+<text x="24" y="157">price (rupees)</text>
+<text x="150" y="157" fill="#52514e">250, 180, 90, …</text>
+<text x="350" y="157">250 + 180 = 430 rupees</text>
+<text x="522" y="157" fill="#2a78d6" font-weight="600">a number</text>
+<rect x="20" y="176" width="660" height="36" rx="2" fill="#f0efec"/>
+<text x="24" y="199">condition</text>
+<text x="150" y="199" fill="#52514e">fine, good, fair, poor</text>
+<text x="350" y="199">fine + fair = ?</text>
+<text x="522" y="199" fill="#eb6834" font-weight="600">a category (ordered)</text>
+<rect x="20" y="218" width="660" height="36" rx="2" fill="#f0efec"/>
+<text x="24" y="241">genre code</text>
+<text x="150" y="241" fill="#52514e">1 fiction, 2 history, 3 travel</text>
+<text x="350" y="241">1 + 2 = 3: travel?</text>
+<text x="522" y="241" fill="#eb6834" font-weight="600">a category</text>
+<rect x="20" y="260" width="660" height="36" rx="2" fill="#f0efec"/>
+<text x="24" y="283">ISBN</text>
+<text x="150" y="283" fill="#52514e">13-digit codes: 978…</text>
+<text x="350" y="283">the sum names no book</text>
+<text x="522" y="283" fill="#eb6834" font-weight="600">a category (a label)</text>
+<text x="20" y="316" fill="#52514e">Blue rows pass the test; grey rows fail it, whatever the column&apos;s storage type says.</text>
+</g>
+</svg>

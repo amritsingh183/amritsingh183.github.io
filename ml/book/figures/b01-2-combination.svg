@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">A vector is a combination of the unit vectors</title>
+<desc id="desc">Left: 3 green steps along î and 2 orange steps along ĵ reach (3, 2). Right: one step backwards along î and 2 along ĵ reach (−1, 2).</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="68" y1="228.8" x2="68" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="124" y1="228.8" x2="124" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="180" y1="228.8" x2="180" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="236" y1="228.8" x2="236" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="292" y1="228.8" x2="292" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="40" y1="200.8" x2="292" y2="200.8" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="40" y1="144.8" x2="292" y2="144.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="40" y1="88.8" x2="292" y2="88.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="124" y="213.8" fill="#898781" text-anchor="middle">1</text>
+<text x="180" y="213.8" fill="#898781" text-anchor="middle">2</text>
+<text x="236" y="213.8" fill="#898781" text-anchor="middle">3</text>
+<text x="292" y="213.8" fill="#898781" text-anchor="middle">4</text>
+<text x="63" y="148.8" fill="#898781" text-anchor="end">1</text>
+<text x="63" y="92.8" fill="#898781" text-anchor="end">2</text>
+<line x1="68" y1="200.8" x2="123" y2="200.8" stroke="#1baf7a" stroke-width="2.2"/>
+<path d="M115.8 197.1 L124 200.8 L115.8 204.5" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="124" y1="200.8" x2="179" y2="200.8" stroke="#1baf7a" stroke-width="2.2"/>
+<path d="M171.8 197.1 L180 200.8 L171.8 204.5" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="180" y1="200.8" x2="235" y2="200.8" stroke="#1baf7a" stroke-width="2.2"/>
+<path d="M227.8 197.1 L236 200.8 L227.8 204.5" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="236" y1="200.8" x2="236" y2="145.8" stroke="#eb6834" stroke-width="2.2"/>
+<path d="M232.3 153 L236 144.8 L239.7 153" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="236" y1="144.8" x2="236" y2="89.8" stroke="#eb6834" stroke-width="2.2"/>
+<path d="M232.3 97 L236 88.8 L239.7 97" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="68" y1="200.8" x2="235.2" y2="89.4" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M227.1 90.3 L236 88.8 L231.2 96.4" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<text x="166" y="26" font-size="13" text-anchor="middle" font-weight="600">(3, 2) = 3 î + 2 ĵ</text>
+<text x="166" y="262.8" fill="#52514e" text-anchor="middle">three steps along î, then two along ĵ</text>
+<text x="166" y="280.8" fill="#52514e" text-anchor="middle">the book: 300 pages, 200 rupees</text>
+<line x1="440" y1="228.8" x2="440" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="496" y1="228.8" x2="496" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="552" y1="228.8" x2="552" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="608" y1="228.8" x2="608" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="440" y1="200.8" x2="636" y2="200.8" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="440" y1="144.8" x2="636" y2="144.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="440" y1="88.8" x2="636" y2="88.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="440" y="213.8" fill="#898781" text-anchor="middle">−2</text>
+<text x="496" y="213.8" fill="#898781" text-anchor="middle">−1</text>
+<text x="608" y="213.8" fill="#898781" text-anchor="middle">1</text>
+<text x="547" y="148.8" fill="#898781" text-anchor="end">1</text>
+<text x="547" y="92.8" fill="#898781" text-anchor="end">2</text>
+<line x1="552" y1="200.8" x2="497" y2="200.8" stroke="#1baf7a" stroke-width="2.2"/>
+<path d="M504.2 204.5 L496 200.8 L504.2 197.1" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="496" y1="200.8" x2="496" y2="145.8" stroke="#eb6834" stroke-width="2.2"/>
+<path d="M492.3 153 L496 144.8 L499.7 153" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="496" y1="144.8" x2="496" y2="89.8" stroke="#eb6834" stroke-width="2.2"/>
+<path d="M492.3 97 L496 88.8 L499.7 97" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="552" y1="200.8" x2="496.4" y2="89.7" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M496.4 97.8 L496 88.8 L503 94.5" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<text x="538" y="26" font-size="13" text-anchor="middle" font-weight="600">(−1, 2) = −1 î + 2 ĵ</text>
+<text x="538" y="262.8" fill="#52514e" text-anchor="middle">one step back along î, then two along ĵ</text>
+<text x="538" y="280.8" fill="#52514e" text-anchor="middle">the vector chapters 2 and 5 ask about</text>
+</g>
+</svg>

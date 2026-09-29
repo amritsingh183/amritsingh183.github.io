@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">A cross-encoder reads both blurbs together and returns one score; a bi-encoder turns each blurb into its own vector once and compares vectors</title>
+<desc id="desc">Left: blurbs B1 and B4 joined into one input with separator tokens pass through BERT and a small head that outputs a similarity score. Right: B1 and B4 each pass through the same BERT and a pooling step, giving vectors u and v whose cosine is the score.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="30" font-size="13" font-weight="600">cross-encoder</text>
+<text x="20" y="46" fill="#52514e">both blurbs in one input</text>
+<rect x="20" y="250" width="300" height="26" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="170" y="267" text-anchor="middle">[CLS] B1 [SEP] B4 [SEP]</text>
+<line x1="170" y1="248" x2="170" y2="216" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="60" y="170" width="220" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="170" y="197" text-anchor="middle">BERT reads the pair</text>
+<line x1="170" y1="168" x2="170" y2="138" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="110" y="110" width="120" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="170" y="127" text-anchor="middle">small head</text>
+<line x1="170" y1="108" x2="170" y2="84" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="170" y="76" text-anchor="middle">score for this pair</text>
+<text x="20" y="304" fill="#52514e">a new pass through BERT for every pair</text>
+<line x1="360" y1="24" x2="360" y2="314" stroke="#e1e0d9" stroke-width="1"/>
+<text x="380" y="30" font-size="13" font-weight="600">bi-encoder (SBERT)</text>
+<text x="380" y="46" fill="#52514e">each blurb on its own, weights shared</text>
+<rect x="392" y="250" width="124" height="26" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="454" y="267" text-anchor="middle">B1</text>
+<line x1="454" y1="248" x2="454" y2="216" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="392" y="170" width="124" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="454" y="190" text-anchor="middle">BERT</text>
+<text x="454" y="206" fill="#52514e" text-anchor="middle">then mean pooling</text>
+<line x1="454" y1="168" x2="454" y2="140" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="429" y="114" width="50" height="24" rx="2" fill="#86b6ef" stroke="#1baf7a" stroke-width="1"/>
+<text x="454" y="130" text-anchor="middle">u</text>
+<rect x="548" y="250" width="124" height="26" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="610" y="267" text-anchor="middle">B4</text>
+<line x1="610" y1="248" x2="610" y2="216" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="548" y="170" width="124" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="610" y="190" text-anchor="middle">BERT</text>
+<text x="610" y="206" fill="#52514e" text-anchor="middle">then mean pooling</text>
+<line x1="610" y1="168" x2="610" y2="140" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="585" y="114" width="50" height="24" rx="2" fill="#86b6ef" stroke="#1baf7a" stroke-width="1"/>
+<text x="610" y="130" text-anchor="middle">v</text>
+<path d="M454 114 L454 96 L610 96 L610 114" fill="none" stroke="#52514e" stroke-width="1"/>
+<line x1="532" y1="96" x2="532" y2="82" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="532" y="74" text-anchor="middle">cosine(u, v)</text>
+<text x="380" y="304" fill="#52514e">vectors made once, compared by cosine</text>
+</g>
+</svg>

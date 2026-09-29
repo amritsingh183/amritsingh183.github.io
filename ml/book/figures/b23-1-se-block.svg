@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">Squeeze-and-excitation: average each channel, pass the averages through two small layers, and rescale each channel by its gate</title>
+<desc id="desc">Left, three 2 by 2 channel maps; then a column of their three averages, a single hidden number, three gate bars between 0 and 1, and on the right the three maps multiplied by their gates.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="30" font-weight="600">channels</text>
+<text x="30" y="50" fill="#2a78d6">channel 1</text>
+<rect x="30" y="56" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="74" text-anchor="middle">4</text>
+<rect x="58" y="56" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="74" text-anchor="middle">2</text>
+<rect x="30" y="84" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="102" text-anchor="middle">6</text>
+<rect x="58" y="84" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="102" text-anchor="middle">4</text>
+<rect x="30" y="56" width="56" height="56" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="30" y="130" fill="#eb6834">channel 2</text>
+<rect x="30" y="136" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="154" text-anchor="middle">1</text>
+<rect x="58" y="136" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="154" text-anchor="middle">3</text>
+<rect x="30" y="164" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="182" text-anchor="middle">2</text>
+<rect x="58" y="164" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="182" text-anchor="middle">2</text>
+<rect x="30" y="136" width="56" height="56" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="30" y="210" fill="#1baf7a">channel 3</text>
+<rect x="30" y="216" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="234" text-anchor="middle">0</text>
+<rect x="58" y="216" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="234" text-anchor="middle">2</text>
+<rect x="30" y="244" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="44" y="262" text-anchor="middle">1</text>
+<rect x="58" y="244" width="28" height="28" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="262" text-anchor="middle">1</text>
+<rect x="30" y="216" width="56" height="56" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<text x="130" y="30" font-weight="600">squeeze</text>
+<rect x="130" y="105" width="40" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="124" text-anchor="middle">4</text>
+<rect x="130" y="135" width="40" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="154" text-anchor="middle">2</text>
+<rect x="130" y="165" width="40" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="184" text-anchor="middle">1</text>
+<text x="130" y="216" fill="#52514e">mean of</text>
+<text x="130" y="230" fill="#52514e">each map</text>
+<line x1="96" y1="150" x2="124" y2="150" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="230" y="30" font-weight="600">excite</text>
+<rect x="230" y="135" width="44" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="252" y="154" text-anchor="middle">1.75</text>
+<line x1="176" y1="150" x2="224" y2="150" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="220" y="190" fill="#52514e">ReLU(w₁·z)</text>
+<text x="220" y="204" fill="#52514e">w₁ = (0.5, −0.25, 0.25)</text>
+<text x="360" y="30" font-weight="600">gates in (0, 1)</text>
+<line x1="280" y1="150" x2="354" y2="150" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="360" y="100" width="110" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="360" y="100" width="98.0" height="22" rx="2" fill="#2a78d6"/>
+<text x="476" y="115">0.891</text>
+<rect x="360" y="136" width="110" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="360" y="136" width="28.5" height="22" rx="2" fill="#eb6834"/>
+<text x="476" y="151">0.259</text>
+<rect x="360" y="172" width="110" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="360" y="172" width="64.5" height="22" rx="2" fill="#1baf7a"/>
+<text x="476" y="187">0.587</text>
+<text x="360" y="218" fill="#52514e">sigmoid(w₂ × hidden)</text>
+<text x="360" y="232" fill="#52514e">w₂ = (1.2, −0.6, 0.2)</text>
+<text x="560" y="30" font-weight="600">scaled channels</text>
+<line x1="520" y1="150" x2="554" y2="150" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="560" y="50" fill="#2a78d6">× 0.891</text>
+<rect x="560" y="56" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="75" text-anchor="middle">3.56</text>
+<rect x="590" y="56" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="75" text-anchor="middle">1.78</text>
+<rect x="560" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="105" text-anchor="middle">5.35</text>
+<rect x="590" y="86" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="105" text-anchor="middle">3.56</text>
+<rect x="560" y="56" width="60" height="60" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="560" y="130" fill="#eb6834">× 0.259</text>
+<rect x="560" y="136" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="155" text-anchor="middle">0.26</text>
+<rect x="590" y="136" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="155" text-anchor="middle">0.78</text>
+<rect x="560" y="166" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="185" text-anchor="middle">0.52</text>
+<rect x="590" y="166" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="185" text-anchor="middle">0.52</text>
+<rect x="560" y="136" width="60" height="60" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="560" y="210" fill="#1baf7a">× 0.587</text>
+<rect x="560" y="216" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="235" text-anchor="middle">0</text>
+<rect x="590" y="216" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="235" text-anchor="middle">1.17</text>
+<rect x="560" y="246" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="575" y="265" text-anchor="middle">0.59</text>
+<rect x="590" y="246" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="265" text-anchor="middle">0.59</text>
+<rect x="560" y="216" width="60" height="60" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<text x="30" y="316" fill="#52514e">All positions of a channel share one gate; the gates are independent and need not sum to 1.</text>
+</g>
+</svg>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">Max pooling keeps the largest number in each 2 by 2 window; average pooling keeps their mean</title>
+<desc id="desc">A 4 by 4 grid split into four 2 by 2 windows in four colours, each window&apos;s largest cell outlined in black; arrows lead to a 2 by 2 max-pooled grid and a 2 by 2 average-pooled grid with matching colours.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="40" font-weight="600">input 4 × 4, windows 2 × 2, stride 2</text>
+<rect x="40" y="56" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="82" text-anchor="middle">3</text>
+<rect x="84" y="56" width="44" height="44" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="106" y="82" text-anchor="middle">7</text>
+<rect x="128" y="56" width="44" height="44" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="82" text-anchor="middle">1</text>
+<rect x="172" y="56" width="44" height="44" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="194" y="82" text-anchor="middle">0</text>
+<rect x="40" y="100" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="126" text-anchor="middle">2</text>
+<rect x="84" y="100" width="44" height="44" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="106" y="126" text-anchor="middle">9</text>
+<rect x="128" y="100" width="44" height="44" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="126" text-anchor="middle">4</text>
+<rect x="172" y="100" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="194" y="126" text-anchor="middle">5</text>
+<rect x="40" y="144" width="44" height="44" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="170" text-anchor="middle">6</text>
+<rect x="84" y="144" width="44" height="44" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="106" y="170" text-anchor="middle">1</text>
+<rect x="128" y="144" width="44" height="44" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="170" text-anchor="middle">8</text>
+<rect x="172" y="144" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="194" y="170" text-anchor="middle">2</text>
+<rect x="40" y="188" width="44" height="44" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="214" text-anchor="middle">0</text>
+<rect x="84" y="188" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="106" y="214" text-anchor="middle">5</text>
+<rect x="128" y="188" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="150" y="214" text-anchor="middle">3</text>
+<rect x="172" y="188" width="44" height="44" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="194" y="214" text-anchor="middle">9</text>
+<rect x="41.5" y="57.5" width="85" height="85" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="91" y="107" width="30" height="30" rx="2" fill="none" stroke="#0b0b0b" stroke-width="1.5"/>
+<rect x="129.5" y="57.5" width="85" height="85" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="179" y="107" width="30" height="30" rx="2" fill="none" stroke="#0b0b0b" stroke-width="1.5"/>
+<rect x="41.5" y="145.5" width="85" height="85" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<rect x="47" y="151" width="30" height="30" rx="2" fill="none" stroke="#0b0b0b" stroke-width="1.5"/>
+<rect x="129.5" y="145.5" width="85" height="85" rx="2" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<rect x="179" y="195" width="30" height="30" rx="2" fill="none" stroke="#0b0b0b" stroke-width="1.5"/>
+<text x="300" y="30" font-weight="600">max pooling</text>
+<rect x="300" y="40" width="44" height="44" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="322" y="66" text-anchor="middle">9</text>
+<rect x="344" y="40" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="366" y="66" text-anchor="middle">5</text>
+<rect x="300" y="84" width="44" height="44" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="322" y="110" text-anchor="middle">6</text>
+<rect x="344" y="84" width="44" height="44" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="366" y="110" text-anchor="middle">9</text>
+<rect x="301.5" y="41.5" width="41" height="41" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="345.5" y="41.5" width="41" height="41" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="301.5" y="85.5" width="41" height="41" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<rect x="345.5" y="85.5" width="41" height="41" rx="2" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<text x="300" y="152" font-weight="600">average pooling</text>
+<rect x="300" y="162" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="322" y="188" text-anchor="middle">5.25</text>
+<rect x="344" y="162" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="366" y="188" text-anchor="middle">2.5</text>
+<rect x="300" y="206" width="44" height="44" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="322" y="232" text-anchor="middle">3</text>
+<rect x="344" y="206" width="44" height="44" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="366" y="232" text-anchor="middle">5.5</text>
+<rect x="301.5" y="163.5" width="41" height="41" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="345.5" y="163.5" width="41" height="41" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="301.5" y="207.5" width="41" height="41" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<rect x="345.5" y="207.5" width="41" height="41" rx="2" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="224" y1="120" x2="292" y2="84" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="224" y1="160" x2="292" y2="204" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="412" y="70">Blue window, top left:</text>
+<text x="412" y="90">max(3, 7, 2, 9) = 9</text>
+<text x="412" y="110">(3 + 7 + 2 + 9) / 4 = 5.25</text>
+<text x="412" y="150" fill="#52514e">16 numbers become 4: each 2 × 2 window</text>
+<text x="412" y="164" fill="#52514e">keeps one, so three quarters are dropped.</text>
+<text x="412" y="190" fill="#52514e">Pooling has no weights to learn; it is the</text>
+<text x="412" y="204" fill="#52514e">same fixed rule in every window and channel.</text>
+<text x="40" y="284" fill="#52514e">The black inner squares mark each window&apos;s largest value, the one max pooling keeps.</text>
+</g>
+</svg>

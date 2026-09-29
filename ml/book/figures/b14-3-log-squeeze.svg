@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 260" width="700" height="260" role="img" aria-labelledby="title desc">
+<title id="title">A log scale spreads values that span orders of magnitude</title>
+<desc id="desc">Two number lines for six print runs: on the ordinary line four dots crowd near zero, one sits at 300,000 and one at two million; on the log line the six dots spread out, one step per factor of ten.</desc>
+<rect width="700" height="260" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="60" y="30" font-weight="600">copies printed, ordinary scale</text>
+<line x1="60" y1="70" x2="640" y2="70" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="60" y1="70" x2="60" y2="74" stroke="#c3c2b7" stroke-width="1"/>
+<text x="60" y="88" fill="#898781" text-anchor="middle">0</text>
+<line x1="205" y1="70" x2="205" y2="74" stroke="#c3c2b7" stroke-width="1"/>
+<text x="205" y="88" fill="#898781" text-anchor="middle">500,000</text>
+<line x1="350" y1="70" x2="350" y2="74" stroke="#c3c2b7" stroke-width="1"/>
+<text x="350" y="88" fill="#898781" text-anchor="middle">1,000,000</text>
+<line x1="495" y1="70" x2="495" y2="74" stroke="#c3c2b7" stroke-width="1"/>
+<text x="495" y="88" fill="#898781" text-anchor="middle">1,500,000</text>
+<line x1="640" y1="70" x2="640" y2="74" stroke="#c3c2b7" stroke-width="1"/>
+<text x="640" y="88" fill="#898781" text-anchor="middle">2,000,000</text>
+<circle cx="60.2" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="60.7" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="61.7" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="71.6" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="147" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="640" cy="70" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="68" y="56" fill="#52514e">4 titles squeezed into this corner (their dots overlap)</text>
+<text x="60" y="122" font-weight="600">the same copies, log scale (log₁₀ of copies)</text>
+<line x1="60" y1="170" x2="640" y2="170" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="60" y1="170" x2="60" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="60" y="188" fill="#898781" text-anchor="middle">2 (10²)</text>
+<line x1="176" y1="170" x2="176" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="176" y="188" fill="#898781" text-anchor="middle">3 (10³)</text>
+<line x1="292" y1="170" x2="292" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="292" y="188" fill="#898781" text-anchor="middle">4 (10⁴)</text>
+<line x1="408" y1="170" x2="408" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="408" y="188" fill="#898781" text-anchor="middle">5 (10⁵)</text>
+<line x1="524" y1="170" x2="524" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="524" y="188" fill="#898781" text-anchor="middle">6 (10⁶)</text>
+<line x1="640" y1="170" x2="640" y2="174" stroke="#c3c2b7" stroke-width="1"/>
+<text x="640" y="188" fill="#898781" text-anchor="middle">7 (10⁷)</text>
+<circle cx="164.8" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="164.8" y="158" text-anchor="middle">800</text>
+<circle cx="222.2" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="222.2" y="144" text-anchor="middle">2,500</text>
+<circle cx="266.3" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="266.3" y="158" text-anchor="middle">6,000</text>
+<circle cx="361.8" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="361.8" y="144" text-anchor="middle">40,000</text>
+<circle cx="463.3" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="463.3" y="158" text-anchor="middle">300,000</text>
+<circle cx="558.9" cy="170" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="558.9" y="144" text-anchor="middle">2,000,000</text>
+<text x="60" y="228" fill="#52514e">On the ordinary scale 10,000 − 1,000 = 9,000; on the log scale the pair differs by 4 − 3 = 1.</text>
+<text x="60" y="244" fill="#52514e">Each factor of ten is one equal step, so small and huge print runs share one readable line.</text>
+</g>
+</svg>

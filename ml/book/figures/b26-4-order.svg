@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="title desc">
+<title id="title">A blurb and its back-to-front twin, which says something quite different, produce exactly the same bag of words</title>
+<desc id="desc">Two sentences drawn as rows of word boxes, one the reverse story of the other, each feeding an arrow into its count row over five words; the two count rows are identical.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="250" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="14" y="50" width="33.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="30.8" y="67" text-anchor="middle">the</text>
+<rect x="51.6" y="50" width="76.8" height="26" rx="2" fill="#b7d3f6" stroke="#c3c2b7" stroke-width="1"/>
+<text x="90" y="67" text-anchor="middle">detective</text>
+<rect x="132.4" y="50" width="62.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="163.6" y="67" text-anchor="middle">returns</text>
+<rect x="198.8" y="50" width="26.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="212" y="67" text-anchor="middle">to</text>
+<rect x="229.2" y="50" width="33.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="246" y="67" text-anchor="middle">the</text>
+<rect x="266.8" y="50" width="62.4" height="26" rx="2" fill="#b7d3f6" stroke="#c3c2b7" stroke-width="1"/>
+<text x="298" y="67" text-anchor="middle">village</text>
+<line x1="339.2" y1="63" x2="398" y2="63" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="404" y="50" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="434" y="67" text-anchor="middle">1</text>
+<rect x="464" y="50" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="494" y="67" text-anchor="middle">1</text>
+<rect x="524" y="50" width="60" height="26" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="554" y="67" text-anchor="middle">2</text>
+<rect x="584" y="50" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="614" y="67" text-anchor="middle">1</text>
+<rect x="644" y="50" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="674" y="67" text-anchor="middle">1</text>
+<text x="434" y="42" fill="#52514e" text-anchor="middle">detective</text>
+<text x="494" y="42" fill="#52514e" text-anchor="middle">returns</text>
+<text x="554" y="42" fill="#52514e" text-anchor="middle">the</text>
+<text x="614" y="42" fill="#52514e" text-anchor="middle">to</text>
+<text x="674" y="42" fill="#52514e" text-anchor="middle">village</text>
+<rect x="14" y="140" width="33.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="30.8" y="157" text-anchor="middle">the</text>
+<rect x="51.6" y="140" width="62.4" height="26" rx="2" fill="#b7d3f6" stroke="#c3c2b7" stroke-width="1"/>
+<text x="82.8" y="157" text-anchor="middle">village</text>
+<rect x="118" y="140" width="62.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="149.2" y="157" text-anchor="middle">returns</text>
+<rect x="184.4" y="140" width="26.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="197.6" y="157" text-anchor="middle">to</text>
+<rect x="214.8" y="140" width="33.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="231.6" y="157" text-anchor="middle">the</text>
+<rect x="252.4" y="140" width="76.8" height="26" rx="2" fill="#b7d3f6" stroke="#c3c2b7" stroke-width="1"/>
+<text x="290.8" y="157" text-anchor="middle">detective</text>
+<line x1="339.2" y1="153" x2="398" y2="153" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="404" y="140" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="434" y="157" text-anchor="middle">1</text>
+<rect x="464" y="140" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="494" y="157" text-anchor="middle">1</text>
+<rect x="524" y="140" width="60" height="26" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="554" y="157" text-anchor="middle">2</text>
+<rect x="584" y="140" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="614" y="157" text-anchor="middle">1</text>
+<rect x="644" y="140" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="674" y="157" text-anchor="middle">1</text>
+<text x="360" y="214" text-anchor="middle">identical rows: the bag cannot tell the blurb from its back-to-front twin</text>
+</g>
+</svg>

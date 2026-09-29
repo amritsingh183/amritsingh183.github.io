@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">Each position gets its own pattern of sines and cosines, so the two copies of a in blurb B1 receive different position codes</title>
+<desc id="desc">Four small line charts, one per number of a four-number position code, plotting its value at positions 0 to 6 under the words of B1; below, the codes of the two copies of a at positions 0 and 4.</desc>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="28" y="50" width="150" height="120" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="28" y1="110" x2="178" y2="110" stroke="#e1e0d9" stroke-width="1"/>
+<text x="103" y="40" text-anchor="middle">sin(pos)</text>
+<path d="M38 110 L59.7 66.2 L81.3 62.7 L103 102.7 L124.7 149.4 L146.3 159.9 L168 124.5" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="38" cy="110" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="59.7" cy="66.2" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="81.3" cy="62.7" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="103" cy="102.7" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="124.7" cy="149.4" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="146.3" cy="159.9" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="168" cy="124.5" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="24" y="62" fill="#898781" text-anchor="end">1</text>
+<text x="24" y="166" fill="#898781" text-anchor="end">−1</text>
+<text x="38" y="184" fill="#898781" text-anchor="middle">0</text>
+<text x="38" y="198" text-anchor="middle">a</text>
+<text x="59.7" y="184" fill="#898781" text-anchor="middle">1</text>
+<text x="81.3" y="184" fill="#898781" text-anchor="middle">2</text>
+<text x="103" y="184" fill="#898781" text-anchor="middle">3</text>
+<text x="124.7" y="184" fill="#898781" text-anchor="middle">4</text>
+<text x="124.7" y="198" text-anchor="middle">a</text>
+<text x="146.3" y="184" fill="#898781" text-anchor="middle">5</text>
+<text x="168" y="184" fill="#898781" text-anchor="middle">6</text>
+<rect x="198" y="50" width="150" height="120" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="198" y1="110" x2="348" y2="110" stroke="#e1e0d9" stroke-width="1"/>
+<text x="273" y="40" text-anchor="middle">cos(pos)</text>
+<path d="M208 58 L229.7 81.9 L251.3 131.6 L273 161.5 L294.7 144.0 L316.3 95.2 L338 60.1" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="208" cy="58" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="229.7" cy="81.9" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="251.3" cy="131.6" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="273" cy="161.5" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="294.7" cy="144.0" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="316.3" cy="95.2" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="338" cy="60.1" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="208" y="184" fill="#898781" text-anchor="middle">0</text>
+<text x="251.3" y="184" fill="#898781" text-anchor="middle">2</text>
+<text x="294.7" y="184" fill="#898781" text-anchor="middle">4</text>
+<text x="338" y="184" fill="#898781" text-anchor="middle">6</text>
+<rect x="368" y="50" width="150" height="120" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="368" y1="110" x2="518" y2="110" stroke="#e1e0d9" stroke-width="1"/>
+<text x="443" y="40" text-anchor="middle">sin(pos ÷ 100)</text>
+<path d="M378 110 L399.7 109.5 L421.3 109.0 L443 108.4 L464.7 107.9 L486.3 107.4 L508 106.9" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="378" cy="110" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="399.7" cy="109.5" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="421.3" cy="109.0" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="443" cy="108.4" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="464.7" cy="107.9" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="486.3" cy="107.4" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="508" cy="106.9" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="378" y="184" fill="#898781" text-anchor="middle">0</text>
+<text x="421.3" y="184" fill="#898781" text-anchor="middle">2</text>
+<text x="464.7" y="184" fill="#898781" text-anchor="middle">4</text>
+<text x="508" y="184" fill="#898781" text-anchor="middle">6</text>
+<rect x="538" y="50" width="150" height="120" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="538" y1="110" x2="688" y2="110" stroke="#e1e0d9" stroke-width="1"/>
+<text x="613" y="40" text-anchor="middle">cos(pos ÷ 100)</text>
+<path d="M548 58 L569.7 58.0 L591.3 58.0 L613 58.0 L634.7 58.0 L656.3 58.1 L678 58.1" fill="none" stroke="#eb6834" stroke-width="2"/>
+<circle cx="548" cy="58" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="569.7" cy="58.0" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="591.3" cy="58.0" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="613" cy="58.0" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="634.7" cy="58.0" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="656.3" cy="58.1" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="678" cy="58.1" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="548" y="184" fill="#898781" text-anchor="middle">0</text>
+<text x="591.3" y="184" fill="#898781" text-anchor="middle">2</text>
+<text x="634.7" y="184" fill="#898781" text-anchor="middle">4</text>
+<text x="678" y="184" fill="#898781" text-anchor="middle">6</text>
+<text x="28" y="232" fill="#52514e">position number under each chart; the word a sits at positions 0 and 4 of the blurb</text>
+<rect x="250" y="256" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="274" text-anchor="middle">0.000</text>
+<rect x="320" y="256" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="274" text-anchor="middle">1.000</text>
+<rect x="390" y="256" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="425" y="274" text-anchor="middle">0.000</text>
+<rect x="460" y="256" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="274" text-anchor="middle">1.000</text>
+<rect x="250" y="284" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="285" y="302" text-anchor="middle">−0.757</text>
+<rect x="320" y="284" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="302" text-anchor="middle">−0.654</text>
+<rect x="390" y="284" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="425" y="302" text-anchor="middle">0.040</text>
+<rect x="460" y="284" width="70" height="28" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="495" y="302" text-anchor="middle">0.999</text>
+<text x="240" y="274" text-anchor="end">a at position 0</text>
+<text x="240" y="302" text-anchor="end">a at position 4</text>
+<text x="360" y="340" fill="#52514e" text-anchor="middle">added to each word&apos;s embedding, the code makes identical words at different places differ</text>
+</g>
+</svg>

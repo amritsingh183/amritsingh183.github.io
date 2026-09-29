@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 352" width="720" height="352" role="img" aria-labelledby="title desc">
+<title id="title">Two heads look at the same three words in two different ways at the same time, and their outputs are placed side by side</title>
+<desc id="desc">The three word vectors on the left feed two heads drawn one above the other. Head 1 uses keys as they are, so each word attends mostly to itself; head 2 swaps the keys, so quiet and town attend to each other. Each head&apos;s two-number outputs are joined into four numbers per word.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="352" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="20" y="132" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="37" y="149" text-anchor="middle">2</text>
+<rect x="54" y="132" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="71" y="149" text-anchor="middle">0</text>
+<rect x="20" y="158" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="37" y="175" text-anchor="middle">1</text>
+<rect x="54" y="158" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="71" y="175" text-anchor="middle">1</text>
+<rect x="20" y="184" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="37" y="201" text-anchor="middle">0</text>
+<rect x="54" y="184" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="71" y="201" text-anchor="middle">2</text>
+<text x="94" y="149">quiet</text>
+<text x="94" y="175">mystery</text>
+<text x="94" y="201">town</text>
+<text x="54" y="122" fill="#52514e" text-anchor="middle">word vectors</text>
+<text x="214" y="32" font-weight="600">head 1: keys as they are</text>
+<rect x="214" y="54" width="44" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="71" text-anchor="middle">0.77</text>
+<rect x="258" y="54" width="44" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="71" text-anchor="middle">0.19</text>
+<rect x="302" y="54" width="44" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="71" text-anchor="middle">0.05</text>
+<rect x="214" y="80" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="97" text-anchor="middle">0.33</text>
+<rect x="258" y="80" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="97" text-anchor="middle">0.33</text>
+<rect x="302" y="80" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="97" text-anchor="middle">0.33</text>
+<rect x="214" y="106" width="44" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="123" text-anchor="middle">0.05</text>
+<rect x="258" y="106" width="44" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="123" text-anchor="middle">0.19</text>
+<rect x="302" y="106" width="44" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="123" text-anchor="middle">0.77</text>
+<text x="236" y="48" fill="#52514e" text-anchor="middle">q</text>
+<text x="280" y="48" fill="#52514e" text-anchor="middle">m</text>
+<text x="324" y="48" fill="#52514e" text-anchor="middle">t</text>
+<line x1="150" y1="171" x2="208" y2="93" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="352" y1="93" x2="372" y2="93" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="362" y="88" fill="#52514e" text-anchor="middle">× V</text>
+<rect x="376" y="54" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="71" text-anchor="middle">1.72</text>
+<rect x="420" y="54" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="71" text-anchor="middle">0.28</text>
+<rect x="376" y="80" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="97" text-anchor="middle">1.00</text>
+<rect x="420" y="80" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="97" text-anchor="middle">1.00</text>
+<rect x="376" y="106" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="123" text-anchor="middle">0.28</text>
+<rect x="420" y="106" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="123" text-anchor="middle">1.72</text>
+<line x1="470" y1="93" x2="520" y2="163" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="214" y="196" font-weight="600">head 2: keys swapped</text>
+<rect x="214" y="218" width="44" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="235" text-anchor="middle">0.05</text>
+<rect x="258" y="218" width="44" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="235" text-anchor="middle">0.19</text>
+<rect x="302" y="218" width="44" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="235" text-anchor="middle">0.77</text>
+<rect x="214" y="244" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="261" text-anchor="middle">0.33</text>
+<rect x="258" y="244" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="261" text-anchor="middle">0.33</text>
+<rect x="302" y="244" width="44" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="261" text-anchor="middle">0.33</text>
+<rect x="214" y="270" width="44" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="236" y="287" text-anchor="middle">0.77</text>
+<rect x="258" y="270" width="44" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="280" y="287" text-anchor="middle">0.19</text>
+<rect x="302" y="270" width="44" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="324" y="287" text-anchor="middle">0.05</text>
+<text x="236" y="212" fill="#52514e" text-anchor="middle">q</text>
+<text x="280" y="212" fill="#52514e" text-anchor="middle">m</text>
+<text x="324" y="212" fill="#52514e" text-anchor="middle">t</text>
+<line x1="150" y1="171" x2="208" y2="257" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="352" y1="257" x2="372" y2="257" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="362" y="252" fill="#52514e" text-anchor="middle">× V</text>
+<rect x="376" y="218" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="235" text-anchor="middle">0.28</text>
+<rect x="420" y="218" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="235" text-anchor="middle">1.72</text>
+<rect x="376" y="244" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="261" text-anchor="middle">1.00</text>
+<rect x="420" y="244" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="261" text-anchor="middle">1.00</text>
+<rect x="376" y="270" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="398" y="287" text-anchor="middle">1.72</text>
+<rect x="420" y="270" width="44" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="442" y="287" text-anchor="middle">0.28</text>
+<line x1="470" y1="257" x2="520" y2="179" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="610" y="106" text-anchor="middle" font-weight="600">joined</text>
+<text x="610" y="122" fill="#52514e" text-anchor="middle">4 numbers per word</text>
+<rect x="526" y="132" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="149" text-anchor="middle">1.72</text>
+<rect x="568" y="132" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="589" y="149" text-anchor="middle">0.28</text>
+<rect x="610" y="132" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="149" text-anchor="middle">0.28</text>
+<rect x="652" y="132" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="673" y="149" text-anchor="middle">1.72</text>
+<rect x="526" y="158" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="175" text-anchor="middle">1.00</text>
+<rect x="568" y="158" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="589" y="175" text-anchor="middle">1.00</text>
+<rect x="610" y="158" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="175" text-anchor="middle">1.00</text>
+<rect x="652" y="158" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="673" y="175" text-anchor="middle">1.00</text>
+<rect x="526" y="184" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="201" text-anchor="middle">0.28</text>
+<rect x="568" y="184" width="42" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="589" y="201" text-anchor="middle">1.72</text>
+<rect x="610" y="184" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="201" text-anchor="middle">1.72</text>
+<rect x="652" y="184" width="42" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="673" y="201" text-anchor="middle">0.28</text>
+<text x="610" y="228" fill="#52514e" text-anchor="middle">blue: head 1, grey: head 2</text>
+<text x="360" y="320" fill="#898781" text-anchor="middle">q, m, t: quiet, mystery, town; both heads divide their scores by √2;</text>
+<text x="360" y="336" fill="#898781" text-anchor="middle">a real layer then mixes the joined numbers with one more matrix</text>
+</g>
+</svg>

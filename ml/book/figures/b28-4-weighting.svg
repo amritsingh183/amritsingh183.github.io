@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 338" width="720" height="338" role="img" aria-labelledby="title desc">
+<title id="title">GloVe weighs each pair by f(x): rare pairs count for little, and every pair seen 100 times or more counts the same</title>
+<desc id="desc">A curve of the weighting function f of the co-occurrence count x from 0 to 150, rising as x to the power three quarters over 100 and flat at 1 from x equal to 100, with four marked points.</desc>
+<rect width="720" height="338" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="80" y1="250" x2="640" y2="250" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="80" y1="40" x2="80" y2="250" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="80" y1="250" x2="640" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="254" fill="#898781" text-anchor="end">0</text>
+<line x1="80" y1="145" x2="640" y2="145" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="149" fill="#898781" text-anchor="end">0.5</text>
+<line x1="80" y1="40" x2="640" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<text x="72" y="44" fill="#898781" text-anchor="end">1</text>
+<text x="80" y="268" fill="#898781" text-anchor="middle">0</text>
+<text x="173.3" y="268" fill="#898781" text-anchor="middle">25</text>
+<text x="266.7" y="268" fill="#898781" text-anchor="middle">50</text>
+<text x="360" y="268" fill="#898781" text-anchor="middle">75</text>
+<text x="453.3" y="268" fill="#898781" text-anchor="middle">100</text>
+<text x="546.7" y="268" fill="#898781" text-anchor="middle">125</text>
+<text x="640" y="268" fill="#898781" text-anchor="middle">150</text>
+<text x="360" y="286" fill="#52514e" text-anchor="middle">x: how many times the two words were seen together</text>
+<text x="88" y="28" fill="#52514e">weight f(x)</text>
+<path d="M80 250 L81.9 246.1 L83.7 243.4 L85.6 241.0 L87.5 238.8 L89.3 236.8 L91.2 234.9 L93.1 233.0 L94.9 231.2 L96.8 229.5 L98.7 227.8 L100.5 226.1 L102.4 224.5 L104.3 223.0 L106.1 221.4 L108 219.9 L109.9 218.4 L111.7 216.9 L113.6 215.5 L115.5 214.1 L117.3 212.7 L119.2 211.3 L121.1 209.9 L122.9 208.5 L124.8 207.2 L126.7 205.9 L128.5 204.5 L130.4 203.2 L132.3 201.9 L134.1 200.7 L136 199.4 L137.9 198.1 L139.7 196.9 L141.6 195.6 L143.5 194.4 L145.3 193.2 L147.2 192.0 L149.1 190.8 L150.9 189.6 L152.8 188.4 L154.7 187.2 L156.5 186.0 L158.4 184.9 L160.3 183.7 L162.1 182.5 L164 181.4 L165.9 180.3 L167.7 179.1 L169.6 178.0 L171.5 176.9 L173.3 175.8 L175.2 174.6 L177.1 173.5 L178.9 172.4 L180.8 171.3 L182.7 170.3 L184.5 169.2 L186.4 168.1 L188.3 167.0 L190.1 165.9 L192 164.9 L193.9 163.8 L195.7 162.8 L197.6 161.7 L199.5 160.7 L201.3 159.6 L203.2 158.6 L205.1 157.5 L206.9 156.5 L208.8 155.5 L210.7 154.4 L212.5 153.4 L214.4 152.4 L216.3 151.4 L218.1 150.4 L220 149.4 L221.9 148.4 L223.7 147.4 L225.6 146.4 L227.5 145.4 L229.3 144.4 L231.2 143.4 L233.1 142.4 L234.9 141.4 L236.8 140.4 L238.7 139.5 L240.5 138.5 L242.4 137.5 L244.3 136.5 L246.1 135.6 L248 134.6 L249.9 133.7 L251.7 132.7 L253.6 131.7 L255.5 130.8 L257.3 129.8 L259.2 128.9 L261.1 128.0 L262.9 127.0 L264.8 126.1 L266.7 125.1 L268.5 124.2 L270.4 123.3 L272.3 122.3 L274.1 121.4 L276 120.5 L277.9 119.6 L279.7 118.6 L281.6 117.7 L283.5 116.8 L285.3 115.9 L287.2 115.0 L289.1 114.1 L290.9 113.1 L292.8 112.2 L294.7 111.3 L296.5 110.4 L298.4 109.5 L300.3 108.6 L302.1 107.7 L304 106.8 L305.9 105.9 L307.7 105.1 L309.6 104.2 L311.5 103.3 L313.3 102.4 L315.2 101.5 L317.1 100.6 L318.9 99.7 L320.8 98.9 L322.7 98.0 L324.5 97.1 L326.4 96.2 L328.3 95.4 L330.1 94.5 L332 93.6 L333.9 92.7 L335.7 91.9 L337.6 91.0 L339.5 90.2 L341.3 89.3 L343.2 88.4 L345.1 87.6 L346.9 86.7 L348.8 85.9 L350.7 85.0 L352.5 84.2 L354.4 83.3 L356.3 82.5 L358.1 81.6 L360 80.8 L361.9 79.9 L363.7 79.1 L365.6 78.2 L367.5 77.4 L369.3 76.5 L371.2 75.7 L373.1 74.9 L374.9 74.0 L376.8 73.2 L378.7 72.4 L380.5 71.5 L382.4 70.7 L384.3 69.9 L386.1 69.0 L388 68.2 L389.9 67.4 L391.7 66.6 L393.6 65.7 L395.5 64.9 L397.3 64.1 L399.2 63.3 L401.1 62.5 L402.9 61.6 L404.8 60.8 L406.7 60.0 L408.5 59.2 L410.4 58.4 L412.3 57.6 L414.1 56.8 L416 56.0 L417.9 55.1 L419.7 54.3 L421.6 53.5 L423.5 52.7 L425.3 51.9 L427.2 51.1 L429.1 50.3 L430.9 49.5 L432.8 48.7 L434.7 47.9 L436.5 47.1 L438.4 46.3 L440.3 45.5 L442.1 44.7 L444 43.9 L445.9 43.2 L447.7 42.4 L449.6 41.6 L451.5 40.8 L453.3 40 L455.2 40 L457.1 40 L458.9 40 L460.8 40 L462.7 40 L464.5 40 L466.4 40 L468.3 40 L470.1 40 L472 40 L473.9 40 L475.7 40 L477.6 40 L479.5 40 L481.3 40 L483.2 40 L485.1 40 L486.9 40 L488.8 40 L490.7 40 L492.5 40 L494.4 40 L496.3 40 L498.1 40 L500 40 L501.9 40 L503.7 40 L505.6 40 L507.5 40 L509.3 40 L511.2 40 L513.1 40 L514.9 40 L516.8 40 L518.7 40 L520.5 40 L522.4 40 L524.3 40 L526.1 40 L528 40 L529.9 40 L531.7 40 L533.6 40 L535.5 40 L537.3 40 L539.2 40 L541.1 40 L542.9 40 L544.8 40 L546.7 40 L548.5 40 L550.4 40 L552.3 40 L554.1 40 L556 40 L557.9 40 L559.7 40 L561.6 40 L563.5 40 L565.3 40 L567.2 40 L569.1 40 L570.9 40 L572.8 40 L574.7 40 L576.5 40 L578.4 40 L580.3 40 L582.1 40 L584 40 L585.9 40 L587.7 40 L589.6 40 L591.5 40 L593.3 40 L595.2 40 L597.1 40 L598.9 40 L600.8 40 L602.7 40 L604.5 40 L606.4 40 L608.3 40 L610.1 40 L612 40 L613.9 40 L615.7 40 L617.6 40 L619.5 40 L621.3 40 L623.2 40 L625.1 40 L626.9 40 L628.8 40 L630.7 40 L632.5 40 L634.4 40 L636.3 40 L638.1 40 L640 40" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<circle cx="117.3" cy="212.7" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="125.3" y="228.7">f(10) = 0.18</text>
+<circle cx="266.7" cy="125.1" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="274.7" y="141.1">f(50) = 0.59</text>
+<circle cx="453.3" cy="40" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="461.3" y="56">f(100) = 1.00</text>
+<text x="360" y="308" fill="#898781" text-anchor="middle">x_max = 100 and power 3/4, the values used in the GloVe paper;</text>
+<text x="360" y="324" fill="#898781" text-anchor="middle">the biggest count in Figure 28.1, 2, would get f = 0.05</text>
+</g>
+</svg>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="title desc">
+<title id="title">Flip one distribution, slide it along the other, multiply the pairs that line up, and add</title>
+<desc id="desc">Three frames for totals of 3, 5 and 7: customer A&apos;s probabilities for 1 to 6 books in a row; beneath, customer B&apos;s probabilities in reverse order, shifted right by two cells from one frame to the next; the products of the pairs that line up, and their sum.</desc>
+<rect width="720" height="400" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="42" font-weight="600">total 3</text>
+<text x="30" y="68" fill="#52514e">A buys x</text>
+<text x="30" y="98" fill="#52514e">B buys total − x</text>
+<text x="30" y="130" fill="#52514e">products</text>
+<text x="349" y="42" fill="#898781" text-anchor="middle">x = 1</text>
+<text x="395" y="42" fill="#898781" text-anchor="middle">x = 2</text>
+<text x="441" y="42" fill="#898781" text-anchor="middle">x = 3</text>
+<text x="487" y="42" fill="#898781" text-anchor="middle">x = 4</text>
+<text x="533" y="42" fill="#898781" text-anchor="middle">x = 5</text>
+<text x="579" y="42" fill="#898781" text-anchor="middle">x = 6</text>
+<rect x="326" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="67" text-anchor="middle">0.35</text>
+<rect x="372" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="67" text-anchor="middle">0.275</text>
+<rect x="418" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="441" y="67" text-anchor="middle">0.175</text>
+<rect x="464" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="487" y="67" text-anchor="middle">0.1</text>
+<rect x="510" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="533" y="67" text-anchor="middle">0.05</text>
+<rect x="556" y="50" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="67" text-anchor="middle">0.05</text>
+<rect x="372" y="80" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="97" text-anchor="middle">0.35</text>
+<text x="395" y="118" fill="#898781" text-anchor="middle">1</text>
+<text x="395" y="134" text-anchor="middle">0.0963</text>
+<rect x="326" y="80" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="97" text-anchor="middle">0.275</text>
+<text x="349" y="118" fill="#898781" text-anchor="middle">2</text>
+<text x="349" y="134" text-anchor="middle">0.0963</text>
+<rect x="280" y="80" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="303" y="97" fill="#898781" text-anchor="middle">0.175</text>
+<text x="303" y="118" fill="#898781" text-anchor="middle">3</text>
+<rect x="234" y="80" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="257" y="97" fill="#898781" text-anchor="middle">0.1</text>
+<text x="257" y="118" fill="#898781" text-anchor="middle">4</text>
+<rect x="188" y="80" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="211" y="97" fill="#898781" text-anchor="middle">0.05</text>
+<text x="211" y="118" fill="#898781" text-anchor="middle">5</text>
+<rect x="142" y="80" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="97" fill="#898781" text-anchor="middle">0.05</text>
+<text x="165" y="118" fill="#898781" text-anchor="middle">6</text>
+<text x="614" y="98" fill="#eb6834">sum = 0.1925</text>
+<text x="30" y="154" font-weight="600">total 5</text>
+<text x="30" y="180" fill="#52514e">A buys x</text>
+<text x="30" y="210" fill="#52514e">B buys total − x</text>
+<text x="30" y="242" fill="#52514e">products</text>
+<text x="349" y="154" fill="#898781" text-anchor="middle">x = 1</text>
+<text x="395" y="154" fill="#898781" text-anchor="middle">x = 2</text>
+<text x="441" y="154" fill="#898781" text-anchor="middle">x = 3</text>
+<text x="487" y="154" fill="#898781" text-anchor="middle">x = 4</text>
+<text x="533" y="154" fill="#898781" text-anchor="middle">x = 5</text>
+<text x="579" y="154" fill="#898781" text-anchor="middle">x = 6</text>
+<rect x="326" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="179" text-anchor="middle">0.35</text>
+<rect x="372" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="179" text-anchor="middle">0.275</text>
+<rect x="418" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="441" y="179" text-anchor="middle">0.175</text>
+<rect x="464" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="487" y="179" text-anchor="middle">0.1</text>
+<rect x="510" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="533" y="179" text-anchor="middle">0.05</text>
+<rect x="556" y="162" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="179" text-anchor="middle">0.05</text>
+<rect x="464" y="192" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="487" y="209" text-anchor="middle">0.35</text>
+<text x="487" y="230" fill="#898781" text-anchor="middle">1</text>
+<text x="487" y="246" text-anchor="middle">0.035</text>
+<rect x="418" y="192" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="441" y="209" text-anchor="middle">0.275</text>
+<text x="441" y="230" fill="#898781" text-anchor="middle">2</text>
+<text x="441" y="246" text-anchor="middle">0.0481</text>
+<rect x="372" y="192" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="209" text-anchor="middle">0.175</text>
+<text x="395" y="230" fill="#898781" text-anchor="middle">3</text>
+<text x="395" y="246" text-anchor="middle">0.0481</text>
+<rect x="326" y="192" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="209" text-anchor="middle">0.1</text>
+<text x="349" y="230" fill="#898781" text-anchor="middle">4</text>
+<text x="349" y="246" text-anchor="middle">0.035</text>
+<rect x="280" y="192" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="303" y="209" fill="#898781" text-anchor="middle">0.05</text>
+<text x="303" y="230" fill="#898781" text-anchor="middle">5</text>
+<rect x="234" y="192" width="46" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="257" y="209" fill="#898781" text-anchor="middle">0.05</text>
+<text x="257" y="230" fill="#898781" text-anchor="middle">6</text>
+<text x="614" y="210" fill="#eb6834">sum = 0.16625</text>
+<text x="30" y="266" font-weight="600">total 7</text>
+<text x="30" y="292" fill="#52514e">A buys x</text>
+<text x="30" y="322" fill="#52514e">B buys total − x</text>
+<text x="30" y="354" fill="#52514e">products</text>
+<text x="349" y="266" fill="#898781" text-anchor="middle">x = 1</text>
+<text x="395" y="266" fill="#898781" text-anchor="middle">x = 2</text>
+<text x="441" y="266" fill="#898781" text-anchor="middle">x = 3</text>
+<text x="487" y="266" fill="#898781" text-anchor="middle">x = 4</text>
+<text x="533" y="266" fill="#898781" text-anchor="middle">x = 5</text>
+<text x="579" y="266" fill="#898781" text-anchor="middle">x = 6</text>
+<rect x="326" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="291" text-anchor="middle">0.35</text>
+<rect x="372" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="291" text-anchor="middle">0.275</text>
+<rect x="418" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="441" y="291" text-anchor="middle">0.175</text>
+<rect x="464" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="487" y="291" text-anchor="middle">0.1</text>
+<rect x="510" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="533" y="291" text-anchor="middle">0.05</text>
+<rect x="556" y="274" width="46" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="291" text-anchor="middle">0.05</text>
+<rect x="556" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="321" text-anchor="middle">0.35</text>
+<text x="579" y="342" fill="#898781" text-anchor="middle">1</text>
+<text x="579" y="358" text-anchor="middle">0.0175</text>
+<rect x="510" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="533" y="321" text-anchor="middle">0.275</text>
+<text x="533" y="342" fill="#898781" text-anchor="middle">2</text>
+<text x="533" y="358" text-anchor="middle">0.0138</text>
+<rect x="464" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="487" y="321" text-anchor="middle">0.175</text>
+<text x="487" y="342" fill="#898781" text-anchor="middle">3</text>
+<text x="487" y="358" text-anchor="middle">0.0175</text>
+<rect x="418" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="441" y="321" text-anchor="middle">0.1</text>
+<text x="441" y="342" fill="#898781" text-anchor="middle">4</text>
+<text x="441" y="358" text-anchor="middle">0.0175</text>
+<rect x="372" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="321" text-anchor="middle">0.05</text>
+<text x="395" y="342" fill="#898781" text-anchor="middle">5</text>
+<text x="395" y="358" text-anchor="middle">0.0138</text>
+<rect x="326" y="304" width="46" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="349" y="321" text-anchor="middle">0.05</text>
+<text x="349" y="342" fill="#898781" text-anchor="middle">6</text>
+<text x="349" y="358" text-anchor="middle">0.0175</text>
+<text x="614" y="322" fill="#eb6834">sum = 0.0975</text>
+<text x="30" y="380" fill="#52514e">B&apos;s row is reversed (the flip) and slides two cells right per frame; pale cells face nothing.</text>
+</g>
+</svg>

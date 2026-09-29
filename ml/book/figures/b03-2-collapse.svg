@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">A determinant of zero flattens the plane</title>
+<desc id="desc">Left: the unit square and two different points, (2, 0) and (0, 1). Right: after a matrix with determinant 0 the whole plane lies on one line, the square is a segment, and both points land on (4, 2), so the move cannot be undone.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="32" y1="180" x2="32" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="72" y1="180" x2="72" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="112" y1="180" x2="112" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="152" y1="180" x2="152" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="192" y1="180" x2="192" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="156" x2="200" y2="156" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="116" x2="200" y2="116" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="24" y1="76" x2="200" y2="76" stroke="#e1e0d9" stroke-width="1"/>
+<text x="32" y="129" fill="#898781" text-anchor="middle">−1</text>
+<text x="112" y="129" fill="#898781" text-anchor="middle">1</text>
+<text x="152" y="129" fill="#898781" text-anchor="middle">2</text>
+<text x="192" y="129" fill="#898781" text-anchor="middle">3</text>
+<text x="67" y="160" fill="#898781" text-anchor="end">−1</text>
+<text x="67" y="80" fill="#898781" text-anchor="end">1</text>
+<line x1="72" y1="80.7" x2="76.7" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="86.4" x2="82.4" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="92.0" x2="88.0" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="97.7" x2="93.7" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="103.4" x2="99.4" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="109.0" x2="105.0" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="72" y1="114.7" x2="110.7" y2="76" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="76.3" y1="116" x2="112" y2="80.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="82.0" y1="116" x2="112" y2="86.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="87.6" y1="116" x2="112" y2="91.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="93.3" y1="116" x2="112" y2="97.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="99.0" y1="116" x2="112" y2="103.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="104.6" y1="116" x2="112" y2="108.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="110.3" y1="116" x2="112" y2="114.3" stroke="#9ec5f4" stroke-width="1"/>
+<path d="M72 116 L112 116 L112 76 L72 76 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<line x1="24" y1="92" x2="28.5" y2="94.2" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="31.6" y1="95.8" x2="36.1" y2="98.0" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="39.2" y1="99.6" x2="43.7" y2="101.8" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="46.8" y1="103.4" x2="51.3" y2="105.6" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="54.4" y1="107.2" x2="58.9" y2="109.4" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="62.0" y1="111.0" x2="66.5" y2="113.2" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="69.6" y1="114.8" x2="74.1" y2="117.0" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="77.2" y1="118.6" x2="81.7" y2="120.8" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="84.8" y1="122.4" x2="89.3" y2="124.6" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="92.4" y1="126.2" x2="96.9" y2="128.4" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="100.0" y1="130.0" x2="104.5" y2="132.2" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="107.6" y1="133.8" x2="112.1" y2="136.1" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="115.2" y1="137.6" x2="119.7" y2="139.9" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="122.8" y1="141.4" x2="127.3" y2="143.7" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="130.4" y1="145.2" x2="134.9" y2="147.5" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="138.0" y1="149.0" x2="142.5" y2="151.3" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="145.6" y1="152.8" x2="150.1" y2="155.1" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="153.2" y1="156.6" x2="157.7" y2="158.9" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="160.8" y1="160.4" x2="165.3" y2="162.7" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="168.4" y1="164.2" x2="172.9" y2="166.5" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="176.1" y1="168.0" x2="180.5" y2="170.3" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="183.7" y1="171.8" x2="188.1" y2="174.1" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="191.3" y1="175.6" x2="195.7" y2="177.9" stroke="#1baf7a" stroke-width="1.5"/>
+<line x1="198.9" y1="179.4" x2="200" y2="180" stroke="#1baf7a" stroke-width="1.5"/>
+<circle cx="152" cy="116" r="5" fill="#2a78d6"/>
+<circle cx="72" cy="76" r="5" fill="#eb6834"/>
+<rect x="157" y="97" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="160" y="109" fill="#2a78d6">(2, 0)</text>
+<rect x="77" y="58" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="80" y="70" fill="#eb6834">(0, 1)</text>
+<line x1="348" y1="244" x2="348" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="388" y1="244" x2="388" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="428" y1="244" x2="428" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="468" y1="244" x2="468" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="508" y1="244" x2="508" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="548" y1="244" x2="548" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="588" y1="244" x2="588" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="628" y1="244" x2="628" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="668" y1="244" x2="668" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="340" y1="236" x2="676" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="340" y1="196" x2="676" y2="196" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="340" y1="156" x2="676" y2="156" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="340" y1="116" x2="676" y2="116" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="340" y1="76" x2="676" y2="76" stroke="#e1e0d9" stroke-width="1"/>
+<text x="348" y="209" fill="#898781" text-anchor="middle">−1</text>
+<text x="428" y="209" fill="#898781" text-anchor="middle">1</text>
+<text x="468" y="209" fill="#898781" text-anchor="middle">2</text>
+<text x="508" y="209" fill="#898781" text-anchor="middle">3</text>
+<text x="548" y="209" fill="#898781" text-anchor="middle">4</text>
+<text x="588" y="209" fill="#898781" text-anchor="middle">5</text>
+<text x="628" y="209" fill="#898781" text-anchor="middle">6</text>
+<text x="668" y="209" fill="#898781" text-anchor="middle">7</text>
+<text x="383" y="240" fill="#898781" text-anchor="end">−1</text>
+<text x="383" y="160" fill="#898781" text-anchor="end">1</text>
+<text x="383" y="120" fill="#898781" text-anchor="end">2</text>
+<text x="383" y="80" fill="#898781" text-anchor="end">3</text>
+<line x1="340" y1="220" x2="676" y2="52" stroke="#52514e" stroke-width="2"/>
+<line x1="388" y1="196" x2="628" y2="76" stroke="#2a78d6" stroke-width="5"/>
+<circle cx="548" cy="116" r="7" fill="#2a78d6"/>
+<circle cx="548" cy="116" r="4" fill="#eb6834"/>
+<circle cx="388" cy="196" r="4" fill="#1baf7a"/>
+<rect x="555" y="122" width="133.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="558" y="134">both land on (4, 2)</text>
+<text x="112" y="26" font-size="13" text-anchor="middle" font-weight="600">before</text>
+<text x="508" y="26" font-size="13" text-anchor="middle" font-weight="600">after a matrix with det 0</text>
+<text x="340" y="268">columns (2, 1) and (4, 2) lie on one line:</text>
+<text x="340" y="285">det = 2×2 − 4×1 = 0</text>
+<text x="530" y="285" fill="#52514e">the square is now a segment</text>
+<text x="24" y="204" fill="#52514e">two different inputs;</text>
+<text x="24" y="221" fill="#1baf7a">every point on the green dashed</text>
+<text x="24" y="236" fill="#1baf7a">line lands on (0, 0)</text>
+</g>
+</svg>

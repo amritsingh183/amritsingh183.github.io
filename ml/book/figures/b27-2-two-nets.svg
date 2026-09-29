@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 344" width="720" height="344" role="img" aria-labelledby="title desc">
+<title id="title">CBOW guesses the centre word from its neighbours; skip-gram guesses each neighbour from the centre word; both look words up in the same table</title>
+<desc id="desc">Two left-to-right flows. Top: four neighbour words enter a lookup box, their rows are averaged, every vocabulary word is scored and a softmax gives probabilities, and the target is detective. Bottom: detective enters the lookup box, its row scores every vocabulary word, and the targets are the four neighbours in turn.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="344" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="16" y="26" font-size="13" font-weight="600">CBOW</text>
+<rect x="16" y="40" width="90" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="61" y="55" text-anchor="middle">small</text>
+<line x1="108" y1="51" x2="150" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="16" y="68" width="90" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="61" y="83" text-anchor="middle">town</text>
+<line x1="108" y1="79" x2="150" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="16" y="96" width="90" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="61" y="111" text-anchor="middle">and</text>
+<line x1="108" y1="107" x2="150" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="16" y="124" width="90" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="61" y="139" text-anchor="middle">a</text>
+<line x1="108" y1="135" x2="150" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="152" y="70" width="150" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="227" y="89" text-anchor="middle">look up 4 rows</text>
+<text x="227" y="104" fill="#52514e" text-anchor="middle">18 rows × 2 numbers</text>
+<line x1="304" y1="92" x2="320" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="322" y="70" width="98" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="371" y="89" text-anchor="middle">average</text>
+<text x="371" y="104" fill="#52514e" text-anchor="middle">one vector</text>
+<line x1="422" y1="92" x2="438" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="440" y="70" width="158" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="519" y="89" text-anchor="middle">score all 18 words</text>
+<text x="519" y="104" fill="#52514e" text-anchor="middle">softmax: probabilities</text>
+<line x1="600" y1="92" x2="620" y2="92" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="622" y="81" width="84" height="22" rx="2" fill="#86b6ef" stroke="#1baf7a" stroke-width="1"/>
+<text x="664" y="96" text-anchor="middle">detective</text>
+<line x1="16" y1="168" x2="704" y2="168" stroke="#e1e0d9" stroke-width="1"/>
+<text x="16" y="194" font-size="13" font-weight="600">skip-gram</text>
+<rect x="16" y="249" width="90" height="22" rx="2" fill="#86b6ef" stroke="#1baf7a" stroke-width="1"/>
+<text x="61" y="264" text-anchor="middle">detective</text>
+<line x1="108" y1="260" x2="150" y2="260" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="152" y="238" width="150" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="227" y="257" text-anchor="middle">look up 1 row</text>
+<text x="227" y="272" fill="#52514e" text-anchor="middle">18 rows × 2 numbers</text>
+<line x1="304" y1="260" x2="438" y2="260" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="440" y="238" width="158" height="44" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="519" y="257" text-anchor="middle">score all 18 words</text>
+<text x="519" y="272" fill="#52514e" text-anchor="middle">softmax: probabilities</text>
+<line x1="600" y1="260" x2="620" y2="219" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="622" y="208" width="84" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="664" y="223" text-anchor="middle">small</text>
+<line x1="600" y1="260" x2="620" y2="247" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="622" y="236" width="84" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="664" y="251" text-anchor="middle">town</text>
+<line x1="600" y1="260" x2="620" y2="275" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="622" y="264" width="84" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="664" y="279" text-anchor="middle">and</text>
+<line x1="600" y1="260" x2="620" y2="303" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="622" y="292" width="84" height="22" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="664" y="307" text-anchor="middle">a</text>
+<text x="380" y="332" fill="#52514e" text-anchor="middle">one target at a time: four training examples from one window</text>
+</g>
+</svg>

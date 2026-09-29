@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">An encoder reads the English blurb one word at a time and hands the decoder a single context vector; everything the decoder knows must pass through it</title>
+<desc id="desc">Top row: seven encoder cells linked left to right, each fed one English word of blurb B1. The last cell feeds one outlined context vector box. Bottom row: seven decoder cells linked left to right, starting from the context vector and producing the French words.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="30" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="52" y="108" text-anchor="middle">a</text>
+<line x1="76" y1="71" x2="90" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="92" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="114" y="108" text-anchor="middle">quiet</text>
+<line x1="138" y1="71" x2="152" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="154" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="176" y="108" text-anchor="middle">mystery</text>
+<line x1="200" y1="71" x2="214" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="216" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="238" y="108" text-anchor="middle">in</text>
+<line x1="262" y1="71" x2="276" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="278" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="300" y="108" text-anchor="middle">a</text>
+<line x1="324" y1="71" x2="338" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="340" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="362" y="108" text-anchor="middle">small</text>
+<line x1="386" y1="71" x2="400" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="402" y="56" width="44" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="424" y="108" text-anchor="middle">town</text>
+<text x="30" y="40">encoder: reads the English, one word per step</text>
+<line x1="448" y1="71" x2="512" y2="71" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="514" y="50" width="116" height="44" rx="2" fill="#86b6ef" stroke="#eb6834" stroke-width="1.5"/>
+<text x="572" y="69" text-anchor="middle">context vector</text>
+<text x="572" y="85" fill="#52514e" text-anchor="middle">one fixed size</text>
+<text x="572" y="112" fill="#eb6834" text-anchor="middle">the bottleneck</text>
+<path d="M572 94 L572 150 L52 150 L52 170" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="52" y1="168" x2="52" y2="184" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="30" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="52" y="238" text-anchor="middle">un</text>
+<line x1="76" y1="201" x2="90" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="92" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="114" y="238" text-anchor="middle">mystère</text>
+<line x1="138" y1="201" x2="152" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="154" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="176" y="238" text-anchor="middle">tranquille</text>
+<line x1="200" y1="201" x2="214" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="216" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="238" y="238" text-anchor="middle">dans</text>
+<line x1="262" y1="201" x2="276" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="278" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="300" y="238" text-anchor="middle">une</text>
+<line x1="324" y1="201" x2="338" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="340" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="362" y="238" text-anchor="middle">petite</text>
+<line x1="386" y1="201" x2="400" y2="201" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="402" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>
+<text x="424" y="238" text-anchor="middle">ville</text>
+<text x="480" y="206">decoder: writes the French,</text>
+<text x="480" y="222">starting from the context</text>
+<text x="360" y="280" fill="#52514e" text-anchor="middle">a long blurb and a short one must fit through the same fixed-size vector</text>
+</g>
+</svg>

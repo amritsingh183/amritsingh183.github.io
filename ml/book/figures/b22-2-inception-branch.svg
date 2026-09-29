@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">A 1 by 1 reduction before a 3 by 3 convolution cuts the multiplications to less than a third</title>
+<desc id="desc">Top, a 3 by 3 convolution straight from 256 channels to 128 with its multiplication count as a long orange bar; bottom, a 1 by 1 convolution down to 64 channels followed by the 3 by 3 convolution, with a two-part blue bar about a third as long.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="34" font-weight="600">input: 28 × 28 × 256; output: 28 × 28 × 128</text>
+<rect x="30" y="60" width="180" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="120" y="79" text-anchor="middle">3 × 3 convolution</text>
+<text x="120" y="94" fill="#52514e" text-anchor="middle">256 → 128 channels</text>
+<rect x="240" y="70" width="380" height="24" rx="2" fill="#eb6834"/>
+<text x="628" y="87">231,211,008</text>
+<rect x="30" y="150" width="180" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="120" y="169" text-anchor="middle">1 × 1 convolution</text>
+<text x="120" y="184" fill="#52514e" text-anchor="middle">256 → 64 channels</text>
+<rect x="30" y="210" width="180" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="120" y="229" text-anchor="middle">3 × 3 convolution</text>
+<text x="120" y="244" fill="#52514e" text-anchor="middle">64 → 128 channels</text>
+<line x1="120" y1="195" x2="120" y2="208" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="240" y="160" width="21.1" height="24" rx="2" fill="#86b6ef"/>
+<text x="269.1" y="177">12,845,056</text>
+<rect x="240" y="220" width="95" height="24" rx="2" fill="#2a78d6"/>
+<text x="343" y="237">57,802,752</text>
+<text x="30" y="282" fill="#52514e">Multiplications: 70,647,808 with the reduction against 231,211,008 without, 30.6% of the direct cost.</text>
+<text x="240" y="138" fill="#52514e">multiplications per image</text>
+</g>
+</svg>

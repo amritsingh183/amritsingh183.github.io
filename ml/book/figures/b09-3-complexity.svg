@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="title desc">
+<title id="title">Training error falls; test error falls, then rises</title>
+<desc id="desc">Mean squared error against polynomial degree from 0 to 7. The training error (blue) falls to 0.00 at degree 7. The test error (green) is lowest, 0.38, at degree 2 and climbs after it. Off the top of the chart: degree 0: training 5.55, test 6.47.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="320" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="70" y1="260" x2="490" y2="260" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="264" fill="#898781" text-anchor="end">0.00</text>
+<line x1="70" y1="223.3" x2="490" y2="223.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="227.3" fill="#898781" text-anchor="end">0.25</text>
+<line x1="70" y1="186.7" x2="490" y2="186.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="190.7" fill="#898781" text-anchor="end">0.50</text>
+<line x1="70" y1="150" x2="490" y2="150" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="154" fill="#898781" text-anchor="end">0.75</text>
+<line x1="70" y1="113.3" x2="490" y2="113.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="117.3" fill="#898781" text-anchor="end">1.00</text>
+<line x1="70" y1="76.7" x2="490" y2="76.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="80.7" fill="#898781" text-anchor="end">1.25</text>
+<line x1="70" y1="40" x2="490" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="44" fill="#898781" text-anchor="end">1.50</text>
+<text x="91.5" y="276" fill="#898781" text-anchor="middle">0</text>
+<text x="145.4" y="276" fill="#898781" text-anchor="middle">1</text>
+<text x="199.2" y="276" fill="#898781" text-anchor="middle">2</text>
+<text x="253.1" y="276" fill="#898781" text-anchor="middle">3</text>
+<text x="306.9" y="276" fill="#898781" text-anchor="middle">4</text>
+<text x="360.8" y="276" fill="#898781" text-anchor="middle">5</text>
+<text x="414.6" y="276" fill="#898781" text-anchor="middle">6</text>
+<text x="468.5" y="276" fill="#898781" text-anchor="middle">7</text>
+<line x1="70" y1="260" x2="490" y2="260" stroke="#c3c2b7" stroke-width="1"/>
+<text x="280" y="294" fill="#52514e" text-anchor="middle">polynomial degree (how bendy the curve may be)</text>
+<text x="20" y="26" fill="#52514e">mean squared error</text>
+<line x1="135.5" y1="40" x2="145.4" y2="173.2" stroke="#2a78d6" stroke-width="2"/>
+<line x1="145.4" y1="173.2" x2="199.2" y2="210.5" stroke="#2a78d6" stroke-width="2"/>
+<line x1="199.2" y1="210.5" x2="253.1" y2="211.1" stroke="#2a78d6" stroke-width="2"/>
+<line x1="253.1" y1="211.1" x2="306.9" y2="212.9" stroke="#2a78d6" stroke-width="2"/>
+<line x1="306.9" y1="212.9" x2="360.8" y2="220.1" stroke="#2a78d6" stroke-width="2"/>
+<line x1="360.8" y1="220.1" x2="414.6" y2="220.3" stroke="#2a78d6" stroke-width="2"/>
+<line x1="414.6" y1="220.3" x2="468.5" y2="260" stroke="#2a78d6" stroke-width="2"/>
+<circle cx="145.4" cy="173.2" r="4" fill="#2a78d6"/>
+<circle cx="199.2" cy="210.5" r="4" fill="#2a78d6"/>
+<circle cx="253.1" cy="211.1" r="4" fill="#2a78d6"/>
+<circle cx="306.9" cy="212.9" r="4" fill="#2a78d6"/>
+<circle cx="360.8" cy="220.1" r="4" fill="#2a78d6"/>
+<circle cx="414.6" cy="220.3" r="4" fill="#2a78d6"/>
+<circle cx="468.5" cy="260" r="4" fill="#2a78d6"/>
+<text x="458.5" y="252" fill="#2a78d6" text-anchor="end">training</text>
+<line x1="137.0" y1="40" x2="145.4" y2="175.0" stroke="#1baf7a" stroke-width="2"/>
+<line x1="145.4" y1="175.0" x2="199.2" y2="203.9" stroke="#1baf7a" stroke-width="2"/>
+<line x1="199.2" y1="203.9" x2="253.1" y2="198.2" stroke="#1baf7a" stroke-width="2"/>
+<line x1="253.1" y1="198.2" x2="306.9" y2="197.2" stroke="#1baf7a" stroke-width="2"/>
+<line x1="306.9" y1="197.2" x2="360.8" y2="173.9" stroke="#1baf7a" stroke-width="2"/>
+<line x1="360.8" y1="173.9" x2="414.6" y2="173.4" stroke="#1baf7a" stroke-width="2"/>
+<line x1="414.6" y1="173.4" x2="468.5" y2="65.5" stroke="#1baf7a" stroke-width="2"/>
+<circle cx="145.4" cy="175.0" r="4" fill="#1baf7a"/>
+<circle cx="199.2" cy="203.9" r="4" fill="#1baf7a"/>
+<circle cx="253.1" cy="198.2" r="4" fill="#1baf7a"/>
+<circle cx="306.9" cy="197.2" r="4" fill="#1baf7a"/>
+<circle cx="360.8" cy="173.9" r="4" fill="#1baf7a"/>
+<circle cx="414.6" cy="173.4" r="4" fill="#1baf7a"/>
+<circle cx="468.5" cy="65.5" r="4" fill="#1baf7a"/>
+<text x="458.5" y="69.5" fill="#1baf7a" text-anchor="end">test</text>
+<line x1="91.5" y1="66" x2="91.5" y2="44" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="153.5" y="54" fill="#52514e">off the chart at degree 0: training 5.55, test 6.47</text>
+<text x="199.2" y="169.9" fill="#1baf7a" text-anchor="middle">sweet spot</text>
+<line x1="199.2" y1="175.9" x2="199.2" y2="196.9" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="530" y="60" font-weight="600">mean squared error</text>
+<rect x="530" y="70" width="58" height="24" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="86" text-anchor="middle">degree</text>
+<rect x="588" y="70" width="58" height="24" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="86" text-anchor="middle">training</text>
+<rect x="646" y="70" width="58" height="24" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="86" text-anchor="middle">test</text>
+<rect x="530" y="94" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="110" text-anchor="middle">0</text>
+<rect x="588" y="94" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="110" fill="#2a78d6" text-anchor="middle">5.55</text>
+<rect x="646" y="94" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="110" fill="#1baf7a" text-anchor="middle">6.47</text>
+<rect x="530" y="118" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="134" text-anchor="middle">1</text>
+<rect x="588" y="118" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="134" fill="#2a78d6" text-anchor="middle">0.59</text>
+<rect x="646" y="118" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="134" fill="#1baf7a" text-anchor="middle">0.58</text>
+<rect x="530" y="142" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="158" text-anchor="middle">2</text>
+<rect x="588" y="142" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="158" fill="#2a78d6" text-anchor="middle">0.34</text>
+<rect x="646" y="142" width="58" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="158" fill="#1baf7a" text-anchor="middle">0.38</text>
+<rect x="530" y="166" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="182" text-anchor="middle">3</text>
+<rect x="588" y="166" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="182" fill="#2a78d6" text-anchor="middle">0.33</text>
+<rect x="646" y="166" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="182" fill="#1baf7a" text-anchor="middle">0.42</text>
+<rect x="530" y="190" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="206" text-anchor="middle">4</text>
+<rect x="588" y="190" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="206" fill="#2a78d6" text-anchor="middle">0.32</text>
+<rect x="646" y="190" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="206" fill="#1baf7a" text-anchor="middle">0.43</text>
+<rect x="530" y="214" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="230" text-anchor="middle">5</text>
+<rect x="588" y="214" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="230" fill="#2a78d6" text-anchor="middle">0.27</text>
+<rect x="646" y="214" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="230" fill="#1baf7a" text-anchor="middle">0.59</text>
+<rect x="530" y="238" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="254" text-anchor="middle">6</text>
+<rect x="588" y="238" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="254" fill="#2a78d6" text-anchor="middle">0.27</text>
+<rect x="646" y="238" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="254" fill="#1baf7a" text-anchor="middle">0.59</text>
+<rect x="530" y="262" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="559" y="278" text-anchor="middle">7</text>
+<rect x="588" y="262" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="617" y="278" fill="#2a78d6" text-anchor="middle">0.00</text>
+<rect x="646" y="262" width="58" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="675" y="278" fill="#1baf7a" text-anchor="middle">1.33</text>
+</g>
+</svg>

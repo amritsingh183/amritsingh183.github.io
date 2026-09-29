@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">BERT is first trained to fill in hidden words, then the same weights are fine-tuned with a small new head for a task such as sorting blurbs</title>
+<desc id="desc">Top: the blurb B1 with the word mystery replaced by a mask token passes through BERT, which guesses the hidden word. Bottom: the same BERT, copied, reads a whole blurb and a small new head on the first position&apos;s output answers whether the book is a mystery.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="16" y="28" font-size="13" font-weight="600">1. pre-training: guess the hidden word</text>
+<rect x="16" y="136" width="49.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="40.8" y="153" text-anchor="middle">[CLS]</text>
+<rect x="70.6" y="136" width="22.7" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="82.0" y="153" text-anchor="middle">a</text>
+<rect x="98.3" y="136" width="49.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="123.1" y="153" text-anchor="middle">quiet</text>
+<rect x="152.9" y="136" width="56.3" height="26" rx="2" fill="#86b6ef" stroke="#c3c2b7" stroke-width="1"/>
+<text x="181.1" y="153" text-anchor="middle">[MASK]</text>
+<rect x="214.2" y="136" width="29.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="229.0" y="153" text-anchor="middle">in</text>
+<rect x="248.7" y="136" width="22.7" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="260.0" y="153" text-anchor="middle">a</text>
+<rect x="276.4" y="136" width="49.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="301.2" y="153" text-anchor="middle">small</text>
+<rect x="331" y="136" width="42.9" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="352.4" y="153" text-anchor="middle">town</text>
+<rect x="378.9" y="136" width="49.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="403.7" y="153" text-anchor="middle">[SEP]</text>
+<rect x="16" y="84" width="412.5" height="36" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="222.2" y="107" text-anchor="middle">BERT: 12 blocks that read the whole blurb in both directions</text>
+<line x1="181.1" y1="82" x2="181.1" y2="58" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="189.1" y="64">guess: mystery</text>
+<text x="440.5" y="94" fill="#52514e">15% of word pieces</text>
+<text x="440.5" y="110" fill="#52514e">are chosen for guessing;</text>
+<text x="440.5" y="126" fill="#52514e">no labels needed</text>
+<line x1="16" y1="184" x2="704" y2="184" stroke="#e1e0d9" stroke-width="1"/>
+<text x="16" y="212" font-size="13" font-weight="600">2. fine-tuning: same weights, one small new part</text>
+<rect x="16" y="316" width="49.6" height="26" rx="2" fill="#86b6ef" stroke="#c3c2b7" stroke-width="1"/>
+<text x="40.8" y="333" text-anchor="middle">[CLS]</text>
+<rect x="70.6" y="316" width="36.2" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="88.7" y="333" text-anchor="middle">the</text>
+<rect x="111.8" y="316" width="76.5" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="150" y="333" text-anchor="middle">detective</text>
+<rect x="193.2" y="316" width="63.0" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="224.8" y="333" text-anchor="middle">returns</text>
+<rect x="261.3" y="316" width="29.4" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="276" y="333" text-anchor="middle">to</text>
+<rect x="295.7" y="316" width="36.2" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="313.8" y="333" text-anchor="middle">the</text>
+<rect x="336.9" y="316" width="63.0" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="368.4" y="333" text-anchor="middle">village</text>
+<rect x="404.9" y="316" width="49.6" height="26" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="429.7" y="333" text-anchor="middle">[SEP]</text>
+<rect x="16" y="264" width="438.5" height="36" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="235.3" y="287" text-anchor="middle">BERT, starting from the pre-trained weights</text>
+<line x1="40.8" y1="262" x2="40.8" y2="244" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="16" y="222" width="150" height="22" rx="2" fill="#86b6ef" stroke="#1baf7a" stroke-width="1"/>
+<text x="91" y="237" text-anchor="middle">new head: 2 outputs</text>
+<line x1="168" y1="233" x2="196" y2="233" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="202" y="237">is this blurb a mystery? yes or no</text>
+<text x="466.5" y="280" fill="#52514e">the output at [CLS]</text>
+<text x="466.5" y="296" fill="#52514e">stands for the whole input</text>
+</g>
+</svg>

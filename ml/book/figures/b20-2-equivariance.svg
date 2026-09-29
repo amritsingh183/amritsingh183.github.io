@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">Convolution is equivariant to a shift; pooling is only approximately invariant</title>
+<desc id="desc">Two columns, before and after shifting a bright bar one cell to the right: the input strips, the detector outputs, which shift by the same one cell, and the max over each half, where the peak value 27 stays in the same pooled cell.</desc>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="24" fill="#52514e">detector kernel [1, 1, 1] (adds three neighbours), then the max over each half of its output</text>
+<text x="40" y="56" font-weight="600">a bar at cells 3 to 5</text>
+<text x="40" y="80" fill="#52514e">input</text>
+<rect x="40" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="51" y="101" text-anchor="middle">0</text>
+<rect x="62" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="73" y="101" text-anchor="middle">0</text>
+<rect x="84" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="101" text-anchor="middle">9</text>
+<rect x="106" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="117" y="101" text-anchor="middle">9</text>
+<rect x="128" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="139" y="101" text-anchor="middle">9</text>
+<rect x="150" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="161" y="101" text-anchor="middle">0</text>
+<rect x="172" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="183" y="101" text-anchor="middle">0</text>
+<rect x="194" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="205" y="101" text-anchor="middle">0</text>
+<rect x="216" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="227" y="101" text-anchor="middle">0</text>
+<rect x="238" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="249" y="101" text-anchor="middle">0</text>
+<text x="40" y="142" fill="#52514e">detector output (moves with the bar)</text>
+<rect x="62" y="148" width="22" height="22" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="73" y="163" text-anchor="middle">9</text>
+<rect x="84" y="148" width="22" height="22" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="95" y="163" text-anchor="middle">18</text>
+<rect x="106" y="148" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="117" y="163" text-anchor="middle">27</text>
+<rect x="128" y="148" width="22" height="22" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="139" y="163" text-anchor="middle">18</text>
+<rect x="150" y="148" width="22" height="22" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="161" y="163" text-anchor="middle">9</text>
+<rect x="172" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="183" y="163" text-anchor="middle">0</text>
+<rect x="194" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="205" y="163" text-anchor="middle">0</text>
+<rect x="216" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="227" y="163" text-anchor="middle">0</text>
+<rect x="106" y="148" width="22" height="22" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="40" y="208" fill="#52514e">max over each half (4 cells)</text>
+<rect x="62" y="214" width="88" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="106" y="229" text-anchor="middle">27</text>
+<rect x="150" y="214" width="88" height="22" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="194" y="229" text-anchor="middle">9</text>
+<rect x="62" y="214" width="88" height="22" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="62" y1="172" x2="62" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="172" x2="150" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="238" y1="172" x2="238" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<text x="384" y="56" font-weight="600">the same bar, one cell to the right</text>
+<text x="384" y="80" fill="#52514e">input</text>
+<rect x="384" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="395" y="101" text-anchor="middle">0</text>
+<rect x="406" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="101" text-anchor="middle">0</text>
+<rect x="428" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="439" y="101" text-anchor="middle">0</text>
+<rect x="450" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="461" y="101" text-anchor="middle">9</text>
+<rect x="472" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="483" y="101" text-anchor="middle">9</text>
+<rect x="494" y="86" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="505" y="101" text-anchor="middle">9</text>
+<rect x="516" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="527" y="101" text-anchor="middle">0</text>
+<rect x="538" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="101" text-anchor="middle">0</text>
+<rect x="560" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="571" y="101" text-anchor="middle">0</text>
+<rect x="582" y="86" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="593" y="101" text-anchor="middle">0</text>
+<text x="384" y="142" fill="#52514e">detector output (moves with the bar)</text>
+<rect x="406" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="417" y="163" text-anchor="middle">0</text>
+<rect x="428" y="148" width="22" height="22" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="439" y="163" text-anchor="middle">9</text>
+<rect x="450" y="148" width="22" height="22" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="461" y="163" text-anchor="middle">18</text>
+<rect x="472" y="148" width="22" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="483" y="163" text-anchor="middle">27</text>
+<rect x="494" y="148" width="22" height="22" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="505" y="163" text-anchor="middle">18</text>
+<rect x="516" y="148" width="22" height="22" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="527" y="163" text-anchor="middle">9</text>
+<rect x="538" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="163" text-anchor="middle">0</text>
+<rect x="560" y="148" width="22" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="571" y="163" text-anchor="middle">0</text>
+<rect x="472" y="148" width="22" height="22" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="384" y="208" fill="#52514e">max over each half (4 cells)</text>
+<rect x="406" y="214" width="88" height="22" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="450" y="229" text-anchor="middle">27</text>
+<rect x="494" y="214" width="88" height="22" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="538" y="229" text-anchor="middle">18</text>
+<rect x="406" y="214" width="88" height="22" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<line x1="406" y1="172" x2="406" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="494" y1="172" x2="494" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="582" y1="172" x2="582" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<text x="40" y="268" fill="#52514e">Equivariant: the whole output moves one cell with the bar.</text>
+<text x="40" y="284" fill="#52514e">Nearly invariant: the pooled peak stays 27 in the left half, but the right half changes</text>
+<text x="40" y="300" fill="#52514e">from 9 to 18; a bigger shift would move the peak to another cell.</text>
+</g>
+</svg>

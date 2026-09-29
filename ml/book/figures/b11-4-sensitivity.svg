@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">A smaller slope means calmer predictions</title>
+<desc id="desc">The three lines for λ = 0, 1 and 3 with a step of one unit of pages drawn on each: the predicted price rises by 1.5, 1 and 0.6.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="50" y1="250" x2="380" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="254" fill="#898781" text-anchor="end">0</text>
+<line x1="50" y1="218.6" x2="380" y2="218.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="222.6" fill="#898781" text-anchor="end">1</text>
+<line x1="50" y1="187.1" x2="380" y2="187.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="191.1" fill="#898781" text-anchor="end">2</text>
+<line x1="50" y1="155.7" x2="380" y2="155.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="159.7" fill="#898781" text-anchor="end">3</text>
+<line x1="50" y1="124.3" x2="380" y2="124.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="128.3" fill="#898781" text-anchor="end">4</text>
+<line x1="50" y1="92.9" x2="380" y2="92.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="96.9" fill="#898781" text-anchor="end">5</text>
+<line x1="50" y1="61.4" x2="380" y2="61.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="65.4" fill="#898781" text-anchor="end">6</text>
+<line x1="50" y1="30" x2="380" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="34" fill="#898781" text-anchor="end">7</text>
+<line x1="123.3" y1="30" x2="123.3" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="123.3" y="264" fill="#898781" text-anchor="middle">1</text>
+<line x1="196.7" y1="30" x2="196.7" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="196.7" y="264" fill="#898781" text-anchor="middle">2</text>
+<line x1="270" y1="30" x2="270" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="270" y="264" fill="#898781" text-anchor="middle">3</text>
+<line x1="343.3" y1="30" x2="343.3" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="343.3" y="264" fill="#898781" text-anchor="middle">4</text>
+<line x1="50" y1="250" x2="380" y2="250" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="50" y1="30" x2="50" y2="250" stroke="#c3c2b7" stroke-width="1"/>
+<text x="420" y="50" font-weight="600">one more unit of x adds this much:</text>
+<path d="M50 234.3 L215 128.2 L367.8 30" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="270" y1="92.9" x2="275" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="278.5" y1="92.9" x2="283.5" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="287" y1="92.9" x2="292" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="295.5" y1="92.9" x2="300.5" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="304" y1="92.9" x2="309" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="312.5" y1="92.9" x2="317.5" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="321" y1="92.9" x2="326" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="329.5" y1="92.9" x2="334.5" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="338" y1="92.9" x2="343" y2="92.9" stroke="#eb6834" stroke-width="1.3"/>
+<line x1="343.3" y1="92.9" x2="343.3" y2="46.7" stroke="#eb6834" stroke-width="2"/>
+<path d="M339.7 53.9 L343.3 45.7 L347 53.9" fill="none" stroke="#eb6834" stroke-width="2"/>
+<text x="420" y="80" fill="#eb6834" font-weight="600">λ = 0: 1.5</text>
+<text x="530" y="80" fill="#52514e">y = 0.5 + 1.5x</text>
+<path d="M50 202.9 L215 132.1 L380 61.4" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="270" y1="108.6" x2="275" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="278.5" y1="108.6" x2="283.5" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="287" y1="108.6" x2="292" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="295.5" y1="108.6" x2="300.5" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="304" y1="108.6" x2="309" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="312.5" y1="108.6" x2="317.5" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="321" y1="108.6" x2="326" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="329.5" y1="108.6" x2="334.5" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="338" y1="108.6" x2="343" y2="108.6" stroke="#1baf7a" stroke-width="1.3"/>
+<line x1="343.3" y1="108.6" x2="343.3" y2="78.1" stroke="#1baf7a" stroke-width="2"/>
+<path d="M339.7 85.4 L343.3 77.1 L347 85.4" fill="none" stroke="#1baf7a" stroke-width="2"/>
+<text x="420" y="114" fill="#1baf7a" font-weight="600">λ = 1: 1</text>
+<text x="530" y="114" fill="#52514e">y = 1.5 + x</text>
+<path d="M50 177.7 L215 135.3 L380 92.9" fill="none" stroke="#2a78d6" stroke-width="2.2"/>
+<line x1="270" y1="121.1" x2="275" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="278.5" y1="121.1" x2="283.5" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="287" y1="121.1" x2="292" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="295.5" y1="121.1" x2="300.5" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="304" y1="121.1" x2="309" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="312.5" y1="121.1" x2="317.5" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="321" y1="121.1" x2="326" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="329.5" y1="121.1" x2="334.5" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="338" y1="121.1" x2="343" y2="121.1" stroke="#2a78d6" stroke-width="1.3"/>
+<line x1="343.3" y1="121.1" x2="343.3" y2="103.3" stroke="#2a78d6" stroke-width="2"/>
+<path d="M339.9 110 L343.3 102.3 L346.8 110" fill="none" stroke="#2a78d6" stroke-width="2"/>
+<text x="420" y="148" fill="#2a78d6" font-weight="600">λ = 3: 0.6</text>
+<text x="530" y="148" fill="#52514e">y = 2.3 + 0.6x</text>
+<text x="215" y="282" fill="#52514e" text-anchor="middle">x: pages (hundreds)</text>
+<text x="420" y="196" fill="#52514e">a flat line shrugs off a change in</text>
+<text x="420" y="212" fill="#52514e">the input; a steep one passes</text>
+<text x="420" y="228" fill="#52514e">every wobble straight on</text>
+<text x="420" y="256" fill="#52514e">all pass through (2, 3.5),</text>
+<text x="420" y="272" fill="#52514e">the average book</text>
+</g>
+</svg>

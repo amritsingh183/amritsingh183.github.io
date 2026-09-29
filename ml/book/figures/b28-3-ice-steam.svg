@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">In the GloVe paper&apos;s corpus the ratio of probabilities is large for solid, small for gas and close to 1 for water and fashion</title>
+<desc id="desc">For four probe words, the two probabilities from Table 1 of the GloVe paper are listed, and the printed ratio is drawn as a bar on a logarithmic scale from 0.01 to 100 with a line at 1.</desc>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="84" y="66" text-anchor="middle" font-weight="600">probe word k</text>
+<text x="172" y="66" text-anchor="middle" font-weight="600">P(k | ice)</text>
+<text x="262" y="66" text-anchor="middle" font-weight="600">P(k | steam)</text>
+<text x="510" y="50" text-anchor="middle" font-weight="600">ratio P(k | ice) ÷ P(k | steam), printed in the paper</text>
+<line x1="330" y1="76" x2="330" y2="272" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="70" fill="#898781" text-anchor="middle">0.01</text>
+<line x1="420" y1="76" x2="420" y2="272" stroke="#e1e0d9" stroke-width="1"/>
+<text x="420" y="70" fill="#898781" text-anchor="middle">0.1</text>
+<line x1="510" y1="76" x2="510" y2="272" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="510" y="70" fill="#898781" text-anchor="middle">1</text>
+<line x1="600" y1="76" x2="600" y2="272" stroke="#e1e0d9" stroke-width="1"/>
+<text x="600" y="70" fill="#898781" text-anchor="middle">10</text>
+<line x1="690" y1="76" x2="690" y2="272" stroke="#e1e0d9" stroke-width="1"/>
+<text x="690" y="70" fill="#898781" text-anchor="middle">100</text>
+<text x="84" y="104" text-anchor="middle">solid</text>
+<text x="172" y="104" text-anchor="middle">1.9 × 10⁻⁴</text>
+<text x="262" y="104" text-anchor="middle">2.2 × 10⁻⁵</text>
+<rect x="510" y="92" width="85.4" height="18" rx="2" fill="#2a78d6"/>
+<text x="601.4" y="105">8.9</text>
+<text x="84" y="152" text-anchor="middle">gas</text>
+<text x="172" y="152" text-anchor="middle">6.6 × 10⁻⁵</text>
+<text x="262" y="152" text-anchor="middle">7.8 × 10⁻⁴</text>
+<rect x="413.6" y="140" width="96.4" height="18" rx="2" fill="#eb6834"/>
+<text x="407.6" y="153" text-anchor="end">8.5 × 10⁻²</text>
+<text x="84" y="200" text-anchor="middle">water</text>
+<text x="172" y="200" text-anchor="middle">3.0 × 10⁻³</text>
+<text x="262" y="200" text-anchor="middle">2.2 × 10⁻³</text>
+<rect x="510" y="188" width="12.0" height="18" rx="2" fill="#2a78d6"/>
+<text x="528.0" y="201">1.36</text>
+<text x="84" y="248" text-anchor="middle">fashion</text>
+<text x="172" y="248" text-anchor="middle">1.7 × 10⁻⁵</text>
+<text x="262" y="248" text-anchor="middle">1.8 × 10⁻⁵</text>
+<rect x="508.4" y="236" width="2" height="18" rx="2" fill="#898781"/>
+<text x="502.4" y="249" text-anchor="end">0.96</text>
+<text x="360" y="296" fill="#52514e" text-anchor="middle">solid goes with ice and gas with steam; water (both) and fashion (neither) sit near 1</text>
+<text x="360" y="312" fill="#898781" text-anchor="middle">values from Table 1 of Pennington, Socher and Manning (2014), a corpus of 6 billion tokens</text>
+</g>
+</svg>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">Simple self-attention in three steps: dot products score every pair of words, softmax turns each row into weights, and each output is the weighted mix of the word vectors</title>
+<desc id="desc">Left: the three word vectors quiet, mystery and town drawn as arrows, with the three outputs as hollow dots. Middle: the three by three table of dot-product scores and the three by three table of softmax weights. Right: the output vectors.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="36" y1="77.2" x2="36" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="36" y1="250" x2="208.8" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="36" y="266" fill="#898781" text-anchor="middle">0</text>
+<line x1="108" y1="77.2" x2="108" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="36" y1="178" x2="208.8" y2="178" stroke="#e1e0d9" stroke-width="1"/>
+<text x="108" y="266" fill="#898781" text-anchor="middle">1</text>
+<text x="30" y="182" fill="#898781" text-anchor="end">1</text>
+<line x1="180" y1="77.2" x2="180" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="36" y1="106" x2="208.8" y2="106" stroke="#e1e0d9" stroke-width="1"/>
+<text x="180" y="266" fill="#898781" text-anchor="middle">2</text>
+<text x="30" y="110" fill="#898781" text-anchor="end">2</text>
+<line x1="36" y1="250" x2="180" y2="250" stroke="#2a78d6" stroke-width="2.5"/>
+<circle cx="180" cy="250" r="4" fill="#2a78d6"/>
+<text x="186" y="242">quiet</text>
+<line x1="36" y1="250" x2="108" y2="178" stroke="#1baf7a" stroke-width="2.5"/>
+<circle cx="108" cy="178" r="4" fill="#1baf7a"/>
+<text x="116" y="174">mystery</text>
+<line x1="36" y1="250" x2="36" y2="106" stroke="#eb6834" stroke-width="2.5"/>
+<circle cx="36" cy="106" r="4" fill="#eb6834"/>
+<text x="44" y="110">town</text>
+<circle cx="169.3" cy="239.3" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<circle cx="108" cy="178" r="5" fill="#fcfcfb" stroke="#1baf7a" stroke-width="1.5"/>
+<circle cx="46.7" cy="116.7" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="36" y="40" fill="#52514e">word vectors (lines) and</text>
+<text x="36" y="54" fill="#52514e">their outputs (hollow dots)</text>
+<text x="337" y="40" text-anchor="middle" font-weight="600">1. score</text>
+<text x="337" y="56" fill="#52514e" text-anchor="middle">dot product of each pair</text>
+<rect x="292" y="96" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307" y="115" text-anchor="middle">4</text>
+<rect x="322" y="96" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="337" y="115" text-anchor="middle">2</text>
+<rect x="352" y="96" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="367" y="115" text-anchor="middle">0</text>
+<rect x="292" y="126" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307" y="145" text-anchor="middle">2</text>
+<rect x="322" y="126" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="337" y="145" text-anchor="middle">2</text>
+<rect x="352" y="126" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="367" y="145" text-anchor="middle">2</text>
+<rect x="292" y="156" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307" y="175" text-anchor="middle">0</text>
+<rect x="322" y="156" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="337" y="175" text-anchor="middle">2</text>
+<rect x="352" y="156" width="30" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="367" y="175" text-anchor="middle">4</text>
+<text x="286" y="115" text-anchor="end">quiet</text>
+<text x="286" y="145" text-anchor="end">mystery</text>
+<text x="286" y="175" text-anchor="end">town</text>
+<text x="307" y="88" fill="#52514e" text-anchor="middle">q</text>
+<text x="337" y="88" fill="#52514e" text-anchor="middle">m</text>
+<text x="367" y="88" fill="#52514e" text-anchor="middle">t</text>
+<text x="485" y="40" text-anchor="middle" font-weight="600">2. softmax each row</text>
+<text x="485" y="56" fill="#52514e" text-anchor="middle">weights that add up to 1</text>
+<rect x="410" y="96" width="50" height="30" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="435" y="115" text-anchor="middle">0.867</text>
+<rect x="460" y="96" width="50" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="115" text-anchor="middle">0.117</text>
+<rect x="510" y="96" width="50" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="535" y="115" text-anchor="middle">0.016</text>
+<rect x="410" y="126" width="50" height="30" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="435" y="145" text-anchor="middle">0.333</text>
+<rect x="460" y="126" width="50" height="30" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="145" text-anchor="middle">0.333</text>
+<rect x="510" y="126" width="50" height="30" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="535" y="145" text-anchor="middle">0.333</text>
+<rect x="410" y="156" width="50" height="30" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="435" y="175" text-anchor="middle">0.016</text>
+<rect x="460" y="156" width="50" height="30" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="485" y="175" text-anchor="middle">0.117</text>
+<rect x="510" y="156" width="50" height="30" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="535" y="175" text-anchor="middle">0.867</text>
+<text x="435" y="88" fill="#52514e" text-anchor="middle">q</text>
+<text x="485" y="88" fill="#52514e" text-anchor="middle">m</text>
+<text x="535" y="88" fill="#52514e" text-anchor="middle">t</text>
+<line x1="386" y1="141" x2="406" y2="141" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="630" y="40" text-anchor="middle" font-weight="600">3. mix</text>
+<text x="630" y="56" fill="#52514e" text-anchor="middle">blend the vectors</text>
+<rect x="582" y="96" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="606" y="115" text-anchor="middle">1.851</text>
+<rect x="630" y="96" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="654" y="115" text-anchor="middle">0.149</text>
+<rect x="582" y="126" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="606" y="145" text-anchor="middle">1.000</text>
+<rect x="630" y="126" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="654" y="145" text-anchor="middle">1.000</text>
+<rect x="582" y="156" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="606" y="175" text-anchor="middle">0.149</text>
+<rect x="630" y="156" width="48" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="654" y="175" text-anchor="middle">1.851</text>
+<text x="606" y="88" fill="#52514e" text-anchor="middle">first</text>
+<text x="654" y="88" fill="#52514e" text-anchor="middle">second</text>
+<line x1="564" y1="141" x2="578" y2="141" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="286" y="204" fill="#898781">q, m, t: quiet, mystery, town</text>
+<text x="286" y="228">output for quiet:</text>
+<text x="286" y="246" fill="#52514e">0.867 × (2, 0) + 0.117 × (1, 1) + 0.016 × (0, 2)</text>
+<text x="286" y="264" fill="#52514e">= (1.851, 0.149)</text>
+<text x="286" y="292" fill="#52514e">mystery scores 2 with itself and 2 with quiet: no bigger</text>
+<text x="286" y="310" fill="#52514e">reorder the words: the same outputs return, reordered</text>
+<text x="360" y="344" fill="#898781" text-anchor="middle">no weights are learned in this version: the word vectors alone decide who attends to whom</text>
+</g>
+</svg>

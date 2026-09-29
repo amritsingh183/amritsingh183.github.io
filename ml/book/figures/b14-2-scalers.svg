@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">One outlier under three scalers: min–max and z-scores crowd the other seven ages, the robust scaler keeps them spread</title>
+<desc id="desc">Top, the raw ages on a line from 0 to 40 years with the interquartile fence marked; below, the scaled values of min–max, z-score and robust scaling on one shared axis from −1 to 3, the seven ordinary books in blue and the 40-year-old book in orange.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="20" y="62" font-weight="600">raw ages</text>
+<text x="20" y="78" fill="#52514e">years</text>
+<line x1="180" y1="60" x2="620" y2="60" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="180" y1="60" x2="180" y2="64" stroke="#c3c2b7" stroke-width="1"/>
+<text x="180" y="78" fill="#898781" text-anchor="middle">0</text>
+<line x1="290" y1="60" x2="290" y2="64" stroke="#c3c2b7" stroke-width="1"/>
+<text x="290" y="78" fill="#898781" text-anchor="middle">10</text>
+<line x1="400" y1="60" x2="400" y2="64" stroke="#c3c2b7" stroke-width="1"/>
+<text x="400" y="78" fill="#898781" text-anchor="middle">20</text>
+<line x1="510" y1="60" x2="510" y2="64" stroke="#c3c2b7" stroke-width="1"/>
+<text x="510" y="78" fill="#898781" text-anchor="middle">30</text>
+<line x1="620" y1="60" x2="620" y2="64" stroke="#c3c2b7" stroke-width="1"/>
+<text x="620" y="78" fill="#898781" text-anchor="middle">40</text>
+<line x1="291.4" y1="36" x2="291.4" y2="41" stroke="#52514e" stroke-width="1.5"/>
+<line x1="291.4" y1="45" x2="291.4" y2="50" stroke="#52514e" stroke-width="1.5"/>
+<line x1="291.4" y1="54" x2="291.4" y2="59" stroke="#52514e" stroke-width="1.5"/>
+<line x1="291.4" y1="63" x2="291.4" y2="66" stroke="#52514e" stroke-width="1.5"/>
+<text x="297.4" y="38" fill="#52514e">IQR fence 10.125 = 5.25 + 1.5 × 3.25</text>
+<circle cx="191" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="202" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="202" cy="52" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="213" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="224" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="235" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="246" cy="60" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="620" cy="60" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<line x1="180" y1="104" x2="180" y2="300" stroke="#e1e0d9" stroke-width="1"/>
+<text x="180" y="318" fill="#898781" text-anchor="middle">−1</text>
+<line x1="290" y1="104" x2="290" y2="300" stroke="#e1e0d9" stroke-width="1"/>
+<text x="290" y="318" fill="#898781" text-anchor="middle">0</text>
+<line x1="400" y1="104" x2="400" y2="300" stroke="#e1e0d9" stroke-width="1"/>
+<text x="400" y="318" fill="#898781" text-anchor="middle">1</text>
+<line x1="510" y1="104" x2="510" y2="300" stroke="#e1e0d9" stroke-width="1"/>
+<text x="510" y="318" fill="#898781" text-anchor="middle">2</text>
+<line x1="620" y1="104" x2="620" y2="300" stroke="#e1e0d9" stroke-width="1"/>
+<text x="620" y="318" fill="#898781" text-anchor="middle">3</text>
+<text x="400" y="336" fill="#52514e" text-anchor="middle">scaled value (one shared axis)</text>
+<text x="20" y="144" font-weight="600">min–max</text>
+<text x="20" y="160" fill="#52514e">(x − min) / (max − min)</text>
+<line x1="180" y1="140" x2="620" y2="140" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="290" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="292.8" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="292.8" cy="132" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="295.6" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="298.5" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="301.3" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="304.1" cy="140" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="400" cy="140" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="628" y="130" fill="#eb6834">40 → 1.00</text>
+<text x="290" y="160" fill="#2a78d6">seven books: 0.00 to 0.13</text>
+<text x="20" y="206" font-weight="600">z-score</text>
+<text x="20" y="222" fill="#52514e">(x − 7.88) / 12.24</text>
+<line x1="180" y1="202" x2="620" y2="202" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="228.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="237.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="237.2" cy="194" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="246.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="255.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="264.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="273.2" cy="202" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="578.7" cy="202" r="3.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="628" y="192" fill="#eb6834">40 → 2.62</text>
+<text x="228.2" y="222" fill="#2a78d6">seven books: −0.56 to −0.15</text>
+<text x="20" y="268" font-weight="600">robust</text>
+<text x="20" y="284" fill="#52514e">(x − 3.5) / 3.25</text>
+<line x1="180" y1="264" x2="620" y2="264" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="205.4" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="239.2" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="239.2" cy="256" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="273.1" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="306.9" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="340.8" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<circle cx="374.6" cy="264" r="3.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<line x1="587" y1="264" x2="628" y2="264" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<circle cx="634" cy="264" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="628" y="254" fill="#eb6834">40 → 11.23</text>
+<text x="205.4" y="284" fill="#2a78d6">seven books: −0.77 to 0.77</text>
+</g>
+</svg>

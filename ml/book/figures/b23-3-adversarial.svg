@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="title desc">
+<title id="title">A change too small to see can move a linear score a long way when there are many pixels</title>
+<desc id="desc">Bars on a logarithmic axis for four image sizes, showing the largest change in a linear score when every pixel moves by 0.007 in the direction of its weight, assuming an average weight of 0.01; the change grows from about 0.003 for 36 pixels to about 10.5 for 150,528.</desc>
+<rect width="720" height="340" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="30" font-weight="600">largest score change = ε × m × n, with ε = 0.007 per pixel and average weight m = 0.01</text>
+<line x1="220" y1="50" x2="220" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="220" y="266" fill="#898781" text-anchor="middle">0.001</text>
+<line x1="300" y1="50" x2="300" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="300" y="266" fill="#898781" text-anchor="middle">0.01</text>
+<line x1="380" y1="50" x2="380" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="380" y="266" fill="#898781" text-anchor="middle">0.1</text>
+<line x1="460" y1="50" x2="460" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="460" y="266" fill="#898781" text-anchor="middle">1</text>
+<line x1="540" y1="50" x2="540" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="540" y="266" fill="#898781" text-anchor="middle">10</text>
+<line x1="620" y1="50" x2="620" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="620" y="266" fill="#898781" text-anchor="middle">100</text>
+<text x="420" y="282" fill="#52514e" text-anchor="middle">change in the score (log scale)</text>
+<text x="30" y="82">36 pixels</text>
+<text x="30" y="96" fill="#52514e">the 6 × 6 cover</text>
+<rect x="220" y="66" width="32.1" height="24" rx="2" fill="#2a78d6"/>
+<text x="260.1" y="82">0.003</text>
+<text x="30" y="128">784 pixels</text>
+<text x="30" y="142" fill="#52514e">a 28 × 28 grey image</text>
+<rect x="220" y="112" width="139.2" height="24" rx="2" fill="#2a78d6"/>
+<text x="367.2" y="128">0.055</text>
+<text x="30" y="174">50,176 pixels</text>
+<text x="30" y="188" fill="#52514e">224 × 224, grey</text>
+<rect x="220" y="158" width="283.6" height="24" rx="2" fill="#eb6834"/>
+<text x="511.6" y="174">3.512</text>
+<text x="30" y="220">150,528 pixels</text>
+<text x="30" y="234" fill="#52514e">224 × 224, colour</text>
+<rect x="220" y="204" width="321.8" height="24" rx="2" fill="#eb6834"/>
+<text x="549.8" y="220">10.537</text>
+<text x="30" y="306" fill="#52514e">Goodfellow, Shlens and Szegedy used ε = 0.007 on GoogLeNet: &quot;panda&quot; (57.7%) became &quot;gibbon&quot; (99.3%).</text>
+<text x="30" y="322" fill="#52514e">The toy score here is linear, as their explanation assumes; orange bars mark changes of 1 or more.</text>
+</g>
+</svg>

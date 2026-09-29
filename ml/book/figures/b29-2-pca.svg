@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 410" width="720" height="410" role="img" aria-labelledby="title desc">
+<title id="title">The eight books of chapter 9, standardised, lie close to one line; projecting each onto that line keeps most of the spread in one number per book</title>
+<desc id="desc">Left: a scatter of the eight books with standardised pages across and standardised price up, the first principal direction drawn through the centre, and a grey drop from each book to the line. Right: the eight projected positions on a single number line.</desc>
+<rect width="720" height="410" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="40" y="56" width="300" height="300" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="40" y1="206" x2="340" y2="206" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="190" y1="56" x2="190" y2="356" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="83.9" y1="312.1" x2="296.1" y2="99.9" stroke="#eb6834" stroke-width="2"/>
+<path d="M102.8 303.0 L97.9 298.1" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="97.9" cy="298.1" r="3" fill="#eb6834"/>
+<circle cx="102.8" cy="303.0" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M121.4 296.6 L110.4 285.6" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="110.4" cy="285.6" r="3" fill="#eb6834"/>
+<circle cx="121.4" cy="296.6" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M139.9 226.6 L154.6 241.4" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="154.6" cy="241.4" r="3" fill="#eb6834"/>
+<circle cx="139.9" cy="226.6" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M164.5 240.3 L160.1 235.9" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="160.1" cy="235.9" r="3" fill="#eb6834"/>
+<circle cx="164.5" cy="240.3" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M189.2 174.2 L205.5 190.5" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="205.5" cy="190.5" r="3" fill="#eb6834"/>
+<circle cx="189.2" cy="174.2" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M226.2 173.7 L224.3 171.7" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="224.3" cy="171.7" r="3" fill="#eb6834"/>
+<circle cx="226.2" cy="173.7" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M263.3 115.7 L271.8 124.2" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="271.8" cy="124.2" r="3" fill="#eb6834"/>
+<circle cx="263.3" cy="115.7" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<path d="M312.6 117.8 L295.4 100.6" fill="none" stroke="#898781" stroke-width="1"/>
+<circle cx="295.4" cy="100.6" r="3" fill="#eb6834"/>
+<circle cx="312.6" cy="117.8" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="190" y="374" fill="#52514e" text-anchor="middle">pages, standardised</text>
+<text x="40" y="48" fill="#52514e">price, standardised</text>
+<line x1="420" y1="150" x2="700" y2="150" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="448.8" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="448.8" y="138" text-anchor="middle">60</text>
+<circle cx="463.9" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="463.9" y="172" text-anchor="middle">90</text>
+<circle cx="517.3" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="517.3" y="138" text-anchor="middle">120</text>
+<circle cx="523.9" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="523.9" y="172" text-anchor="middle">160</text>
+<circle cx="578.7" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="578.7" y="138" text-anchor="middle">200</text>
+<circle cx="601.4" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="601.4" y="172" text-anchor="middle">260</text>
+<circle cx="658.7" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="658.7" y="138" text-anchor="middle">320</text>
+<circle cx="687.3" cy="150" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="687.3" y="172" text-anchor="middle">400</text>
+<text x="560" y="80" font-size="13" text-anchor="middle" font-weight="600">one number per book</text>
+<text x="560" y="100" fill="#52514e" text-anchor="middle">each book&apos;s place on the line, by pages</text>
+<text x="404" y="230">the line keeps 97.3% of the total spread;</text>
+<text x="404" y="248">the 2.7% left over is the grey drops</text>
+<text x="404" y="266">correlation of pages and price: 0.945</text>
+<text x="404" y="284" fill="#52514e">for two standardised columns the line</text>
+<text x="404" y="302" fill="#52514e">always runs at 45 degrees, and its share</text>
+<text x="404" y="320" fill="#52514e">of the spread is (1 + r) ÷ 2</text>
+</g>
+</svg>

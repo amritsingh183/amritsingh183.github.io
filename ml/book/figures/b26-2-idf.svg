@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">In blurb B1 the word a occurs twice but gets the smallest tf-idf weight, because four of the five blurbs contain it</title>
+<desc id="desc">A table for the six different words of blurb B1: count in B1, number of blurbs containing the word, idf equal to ln of 5 over that number, and a bar for tf-idf equal to count times idf.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="70" y="54" text-anchor="end" font-weight="600">word</text>
+<text x="160" y="54" text-anchor="middle" font-weight="600">count in B1</text>
+<text x="260" y="54" text-anchor="middle" font-weight="600">blurbs with it</text>
+<text x="380" y="54" text-anchor="middle" font-weight="600">idf = ln(5 ÷ that)</text>
+<text x="480" y="54" font-weight="600">tf-idf = count × idf</text>
+<rect x="12" y="68" width="696" height="28" rx="2" fill="#f0efec"/>
+<text x="70" y="86" text-anchor="end">a</text>
+<text x="160" y="86" text-anchor="middle">2</text>
+<text x="260" y="86" text-anchor="middle">4 of 5</text>
+<text x="380" y="86" text-anchor="middle">0.223</text>
+<rect x="480" y="73" width="41.6" height="18" rx="2" fill="#2a78d6"/>
+<text x="527.6" y="86">0.446</text>
+<text x="70" y="114" text-anchor="end">quiet</text>
+<text x="160" y="114" text-anchor="middle">1</text>
+<text x="260" y="114" text-anchor="middle">2 of 5</text>
+<text x="380" y="114" text-anchor="middle">0.916</text>
+<rect x="480" y="101" width="85.4" height="18" rx="2" fill="#2a78d6"/>
+<text x="571.4" y="114">0.916</text>
+<rect x="12" y="124" width="696" height="28" rx="2" fill="#f0efec"/>
+<text x="70" y="142" text-anchor="end">mystery</text>
+<text x="160" y="142" text-anchor="middle">1</text>
+<text x="260" y="142" text-anchor="middle">2 of 5</text>
+<text x="380" y="142" text-anchor="middle">0.916</text>
+<rect x="480" y="129" width="85.4" height="18" rx="2" fill="#2a78d6"/>
+<text x="571.4" y="142">0.916</text>
+<text x="70" y="170" text-anchor="end">in</text>
+<text x="160" y="170" text-anchor="middle">1</text>
+<text x="260" y="170" text-anchor="middle">1 of 5</text>
+<text x="380" y="170" text-anchor="middle">1.609</text>
+<rect x="480" y="157" width="150" height="18" rx="2" fill="#2a78d6"/>
+<text x="636" y="170">1.609</text>
+<rect x="12" y="180" width="696" height="28" rx="2" fill="#f0efec"/>
+<text x="70" y="198" text-anchor="end">small</text>
+<text x="160" y="198" text-anchor="middle">1</text>
+<text x="260" y="198" text-anchor="middle">2 of 5</text>
+<text x="380" y="198" text-anchor="middle">0.916</text>
+<rect x="480" y="185" width="85.4" height="18" rx="2" fill="#2a78d6"/>
+<text x="571.4" y="198">0.916</text>
+<text x="70" y="226" text-anchor="end">town</text>
+<text x="160" y="226" text-anchor="middle">1</text>
+<text x="260" y="226" text-anchor="middle">2 of 5</text>
+<text x="380" y="226" text-anchor="middle">0.916</text>
+<rect x="480" y="213" width="85.4" height="18" rx="2" fill="#2a78d6"/>
+<text x="571.4" y="226">0.916</text>
+<text x="360" y="260" fill="#52514e" text-anchor="middle">a word found in every blurb would get idf = ln(5 ÷ 5) = 0 and vanish; rare words weigh most</text>
+<text x="360" y="276" fill="#52514e" text-anchor="middle">here the rarest word is the little word in, which is why real systems also drop stop words</text>
+</g>
+</svg>

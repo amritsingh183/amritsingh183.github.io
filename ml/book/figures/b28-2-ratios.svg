@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="title desc">
+<title id="title">Dividing the neighbour probabilities of quiet by those of small gives 1 for their shared neighbour a, and pulls apart the words each has alone</title>
+<desc id="desc">A table with one row per word k of B1 and B2: bars for the probability of k next to quiet and next to small, and the ratio of the two with a plain reading of it.</desc>
+<rect width="720" height="340" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="80" y="48" text-anchor="end" font-weight="600">word k</text>
+<text x="160" y="48" text-anchor="middle" font-weight="600">P(k | quiet)</text>
+<text x="300" y="48" text-anchor="middle" font-weight="600">P(k | small)</text>
+<text x="400" y="48" text-anchor="middle" font-weight="600">ratio</text>
+<text x="470" y="48" font-weight="600">what the ratio says</text>
+<rect x="12" y="60" width="696" height="30" rx="2" fill="#f0efec"/>
+<text x="80" y="79" text-anchor="end">a</text>
+<rect x="100" y="67" width="90" height="16" rx="2" fill="#1baf7a"/>
+<text x="196" y="79">0.5</text>
+<rect x="240" y="67" width="90" height="16" rx="2" fill="#2a78d6"/>
+<text x="336" y="79">0.5</text>
+<text x="400" y="79" text-anchor="middle">1</text>
+<text x="470" y="79" fill="#52514e">a neighbour they share</text>
+<text x="80" y="109" text-anchor="end">and</text>
+<text x="106" y="109" fill="#898781">0</text>
+<text x="246" y="109" fill="#898781">0</text>
+<text x="400" y="109" text-anchor="middle">0 ÷ 0</text>
+<text x="470" y="109" fill="#52514e">never beside either: no evidence</text>
+<rect x="12" y="120" width="696" height="30" rx="2" fill="#f0efec"/>
+<text x="80" y="139" text-anchor="end">detective</text>
+<text x="106" y="139" fill="#898781">0</text>
+<text x="246" y="139" fill="#898781">0</text>
+<text x="400" y="139" text-anchor="middle">0 ÷ 0</text>
+<text x="470" y="139" fill="#52514e">never beside either: no evidence</text>
+<text x="80" y="169" text-anchor="end">in</text>
+<text x="106" y="169" fill="#898781">0</text>
+<text x="246" y="169" fill="#898781">0</text>
+<text x="400" y="169" text-anchor="middle">0 ÷ 0</text>
+<text x="470" y="169" fill="#52514e">never beside either: no evidence</text>
+<rect x="12" y="180" width="696" height="30" rx="2" fill="#f0efec"/>
+<text x="80" y="199" text-anchor="end">mystery</text>
+<rect x="100" y="187" width="90" height="16" rx="2" fill="#1baf7a"/>
+<text x="196" y="199">0.5</text>
+<text x="246" y="199" fill="#898781">0</text>
+<text x="400" y="199" text-anchor="middle">∞</text>
+<text x="470" y="199" fill="#52514e">seen only beside quiet</text>
+<text x="80" y="229" text-anchor="end">quiet</text>
+<text x="106" y="229" fill="#898781">0</text>
+<text x="246" y="229" fill="#898781">0</text>
+<text x="400" y="229" text-anchor="middle">0 ÷ 0</text>
+<text x="470" y="229" fill="#52514e">never beside either: no evidence</text>
+<rect x="12" y="240" width="696" height="30" rx="2" fill="#f0efec"/>
+<text x="80" y="259" text-anchor="end">small</text>
+<text x="106" y="259" fill="#898781">0</text>
+<text x="246" y="259" fill="#898781">0</text>
+<text x="400" y="259" text-anchor="middle">0 ÷ 0</text>
+<text x="470" y="259" fill="#52514e">never beside either: no evidence</text>
+<text x="80" y="289" text-anchor="end">town</text>
+<text x="106" y="289" fill="#898781">0</text>
+<rect x="240" y="277" width="90" height="16" rx="2" fill="#2a78d6"/>
+<text x="336" y="289">0.5</text>
+<text x="400" y="289" text-anchor="middle">0</text>
+<text x="470" y="289" fill="#52514e">seen only beside small</text>
+<text x="360" y="322" fill="#52514e" text-anchor="middle">quiet had 4 neighbours in all and small had 4; each probability is a count divided by that total</text>
+</g>
+</svg>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262" width="720" height="262" role="img" aria-labelledby="title desc">
+<title id="title">Row by column: how two matrices multiply</title>
+<desc id="desc">Three frames. In each of the first two, one column of A is turned on its side and laid over each row of R; multiplying the stacked pairs and adding gives one column of R·A. The last frame shows the product, with columns (−1, 2) and (−1, −1).</desc>
+<rect width="720" height="262" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="14" y="24" font-weight="600">frame 1: column 1 of A</text>
+<text x="14" y="40" fill="#52514e">on its side, over each row of R</text>
+<text x="14" y="56" fill="#52514e">row 1 of R</text>
+<rect x="18" y="62" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="78" text-anchor="middle">2</text>
+<rect x="48" y="62" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="78" text-anchor="middle">1</text>
+<rect x="18" y="62" width="60" height="24" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="18" y="86" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="102" text-anchor="middle">0</text>
+<rect x="48" y="86" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="102" text-anchor="middle">−1</text>
+<text x="88" y="91">0×2 + (−1)×1 = −1</text>
+<text x="14" y="126" fill="#52514e">row 2 of R</text>
+<rect x="18" y="132" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="148" text-anchor="middle">2</text>
+<rect x="48" y="132" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="148" text-anchor="middle">1</text>
+<rect x="18" y="132" width="60" height="24" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="18" y="156" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="33" y="172" text-anchor="middle">1</text>
+<rect x="48" y="156" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="63" y="172" text-anchor="middle">0</text>
+<text x="88" y="161">1×2 + 0×1 = 2</text>
+<text x="14" y="222" fill="#2a78d6">column 1 of R·A: (−1, 2)</text>
+<text x="250" y="24" font-weight="600">frame 2: column 2 of A</text>
+<text x="250" y="40" fill="#52514e">on its side, over each row of R</text>
+<text x="250" y="56" fill="#52514e">row 1 of R</text>
+<rect x="254" y="62" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="78" text-anchor="middle">−1</text>
+<rect x="284" y="62" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="78" text-anchor="middle">1</text>
+<rect x="254" y="62" width="60" height="24" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="254" y="86" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="102" text-anchor="middle">0</text>
+<rect x="284" y="86" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="102" text-anchor="middle">−1</text>
+<text x="324" y="91">0×(−1) + (−1)×1 = −1</text>
+<text x="250" y="126" fill="#52514e">row 2 of R</text>
+<rect x="254" y="132" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="148" text-anchor="middle">−1</text>
+<rect x="284" y="132" width="30" height="24" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="148" text-anchor="middle">1</text>
+<rect x="254" y="132" width="60" height="24" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="254" y="156" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="269" y="172" text-anchor="middle">1</text>
+<rect x="284" y="156" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="299" y="172" text-anchor="middle">0</text>
+<text x="324" y="161">1×(−1) + 0×1 = −1</text>
+<text x="250" y="222" fill="#2a78d6">column 2 of R·A: (−1, −1)</text>
+<text x="486" y="24" font-weight="600">frame 3: the product R·A</text>
+<text x="486" y="40" fill="#52514e">first A, then R</text>
+<rect x="494" y="90" width="44" height="32" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="516" y="110" text-anchor="middle">−1</text>
+<rect x="538" y="90" width="44" height="32" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="110" text-anchor="middle">−1</text>
+<rect x="494" y="122" width="44" height="32" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="516" y="142" text-anchor="middle">2</text>
+<rect x="538" y="122" width="44" height="32" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="142" text-anchor="middle">−1</text>
+<text x="486" y="180" fill="#52514e">each entry is one row of R</text>
+<text x="486" y="195" fill="#52514e">times one column of A</text>
+<line x1="240" y1="12" x2="240" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="476" y1="12" x2="476" y2="236" stroke="#e1e0d9" stroke-width="1"/>
+</g>
+</svg>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 262" width="720" height="262" role="img" aria-labelledby="title desc">
+<title id="title">Matrix times vector is a combination of the columns</title>
+<desc id="desc">In the moved grid, −1 times the first column (2, 1) followed by 2 times the second column (−1, 1) lands on (−4, 1), the matrix times (−1, 2).</desc>
+<rect width="720" height="262" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="32" y1="214" x2="32" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="72" y1="214" x2="72" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="112" y1="214" x2="112" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="152" y1="214" x2="152" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="192" y1="214" x2="192" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="232" y1="214" x2="232" y2="30" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="272" y1="214" x2="272" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="312" y1="214" x2="312" y2="30" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="214" x2="344" y2="214" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="174" x2="344" y2="174" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="134" x2="344" y2="134" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="24" y1="94" x2="344" y2="94" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="24" y1="54" x2="344" y2="54" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="72" y1="214" x2="24" y2="166" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="312" y1="214" x2="344" y2="198" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="192" y1="214" x2="24" y2="46" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="192" y1="214" x2="344" y2="138" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="312" y1="214" x2="128" y2="30" stroke="#898781" stroke-width="1.5"/>
+<line x1="72" y1="214" x2="344" y2="78" stroke="#898781" stroke-width="1.5"/>
+<line x1="344" y1="126" x2="248" y2="30" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="24" y1="178" x2="320" y2="30" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="24" y1="118" x2="200" y2="30" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="24" y1="58" x2="80" y2="30" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="232" y1="134" x2="152.9" y2="173.6" stroke="#1baf7a" stroke-width="2.5"/>
+<path d="M161 173.6 L152 174 L157.7 167" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<line x1="152" y1="174" x2="72.7" y2="94.7" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M75.2 102.4 L72 94 L80.4 97.2" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<line x1="232" y1="134" x2="73.0" y2="94.2" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M79.1 99.6 L72 94 L80.9 92.4" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<rect x="199" y="160" width="79.9" height="17" rx="2" fill="#fcfcfb"/>
+<text x="202" y="172" fill="#1baf7a">−1 × (2, 1)</text>
+<rect x="23.1" y="138" width="79.9" height="17" rx="2" fill="#fcfcfb"/>
+<text x="100" y="150" fill="#eb6834" text-anchor="end">2 × (−1, 1)</text>
+<rect x="45.5" y="72" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="72" y="84" fill="#2a78d6" text-anchor="middle">(−4, 1)</text>
+<text x="384" y="50" font-size="13" font-weight="600">A · (−1, 2)</text>
+<text x="384" y="76">= −1 × (2, 1) + 2 × (−1, 1)</text>
+<text x="384" y="93">= (−2, −1) + (−2, 2)</text>
+<text x="384" y="110" fill="#2a78d6">= (−4, 1)</text>
+<text x="384" y="150" fill="#52514e">the same numbers, row by row:</text>
+<text x="384" y="170">row 1: 2 × (−1) + (−1) × 2 = −4</text>
+<text x="384" y="187">row 2: 1 × (−1) + 1 × 2 = 1</text>
+<text x="384" y="226" fill="#52514e">the columns say where î and ĵ go;</text>
+<text x="384" y="241" fill="#52514e">the vector says how much of each to take</text>
+</g>
+</svg>

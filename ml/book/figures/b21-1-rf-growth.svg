@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="title desc">
+<title id="title">Stacking layers grows the receptive field; a stride makes it grow faster</title>
+<desc id="desc">Two panels of units in rows from the input up to layer 3, with lines from one top unit down to every unit it depends on: three 3-wide layers with stride 1 reach 3, 5 and 7 input pixels; with stride 2 in the first layer they reach 3, 7 and 11.</desc>
+<rect width="720" height="400" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="28" font-weight="600">three 3-wide layers, stride 1</text>
+<line x1="90" y1="138" x2="70" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="90" y1="138" x2="90" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="90" y1="138" x2="110" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="138" x2="90" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="138" x2="110" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="138" x2="130" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="138" x2="110" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="138" x2="130" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="138" x2="150" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="138" x2="130" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="138" x2="150" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="138" x2="170" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="170" y1="138" x2="150" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="170" y1="138" x2="170" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="170" y1="138" x2="190" y2="164" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="98" x2="90" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="98" x2="110" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="98" x2="130" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="98" x2="110" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="98" x2="130" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="98" x2="150" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="98" x2="130" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="98" x2="150" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="98" x2="170" y2="124" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="58" x2="110" y2="84" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="58" x2="130" y2="84" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="130" y1="58" x2="150" y2="84" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="42" y="164" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="62" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="102" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="122" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="164" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="202" y="164" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="175" fill="#52514e">input: 9 pixels</text>
+<rect x="62" y="124" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="124" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="102" y="124" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="122" y="124" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="124" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="124" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="124" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="135" fill="#2a78d6">layer 1 (k = 3, stride 1): sees 3</text>
+<rect x="82" y="84" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="102" y="84" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="122" y="84" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="84" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="84" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="95" fill="#2a78d6">layer 2 (k = 3, stride 1): sees 5</text>
+<rect x="102" y="44" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="122" y="44" width="16" height="14" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="44" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="55" fill="#2a78d6">layer 3 (k = 3, stride 1): sees 7</text>
+<text x="560" y="55" fill="#52514e">(pixels 2 to 8)</text>
+<text x="40" y="220" font-weight="600">the same, with stride 2 in layer 1</text>
+<line x1="70" y1="330" x2="50" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="70" y1="330" x2="70" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="70" y1="330" x2="90" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="330" x2="90" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="330" x2="110" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="330" x2="130" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="330" x2="130" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="330" x2="150" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="330" x2="170" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="330" x2="170" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="330" x2="190" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="330" x2="210" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="230" y1="330" x2="210" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="230" y1="330" x2="230" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="230" y1="330" x2="250" y2="356" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="290" x2="70" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="290" x2="110" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="110" y1="290" x2="150" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="290" x2="110" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="290" x2="150" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="290" x2="190" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="290" x2="150" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="290" x2="190" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="290" x2="230" y2="316" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="250" x2="110" y2="276" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="250" x2="150" y2="276" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="150" y1="250" x2="190" y2="276" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="42" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="62" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="82" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="102" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="122" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="162" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="202" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="222" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="242" y="356" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="262" y="356" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="282" y="356" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="367" fill="#52514e">input: 13 pixels</text>
+<rect x="62" y="316" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="102" y="316" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="316" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="316" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="222" y="316" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="262" y="316" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="327" fill="#2a78d6">layer 1 (k = 3, stride 2): sees 3</text>
+<rect x="102" y="276" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="142" y="276" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="276" width="16" height="14" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="222" y="276" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="287" fill="#2a78d6">layer 2 (k = 3, stride 1): sees 7</text>
+<rect x="142" y="236" width="16" height="14" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="182" y="236" width="16" height="14" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="330" y="247" fill="#2a78d6">layer 3 (k = 3, stride 1): sees 11</text>
+<text x="560" y="247" fill="#52514e">(pixels 1 to 11)</text>
+</g>
+</svg>

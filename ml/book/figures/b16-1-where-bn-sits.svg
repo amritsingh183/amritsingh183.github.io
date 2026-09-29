@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="title desc">
+<title id="title">Where batch normalisation sits: between a layer&apos;s weighted sums and its activation</title>
+<desc id="desc">Five boxes left to right: the inputs of one book, the weighted sum, the batch-normalisation step with its two stages, the ReLU activation, and the next layer; notes below say which statistics are used in training and in use.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="250" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="20" y="70" width="110" height="56" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="75" y="95" text-anchor="middle">inputs</text>
+<text x="75" y="110" fill="#52514e" text-anchor="middle">pages, price, age</text>
+<rect x="160" y="70" width="110" height="56" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="215" y="95" text-anchor="middle">weighted sum</text>
+<text x="215" y="110" fill="#52514e" text-anchor="middle">z = w·x</text>
+<rect x="300" y="70" width="190" height="56" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="395" y="95" text-anchor="middle">batch norm</text>
+<text x="395" y="110" fill="#52514e" text-anchor="middle">(z − μ) / σ, then γ·ẑ + β</text>
+<rect x="520" y="70" width="80" height="56" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="95" text-anchor="middle">ReLU</text>
+<text x="560" y="110" fill="#52514e" text-anchor="middle">max(0, y)</text>
+<rect x="630" y="70" width="80" height="56" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="670" y="95" text-anchor="middle">next</text>
+<text x="670" y="110" fill="#52514e" text-anchor="middle">layer</text>
+<line x1="132" y1="98" x2="158" y2="98" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="272" y1="98" x2="298" y2="98" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="492" y1="98" x2="518" y2="98" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="602" y1="98" x2="628" y2="98" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="395" y="56" fill="#52514e" text-anchor="middle">one unit, one mini-batch</text>
+<text x="300" y="160" font-weight="600">In training:</text>
+<text x="300" y="178">μ and σ come from the current mini-batch.</text>
+<text x="300" y="204" font-weight="600">In use:</text>
+<text x="300" y="222">μ and σ are averages kept during training.</text>
+<text x="20" y="160">γ and β are learned</text>
+<text x="20" y="178">like weights, one pair</text>
+<text x="20" y="196">per unit.</text>
+</g>
+</svg>

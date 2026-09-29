@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" width="720" height="240" role="img" aria-labelledby="title desc">
+<title id="title">The filter adds its one bias to every position, then the activation follows</title>
+<desc id="desc">Three 2 by 2 grids left to right: the summed map, the map after adding the filter&apos;s bias of minus 2 to every cell, and the map after ReLU sets the negative cells to zero.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="240" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="40" font-weight="600">sum of the kernels&apos; maps</text>
+<rect x="40" y="56" width="48" height="48" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="84" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="88" y="56" width="48" height="48" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="112" y="84" text-anchor="middle">1</text>
+<rect x="40" y="104" width="48" height="48" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="132" text-anchor="middle">7</text>
+<rect x="88" y="104" width="48" height="48" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="112" y="132" text-anchor="middle">5</text>
+<line x1="148" y1="104" x2="268" y2="104" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="280" y="40" font-weight="600">+ bias (−2) everywhere</text>
+<rect x="280" y="56" width="48" height="48" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="304" y="84" fill="#eb6834" text-anchor="middle">−3</text>
+<rect x="328" y="56" width="48" height="48" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="352" y="84" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="280" y="104" width="48" height="48" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="304" y="132" text-anchor="middle">5</text>
+<rect x="328" y="104" width="48" height="48" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="352" y="132" text-anchor="middle">3</text>
+<line x1="388" y1="104" x2="508" y2="104" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="520" y="40" font-weight="600">ReLU: negatives become 0</text>
+<rect x="520" y="56" width="48" height="48" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="544" y="84" fill="#898781" text-anchor="middle">0</text>
+<rect x="568" y="56" width="48" height="48" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="592" y="84" fill="#898781" text-anchor="middle">0</text>
+<rect x="520" y="104" width="48" height="48" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="544" y="132" text-anchor="middle">5</text>
+<rect x="568" y="104" width="48" height="48" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="592" y="132" text-anchor="middle">3</text>
+<text x="40" y="190" fill="#52514e">A filter has exactly one bias, a single number (−2), however many kernels and positions it has.</text>
+<text x="40" y="206" fill="#52514e">The finished grid is one output channel, also called a feature map.</text>
+</g>
+</svg>

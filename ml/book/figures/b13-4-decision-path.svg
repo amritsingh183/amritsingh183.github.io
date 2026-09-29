@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="700" height="400" role="img" aria-labelledby="title desc">
+<title id="title">A decision path for choosing a distribution, with the page-count sample&apos;s result at each step</title>
+<desc id="desc">Six boxes joined by arrows down the left, from drawing the histogram to keeping the simplest distribution that fits, and beside each box the outcome for the 60 page counts.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="700" height="400" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="26" fill="#52514e">Step</text>
+<text x="366" y="26" fill="#52514e">What it gave for the 60 page counts</text>
+<rect x="40" y="40" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="59" text-anchor="middle">1. Draw the histogram</text>
+<text x="190" y="74" fill="#52514e" text-anchor="middle">shape, skew, natural limits</text>
+<text x="366" y="66">skewed right; 71 to 658 pages, none below 0</text>
+<line x1="344" y1="62" x2="358" y2="62" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="85" x2="190" y2="97" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="98" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="117" text-anchor="middle">2. Shortlist candidates</text>
+<text x="190" y="132" fill="#52514e" text-anchor="middle">shapes that can skew right</text>
+<text x="366" y="124">normal (as a check), lognormal, gamma, Weibull</text>
+<line x1="344" y1="120" x2="358" y2="120" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="143" x2="190" y2="155" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="156" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="175" text-anchor="middle">3. Test each fit</text>
+<text x="190" y="190" fill="#52514e" text-anchor="middle">Anderson–Darling; a high p keeps it</text>
+<text x="366" y="182">normal p = 0.006, out; lognormal p = 0.74, kept</text>
+<line x1="344" y1="178" x2="358" y2="178" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="201" x2="190" y2="213" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="214" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="233" text-anchor="middle">4. Read the probability plots</text>
+<text x="190" y="248" fill="#52514e" text-anchor="middle">do the dots stay in the fat pencil?</text>
+<text x="366" y="240">lognormal and gamma: yes; normal: no</text>
+<line x1="344" y1="236" x2="358" y2="236" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="259" x2="190" y2="271" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="272" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="291" text-anchor="middle">5. A third parameter?</text>
+<text x="190" y="306" fill="#52514e" text-anchor="middle">only for a real smallest value</text>
+<text x="366" y="298">no floor near the data; θ = 49 fits worse</text>
+<line x1="344" y1="294" x2="358" y2="294" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="190" y1="317" x2="190" y2="329" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="330" width="300" height="44" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="190" y="349" text-anchor="middle">6. Keep the simplest that fits</text>
+<text x="190" y="364" fill="#52514e" text-anchor="middle">a parsimonious description</text>
+<text x="366" y="356">lognormal: median 252 pages, σ = 0.48</text>
+<line x1="344" y1="352" x2="358" y2="352" stroke="#c3c2b7" stroke-width="1"/>
+</g>
+</svg>

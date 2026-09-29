@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">A quarter turn has no real eigenvector</title>
+<desc id="desc">Left: three vectors and their images under the quarter turn R; each image stands at a right angle to its vector, off the vector&apos;s dashed line. Right: det(R − λI) = λ² + 1 is never smaller than 1, so it is never zero and R has no real eigenvalue.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="51.2" y1="228.8" x2="51.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="93.2" y1="228.8" x2="93.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="135.2" y1="228.8" x2="135.2" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="177.2" y1="228.8" x2="177.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="219.2" y1="228.8" x2="219.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="26" y1="195.2" x2="244.4" y2="195.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="26" y1="153.2" x2="244.4" y2="153.2" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="26" y1="111.2" x2="244.4" y2="111.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="26" y1="69.2" x2="244.4" y2="69.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="268" y="56" font-weight="600">each vector turns off its own line</text>
+<line x1="26" y1="153.2" x2="31" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="34.5" y1="153.2" x2="39.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="43" y1="153.2" x2="48" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="51.5" y1="153.2" x2="56.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="60" y1="153.2" x2="65" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="68.5" y1="153.2" x2="73.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="77" y1="153.2" x2="82" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="85.5" y1="153.2" x2="90.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="94" y1="153.2" x2="99" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="102.5" y1="153.2" x2="107.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="111" y1="153.2" x2="116" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="119.5" y1="153.2" x2="124.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="128" y1="153.2" x2="133" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="136.5" y1="153.2" x2="141.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="145" y1="153.2" x2="150" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="153.5" y1="153.2" x2="158.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="162" y1="153.2" x2="167" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="170.5" y1="153.2" x2="175.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="179" y1="153.2" x2="184" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="187.5" y1="153.2" x2="192.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="196" y1="153.2" x2="201" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="204.5" y1="153.2" x2="209.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="213" y1="153.2" x2="218" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="221.5" y1="153.2" x2="226.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="230" y1="153.2" x2="235" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="238.5" y1="153.2" x2="243.5" y2="153.2" stroke="#2a78d6" stroke-width="1"/>
+<line x1="135.2" y1="153.2" x2="218.2" y2="153.2" stroke="#2a78d6" stroke-width="1.4"/>
+<path d="M211 149.5 L219.2 153.2 L211 156.9" fill="none" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="135.2" y1="153.2" x2="135.2" y2="70.2" stroke="#2a78d6" stroke-width="2.8"/>
+<path d="M131.5 77.4 L135.2 69.2 L138.9 77.4" fill="none" stroke="#2a78d6" stroke-width="2.8"/>
+<text x="268" y="84" fill="#2a78d6">(2, 0) → (0, 2)</text>
+<text x="406" y="84" fill="#52514e">v · Rv = 0</text>
+<line x1="59.6" y1="228.8" x2="63.1" y2="225.3" stroke="#eb6834" stroke-width="1"/>
+<line x1="65.6" y1="222.8" x2="69.1" y2="219.3" stroke="#eb6834" stroke-width="1"/>
+<line x1="71.6" y1="216.8" x2="75.2" y2="213.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="77.6" y1="210.8" x2="81.2" y2="207.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="83.6" y1="204.8" x2="87.2" y2="201.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="89.7" y1="198.7" x2="93.2" y2="195.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="95.7" y1="192.7" x2="99.2" y2="189.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="101.7" y1="186.7" x2="105.2" y2="183.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="107.7" y1="180.7" x2="111.2" y2="177.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="113.7" y1="174.7" x2="117.2" y2="171.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="119.7" y1="168.7" x2="123.2" y2="165.2" stroke="#eb6834" stroke-width="1"/>
+<line x1="125.7" y1="162.7" x2="129.3" y2="159.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="131.7" y1="156.7" x2="135.3" y2="153.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="137.7" y1="150.7" x2="141.3" y2="147.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="143.7" y1="144.7" x2="147.3" y2="141.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="149.8" y1="138.6" x2="153.3" y2="135.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="155.8" y1="132.6" x2="159.3" y2="129.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="161.8" y1="126.6" x2="165.3" y2="123.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="167.8" y1="120.6" x2="171.3" y2="117.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="173.8" y1="114.6" x2="177.3" y2="111.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="179.8" y1="108.6" x2="183.3" y2="105.1" stroke="#eb6834" stroke-width="1"/>
+<line x1="185.8" y1="102.6" x2="189.4" y2="99.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="191.8" y1="96.6" x2="195.4" y2="93.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="197.8" y1="90.6" x2="201.4" y2="87.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="203.8" y1="84.6" x2="207.4" y2="81.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="209.9" y1="78.5" x2="213.4" y2="75.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="215.9" y1="72.5" x2="219.4" y2="69.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="221.9" y1="66.5" x2="225.4" y2="63.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="227.9" y1="60.5" x2="231.4" y2="57.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="233.9" y1="54.5" x2="237.4" y2="51.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="239.9" y1="48.5" x2="243.4" y2="45.0" stroke="#eb6834" stroke-width="1"/>
+<line x1="135.2" y1="153.2" x2="176.5" y2="111.9" stroke="#eb6834" stroke-width="1.4"/>
+<path d="M168.8 114.4 L177.2 111.2 L174 119.6" fill="none" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="135.2" y1="153.2" x2="93.9" y2="111.9" stroke="#eb6834" stroke-width="2.8"/>
+<path d="M96.4 119.6 L93.2 111.2 L101.6 114.4" fill="none" stroke="#eb6834" stroke-width="2.8"/>
+<text x="268" y="104" fill="#eb6834">(1, 1) → (−1, 1)</text>
+<text x="406" y="104" fill="#52514e">v · Rv = 0</text>
+<line x1="173" y1="228.8" x2="170.8" y2="224.3" stroke="#1baf7a" stroke-width="1"/>
+<line x1="169.2" y1="221.2" x2="167.0" y2="216.7" stroke="#1baf7a" stroke-width="1"/>
+<line x1="165.4" y1="213.6" x2="163.2" y2="209.1" stroke="#1baf7a" stroke-width="1"/>
+<line x1="161.6" y1="206.0" x2="159.4" y2="201.5" stroke="#1baf7a" stroke-width="1"/>
+<line x1="157.8" y1="198.4" x2="155.6" y2="193.9" stroke="#1baf7a" stroke-width="1"/>
+<line x1="154.0" y1="190.8" x2="151.8" y2="186.3" stroke="#1baf7a" stroke-width="1"/>
+<line x1="150.2" y1="183.2" x2="148.0" y2="178.7" stroke="#1baf7a" stroke-width="1"/>
+<line x1="146.4" y1="175.6" x2="144.2" y2="171.1" stroke="#1baf7a" stroke-width="1"/>
+<line x1="142.6" y1="168.0" x2="140.4" y2="163.5" stroke="#1baf7a" stroke-width="1"/>
+<line x1="138.8" y1="160.4" x2="136.6" y2="155.9" stroke="#1baf7a" stroke-width="1"/>
+<line x1="135.0" y1="152.8" x2="132.8" y2="148.3" stroke="#1baf7a" stroke-width="1"/>
+<line x1="131.2" y1="145.2" x2="128.9" y2="140.7" stroke="#1baf7a" stroke-width="1"/>
+<line x1="127.4" y1="137.6" x2="125.1" y2="133.1" stroke="#1baf7a" stroke-width="1"/>
+<line x1="123.6" y1="130.0" x2="121.3" y2="125.5" stroke="#1baf7a" stroke-width="1"/>
+<line x1="119.8" y1="122.4" x2="117.5" y2="117.9" stroke="#1baf7a" stroke-width="1"/>
+<line x1="116.0" y1="114.8" x2="113.7" y2="110.3" stroke="#1baf7a" stroke-width="1"/>
+<line x1="112.2" y1="107.2" x2="109.9" y2="102.7" stroke="#1baf7a" stroke-width="1"/>
+<line x1="108.4" y1="99.6" x2="106.1" y2="95.1" stroke="#1baf7a" stroke-width="1"/>
+<line x1="104.6" y1="92.0" x2="102.3" y2="87.5" stroke="#1baf7a" stroke-width="1"/>
+<line x1="100.8" y1="84.4" x2="98.5" y2="79.9" stroke="#1baf7a" stroke-width="1"/>
+<line x1="97.0" y1="76.7" x2="94.7" y2="72.3" stroke="#1baf7a" stroke-width="1"/>
+<line x1="93.2" y1="69.1" x2="90.9" y2="64.7" stroke="#1baf7a" stroke-width="1"/>
+<line x1="89.4" y1="61.5" x2="87.1" y2="57.1" stroke="#1baf7a" stroke-width="1"/>
+<line x1="85.6" y1="53.9" x2="83.3" y2="49.5" stroke="#1baf7a" stroke-width="1"/>
+<line x1="81.8" y1="46.3" x2="80.6" y2="44" stroke="#1baf7a" stroke-width="1"/>
+<line x1="135.2" y1="153.2" x2="93.6" y2="70.1" stroke="#1baf7a" stroke-width="1.4"/>
+<path d="M93.6 78.2 L93.2 69.2 L100.2 74.9" fill="none" stroke="#1baf7a" stroke-width="1.4"/>
+<line x1="135.2" y1="153.2" x2="52.1" y2="194.8" stroke="#1baf7a" stroke-width="2.8"/>
+<path d="M60.2 194.8 L51.2 195.2 L56.9 188.2" fill="none" stroke="#1baf7a" stroke-width="2.8"/>
+<text x="268" y="124" fill="#1baf7a">(−1, 2) → (−2, −1)</text>
+<text x="406" y="124" fill="#52514e">v · Rv = 0</text>
+<text x="268" y="160" fill="#52514e">thin arrow: the vector; thick: its image;</text>
+<text x="268" y="175" fill="#52514e">dashed: the vector&apos;s own line</text>
+<text x="135.2" y="26" font-size="13" text-anchor="middle" font-weight="600">the quarter turn R</text>
+<line x1="518" y1="196.4" x2="694" y2="196.4" stroke="#c3c2b7" stroke-width="1.4"/>
+<text x="512" y="200.4" fill="#898781" text-anchor="end">0</text>
+<line x1="518" y1="169.1" x2="694" y2="169.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="512" y="173.1" fill="#898781" text-anchor="end">1</text>
+<line x1="518" y1="141.8" x2="694" y2="141.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="512" y="145.8" fill="#898781" text-anchor="end">2</text>
+<line x1="518" y1="114.5" x2="694" y2="114.5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="512" y="118.5" fill="#898781" text-anchor="end">3</text>
+<line x1="518" y1="87.3" x2="694" y2="87.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="512" y="91.3" fill="#898781" text-anchor="end">4</text>
+<line x1="518" y1="60" x2="694" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+<text x="512" y="64" fill="#898781" text-anchor="end">5</text>
+<text x="518" y="224" fill="#898781" text-anchor="middle">−2</text>
+<text x="562" y="224" fill="#898781" text-anchor="middle">−1</text>
+<text x="606" y="224" fill="#898781" text-anchor="middle">0</text>
+<text x="650" y="224" fill="#898781" text-anchor="middle">1</text>
+<text x="694" y="224" fill="#898781" text-anchor="middle">2</text>
+<line x1="606" y1="60" x2="606" y2="210" stroke="#e1e0d9" stroke-width="1"/>
+<path d="M518 60 L519.1 62.7 L520.2 65.4 L521.3 68 L522.4 70.6 L523.5 73.2 L524.6 75.7 L525.7 78.3 L526.8 80.7 L527.9 83.2 L529 85.6 L530.1 87.9 L531.2 90.3 L532.3 92.6 L533.4 94.8 L534.5 97.1 L535.6 99.3 L536.7 101.4 L537.8 103.6 L538.9 105.7 L540 107.7 L541.1 109.8 L542.2 111.8 L543.3 113.7 L544.4 115.6 L545.5 117.5 L546.6 119.4 L547.7 121.2 L548.8 123 L549.9 124.8 L551 126.5 L552.1 128.2 L553.2 129.8 L554.3 131.4 L555.4 133 L556.5 134.6 L557.6 136.1 L558.7 137.6 L559.8 139 L560.9 140.4 L562 141.8 L563.1 143.2 L564.2 144.5 L565.3 145.8 L566.4 147 L567.5 148.2 L568.6 149.4 L569.7 150.5 L570.8 151.6 L571.9 152.7 L573 153.8 L574.1 154.8 L575.2 155.7 L576.3 156.7 L577.4 157.6 L578.5 158.4 L579.6 159.3 L580.7 160.1 L581.8 160.8 L582.9 161.6 L584 162.3 L585.1 162.9 L586.2 163.6 L587.3 164.2 L588.4 164.7 L589.5 165.3 L590.6 165.8 L591.7 166.2 L592.8 166.6 L593.9 167 L595 167.4 L596.1 167.7 L597.2 168 L598.3 168.3 L599.4 168.5 L600.5 168.7 L601.6 168.8 L602.7 168.9 L603.8 169 L604.9 169.1 L606 169.1 L607.1 169.1 L608.2 169 L609.3 168.9 L610.4 168.8 L611.5 168.7 L612.6 168.5 L613.7 168.3 L614.8 168 L615.9 167.7 L617 167.4 L618.1 167 L619.2 166.6 L620.3 166.2 L621.4 165.8 L622.5 165.3 L623.6 164.7 L624.7 164.2 L625.8 163.6 L626.9 162.9 L628 162.3 L629.1 161.6 L630.2 160.8 L631.3 160.1 L632.4 159.3 L633.5 158.4 L634.6 157.6 L635.7 156.7 L636.8 155.7 L637.9 154.8 L639 153.8 L640.1 152.7 L641.2 151.6 L642.3 150.5 L643.4 149.4 L644.5 148.2 L645.6 147 L646.7 145.8 L647.8 144.5 L648.9 143.2 L650 141.8 L651.1 140.4 L652.2 139 L653.3 137.6 L654.4 136.1 L655.5 134.6 L656.6 133 L657.7 131.4 L658.8 129.8 L659.9 128.2 L661 126.5 L662.1 124.8 L663.2 123 L664.3 121.2 L665.4 119.4 L666.5 117.5 L667.6 115.6 L668.7 113.7 L669.8 111.7 L670.9 109.8 L672 107.7 L673.1 105.7 L674.2 103.6 L675.3 101.4 L676.4 99.3 L677.5 97.1 L678.6 94.8 L679.7 92.6 L680.8 90.3 L681.9 87.9 L683 85.6 L684.1 83.2 L685.2 80.7 L686.3 78.3 L687.4 75.7 L688.5 73.2 L689.6 70.6 L690.7 68 L691.8 65.4 L692.9 62.7 L694 60" fill="none" stroke="#2a78d6" stroke-width="2.2"/>
+<circle cx="606" cy="169.1" r="4" fill="#2a78d6"/>
+<text x="606" y="26" text-anchor="middle" font-weight="600">det(R − λI) = λ² + 1</text>
+<text x="606" y="44" fill="#52514e" text-anchor="middle">lowest value 1, at λ = 0</text>
+<text x="606" y="242" fill="#52514e" text-anchor="middle">λ</text>
+<text x="606" y="262" fill="#eb6834" text-anchor="middle">never zero: no real eigenvalue</text>
+<text x="26" y="252.8">R has columns (0, 1) and (−1, 0)</text>
+</g>
+</svg>

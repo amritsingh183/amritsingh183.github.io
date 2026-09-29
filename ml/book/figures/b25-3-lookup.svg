@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-labelledby="title desc">
+<title id="title">Multiplying a one-hot row by the feature table picks out one row of the table: an embedding layer is a lookup</title>
+<desc id="desc">A row of eleven cells with a single 1 at detective, times the eleven by four feature table with the detective row outlined, equals that row of four numbers.</desc>
+<rect width="720" height="380" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="110" y="62" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="78" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="86" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="102" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="110" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="126" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="134" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="150" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="158" width="30" height="24" rx="2" fill="#86b6ef" stroke="#2a78d6" stroke-width="1"/>
+<text x="125" y="174" text-anchor="middle">1</text>
+<rect x="110" y="182" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="198" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="206" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="222" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="230" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="246" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="254" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="270" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="278" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="294" fill="#898781" text-anchor="middle">0</text>
+<rect x="110" y="302" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="125" y="318" fill="#898781" text-anchor="middle">0</text>
+<text x="102" y="78" text-anchor="end">quiet</text>
+<text x="102" y="102" text-anchor="end">mystery</text>
+<text x="102" y="126" text-anchor="end">small</text>
+<text x="102" y="150" text-anchor="end">town</text>
+<text x="102" y="174" text-anchor="end">detective</text>
+<text x="102" y="198" text-anchor="end">recipes</text>
+<text x="102" y="222" text-anchor="end">village</text>
+<text x="102" y="246" text-anchor="end">kitchen</text>
+<text x="102" y="270" text-anchor="end">returns</text>
+<text x="102" y="294" text-anchor="end">repair</text>
+<text x="102" y="318" text-anchor="end">bicycle</text>
+<text x="125" y="50" text-anchor="middle">one-hot</text>
+<text x="125" y="344" fill="#52514e" text-anchor="middle">stood on end:</text>
+<text x="125" y="358" fill="#52514e" text-anchor="middle">each entry meets the row beside it</text>
+<text x="185" y="198" font-size="16" fill="#52514e" text-anchor="middle">×</text>
+<rect x="230" y="62" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="78" text-anchor="middle">0.3</text>
+<rect x="280" y="62" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="78" text-anchor="middle">0.3</text>
+<rect x="330" y="62" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="78" text-anchor="middle">0.1</text>
+<rect x="380" y="62" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="78" fill="#898781" text-anchor="middle">0</text>
+<rect x="230" y="86" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="102" text-anchor="middle">0.9</text>
+<rect x="280" y="86" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="102" fill="#898781" text-anchor="middle">0</text>
+<rect x="330" y="86" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="102" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="86" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="102" fill="#898781" text-anchor="middle">0</text>
+<rect x="230" y="110" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="126" text-anchor="middle">0.1</text>
+<rect x="280" y="110" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="126" text-anchor="middle">0.4</text>
+<rect x="330" y="110" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="126" text-anchor="middle">0.1</text>
+<rect x="380" y="110" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="126" text-anchor="middle">0.1</text>
+<rect x="230" y="134" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="150" text-anchor="middle">0.1</text>
+<rect x="280" y="134" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="150" text-anchor="middle">1.0</text>
+<rect x="330" y="134" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="150" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="134" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="150" fill="#898781" text-anchor="middle">0</text>
+<rect x="230" y="158" width="50" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="174" text-anchor="middle">0.9</text>
+<rect x="280" y="158" width="50" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="174" text-anchor="middle">0.2</text>
+<rect x="330" y="158" width="50" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="174" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="158" width="50" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="174" text-anchor="middle">0.1</text>
+<rect x="230" y="182" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="198" fill="#898781" text-anchor="middle">0</text>
+<rect x="280" y="182" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="198" fill="#898781" text-anchor="middle">0</text>
+<rect x="330" y="182" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="198" text-anchor="middle">1.0</text>
+<rect x="380" y="182" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="198" text-anchor="middle">0.3</text>
+<rect x="230" y="206" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="222" text-anchor="middle">0.1</text>
+<rect x="280" y="206" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="222" text-anchor="middle">0.8</text>
+<rect x="330" y="206" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="222" text-anchor="middle">0.3</text>
+<rect x="380" y="206" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="222" fill="#898781" text-anchor="middle">0</text>
+<rect x="230" y="230" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="246" fill="#898781" text-anchor="middle">0</text>
+<rect x="280" y="230" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="246" text-anchor="middle">0.2</text>
+<rect x="330" y="230" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="246" text-anchor="middle">0.9</text>
+<rect x="380" y="230" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="246" text-anchor="middle">0.2</text>
+<rect x="230" y="254" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="270" text-anchor="middle">0.2</text>
+<rect x="280" y="254" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="270" text-anchor="middle">0.1</text>
+<rect x="330" y="254" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="270" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="254" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="270" text-anchor="middle">0.2</text>
+<rect x="230" y="278" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="294" fill="#898781" text-anchor="middle">0</text>
+<rect x="280" y="278" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="294" fill="#898781" text-anchor="middle">0</text>
+<rect x="330" y="278" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="294" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="278" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="294" text-anchor="middle">1.0</text>
+<rect x="230" y="302" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="255" y="318" fill="#898781" text-anchor="middle">0</text>
+<rect x="280" y="302" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="318" text-anchor="middle">0.1</text>
+<rect x="330" y="302" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="355" y="318" fill="#898781" text-anchor="middle">0</text>
+<rect x="380" y="302" width="50" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="318" text-anchor="middle">0.9</text>
+<text x="255" y="50" fill="#52514e" text-anchor="middle">crime</text>
+<text x="305" y="50" fill="#52514e" text-anchor="middle">place</text>
+<text x="355" y="50" fill="#52514e" text-anchor="middle">food</text>
+<text x="405" y="50" fill="#52514e" text-anchor="middle">tools</text>
+<rect x="228" y="156" width="204" height="28" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="330" y="344" fill="#52514e" text-anchor="middle">the table: 11 rows, 4 columns</text>
+<text x="472" y="175" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="500" y="158" width="46" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="523" y="174" text-anchor="middle">0.9</text>
+<rect x="546" y="158" width="46" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="569" y="174" text-anchor="middle">0.2</text>
+<rect x="592" y="158" width="46" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="615" y="174" fill="#898781" text-anchor="middle">0</text>
+<rect x="638" y="158" width="46" height="24" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="661" y="174" text-anchor="middle">0.1</text>
+<text x="523" y="150" fill="#52514e" text-anchor="middle">crime</text>
+<text x="569" y="150" fill="#52514e" text-anchor="middle">place</text>
+<text x="615" y="150" fill="#52514e" text-anchor="middle">food</text>
+<text x="661" y="150" fill="#52514e" text-anchor="middle">tools</text>
+<text x="592" y="202" text-anchor="middle">detective&apos;s embedding</text>
+<text x="592" y="220" fill="#52514e" text-anchor="middle">the 1 keeps its row;</text>
+<text x="592" y="234" fill="#52514e" text-anchor="middle">every 0 wipes out its row</text>
+</g>
+</svg>

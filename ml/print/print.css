@@ -447,7 +447,8 @@ p:has(> math[display="block"]) {
     break-inside: avoid;
 }
 
-/* ---- Contents: entries with dotted leaders and the page number on the right ---- */
+/* ---- Contents: entries with dotted leaders and the page number on the right. The 0.3 em gaps (0.5 em until
+   2026-09-29) let a 41-line contents such as the third post's fit on one page ---- */
 ul.toc {
     list-style: none;
     padding: 0;
@@ -457,11 +458,11 @@ ul.toc {
 ul.toc ul {
     list-style: none;
     padding-left: 1.6em;
-    margin: 0.1em 0 0.5em;
+    margin: 0.1em 0 0.3em;
 }
 
 ul.toc > li {
-    margin-top: 0.5em;
+    margin-top: 0.3em;
 }
 
 ul.toc ul li {

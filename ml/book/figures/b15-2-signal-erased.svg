@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">Quantile normalisation over all reviewers erases a real difference and invents a false one</title>
+<desc id="desc">Left, raw scores of two critics and two fans for five books with a fans-minus-critics column reading 3, 3, 3, 3 and 0; right, the same grid after quantile normalisation of all four columns, where the gaps shrink towards zero and book 5 gains a false negative gap, outlined in orange.</desc>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="178" y="50" text-anchor="middle" font-weight="600">raw scores</text>
+<text x="97" y="76" fill="#52514e" text-anchor="middle">C1</text>
+<text x="131" y="76" fill="#52514e" text-anchor="middle">C2</text>
+<text x="165" y="76" fill="#52514e" text-anchor="middle">F1</text>
+<text x="199" y="76" fill="#52514e" text-anchor="middle">F2</text>
+<text x="72" y="105" fill="#52514e" text-anchor="end">book 1</text>
+<text x="72" y="139" fill="#52514e" text-anchor="end">book 2</text>
+<text x="72" y="173" fill="#52514e" text-anchor="end">book 3</text>
+<text x="72" y="207" fill="#52514e" text-anchor="end">book 4</text>
+<text x="72" y="241" fill="#52514e" text-anchor="end">book 5</text>
+<rect x="80" y="84" width="34" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="105" text-anchor="middle">2</text>
+<rect x="114" y="84" width="34" height="34" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="105" text-anchor="middle">1</text>
+<rect x="148" y="84" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="105" text-anchor="middle">5</text>
+<rect x="182" y="84" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="199" y="105" text-anchor="middle">4</text>
+<rect x="80" y="118" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="139" text-anchor="middle">3</text>
+<rect x="114" y="118" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="139" text-anchor="middle">3</text>
+<rect x="148" y="118" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="139" text-anchor="middle">6</text>
+<rect x="182" y="118" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="199" y="139" text-anchor="middle">6</text>
+<rect x="80" y="152" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="173" text-anchor="middle">4</text>
+<rect x="114" y="152" width="34" height="34" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="173" text-anchor="middle">2</text>
+<rect x="148" y="152" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="173" text-anchor="middle">7</text>
+<rect x="182" y="152" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="199" y="173" text-anchor="middle">5</text>
+<rect x="80" y="186" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="207" text-anchor="middle">5</text>
+<rect x="114" y="186" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="207" text-anchor="middle">4</text>
+<rect x="148" y="186" width="34" height="34" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="207" text-anchor="middle">8</text>
+<rect x="182" y="186" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="199" y="207" text-anchor="middle">7</text>
+<rect x="80" y="220" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="97" y="241" text-anchor="middle">6</text>
+<rect x="114" y="220" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="131" y="241" text-anchor="middle">5</text>
+<rect x="148" y="220" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="165" y="241" text-anchor="middle">6</text>
+<rect x="182" y="220" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="199" y="241" text-anchor="middle">5</text>
+<line x1="148" y1="64" x2="148" y2="258" stroke="#52514e" stroke-width="1.5"/>
+<text x="260" y="76" fill="#52514e" text-anchor="middle">fans − critics</text>
+<rect x="230" y="84" width="60" height="34" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="105" text-anchor="middle">3</text>
+<rect x="230" y="118" width="60" height="34" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="139" text-anchor="middle">3</text>
+<rect x="230" y="152" width="60" height="34" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="173" text-anchor="middle">3</text>
+<rect x="230" y="186" width="60" height="34" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="207" text-anchor="middle">3</text>
+<rect x="230" y="220" width="60" height="34" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="260" y="241" text-anchor="middle">0</text>
+<text x="528" y="50" text-anchor="middle" font-weight="600">after quantile normalisation of all four</text>
+<text x="447" y="76" fill="#52514e" text-anchor="middle">C1</text>
+<text x="481" y="76" fill="#52514e" text-anchor="middle">C2</text>
+<text x="515" y="76" fill="#52514e" text-anchor="middle">F1</text>
+<text x="549" y="76" fill="#52514e" text-anchor="middle">F2</text>
+<rect x="430" y="84" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="447" y="105" text-anchor="middle">3</text>
+<rect x="464" y="84" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="481" y="105" text-anchor="middle">3</text>
+<rect x="498" y="84" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="105" text-anchor="middle">3</text>
+<rect x="532" y="84" width="34" height="34" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="105" text-anchor="middle">3</text>
+<rect x="430" y="118" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="447" y="139" text-anchor="middle">4</text>
+<rect x="464" y="118" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="481" y="139" text-anchor="middle">4.5</text>
+<rect x="498" y="118" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="139" text-anchor="middle">4.25</text>
+<rect x="532" y="118" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="139" text-anchor="middle">5.5</text>
+<rect x="430" y="152" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="447" y="173" text-anchor="middle">4.5</text>
+<rect x="464" y="152" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="481" y="173" text-anchor="middle">4</text>
+<rect x="498" y="152" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="173" text-anchor="middle">5.5</text>
+<rect x="532" y="152" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="173" text-anchor="middle">4.25</text>
+<rect x="430" y="186" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="447" y="207" text-anchor="middle">5.5</text>
+<rect x="464" y="186" width="34" height="34" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="481" y="207" text-anchor="middle">5.5</text>
+<rect x="498" y="186" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="207" text-anchor="middle">6.5</text>
+<rect x="532" y="186" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="207" text-anchor="middle">6.5</text>
+<rect x="430" y="220" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="447" y="241" text-anchor="middle">6.5</text>
+<rect x="464" y="220" width="34" height="34" rx="2" fill="#3987e5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="481" y="241" text-anchor="middle">6.5</text>
+<rect x="498" y="220" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="515" y="241" text-anchor="middle">4.25</text>
+<rect x="532" y="220" width="34" height="34" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="549" y="241" text-anchor="middle">4.25</text>
+<line x1="498" y1="64" x2="498" y2="258" stroke="#52514e" stroke-width="1.5"/>
+<text x="610" y="76" fill="#52514e" text-anchor="middle">fans − critics</text>
+<rect x="580" y="84" width="60" height="34" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="105" fill="#eb6834" text-anchor="middle">0</text>
+<rect x="580" y="84" width="60" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="580" y="118" width="60" height="34" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="139" fill="#eb6834" text-anchor="middle">0.625</text>
+<rect x="580" y="118" width="60" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="580" y="152" width="60" height="34" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="173" fill="#eb6834" text-anchor="middle">0.625</text>
+<rect x="580" y="152" width="60" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="580" y="186" width="60" height="34" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="207" fill="#eb6834" text-anchor="middle">1</text>
+<rect x="580" y="186" width="60" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="580" y="220" width="60" height="34" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="610" y="241" fill="#eb6834" text-anchor="middle">−2.25</text>
+<rect x="580" y="220" width="60" height="34" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="80" y="290" fill="#52514e">The fans really do score books 1 to 4 three points higher, and book 5 the same (left).</text>
+<text x="80" y="306" fill="#52514e">Normalising all four together removes most of that gap and creates one for book 5 (right).</text>
+</g>
+</svg>

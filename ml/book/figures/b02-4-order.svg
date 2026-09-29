@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="title desc">
+<title id="title">The order of two moves matters</title>
+<desc id="desc">Left: A first, then the quarter turn R; î lands on (−1, 2) and ĵ on (−1, −1). Right: R first, then A; î lands on (−1, 1) and ĵ on (−2, −1). The two unit squares end in different places.</desc>
+<rect width="720" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="69.2" y1="220.4" x2="69.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="111.2" y1="220.4" x2="111.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="153.2" y1="220.4" x2="153.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="195.2" y1="220.4" x2="195.2" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="237.2" y1="220.4" x2="237.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="44" y1="195.2" x2="262.4" y2="195.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="44" y1="153.2" x2="262.4" y2="153.2" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="44" y1="111.2" x2="262.4" y2="111.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="44" y1="69.2" x2="262.4" y2="69.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="69.2" y="166.2" fill="#898781" text-anchor="middle">−3</text>
+<text x="111.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
+<text x="153.2" y="166.2" fill="#898781" text-anchor="middle">−1</text>
+<text x="237.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
+<text x="190.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
+<text x="190.2" y="115.2" fill="#898781" text-anchor="end">1</text>
+<text x="190.2" y="73.2" fill="#898781" text-anchor="end">2</text>
+<line x1="112.5" y1="113.8" x2="154.5" y2="71.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="114.4" y1="117.6" x2="156.4" y2="75.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="116.3" y1="121.3" x2="158.3" y2="79.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="118.1" y1="125.1" x2="160.1" y2="83.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="120.0" y1="128.9" x2="162.0" y2="86.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="121.9" y1="132.6" x2="163.9" y2="90.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="123.8" y1="136.4" x2="165.8" y2="94.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="125.7" y1="140.2" x2="167.7" y2="98.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="127.6" y1="144.0" x2="169.6" y2="102.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="129.5" y1="147.7" x2="171.5" y2="105.7" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="131.3" y1="151.5" x2="173.3" y2="109.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="133.2" y1="155.3" x2="175.2" y2="113.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="135.1" y1="159.0" x2="177.1" y2="117.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="137.0" y1="162.8" x2="179.0" y2="120.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="138.9" y1="166.6" x2="180.9" y2="124.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="140.8" y1="170.4" x2="182.8" y2="128.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="142.7" y1="174.1" x2="184.7" y2="132.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="144.5" y1="177.9" x2="186.5" y2="135.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="146.4" y1="181.7" x2="188.4" y2="139.7" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="148.3" y1="185.4" x2="190.3" y2="143.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="150.2" y1="189.2" x2="192.2" y2="147.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="152.1" y1="193.0" x2="194.1" y2="151.0" stroke="#9ec5f4" stroke-width="1"/>
+<path d="M195.2 153.2 L153.2 69.2 L111.2 111.2 L153.2 195.2 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<line x1="195.2" y1="153.2" x2="153.6" y2="70.1" stroke="#1baf7a" stroke-width="2.5"/>
+<path d="M153.6 78.2 L153.2 69.2 L160.2 74.9" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<line x1="195.2" y1="153.2" x2="153.9" y2="194.5" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M161.6 192 L153.2 195.2 L156.4 186.8" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<text x="153.2" y="26" font-size="13" text-anchor="middle" font-weight="600">first A, then R: R·A</text>
+<rect x="44" y="234.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="250.4" fill="#1baf7a" text-anchor="middle">−1</text>
+<rect x="74" y="234.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="89" y="250.4" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="44" y="258.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="59" y="274.4" fill="#1baf7a" text-anchor="middle">2</text>
+<rect x="74" y="258.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="89" y="274.4" fill="#eb6834" text-anchor="middle">−1</text>
+<text x="116" y="251.4">î → (−1, 2), ĵ → (−1, −1)</text>
+<text x="116" y="268.4" fill="#52514e">the unit square&apos;s area becomes 3</text>
+<line x1="429.2" y1="220.4" x2="429.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="471.2" y1="220.4" x2="471.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="513.2" y1="220.4" x2="513.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="555.2" y1="220.4" x2="555.2" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="597.2" y1="220.4" x2="597.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="404" y1="195.2" x2="622.4" y2="195.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="404" y1="153.2" x2="622.4" y2="153.2" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="404" y1="111.2" x2="622.4" y2="111.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="404" y1="69.2" x2="622.4" y2="69.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="429.2" y="166.2" fill="#898781" text-anchor="middle">−3</text>
+<text x="471.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
+<text x="513.2" y="166.2" fill="#898781" text-anchor="middle">−1</text>
+<text x="597.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
+<text x="550.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
+<text x="550.2" y="115.2" fill="#898781" text-anchor="end">1</text>
+<text x="550.2" y="73.2" fill="#898781" text-anchor="end">2</text>
+<line x1="429.3" y1="153.3" x2="429.7" y2="152.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="432.2" y1="156.2" x2="441.0" y2="147.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="435.0" y1="159.0" x2="452.3" y2="141.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="437.8" y1="161.8" x2="463.7" y2="136.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="440.6" y1="164.6" x2="475.0" y2="130.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="443.5" y1="167.5" x2="486.3" y2="124.7" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="446.3" y1="170.3" x2="497.6" y2="119.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="449.1" y1="173.1" x2="508.9" y2="113.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="452.0" y1="176.0" x2="515.0" y2="113.0" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="454.8" y1="178.8" x2="517.8" y2="115.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="457.6" y1="181.6" x2="520.6" y2="118.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="460.4" y1="184.4" x2="523.4" y2="121.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="463.3" y1="187.3" x2="526.3" y2="124.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="466.1" y1="190.1" x2="529.1" y2="127.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="468.9" y1="192.9" x2="531.9" y2="129.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="473.4" y1="194.1" x2="534.8" y2="132.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="484.7" y1="188.4" x2="537.6" y2="135.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="496.0" y1="182.8" x2="540.4" y2="138.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="507.4" y1="177.1" x2="543.2" y2="141.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="518.7" y1="171.5" x2="546.1" y2="144.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="530.0" y1="165.8" x2="548.9" y2="146.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="541.3" y1="160.2" x2="551.7" y2="149.7" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="552.6" y1="154.5" x2="554.6" y2="152.6" stroke="#9ec5f4" stroke-width="1"/>
+<path d="M555.2 153.2 L513.2 111.2 L429.2 153.2 L471.2 195.2 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<line x1="555.2" y1="153.2" x2="513.9" y2="111.9" stroke="#1baf7a" stroke-width="2.5"/>
+<path d="M516.4 119.6 L513.2 111.2 L521.6 114.4" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<line x1="555.2" y1="153.2" x2="472.1" y2="194.8" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M480.2 194.8 L471.2 195.2 L476.9 188.2" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<text x="513.2" y="26" font-size="13" text-anchor="middle" font-weight="600">first R, then A: A·R</text>
+<rect x="404" y="234.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="419" y="250.4" fill="#1baf7a" text-anchor="middle">−1</text>
+<rect x="434" y="234.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="449" y="250.4" fill="#eb6834" text-anchor="middle">−2</text>
+<rect x="404" y="258.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="419" y="274.4" fill="#1baf7a" text-anchor="middle">1</text>
+<rect x="434" y="258.4" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="449" y="274.4" fill="#eb6834" text-anchor="middle">−1</text>
+<text x="476" y="251.4">î → (−1, 1), ĵ → (−2, −1)</text>
+<text x="476" y="268.4" fill="#52514e">the unit square&apos;s area becomes 3</text>
+</g>
+</svg>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236" width="720" height="236" role="img" aria-labelledby="title desc">
+<title id="title">A quarter turn described in her words</title>
+<desc id="desc">A pipeline: her vector (−1, 2) is translated into our words by A, giving (−4, 1); our quarter turn R gives (−1, −4); A⁻¹ translates back, giving (−5/3, −7/3) in her words. The single matrix A⁻¹RA does the same job.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="236" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="8" y="56" width="128" height="52" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="72" y="79" text-anchor="middle">(−1, 2)</text>
+<text x="72" y="94" fill="#52514e" text-anchor="middle">her words</text>
+<line x1="142" y1="82" x2="194" y2="82" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="168" y="72" font-size="13" text-anchor="middle" font-weight="600">A</text>
+<rect x="200" y="56" width="128" height="52" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="264" y="79" text-anchor="middle">(−4, 1)</text>
+<text x="264" y="94" fill="#52514e" text-anchor="middle">our words</text>
+<line x1="334" y1="82" x2="386" y2="82" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="360" y="72" font-size="13" text-anchor="middle" font-weight="600">R</text>
+<rect x="392" y="56" width="128" height="52" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="456" y="79" text-anchor="middle">(−1, −4)</text>
+<text x="456" y="94" fill="#52514e" text-anchor="middle">our words, turned</text>
+<line x1="526" y1="82" x2="578" y2="82" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="552" y="72" font-size="13" text-anchor="middle" font-weight="600">A⁻¹</text>
+<rect x="584" y="56" width="128" height="52" rx="2" fill="#cde2fb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="648" y="79" text-anchor="middle">(−5/3, −7/3)</text>
+<text x="648" y="94" fill="#52514e" text-anchor="middle">her words, turned</text>
+<text x="8" y="30" fill="#52514e">to turn her vector: translate, turn, translate back</text>
+<text x="8" y="134" fill="#52514e">A: her words into ours · R: our quarter turn · A⁻¹: our words into hers</text>
+<text x="8" y="180" font-size="13" font-weight="600">all at once: A⁻¹ R A =</text>
+<rect x="180" y="162" width="52" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="206" y="179" text-anchor="middle">1/3</text>
+<rect x="232" y="162" width="52" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="258" y="179" text-anchor="middle">−2/3</text>
+<rect x="180" y="188" width="52" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="206" y="205" text-anchor="middle">5/3</text>
+<rect x="232" y="188" width="52" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="258" y="205" text-anchor="middle">−1/3</text>
+<text x="300" y="180">times her (−1, 2) gives (−5/3, −7/3): the same answer</text>
+<text x="300" y="198" fill="#52514e">read right to left: A first, then R, then A⁻¹</text>
+</g>
+</svg>

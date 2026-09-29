@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="title desc">
+<title id="title">Cramer&apos;s rule for x, drawn as areas</title>
+<desc id="desc">Left: the parallelogram built on the unknown vector and a unit vector has signed area x. Right: after the matrix it is built on the output (−4, −2) and a column of the matrix, (2, 2); its area is −4 = 8 × x, so x = −0.5.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="330" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="41.2" y1="184.8" x2="41.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="85.2" y1="184.8" x2="85.2" y2="44" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="129.2" y1="184.8" x2="129.2" y2="44" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="28" y1="145.2" x2="155.6" y2="145.2" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="28" y1="101.2" x2="155.6" y2="101.2" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="28" y1="57.2" x2="155.6" y2="57.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="41.2" y="114.2" fill="#898781" text-anchor="middle">−1</text>
+<text x="129.2" y="114.2" fill="#898781" text-anchor="middle">1</text>
+<text x="80.2" y="149.2" fill="#898781" text-anchor="end">−1</text>
+<text x="80.2" y="61.2" fill="#898781" text-anchor="end">1</text>
+<line x1="82.1" y1="65.0" x2="85.2" y2="61.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="78.3" y1="74.4" x2="85.2" y2="67.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="74.5" y1="83.9" x2="85.2" y2="73.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="70.8" y1="93.3" x2="85.2" y2="78.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="67.0" y1="102.7" x2="85.2" y2="84.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="112.1" x2="85.2" y2="90.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="117.8" x2="85.2" y2="95.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="123.5" x2="85.0" y2="101.7" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="129.1" x2="81.2" y2="111.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="134.8" x2="77.5" y2="120.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="140.4" x2="73.7" y2="129.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="146.1" x2="69.9" y2="139.4" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="63.2" y1="151.8" x2="66.2" y2="148.8" stroke="#9ec5f4" stroke-width="1"/>
+<path d="M85.2 101.2 L63.2 156.2 L63.2 112.2 L85.2 57.2 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<line x1="85.2" y1="101.2" x2="85.2" y2="58.2" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M81.5 65.4 L85.2 57.2 L88.9 65.4" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<line x1="85.2" y1="101.2" x2="63.6" y2="155.3" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M69.7 149.9 L63.2 156.2 L62.8 147.2" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<rect x="5.8" y="162.2" width="106.8" height="17" rx="2" fill="#fcfcfb"/>
+<text x="59.2" y="174.2" fill="#2a78d6" text-anchor="middle">(x, y): unknown</text>
+<text x="91.8" y="26" font-size="13" text-anchor="middle" font-weight="600">before</text>
+<line x1="376.4" y1="260" x2="376.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="420.4" y1="260" x2="420.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="464.4" y1="260" x2="464.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="508.4" y1="260" x2="508.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="552.4" y1="260" x2="552.4" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="596.4" y1="260" x2="596.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="640.4" y1="260" x2="640.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="684.4" y1="260" x2="684.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="350" y1="238" x2="684.4" y2="238" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="350" y1="194" x2="684.4" y2="194" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="350" y1="150" x2="684.4" y2="150" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="350" y1="106" x2="684.4" y2="106" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="350" y1="62" x2="684.4" y2="62" stroke="#e1e0d9" stroke-width="1"/>
+<text x="376.4" y="163" fill="#898781" text-anchor="middle">−4</text>
+<text x="420.4" y="163" fill="#898781" text-anchor="middle">−3</text>
+<text x="464.4" y="163" fill="#898781" text-anchor="middle">−2</text>
+<text x="508.4" y="163" fill="#898781" text-anchor="middle">−1</text>
+<text x="596.4" y="163" fill="#898781" text-anchor="middle">1</text>
+<text x="640.4" y="163" fill="#898781" text-anchor="middle">2</text>
+<text x="684.4" y="163" fill="#898781" text-anchor="middle">3</text>
+<text x="547.4" y="242" fill="#898781" text-anchor="end">−2</text>
+<text x="547.4" y="198" fill="#898781" text-anchor="end">−1</text>
+<text x="547.4" y="110" fill="#898781" text-anchor="end">1</text>
+<text x="547.4" y="66" fill="#898781" text-anchor="end">2</text>
+<line x1="350" y1="176.4" x2="486.4" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="350" y1="199.9" x2="530.4" y2="260" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="442.4" y1="260" x2="662.4" y2="40" stroke="#898781" stroke-width="1.5"/>
+<line x1="350" y1="82.5" x2="684.4" y2="194" stroke="#898781" stroke-width="1.5"/>
+<line x1="618.4" y1="260" x2="684.4" y2="194" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="574.4" y1="40" x2="684.4" y2="76.7" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="380.8" y1="235.8" x2="468.8" y2="147.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="392.1" y1="230.1" x2="480.1" y2="142.1" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="403.4" y1="224.5" x2="491.4" y2="136.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="414.7" y1="218.8" x2="502.7" y2="130.8" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="426.0" y1="213.2" x2="514.0" y2="125.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="437.4" y1="207.5" x2="525.4" y2="119.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="448.7" y1="201.9" x2="536.7" y2="113.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="460.0" y1="196.2" x2="548.0" y2="108.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="471.3" y1="190.5" x2="559.3" y2="102.5" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="482.6" y1="184.9" x2="570.6" y2="96.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="493.9" y1="179.2" x2="581.9" y2="91.2" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="505.2" y1="173.6" x2="593.2" y2="85.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="516.6" y1="167.9" x2="604.6" y2="79.9" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="527.9" y1="162.3" x2="615.9" y2="74.3" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="539.2" y1="156.6" x2="627.2" y2="68.6" stroke="#9ec5f4" stroke-width="1"/>
+<line x1="550.5" y1="151.0" x2="638.5" y2="63.0" stroke="#9ec5f4" stroke-width="1"/>
+<path d="M552.4 150 L376.4 238 L464.4 150 L640.4 62 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<line x1="552.4" y1="150" x2="639.7" y2="62.7" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M632 65.2 L640.4 62 L637.2 70.4" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<line x1="552.4" y1="150" x2="377.3" y2="237.6" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M385.4 237.6 L376.4 238 L382.1 231" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<rect x="377.4" y="246" width="153.8" height="17" rx="2" fill="#fcfcfb"/>
+<text x="380.4" y="258" fill="#2a78d6">output (−4, −2): known</text>
+<rect x="589.1" y="42" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="632.4" y="54" fill="#eb6834" text-anchor="end">(2, 2)</text>
+<text x="517.2" y="26" font-size="13" text-anchor="middle" font-weight="600">after the matrix</text>
+<line x1="165.6" y1="120" x2="340" y2="120" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="28" y="280">signed area = x</text>
+<text x="28" y="297" fill="#52514e">(here x = −0.5)</text>
+<text x="350" y="280">signed area = det × x = 8 × x</text>
+<text x="350" y="297">= (−4)×2 − 2×(−2) = −4</text>
+<text x="350" y="315" fill="#2a78d6" font-weight="600">so x = −4 ÷ 8 = −0.5</text>
+</g>
+</svg>

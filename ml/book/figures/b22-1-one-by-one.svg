@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 356" width="720" height="356" role="img" aria-labelledby="title desc">
+<title id="title">A 1 by 1 convolution mixes the channels at each pixel and leaves the pixels where they are</title>
+<desc id="desc">Left, the three 4 by 4 colour planes with the top-left pixel outlined; middle, that pixel&apos;s three values multiplied by a 2 by 3 weight matrix to give two numbers; right, the two 4 by 4 output planes that result from doing the same at every pixel.</desc>
+<rect width="720" height="356" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="34" fill="#eb6834" font-weight="600">red</text>
+<rect x="30" y="40" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="54" text-anchor="middle">2</text>
+<rect x="50" y="40" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="54" text-anchor="middle">0</text>
+<rect x="70" y="40" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="54" text-anchor="middle">1</text>
+<rect x="90" y="40" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="54" text-anchor="middle">3</text>
+<rect x="30" y="60" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="74" text-anchor="middle">1</text>
+<rect x="50" y="60" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="74" text-anchor="middle">3</text>
+<rect x="70" y="60" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="74" text-anchor="middle">0</text>
+<rect x="90" y="60" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="74" text-anchor="middle">2</text>
+<rect x="30" y="80" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="94" text-anchor="middle">0</text>
+<rect x="50" y="80" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="94" text-anchor="middle">2</text>
+<rect x="70" y="80" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="94" text-anchor="middle">2</text>
+<rect x="90" y="80" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="94" text-anchor="middle">1</text>
+<rect x="30" y="100" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="114" text-anchor="middle">3</text>
+<rect x="50" y="100" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="114" text-anchor="middle">1</text>
+<rect x="70" y="100" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="114" text-anchor="middle">0</text>
+<rect x="90" y="100" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="114" text-anchor="middle">0</text>
+<rect x="30" y="40" width="20" height="20" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="30" y="134" fill="#1baf7a" font-weight="600">green</text>
+<rect x="30" y="140" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="154" text-anchor="middle">1</text>
+<rect x="50" y="140" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="154" text-anchor="middle">1</text>
+<rect x="70" y="140" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="154" text-anchor="middle">0</text>
+<rect x="90" y="140" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="154" text-anchor="middle">2</text>
+<rect x="30" y="160" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="174" text-anchor="middle">0</text>
+<rect x="50" y="160" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="174" text-anchor="middle">2</text>
+<rect x="70" y="160" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="174" text-anchor="middle">1</text>
+<rect x="90" y="160" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="174" text-anchor="middle">1</text>
+<rect x="30" y="180" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="194" text-anchor="middle">2</text>
+<rect x="50" y="180" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="194" text-anchor="middle">0</text>
+<rect x="70" y="180" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="194" text-anchor="middle">1</text>
+<rect x="90" y="180" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="194" text-anchor="middle">3</text>
+<rect x="30" y="200" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="214" text-anchor="middle">1</text>
+<rect x="50" y="200" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="214" text-anchor="middle">0</text>
+<rect x="70" y="200" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="214" text-anchor="middle">2</text>
+<rect x="90" y="200" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="214" text-anchor="middle">1</text>
+<rect x="30" y="140" width="20" height="20" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="30" y="234" fill="#2a78d6" font-weight="600">blue</text>
+<rect x="30" y="240" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="254" text-anchor="middle">0</text>
+<rect x="50" y="240" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="254" text-anchor="middle">2</text>
+<rect x="70" y="240" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="254" text-anchor="middle">1</text>
+<rect x="90" y="240" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="254" text-anchor="middle">0</text>
+<rect x="30" y="260" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="274" text-anchor="middle">3</text>
+<rect x="50" y="260" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="274" text-anchor="middle">0</text>
+<rect x="70" y="260" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="274" text-anchor="middle">1</text>
+<rect x="90" y="260" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="274" text-anchor="middle">2</text>
+<rect x="30" y="280" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="294" text-anchor="middle">1</text>
+<rect x="50" y="280" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="294" text-anchor="middle">1</text>
+<rect x="70" y="280" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="294" text-anchor="middle">0</text>
+<rect x="90" y="280" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="294" text-anchor="middle">2</text>
+<rect x="30" y="300" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="40" y="314" text-anchor="middle">0</text>
+<rect x="50" y="300" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="60" y="314" text-anchor="middle">3</text>
+<rect x="70" y="300" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="80" y="314" text-anchor="middle">1</text>
+<rect x="90" y="300" width="20" height="20" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="100" y="314" text-anchor="middle">1</text>
+<rect x="30" y="240" width="20" height="20" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="190" y="44" font-weight="600">one pixel, three channels</text>
+<rect x="190" y="76" width="34" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="93" text-anchor="middle">2</text>
+<rect x="190" y="102" width="34" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="119" text-anchor="middle">1</text>
+<rect x="190" y="128" width="34" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="207" y="145" text-anchor="middle">0</text>
+<text x="240" y="118" font-size="16" fill="#52514e" text-anchor="middle">×</text>
+<text x="254" y="70" fill="#52514e">weights: 2 outputs × 3 channels</text>
+<rect x="254" y="76" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="271" y="93" text-anchor="middle">1</text>
+<rect x="288" y="76" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="93" text-anchor="middle">1</text>
+<rect x="322" y="76" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="339" y="93" text-anchor="middle">0</text>
+<rect x="254" y="102" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="271" y="119" text-anchor="middle">0</text>
+<rect x="288" y="102" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="305" y="119" text-anchor="middle">−1</text>
+<rect x="322" y="102" width="34" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="339" y="119" text-anchor="middle">2</text>
+<text x="370" y="104" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="386" y="76" width="34" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="403" y="93" text-anchor="middle">3</text>
+<rect x="386" y="102" width="34" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="403" y="119" text-anchor="middle">−1</text>
+<text x="190" y="170" fill="#52514e">first output: 1·2 + 1·1 + 0·0 = 3</text>
+<text x="190" y="186" fill="#52514e">second output: 0·2 + (−1)·1 + 2·0 = −1</text>
+<text x="190" y="214" fill="#52514e">The same 6 weights are applied at all 16 pixels:</text>
+<text x="190" y="228" fill="#52514e">a small dense layer across channels, per pixel.</text>
+<text x="540" y="34" font-weight="600">output channel 1</text>
+<rect x="540" y="40" width="26" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="57" text-anchor="middle">3</text>
+<rect x="566" y="40" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="57" text-anchor="middle">1</text>
+<rect x="592" y="40" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="57" text-anchor="middle">1</text>
+<rect x="618" y="40" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="57" text-anchor="middle">5</text>
+<rect x="540" y="66" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="83" text-anchor="middle">1</text>
+<rect x="566" y="66" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="83" text-anchor="middle">5</text>
+<rect x="592" y="66" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="83" text-anchor="middle">1</text>
+<rect x="618" y="66" width="26" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="83" text-anchor="middle">3</text>
+<rect x="540" y="92" width="26" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="109" text-anchor="middle">2</text>
+<rect x="566" y="92" width="26" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="109" text-anchor="middle">2</text>
+<rect x="592" y="92" width="26" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="109" text-anchor="middle">3</text>
+<rect x="618" y="92" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="109" text-anchor="middle">4</text>
+<rect x="540" y="118" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="135" text-anchor="middle">4</text>
+<rect x="566" y="118" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="135" text-anchor="middle">1</text>
+<rect x="592" y="118" width="26" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="135" text-anchor="middle">2</text>
+<rect x="618" y="118" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="135" text-anchor="middle">1</text>
+<rect x="540" y="40" width="26" height="26" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="540" y="174" font-weight="600">output channel 2</text>
+<rect x="540" y="180" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="197" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="566" y="180" width="26" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="197" text-anchor="middle">3</text>
+<rect x="592" y="180" width="26" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="197" text-anchor="middle">2</text>
+<rect x="618" y="180" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="197" fill="#eb6834" text-anchor="middle">−2</text>
+<rect x="540" y="206" width="26" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="223" text-anchor="middle">6</text>
+<rect x="566" y="206" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="223" fill="#eb6834" text-anchor="middle">−2</text>
+<rect x="592" y="206" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="223" text-anchor="middle">1</text>
+<rect x="618" y="206" width="26" height="26" rx="2" fill="#86b6ef" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="223" text-anchor="middle">3</text>
+<rect x="540" y="232" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="249" fill="#898781" text-anchor="middle">0</text>
+<rect x="566" y="232" width="26" height="26" rx="2" fill="#9ec5f4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="249" text-anchor="middle">2</text>
+<rect x="592" y="232" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="249" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="618" y="232" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="249" text-anchor="middle">1</text>
+<rect x="540" y="258" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="553" y="275" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="566" y="258" width="26" height="26" rx="2" fill="#5598e7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="579" y="275" text-anchor="middle">6</text>
+<rect x="592" y="258" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="605" y="275" fill="#898781" text-anchor="middle">0</text>
+<rect x="618" y="258" width="26" height="26" rx="2" fill="#b7d3f6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="631" y="275" text-anchor="middle">1</text>
+<rect x="540" y="180" width="26" height="26" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<text x="30" y="340" fill="#52514e">3 input channels become 2 output channels; the 4 × 4 layout is unchanged.</text>
+</g>
+</svg>

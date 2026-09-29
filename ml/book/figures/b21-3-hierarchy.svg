@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">Deeper layers see larger regions and respond to larger, more complex patterns</title>
+<desc id="desc">Left, a 64 by 64 pixel cover drawn to scale with nested squares for the regions seen after layers 2, 5, 8 and 11 of a small network; right, a ladder from edges to objects with each stage&apos;s receptive-field size.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="40" font-weight="600">a 64 × 64 cover, drawn to scale</text>
+<rect x="40" y="70" width="192" height="192" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<rect x="128.5" y="158.5" width="15" height="15" rx="2" fill="none" stroke="#2a78d6" stroke-width="1.5"/>
+<rect x="115" y="145" width="42" height="42" rx="2" fill="none" stroke="#1baf7a" stroke-width="1.5"/>
+<rect x="88" y="118" width="96" height="96" rx="2" fill="none" stroke="#eb6834" stroke-width="1.5"/>
+<rect x="34" y="64" width="204" height="204" rx="2" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<text x="40" y="282" fill="#52514e">the largest square spills past the cover:</text>
+<text x="40" y="296" fill="#52514e">its unit sees the whole cover and some padding</text>
+<rect x="330" y="260" width="360" height="50" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="342" y="280" font-weight="600">after layer 2: edges</text>
+<text x="342" y="298" fill="#52514e">strokes of letters, the border of a picture</text>
+<text x="678" y="280" fill="#2a78d6" text-anchor="end" font-weight="600">5 × 5</text>
+<line x1="510" y1="259" x2="510" y2="239" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="330" y="188" width="360" height="50" rx="2" fill="#fcfcfb" stroke="#1baf7a" stroke-width="1.5"/>
+<text x="342" y="208" font-weight="600">after layer 5: corners and contours</text>
+<text x="342" y="226" fill="#52514e">where strokes meet and bend</text>
+<text x="678" y="208" fill="#1baf7a" text-anchor="end" font-weight="600">14 × 14</text>
+<line x1="510" y1="187" x2="510" y2="167" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="330" y="116" width="360" height="50" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1.5"/>
+<text x="342" y="136" font-weight="600">after layer 8: object parts</text>
+<text x="342" y="154" fill="#52514e">whole letters, shapes in the picture</text>
+<text x="678" y="136" fill="#eb6834" text-anchor="end" font-weight="600">32 × 32</text>
+<line x1="510" y1="115" x2="510" y2="95" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="330" y="44" width="360" height="50" rx="2" fill="#fcfcfb" stroke="#52514e" stroke-width="1.5"/>
+<text x="342" y="64" font-weight="600">after layer 11: objects</text>
+<text x="342" y="82" fill="#52514e">the title block, the picture: a cookbook cover</text>
+<text x="678" y="64" fill="#52514e" text-anchor="end" font-weight="600">68 × 68</text>
+<text x="330" y="336" fill="#52514e">Network: pairs of 3 × 3 layers, 2 × 2 pooling between.</text>
+</g>
+</svg>

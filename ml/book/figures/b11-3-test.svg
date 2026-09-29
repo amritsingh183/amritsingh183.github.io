@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320" role="img" aria-labelledby="title desc">
+<title id="title">The flatter line predicts new books better</title>
+<desc id="desc">6 new books (green) around a gentler trend. The least-squares line misses them by a total squared error of 4.69; the ridge line for λ = 1 by 0.64.</desc>
+<rect width="720" height="320" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="50" y1="240" x2="340" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="244" fill="#898781" text-anchor="end">0</text>
+<line x1="50" y1="211.4" x2="340" y2="211.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="215.4" fill="#898781" text-anchor="end">1</text>
+<line x1="50" y1="182.9" x2="340" y2="182.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="186.9" fill="#898781" text-anchor="end">2</text>
+<line x1="50" y1="154.3" x2="340" y2="154.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="158.3" fill="#898781" text-anchor="end">3</text>
+<line x1="50" y1="125.7" x2="340" y2="125.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="129.7" fill="#898781" text-anchor="end">4</text>
+<line x1="50" y1="97.1" x2="340" y2="97.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="101.1" fill="#898781" text-anchor="end">5</text>
+<line x1="50" y1="68.6" x2="340" y2="68.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="72.6" fill="#898781" text-anchor="end">6</text>
+<line x1="50" y1="40" x2="340" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<text x="45" y="44" fill="#898781" text-anchor="end">7</text>
+<line x1="114.4" y1="40" x2="114.4" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="114.4" y="254" fill="#898781" text-anchor="middle">1</text>
+<line x1="178.9" y1="40" x2="178.9" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="178.9" y="254" fill="#898781" text-anchor="middle">2</text>
+<line x1="243.3" y1="40" x2="243.3" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="243.3" y="254" fill="#898781" text-anchor="middle">3</text>
+<line x1="307.8" y1="40" x2="307.8" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="307.8" y="254" fill="#898781" text-anchor="middle">4</text>
+<line x1="50" y1="240" x2="340" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="50" y1="40" x2="50" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<path d="M50 225.7 L195 129.3 L329.3 40" fill="none" stroke="#eb6834" stroke-width="2.2"/>
+<line x1="82.2" y1="168.6" x2="82.2" y2="173.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="82.2" y1="177.1" x2="82.2" y2="182.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="82.2" y1="185.6" x2="82.2" y2="190.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="82.2" y1="194.1" x2="82.2" y2="199.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="82.2" y1="202.6" x2="82.2" y2="204.3" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="82.2" cy="168.6" r="4.5" fill="#1baf7a"/>
+<line x1="146.7" y1="160" x2="146.7" y2="161.4" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="146.7" cy="160" r="4.5" fill="#1baf7a"/>
+<line x1="178.9" y1="137.1" x2="178.9" y2="140" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="178.9" cy="137.1" r="4.5" fill="#1baf7a"/>
+<line x1="211.1" y1="134.3" x2="211.1" y2="129.3" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="211.1" y1="125.8" x2="211.1" y2="120.8" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="211.1" cy="134.3" r="4.5" fill="#1baf7a"/>
+<line x1="275.6" y1="97.1" x2="275.6" y2="92.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="275.6" y1="88.6" x2="275.6" y2="83.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="275.6" y1="80.1" x2="275.6" y2="75.7" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="275.6" cy="97.1" r="4.5" fill="#1baf7a"/>
+<line x1="307.8" y1="97.1" x2="307.8" y2="92.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="307.8" y1="88.6" x2="307.8" y2="83.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="307.8" y1="80.1" x2="307.8" y2="75.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="307.8" y1="71.6" x2="307.8" y2="66.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="307.8" y1="63.1" x2="307.8" y2="58.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="307.8" y1="54.6" x2="307.8" y2="54.3" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="307.8" cy="97.1" r="4.5" fill="#1baf7a"/>
+<circle cx="114.4" cy="182.9" r="4" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<circle cx="243.3" cy="97.1" r="4" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="195" y="26" font-size="13" fill="#eb6834" text-anchor="middle" font-weight="600">least squares (λ = 0)</text>
+<text x="50" y="274">squared misses on the 6 new books: 4.69</text>
+<line x1="410" y1="240" x2="700" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="244" fill="#898781" text-anchor="end">0</text>
+<line x1="410" y1="211.4" x2="700" y2="211.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="215.4" fill="#898781" text-anchor="end">1</text>
+<line x1="410" y1="182.9" x2="700" y2="182.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="186.9" fill="#898781" text-anchor="end">2</text>
+<line x1="410" y1="154.3" x2="700" y2="154.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="158.3" fill="#898781" text-anchor="end">3</text>
+<line x1="410" y1="125.7" x2="700" y2="125.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="129.7" fill="#898781" text-anchor="end">4</text>
+<line x1="410" y1="97.1" x2="700" y2="97.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="101.1" fill="#898781" text-anchor="end">5</text>
+<line x1="410" y1="68.6" x2="700" y2="68.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="72.6" fill="#898781" text-anchor="end">6</text>
+<line x1="410" y1="40" x2="700" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<text x="405" y="44" fill="#898781" text-anchor="end">7</text>
+<line x1="474.4" y1="40" x2="474.4" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="474.4" y="254" fill="#898781" text-anchor="middle">1</text>
+<line x1="538.9" y1="40" x2="538.9" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="538.9" y="254" fill="#898781" text-anchor="middle">2</text>
+<line x1="603.3" y1="40" x2="603.3" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="603.3" y="254" fill="#898781" text-anchor="middle">3</text>
+<line x1="667.8" y1="40" x2="667.8" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="667.8" y="254" fill="#898781" text-anchor="middle">4</text>
+<line x1="410" y1="240" x2="700" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="410" y1="40" x2="410" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<path d="M410 197.1 L555 132.9 L700 68.6" fill="none" stroke="#1baf7a" stroke-width="2.2"/>
+<line x1="442.2" y1="168.6" x2="442.2" y2="173.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="442.2" y1="177.1" x2="442.2" y2="182.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="442.2" cy="168.6" r="4.5" fill="#1baf7a"/>
+<line x1="506.7" y1="160" x2="506.7" y2="155" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="506.7" cy="160" r="4.5" fill="#1baf7a"/>
+<line x1="538.9" y1="137.1" x2="538.9" y2="140" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="538.9" cy="137.1" r="4.5" fill="#1baf7a"/>
+<line x1="571.1" y1="134.3" x2="571.1" y2="129.3" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="571.1" y1="125.8" x2="571.1" y2="125.7" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="571.1" cy="134.3" r="4.5" fill="#1baf7a"/>
+<circle cx="635.6" cy="97.1" r="4.5" fill="#1baf7a"/>
+<line x1="667.8" y1="97.1" x2="667.8" y2="92.1" stroke="#0b0b0b" stroke-width="1.2"/>
+<line x1="667.8" y1="88.6" x2="667.8" y2="83.6" stroke="#0b0b0b" stroke-width="1.2"/>
+<circle cx="667.8" cy="97.1" r="4.5" fill="#1baf7a"/>
+<circle cx="474.4" cy="182.9" r="4" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<circle cx="603.3" cy="97.1" r="4" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="555" y="26" font-size="13" fill="#1baf7a" text-anchor="middle" font-weight="600">ridge (λ = 1)</text>
+<text x="410" y="274">squared misses on the 6 new books: 0.64</text>
+<text x="50" y="292" fill="#52514e">open circles: the two training books · the line for λ = 3 scores 0.64</text>
+<text x="50" y="308" fill="#52514e">the new books follow y = 1.9 + 0.8x plus small fixed noise</text>
+</g>
+</svg>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" width="700" height="300" role="img" aria-labelledby="title desc">
+<title id="title">The probability mass function of how many books a customer buys</title>
+<desc id="desc">Six blue bars over 1 to 6 books with heights equal to the count divided by 40; the heights are printed and add up to one.</desc>
+<rect width="700" height="300" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="70" y1="240" x2="470" y2="240" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="244" fill="#898781" text-anchor="end">0</text>
+<line x1="70" y1="195.6" x2="470" y2="195.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="199.6" fill="#898781" text-anchor="end">0.1</text>
+<line x1="70" y1="151.1" x2="470" y2="151.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="155.1" fill="#898781" text-anchor="end">0.2</text>
+<line x1="70" y1="106.7" x2="470" y2="106.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="110.7" fill="#898781" text-anchor="end">0.3</text>
+<line x1="70" y1="62.2" x2="470" y2="62.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="64" y="66.2" fill="#898781" text-anchor="end">0.4</text>
+<line x1="70" y1="240" x2="470" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="70" y1="40" x2="70" y2="240" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="103.3" y1="240" x2="103.3" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="103.3" y="256" fill="#898781" text-anchor="middle">1</text>
+<line x1="170" y1="240" x2="170" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="170" y="256" fill="#898781" text-anchor="middle">2</text>
+<line x1="236.7" y1="240" x2="236.7" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="236.7" y="256" fill="#898781" text-anchor="middle">3</text>
+<line x1="303.3" y1="240" x2="303.3" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="303.3" y="256" fill="#898781" text-anchor="middle">4</text>
+<line x1="370" y1="240" x2="370" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="370" y="256" fill="#898781" text-anchor="middle">5</text>
+<line x1="436.7" y1="240" x2="436.7" y2="244" stroke="#c3c2b7" stroke-width="1"/>
+<text x="436.7" y="256" fill="#898781" text-anchor="middle">6</text>
+<text x="270" y="272" fill="#52514e" text-anchor="middle">books bought in one visit</text>
+<text x="64" y="28" fill="#52514e">probability</text>
+<rect x="84.7" y="84.4" width="37.3" height="155.6" rx="2" fill="#2a78d6"/>
+<text x="103.3" y="64.4" text-anchor="middle">0.35</text>
+<text x="103.3" y="77.4" fill="#898781" text-anchor="middle">14 of 40</text>
+<rect x="151.3" y="117.8" width="37.3" height="122.2" rx="2" fill="#2a78d6"/>
+<text x="170" y="97.8" text-anchor="middle">0.275</text>
+<text x="170" y="110.8" fill="#898781" text-anchor="middle">11 of 40</text>
+<rect x="218" y="162.2" width="37.3" height="77.8" rx="2" fill="#2a78d6"/>
+<text x="236.7" y="142.2" text-anchor="middle">0.175</text>
+<text x="236.7" y="155.2" fill="#898781" text-anchor="middle">7 of 40</text>
+<rect x="284.7" y="195.6" width="37.3" height="44.4" rx="2" fill="#2a78d6"/>
+<text x="303.3" y="175.6" text-anchor="middle">0.1</text>
+<text x="303.3" y="188.6" fill="#898781" text-anchor="middle">4 of 40</text>
+<rect x="351.3" y="217.8" width="37.3" height="22.2" rx="2" fill="#2a78d6"/>
+<text x="370" y="197.8" text-anchor="middle">0.05</text>
+<text x="370" y="210.8" fill="#898781" text-anchor="middle">2 of 40</text>
+<rect x="418" y="217.8" width="37.3" height="22.2" rx="2" fill="#2a78d6"/>
+<text x="436.7" y="197.8" text-anchor="middle">0.05</text>
+<text x="436.7" y="210.8" fill="#898781" text-anchor="middle">2 of 40</text>
+<text x="500" y="90">40 customers were counted.</text>
+<text x="500" y="112">Each bar is a probability:</text>
+<text x="500" y="130">a count divided by 40.</text>
+<text x="500" y="156">Only whole numbers of books</text>
+<text x="500" y="174">are possible, so the chance</text>
+<text x="500" y="192">sits on six separate values.</text>
+<text x="500" y="218">The six heights add up to 1.</text>
+</g>
+</svg>

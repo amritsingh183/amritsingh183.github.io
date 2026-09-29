@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="720" height="340" role="img" aria-labelledby="title desc">
+<title id="title">Separable convolutions: a depthwise pass then a pointwise pass, and a kernel written as a column times a row</title>
+<desc id="desc">Left, bars comparing the multiplications of a standard 3 by 3 convolution with those of its depthwise and pointwise parts; right, the Sobel kernel built as a column of 1, 2, 1 times a row of 1, 0, minus 1.</desc>
+<rect width="720" height="340" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="30" y="34" font-weight="600">56 × 56 × 64 in, 128 out, 3 × 3 kernels</text>
+<text x="30" y="64">standard convolution</text>
+<rect x="30" y="72" width="300" height="22" rx="2" fill="#eb6834"/>
+<text x="30" y="110">231,211,008</text>
+<text x="30" y="144">depthwise (one 3 × 3 kernel per channel)</text>
+<rect x="30" y="152" width="2.3" height="22" rx="2" fill="#86b6ef"/>
+<text x="42.3" y="168">1,806,336</text>
+<text x="30" y="200">pointwise (1 × 1, 64 → 128)</text>
+<rect x="30" y="208" width="33.3" height="22" rx="2" fill="#2a78d6"/>
+<text x="73.3" y="224">25,690,112</text>
+<text x="30" y="262" fill="#52514e">together 0.119 of the standard cost: 1/128 + 1/9 = 0.119</text>
+<text x="30" y="278" fill="#52514e">weights: 8,768 against 73,728</text>
+<text x="440" y="34" font-weight="600">a spatially separable kernel</text>
+<rect x="440" y="100" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="453" y="117" text-anchor="middle">1</text>
+<rect x="440" y="126" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="453" y="143" text-anchor="middle">2</text>
+<rect x="440" y="152" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="453" y="169" text-anchor="middle">1</text>
+<text x="484" y="144" font-size="16" fill="#52514e" text-anchor="middle">×</text>
+<rect x="500" y="70" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="513" y="87" text-anchor="middle">1</text>
+<rect x="526" y="70" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="539" y="87" text-anchor="middle">0</text>
+<rect x="552" y="70" width="26" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="565" y="87" text-anchor="middle">−1</text>
+<text x="598" y="144" font-size="16" fill="#52514e" text-anchor="middle">=</text>
+<rect x="616" y="100" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="629" y="117" text-anchor="middle">1</text>
+<rect x="642" y="100" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="655" y="117" fill="#898781" text-anchor="middle">0</text>
+<rect x="668" y="100" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="681" y="117" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="616" y="126" width="26" height="26" rx="2" fill="#2a78d6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="629" y="143" text-anchor="middle">2</text>
+<rect x="642" y="126" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="655" y="143" fill="#898781" text-anchor="middle">0</text>
+<rect x="668" y="126" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="681" y="143" fill="#eb6834" text-anchor="middle">−2</text>
+<rect x="616" y="152" width="26" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="629" y="169" text-anchor="middle">1</text>
+<rect x="642" y="152" width="26" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="655" y="169" fill="#898781" text-anchor="middle">0</text>
+<rect x="668" y="152" width="26" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="681" y="169" fill="#eb6834" text-anchor="middle">−1</text>
+<text x="440" y="206" fill="#52514e">the Sobel kernel of Figure 19.2</text>
+<text x="440" y="222" fill="#52514e">Two passes of 3 taps (6 multiplications</text>
+<text x="440" y="236" fill="#52514e">per pixel) replace one pass of 9.</text>
+</g>
+</svg>

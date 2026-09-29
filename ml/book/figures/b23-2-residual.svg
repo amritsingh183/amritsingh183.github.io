@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">A residual block adds its input back to its output, so doing nothing only needs zero weights</title>
+<desc id="desc">Left, a plain block of two convolutions; right, the same block with a skip connection from its input to an addition after the second convolution; beside each, the 3 by 3 kernel it must learn to pass its input through unchanged.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="40" y="34" font-weight="600">plain block</text>
+<rect x="40" y="60" width="180" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="130" y="79" text-anchor="middle">input x</text>
+<line x1="130" y1="92" x2="130" y2="108" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="110" width="180" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="130" y="129" text-anchor="middle">3 × 3 convolution, ReLU</text>
+<line x1="130" y1="142" x2="130" y2="158" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="160" width="180" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="130" y="179" text-anchor="middle">3 × 3 convolution</text>
+<line x1="130" y1="192" x2="130" y2="244" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="40" y="246" width="180" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="130" y="265" text-anchor="middle">ReLU → H(x)</text>
+<text x="380" y="34" font-weight="600">residual block</text>
+<rect x="380" y="60" width="180" height="30" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="470" y="79" text-anchor="middle">input x</text>
+<line x1="470" y1="92" x2="470" y2="108" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="380" y="110" width="180" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="470" y="129" text-anchor="middle">3 × 3 convolution, ReLU</text>
+<line x1="470" y1="142" x2="470" y2="158" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="380" y="160" width="180" height="30" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="470" y="179" text-anchor="middle">3 × 3 convolution</text>
+<line x1="470" y1="192" x2="470" y2="206" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<circle cx="470" cy="218" r="11" fill="#fcfcfb" stroke="#52514e" stroke-width="1.5"/>
+<text x="470" y="223" font-size="14" text-anchor="middle">+</text>
+<path d="M560 75 C600 75 600 218 482 218" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="594" y="150.5" fill="#52514e">x</text>
+<line x1="470" y1="230" x2="470" y2="244" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="380" y="246" width="180" height="30" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="470" y="265" text-anchor="middle">ReLU → F(x) + x</text>
+<text x="240" y="110" fill="#52514e">to copy x, each</text>
+<text x="240" y="124" fill="#52514e">convolution must</text>
+<text x="240" y="138" fill="#52514e">learn this kernel</text>
+<text x="240" y="152" fill="#52514e">for its own channel:</text>
+<rect x="250" y="160" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="259" y="173" text-anchor="middle">0</text>
+<rect x="268" y="160" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="277" y="173" text-anchor="middle">0</text>
+<rect x="286" y="160" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="173" text-anchor="middle">0</text>
+<rect x="250" y="178" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="259" y="191" text-anchor="middle">0</text>
+<rect x="268" y="178" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="277" y="191" text-anchor="middle">1</text>
+<rect x="286" y="178" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="191" text-anchor="middle">0</text>
+<rect x="250" y="196" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="259" y="209" text-anchor="middle">0</text>
+<rect x="268" y="196" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="277" y="209" text-anchor="middle">0</text>
+<rect x="286" y="196" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="295" y="209" text-anchor="middle">0</text>
+<text x="612" y="110" fill="#52514e">to copy x, the</text>
+<text x="612" y="124" fill="#52514e">layers need</text>
+<text x="612" y="138" fill="#52514e">only zeros:</text>
+<rect x="616" y="148" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="625" y="161" text-anchor="middle">0</text>
+<rect x="634" y="148" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="643" y="161" text-anchor="middle">0</text>
+<rect x="652" y="148" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="661" y="161" text-anchor="middle">0</text>
+<rect x="616" y="166" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="625" y="179" text-anchor="middle">0</text>
+<rect x="634" y="166" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="643" y="179" text-anchor="middle">0</text>
+<rect x="652" y="166" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="661" y="179" text-anchor="middle">0</text>
+<rect x="616" y="184" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="625" y="197" text-anchor="middle">0</text>
+<rect x="634" y="184" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="643" y="197" text-anchor="middle">0</text>
+<rect x="652" y="184" width="18" height="18" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="661" y="197" text-anchor="middle">0</text>
+<text x="40" y="312" fill="#52514e">A residual block learns F(x) = H(x) − x, the change to make, rather than the whole mapping H(x).</text>
+<text x="40" y="328" fill="#52514e">If a layer is best left out, pushing its weights to zero is easy; building an exact copy is harder.</text>
+</g>
+</svg>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 264" width="720" height="264" role="img" aria-labelledby="title desc">
+<title id="title">A matrix moves the whole grid</title>
+<desc id="desc">Left: the usual grid with î, ĵ and the vector (−1, 2). Right: the same grid after the matrix A; î lands on (2, 1), ĵ on (−1, 1) and the vector on (−4, 1).</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="264" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<line x1="26.4" y1="219.2" x2="26.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="58.4" y1="219.2" x2="58.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="90.4" y1="219.2" x2="90.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="122.4" y1="219.2" x2="122.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="154.4" y1="219.2" x2="154.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="186.4" y1="219.2" x2="186.4" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="218.4" y1="219.2" x2="218.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="250.4" y1="219.2" x2="250.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="282.4" y1="219.2" x2="282.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="20" y1="212.8" x2="288.8" y2="212.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="20" y1="180.8" x2="288.8" y2="180.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="20" y1="148.8" x2="288.8" y2="148.8" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="20" y1="116.8" x2="288.8" y2="116.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="20" y1="84.8" x2="288.8" y2="84.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="20" y1="52.8" x2="288.8" y2="52.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="186.4" y1="148.8" x2="217.4" y2="148.8" stroke="#1baf7a" stroke-width="2.5"/>
+<path d="M210.2 145.1 L218.4 148.8 L210.2 152.5" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<line x1="186.4" y1="148.8" x2="186.4" y2="117.8" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M182.7 125 L186.4 116.8 L190.1 125" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<line x1="186.4" y1="148.8" x2="154.8" y2="85.7" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M154.8 93.8 L154.4 84.8 L161.4 90.5" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<rect x="98.4" y="66.8" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="148.4" y="78.8" fill="#2a78d6" text-anchor="end">(−1, 2)</text>
+<line x1="406.4" y1="219.2" x2="406.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="438.4" y1="219.2" x2="438.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="470.4" y1="219.2" x2="470.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="502.4" y1="219.2" x2="502.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="534.4" y1="219.2" x2="534.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="566.4" y1="219.2" x2="566.4" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="598.4" y1="219.2" x2="598.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="630.4" y1="219.2" x2="630.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="662.4" y1="219.2" x2="662.4" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="400" y1="212.8" x2="668.8" y2="212.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="400" y1="180.8" x2="668.8" y2="180.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="400" y1="148.8" x2="668.8" y2="148.8" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="116.8" x2="668.8" y2="116.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="400" y1="84.8" x2="668.8" y2="84.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="400" y1="52.8" x2="668.8" y2="52.8" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="444.8" y1="219.2" x2="400" y2="174.4" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="617.6" y1="219.2" x2="668.8" y2="193.6" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="540.8" y1="219.2" x2="400" y2="78.4" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="521.6" y1="219.2" x2="668.8" y2="145.6" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="636.8" y1="219.2" x2="457.6" y2="40" stroke="#898781" stroke-width="1.5"/>
+<line x1="425.6" y1="219.2" x2="668.8" y2="97.6" stroke="#898781" stroke-width="1.5"/>
+<line x1="668.8" y1="155.2" x2="553.6" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="184" x2="668.8" y2="49.6" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="668.8" y1="59.2" x2="649.6" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="136" x2="592" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="88" x2="496" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="40" x2="400" y2="40" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="566.4" y1="148.8" x2="629.5" y2="117.2" stroke="#1baf7a" stroke-width="2.5"/>
+<path d="M621.4 117.2 L630.4 116.8 L624.7 123.8" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<line x1="566.4" y1="148.8" x2="535.1" y2="117.5" stroke="#eb6834" stroke-width="2.5"/>
+<path d="M537.6 125.2 L534.4 116.8 L542.8 120" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<line x1="566.4" y1="148.8" x2="439.4" y2="117.0" stroke="#2a78d6" stroke-width="2.5"/>
+<path d="M445.5 122.4 L438.4 116.8 L447.3 115.2" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<rect x="633.4" y="120.8" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="636.4" y="132.8" fill="#1baf7a">(2, 1)</text>
+<rect x="480.4" y="96.8" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="530.4" y="108.8" fill="#eb6834" text-anchor="end">(−1, 1)</text>
+<rect x="411.9" y="94.8" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="438.4" y="106.8" fill="#2a78d6" text-anchor="middle">(−4, 1)</text>
+<text x="154.4" y="26" font-size="13" text-anchor="middle" font-weight="600">before: the usual grid</text>
+<text x="534.4" y="26" font-size="13" text-anchor="middle" font-weight="600">after A: the grid follows î and ĵ</text>
+<text x="344.4" y="120" font-size="13" text-anchor="middle">A</text>
+<rect x="314.4" y="128" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="329.4" y="144" fill="#1baf7a" text-anchor="middle">2</text>
+<rect x="344.4" y="128" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="359.4" y="144" fill="#eb6834" text-anchor="middle">−1</text>
+<rect x="314.4" y="152" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="329.4" y="168" fill="#1baf7a" text-anchor="middle">1</text>
+<rect x="344.4" y="152" width="30" height="24" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="359.4" y="168" fill="#eb6834" text-anchor="middle">1</text>
+<line x1="316.4" y1="196" x2="372.4" y2="196" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="154.4" y="241.2" fill="#52514e" text-anchor="middle">î = (1, 0), ĵ = (0, 1), v = (−1, 2)</text>
+<text x="534.4" y="241.2" fill="#52514e" text-anchor="middle">î lands on (2, 1), ĵ on (−1, 1): the columns of A</text>
+</g>
+</svg>

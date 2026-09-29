@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260" role="img" aria-labelledby="title desc">
+<title id="title">An embedding model turns texts of any length into vectors of one fixed length, and similarity between texts becomes similarity between vectors</title>
+<desc id="desc">Three texts of different lengths, two blurbs and a review, pass through an embedding model box and come out as three equal-length rows of cells; two of the rows feed a cosine similarity box.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="260" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="14" y="56">B3: recipes from a village kitchen</text>
+<text x="14" y="71" fill="#898781">5 words</text>
+<line x1="250" y1="61" x2="282" y2="61" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="14" y="116">B2: a small town detective</text>
+<text x="14" y="131" fill="#898781">and a quiet mystery: 8 words</text>
+<line x1="250" y1="121" x2="282" y2="121" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="14" y="176">a customer&apos;s review</text>
+<text x="14" y="191" fill="#898781">about 100 words</text>
+<line x1="250" y1="181" x2="282" y2="181" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="286" y="40" width="110" height="150" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1.5"/>
+<text x="341" y="108" text-anchor="middle">embedding</text>
+<text x="341" y="124" text-anchor="middle">model</text>
+<line x1="400" y1="61" x2="424" y2="61" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="430" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="450" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="470" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="490" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="510" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="530" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="550" y="50" width="20" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="65" fill="#52514e" text-anchor="middle">…</text>
+<rect x="570" y="50" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="592" y1="61" x2="612" y2="61" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="121" x2="424" y2="121" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="430" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="450" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="470" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="490" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="510" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="530" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="550" y="110" width="20" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="125" fill="#52514e" text-anchor="middle">…</text>
+<rect x="570" y="110" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="592" y1="121" x2="612" y2="121" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="400" y1="181" x2="424" y2="181" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="430" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="450" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="470" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="490" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="510" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="530" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<rect x="550" y="170" width="20" height="22" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="560" y="185" fill="#52514e" text-anchor="middle">…</text>
+<rect x="570" y="170" width="20" height="22" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<path d="M612 61 L612 121" fill="none" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="612" y1="91" x2="626" y2="91" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="628" y="70" width="84" height="42" rx="2" fill="#fcfcfb" stroke="#c3c2b7" stroke-width="1"/>
+<text x="670" y="88" text-anchor="middle">cosine</text>
+<text x="670" y="103" fill="#52514e" text-anchor="middle">one number</text>
+<text x="510" y="222" fill="#52514e" text-anchor="middle">every row has the same length, whatever went in</text>
+<text x="510" y="238" fill="#898781" text-anchor="middle">(384 numbers for the model all-MiniLM-L6-v2)</text>
+</g>
+</svg>

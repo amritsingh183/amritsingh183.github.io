@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="title desc">
+<title id="title">Flattened to two directions, the made-up feature vectors put crime words, place words, food words and tool words in four separate corners</title>
+<desc id="desc">A scatter plot of the eleven content words at their coordinates along the two main directions of the four-feature table, with dashed lines joining three pairs and their cosine similarity written beside each line.</desc>
+<rect width="720" height="400" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<rect x="60" y="40" width="420" height="320" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="259.5" y1="40" x2="259.5" y2="360" stroke="#e1e0d9" stroke-width="1"/>
+<line x1="60" y1="194.2" x2="480" y2="194.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="270" y="380" fill="#52514e" text-anchor="middle">first direction (40% of the spread)</text>
+<text x="50" y="52" fill="#52514e">second (33%)</text>
+<path d="M113.6 281.1 L110.8 270.5" fill="none" stroke="#c3c2b7" stroke-width="1"/>
+<path d="M137.0 108.6 L194.3 87.4" fill="none" stroke="#c3c2b7" stroke-width="1"/>
+<path d="M113.6 281.1 L429.2 99.0" fill="none" stroke="#c3c2b7" stroke-width="1"/>
+<circle cx="188.9" cy="186.1" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="196.9" y="200.1">quiet</text>
+<circle cx="113.6" cy="281.1" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="121.6" y="275.1">mystery</text>
+<circle cx="227.2" cy="170.2" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="235.2" y="164.2">small</text>
+<circle cx="137.0" cy="108.6" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="145.0" y="102.6">town</text>
+<circle cx="110.8" cy="270.5" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="102.8" y="264.5" text-anchor="end">detective</text>
+<circle cx="429.2" cy="99.0" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="437.2" y="93.0">recipes</text>
+<circle cx="194.3" cy="87.4" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="202.3" y="81.4">village</text>
+<circle cx="379.2" cy="80.6" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="387.2" y="74.6">kitchen</text>
+<circle cx="247.0" cy="236.1" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="255.0" y="230.1">returns</text>
+<circle cx="427.3" cy="319.4" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="435.3" y="313.4">repair</text>
+<circle cx="399.8" cy="297.5" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="407.8" y="291.5">bicycle</text>
+<text x="496" y="60" font-weight="600">largest feature</text>
+<circle cx="502" cy="80" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="514" y="84" fill="#52514e">crime</text>
+<circle cx="502" cy="100" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="514" y="104" fill="#52514e">place</text>
+<circle cx="502" cy="120" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="514" y="124" fill="#52514e">food</text>
+<circle cx="502" cy="140" r="5" fill="#52514e" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="514" y="144" fill="#52514e">tools</text>
+<text x="496" y="190" font-weight="600">cosine in all four features</text>
+<text x="496" y="212" fill="#52514e">mystery and detective: 0.97</text>
+<text x="496" y="230" fill="#52514e">town and village: 0.94</text>
+<text x="496" y="248" fill="#52514e">mystery and recipes: 0.00</text>
+<text x="496" y="290" fill="#898781">one-hot codes give 0 for</text>
+<text x="496" y="304" fill="#898781">every pair of different words</text>
+</g>
+</svg>
