@@ -157,7 +157,7 @@ fn main() {
 
 ### `mut` belongs to the name, not the value
 
-`mut` on a binding is a promise about the *name*, not about the value. You can not change the value through that name (mutable binding). You can move a value out of an immutable binding into a mutable one and change it there; the value was never "immutable", only its first name was:
+`mut` on a binding is a promise about the *name*, not about the value. You cannot change the value through a name declared without `mut` (an immutable binding). You can move a value out of an immutable binding into a mutable one and change it there; the value was never "immutable", only its first name was:
 
 ```rust
 fn main() {
