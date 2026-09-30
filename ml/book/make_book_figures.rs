@@ -5,7 +5,11 @@
 //! Run:      /tmp/make_book_figures ml/book/figures        (the argument is the output folder)
 //!
 //! The SVG builder and the colour tokens are `ml/figures/svg.rs`, shared with `ml/figures/make_figures.rs`. Each part
-//! module draws the figures of its chapters from numbers it computes itself; nothing drawn is typed as a literal result.
+//! module computes the values its figures draw from the book's inputs, with three exceptions. Published values that a
+//! figure quotes, such as GloVe's Table 1, the model sizes, SBERT's timings and the two confidences in Figure 23.3, are
+//! typed as literals, and the figure, its caption or the text beside it names their source. Labels also type numbers as
+//! text, such as sizes ("stride 2") and simple counts ("64 different weights"). The shading of Figure 29.1 stands for
+//! values but is chosen by hand, as the figure itself says.
 //! Two runs write byte-identical files. A figure's file stem is `b<chapter>-<n>-<slug>`, and two figures with one stem
 //! stop the run.
 #![forbid(unsafe_code)]

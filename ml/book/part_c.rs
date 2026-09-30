@@ -1,6 +1,9 @@
-//! Figures of Parts V and VI (chapters 25 to 33) of "Machine Learning, Drawn Out". Every drawn number is computed here
-//! from the book's shared data (the five blurbs, the three attention words) or from inputs stated beside them; values
-//! quoted from a paper are marked as such where they are declared.
+//! Figures of Parts V and VI (chapters 25 to 33) of "Machine Learning, Drawn Out". The values these figures draw are
+//! computed here from the book's shared data (the five blurbs, the three attention words) or from inputs stated beside
+//! them, with three exceptions. Published values that a figure quotes, such as GloVe's Table 1, the model sizes and
+//! SBERT's timings, are typed as literals, and the figure, its caption or the text beside it names their source. Labels
+//! also type numbers as text, such as sizes ("11 rows, 4 columns") and simple counts ("8 words"). The shading of Figure
+//! 29.1 stands for values but is chosen by hand, as the figure itself says.
 use crate::Figure;
 use crate::svg::{Anchor, Cell, Svg, cell, heat, num, numt, text_w, thousands, tok};
 
@@ -1604,7 +1607,7 @@ fn fig_31_3_heads() -> Figure {
         720,
         352,
         "Two heads look at the same three words in two different ways at the same time, and their outputs are placed side by side",
-        "The three word vectors on the left feed two heads drawn one above the other. Head 1 uses keys as they are, so each word attends mostly to itself; head 2 swaps the keys, so quiet and town attend to each other. Each head's two-number outputs are joined into four numbers per word.",
+        "The three word vectors on the left feed two heads drawn one above the other. Head 1 uses keys as they are, so quiet and town attend mostly to themselves and mystery spreads its attention evenly; head 2 swaps the keys, so quiet and town attend to each other and mystery again spreads evenly. Each head's two-number outputs are joined into four numbers per word.",
     ).min_text(12);
     let (cw, ch) = (44.0, 26.0);
     let yx = 132.0;

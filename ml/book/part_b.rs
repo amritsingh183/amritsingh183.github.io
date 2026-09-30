@@ -1,10 +1,14 @@
-//! Figures of Parts III and IV (chapters 12 to 24) of "Machine Learning, Drawn Out". Every drawn number is computed here
-//! from the shared inputs of the book's specification (the page-count sample, the book ages, the reviewer grid, the cover
-//! image and its kernels, the edge image and the Sobel kernel, the pooling input) or from small inputs defined below.
+//! Figures of Parts III and IV (chapters 12 to 24) of "Machine Learning, Drawn Out". The values these figures draw are
+//! computed here from the shared inputs of the book's specification (the page-count sample, the book ages, the reviewer
+//! grid, the cover image and its kernels, the edge image and the Sobel kernel, the pooling input) or from small inputs
+//! defined below. Two things are typed as text instead: numbers in labels, such as sizes ("stride 2") and simple counts
+//! ("64 different weights"), and the pair of confidences that Figure 23.3 quotes from Goodfellow, Shlens and Szegedy.
 use crate::Figure;
 use crate::svg::{Anchor, Cell, Svg, cell, heat, num, numt, thousands, tok};
 
-/// The arithmetic behind every drawn number. Pure functions on f64; nothing drawn is typed as a result.
+/// Inputs for the figures of Parts III and IV, a seeded pseudo-random generator for the page-count sample, and
+/// functions that compute values the figures draw. Numbers typed as text in labels, and the two confidences that
+/// Figure 23.3 quotes from Goodfellow, Shlens and Szegedy, do not come from here.
 pub mod calc {
     use std::f64::consts::PI;
 

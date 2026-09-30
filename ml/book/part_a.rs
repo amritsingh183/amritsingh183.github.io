@@ -1,6 +1,7 @@
-//! Figures of Parts I and II of "Machine Learning, Drawn Out": chapters 1 to 11. Every drawn number is computed here,
-//! from the shared inputs of the book's specification (its section B) or from the small inputs named in this file; no
-//! result is typed as a literal.
+//! Figures of Parts I and II of "Machine Learning, Drawn Out": chapters 1 to 11. The values these figures draw are
+//! computed here, from the shared inputs of the book's specification (its section B) or from the small inputs named in
+//! this file. Labels also type numbers as text, such as names ("row 1", "frame 3"), sizes ("1 × 2") and the ranges of
+//! the activation functions ("between 0 and 1").
 use crate::Figure;
 use crate::svg::{Anchor, Cell, Svg, cell, num, numt, text_w, thousands, tok};
 

@@ -3,7 +3,7 @@ layout: post
 title: "Mastering Rust's `Enum` type: A Complete Guide"
 date: 2025-02-05 23:23:00 +0530
 categories: rust concepts
-last_updated: 2026-09-19
+last_updated: 2026-09-30
 ---
 # Mastering Rust's Enum Type: A Complete Guide
 
@@ -82,7 +82,7 @@ Three things to notice:
 - `#[derive(Debug)]` lets `{:?}` print the variant's name. Without it, `println!` has no idea how to show a `Size`.
 - Nothing in `Size` is a number or a string. A variant can be a pure label, and the compiler still knows the complete list of labels.
 
-What makes Rust enums different from the enums of C or Java, or from Go's lists of constants, is that variants can **carry data**, and different variants can carry different data:
+What makes Rust enums different from the enums of C or Java, or from Go's lists of constants, is that variants can **carry data** that you supply each time you build a value, and different variants can carry different data:
 
 ```rust
 #[derive(Debug)]
@@ -202,7 +202,7 @@ voucher B2
 
 **A tuple variant is a function.** `Payment::Voucher` on its own, without parentheses, behaves as a function of type `fn(String) -> Payment`. That is why `.map(Payment::Voucher)` works, and why `Some` can be passed around as a function; post 3 called `Some` a *variant constructor*. A unit variant is a plain value. A struct variant is neither: you must write the braces and every field.
 
-**Choosing the kind.** Two numbers called `4242, true` mean little on their own; `last4` and `contactless` explain themselves. Reach for a struct variant as soon as a reader would have to guess what a position means, and for a unit variant whenever the name is the whole message. Tuple variants suit a single obvious payload: `Voucher(String)`, `Some(T)`, `Err(E)`.
+**Choosing the kind.** Two values called `4242, true` mean little on their own; `last4` and `contactless` explain themselves. Reach for a struct variant as soon as a reader would have to guess what a position means, and for a unit variant whenever the name is the whole message. Tuple variants suit a single obvious payload: `Voucher(String)`, `Some(T)`, `Err(E)`.
 
 <a id="enums-3"></a>
 
@@ -645,7 +645,7 @@ Reading the numbers:
 - **`TaggedPayment` is 32 bytes.** `#[repr(u8)]` asks for an explicit one-byte tag. The tag then needs a slot of its own, and because the `String` inside must start at an 8-byte boundary, that slot costs eight bytes.
 - **`Big` is 1025 bytes even when it holds `Nothing`.** An enum is always at least as large as its largest variant, because any variable of that type must be able to hold any variant. If one variant is huge and rare, put its payload in a `Box`, so the enum stores an 8-byte pointer instead. Clippy's `large_enum_variant` lint warns exactly here, when the two largest variants differ by more than 200 bytes (the default threshold): "large size difference between variants".
 
-The only guaranteed rule in this list is the last one: at least as large as the largest variant. Where the tag lives and how a niche is used are the compiler's choices, and they may change between versions. If a layout must be stable, because the bytes cross into C or onto disk, ask for it with `#[repr(...)]`, as the previous subsection showed. The [`Option` representation guarantees](https://doc.rust-lang.org/std/option/index.html#representation) that post 2 listed are the documented exception: `Option<Box<T>>` and `Option<&T>` are promised to be the same size as the plain pointer.
+Apart from the separate tag that `#[repr(u8)]` asks for in `TaggedPayment`, the only guaranteed rule in this list is the last one: at least as large as the largest variant. Otherwise, where the tag lives and how a niche is used are the compiler's choices, and they may change between versions. If a layout must be stable, because the bytes cross into C or onto disk, ask for it with `#[repr(...)]`, as the previous subsection showed. The [`Option` representation guarantees](https://doc.rust-lang.org/std/option/index.html#representation) that post 2 listed are a documented exception: `Option<Box<T>>` and `Option<&T>` are promised to be the same size as the plain pointer.
 
 ### Same variant, ignoring the data?
 
@@ -809,7 +809,7 @@ Some(350)
 ```
 
 - `PartialEq` gives `==`; without it `Size::Small == Size::Large` is E0369, and the compiler suggests the derive. `Eq` adds the promise that every value equals itself, which `HashMap` keys need.
-- `PartialOrd` and `Ord` order values **by discriminant first**, which is declaration order unless you set the numbers yourself, then by the fields inside the same variant: `Small < Medium < Large` here, and `Cash < Card { .. } < Voucher(..)` for `Payment` whatever the data. Reorder the variants, or renumber them, and every comparison changes, silently.
+- `PartialOrd` and `Ord` order values **by discriminant first**, which is declaration order unless you set the numbers yourself, then by the fields inside the same variant: `Small < Medium < Large` here, and `Cash < Card { .. } < Voucher(..)` for `Payment` whatever the data. Reorder the variants, or renumber them, and comparisons between variants follow the new order, silently.
 - `Hash` together with `Eq` lets the enum be a `HashMap` key.
 - `Default` needs `#[default]` on exactly one variant, and that variant must be a unit variant (Rust 1.62). Putting it on `Voucher(String)` is an error: "the `#[default]` attribute may only be used on unit enum variants".
 - `Copy` needs `Clone` and every field `Copy`, as this section began.
@@ -1227,7 +1227,7 @@ fn main() {
 }
 ```
 
-Match `drink.as_str()` instead, and remember that strings, like numbers, have no complete list of values, so a `_` or a name is required at the end:
+Match `drink.as_str()` instead, and remember that strings have no complete list of values, so a `_` or a name is required at the end:
 
 ```rust
 fn main() {
@@ -1301,7 +1301,7 @@ Voucher("A1") -> Some("A1")
 Cash -> None
 ```
 
-`let ... else` (Rust 1.65) needs an `else` block that cannot fall through: `return`, `break`, `continue` or a panic. `matches!` (Rust 1.42) expands to a `match` with a `true` arm and a `false` arm, so it takes the same patterns and guards. Since Rust 1.96 there is also `std::assert_matches!`, for tests; it is not in the prelude, so write `use std::assert_matches;` first, and when it fails it prints the actual value.
+`let ... else` (Rust 1.65) needs an `else` block that cannot fall through, for example `return`, `break`, `continue` or a panic. `matches!` (Rust 1.42) expands to a `match` with a `true` arm and a `false` arm, so it takes the same patterns and guards. Since Rust 1.96 there is also `std::assert_matches!`, for tests; it is not in the prelude, so write `use std::assert_matches;` first, and when it fails it prints the actual value.
 
 **Let chains** (Rust 1.88) let one `if` ask several questions, mixing `let` patterns and plain conditions with `&&`. They are available only in edition 2024:
 
@@ -1412,7 +1412,7 @@ The habit that avoids this: on enums you own, list the variants. When several ne
 Payment::Card { .. } | Payment::Voucher(_) => format!("+{pence} p by other means"),
 ```
 
-Now adding `Refund` makes this match fail to compile, which is exactly the reminder you wanted. Keep `_` for values that genuinely have no complete list, such as numbers and strings, and for enums from other crates marked `#[non_exhaustive]`, below.
+Now adding `Refund` makes this match fail to compile, which is exactly the reminder you wanted. Keep `_` for values that genuinely have no complete list, such as strings, and for enums from other crates marked `#[non_exhaustive]`, below.
 
 ### Guards do not count
 
@@ -1725,7 +1725,7 @@ Amrit / Customer
 | :-- | :-- | :-- |
 | `Small => ...` without `use Size::*` | A new variable that matches anything; E0170 if the name is a variant, only warnings if misspelt | `Size::Small`, or `Self::Small` inside an `impl`; read "unreachable pattern" warnings |
 | `_ => ...` on your own enum | New variants are swallowed silently | List the variants; group those that share treatment with an or-pattern |
-| `match payment { Voucher(code) => ... }` then use `payment` | The `String` moved out; E0382 | `match &payment`, or `ref code` |
+| `match payment { Payment::Voucher(code) => ... }` then use `payment` | The `String` moved out; E0382 | `match &payment`, or `ref code` |
 | `match *p { .. }` with `p: &Payment` | Moving out from behind a reference; E0507 | `match p`, return `&str` or `.clone()` |
 | `let b = a;` for a unit-only enum, then use `a` | Enums are not `Copy` by default; E0382 | `#[derive(Clone, Copy)]` when every field is `Copy` |
 | `a == b` on an enum | No `PartialEq`; E0369 | `#[derive(PartialEq)]` |

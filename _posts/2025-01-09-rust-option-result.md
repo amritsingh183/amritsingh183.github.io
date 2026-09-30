@@ -3,7 +3,7 @@ layout: post
 title: "Mastering Rust's `Option` and `Result` Types: A Complete Guide"
 date: 2025-01-09 13:23:00 +0530
 categories: rust concepts
-last_updated: 2026-09-19
+last_updated: 2026-09-30
 ---
 # Mastering Rust's Option and Result Types: A Complete Guide
 
@@ -761,7 +761,7 @@ These methods answer different questions:
 | `replace(value)` | Becomes `Some(value)` | The old `Option<T>` |
 | `insert(value)` | Becomes `Some(value)`; the previous payload is dropped | `&mut T` pointing to the new payload |
 | `get_or_insert(value)` | Fills only an empty slot | `&mut T` pointing to the existing or inserted payload |
-| `get_or_insert_with(f)` | Calls `f` and fills only an empty slot | `&mut T` pointing to the existing or inserted payload |
+| `get_or_insert_with(f)` | If the slot is empty, calls `f` and fills it | `&mut T` pointing to the existing or inserted payload |
 | `get_or_insert_default()` | Fills an empty slot with `T::default()` | `&mut T`; requires `T: Default` |
 
 The `value` passed to `get_or_insert` has already been evaluated. If the slot was full, that unused value is dropped. With `replace`, the old value belongs to the returned option; the method does not destroy that old payload itself.

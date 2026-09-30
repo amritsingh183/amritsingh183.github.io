@@ -3,7 +3,7 @@ layout: post
 title: "Machine Learning, Drawn Out"
 date: 2026-09-29 10:00:00 +0530
 categories: ml
-last_updated: 2026-09-29
+last_updated: 2026-09-30
 ---
 # Machine Learning, Drawn Out
 
@@ -55,13 +55,13 @@ last_updated: 2026-09-29
 
 ## 0. How to read this book
 
-This is a notebook that became a book. The notes it grew from were the usual mess of a learner: screenshots of lectures, whole articles pasted for later, and one-line reminders such as "there is only one parallelepiped". The mess was useful because it recorded which ideas needed a picture before they made sense. This book keeps that order of discovery and supplies the pictures.
+This book takes the ideas of machine learning one at a time, in an order where each builds mostly on the ones before it, with figures for the ideas that are easier to see than to read.
 
 **One shop, all the way through.** Most chapters use the same example: a small second-hand bookshop that you run. A book on your shelf is a pair of numbers, its page count and its price, and that pair is a vector. Guessing a fair price from the page count is a prediction problem, and it is where bias, variance and cross-validation appear. A photo of a cover is a grid of numbers, and that is where convolutions work. The blurb on the back is a string of words, and that is where embeddings and attention take over. Where an idea is pure geometry, such as a rotation or an eigenvector, the shop steps aside and the picture speaks for itself.
 
-**The shape of a chapter.** Each chapter opens with two sentences that say what the idea is and why it matters, headed *In one breath*. The body tells the idea with worked numbers and figures. A box headed *From my notes* quotes the original reminder, sometimes because it was right, sometimes because it was nearly right and the paragraph after it says what the precise statement is. *Watch, read, try* lists the videos, articles and interactive pages that the notes had collected, one line each, with the timestamps that were worth saving, together with the papers and reference pages that the chapter's facts were checked against. *Check yourself* closes the chapter with two or three questions and their answers.
+**The shape of a chapter.** Each chapter opens with two sentences that say what the idea is and why it matters, headed *In one breath*. The body tells the idea with worked numbers and figures. *Watch, read, try* lists videos, articles, papers and interactive pages related to the chapter. *Check yourself* closes the chapter with two or three questions and their answers.
 
-**What the pictures mean.** Every figure was drawn by a small program from the same numbers the text uses, so a value you read in a caption is the value the program computed, not a value someone typed. The colours are consistent: blue, orange and green tell categories apart, and a single blue ramp from pale to dark shows magnitude, pale for small and dark for large. Grey is structure: axes, grids and boxes that carry no data. When a figure shows a sequence of steps, read it left to right.
+**What the pictures mean.** Every figure was drawn by a program that works out the values it shows from the same inputs the text uses. Apart from those inputs, only some numbers in labels, the shading of Figure 29.1 and the few published values that figures quote are typed in, and the figure, its caption or the text beside it names where each published value comes from. The colours are consistent: blue, orange and green tell categories apart, and a single blue ramp from pale to dark shows magnitude, pale for small and dark for large. Grey mostly draws structure, such as axes, grids, boxes, arrows and dashed guide lines, but some figures also use it for values and groups, such as the true price curve of chapter 9, a fourth group of words in Figure 25.2, or the negative numbers in several number grids of Part IV. Most figures that show steps in order run left to right; where one runs another way, as Figure 8.2 does from right to left and Figure 13.4 from top to bottom, arrows or labels show the order.
 
 **How the parts fit.** Part I is the geometry that everything else stands on: vectors, the matrices that move them, determinants, dot products and eigenvectors. Part II builds a neural network from one neuron up and asks how it learns and how learning goes wrong. Part III steps back to the data: what a distribution is, how to recognise one, and how to prepare columns before a model sees them. Part IV is vision: convolutions, receptive fields and the tricks that make image networks work. Part V turns words into numbers, and Part VI turns sentences into numbers you can compare. Read the parts in order the first time; after that, each chapter stands on its own, and the glossary and the note map at the back will take you where you need to go.
 
@@ -84,7 +84,7 @@ Figure 1.1 reads the book's coordinates in a second way. Shine a light straight 
 ![An arrow from the origin to the point three across and two up, with its shadow of length three on the x-axis and its shadow of length two on the y-axis](/ml/book/figures/b01-1-projections.svg)
 *Figure 1.1. The book (3, 2) as an arrow: its shadow on the x-axis (green) is 3 long and its shadow on the y-axis (orange) is 2 long, and the dot products with î and ĵ give the same 3 and 2.*
 
-There is also a purely numerical route to the same two numbers. The dot product of two vectors multiplies their matching entries and adds the results. For our book, (3, 2) · (1, 0) = 3 × 1 + 2 × 0 = 3, and (3, 2) · (0, 1) = 3 × 0 + 2 × 1 = 2. The dot product with î picks out the first coordinate and the dot product with ĵ picks out the second. So the shadow picture and the multiply-and-add recipe agree, and here they agree because î and ĵ are one unit long. Chapter 4 shows that the agreement is no accident: for any two vectors, the dot product is one vector's shadow on the other, multiplied by the other's length.
+There is also a purely numerical route to the same two numbers. The dot product of two vectors multiplies their matching entries and adds the results. For our book, (3, 2) · (1, 0) = 3 × 1 + 2 × 0 = 3, and (3, 2) · (0, 1) = 3 × 0 + 2 × 1 = 2. The dot product with î picks out the first coordinate and the dot product with ĵ picks out the second. So the shadow picture and the multiply-and-add recipe agree, and here they agree because î and ĵ are one unit long: measured against a longer arrow along the same axis, such as 2î, the dot product doubles while the shadow stays the same. Chapter 4 shows that the agreement is no accident: for any two vectors, the dot product is one vector's shadow on the other, multiplied by the other's length.
 
 ### Combinations of î and ĵ
 
@@ -96,10 +96,6 @@ Multiplying a vector by a number is called scaling: it stretches the arrow, or f
 A sum of scaled vectors such as 3î + 2ĵ is called a linear combination. Every point of the plane is a linear combination of î and ĵ, and in exactly one way, which makes the pair a basis: a set of vectors whose combinations reach every point with none to spare. The arithmetic has a plain meaning in the shop. Two copies of the book are 2 × (3, 2) = (6, 4), six hundred pages for four hundred rupees. The book together with a slim volume (1, 1) makes (3, 2) + (1, 1) = (4, 3): four hundred pages for three hundred rupees.
 
 Nothing changes in more dimensions except the count. A book described by pages, price and age is a vector with three coordinates, an arrow in three-dimensional space, and a third unit vector joins î and ĵ along the new axis. Words in Part V become vectors with a great many coordinates. No one can picture those arrows, yet every rule in this part of the book holds for them unchanged, which is why it pays to learn the rules where they can still be drawn.
-
-> **From my notes.** Ways of thinking about the coordinates of a vector: the projection of the vector on the X axis; the dot product of the vector with î.
-
-Both readings are right, and they agree because î has length one. Measure against a longer arrow along the same axis, 2î for instance, and the dot product doubles while the shadow stays where it was. Chapter 4 turns that detail into the general rule.
 
 **Watch, read, try**
 
@@ -143,11 +139,7 @@ Order matters. Turning first and then applying A gives A·R, with columns (−1,
 ![Two grids, each with the image of the unit square: on the left after A and then the quarter turn, on the right after the quarter turn and then A; the two parallelograms point in different directions](/ml/book/figures/b02-4-order.svg)
 *Figure 2.4. First A then R (left) sends î to (−1, 2) and ĵ to (−1, −1); first R then A (right) sends them to (−1, 1) and (−2, −1). Both squares become parallelograms of area 3, in different places.*
 
-> **From my notes.** Geometrically, a transformation M translates our grid to someone else's grid, someone whose unit vectors î and ĵ are the columns of M; numerically, it translates our vectors into the other space.
-
-> **From my notes.** What does (−1, 2) look like to her? What does her vector (x, y) look like to us?
-
-The first note is the right picture, and chapter 5 builds on it: the columns of A are her î and ĵ written in our coordinates. The second note asks two good questions whose answers run in opposite directions, and the video frames saved under the first question in fact answer the second. Multiplying her coordinates (−1, 2) by A gives (−4, 1), which is what her vector looks like to us. The other direction, from our (−1, 2) to her coordinates, needs the move that undoes A, which chapter 3 introduces; she would call our (−1, 2) the pair (1/3, 5/3). Chapter 5 draws both.
+A matrix can also be read as a translation between two ways of measuring. Suppose a friend measures with her own two arrows, her î and ĵ, which in our coordinates are the columns of A, (2, 1) and (−1, 1). Geometrically, A carries our grid onto hers. Numerically it works the other way round: multiplying by A turns her coordinates into ours, not ours into hers, a reversal that 3Blue1Brown's chapter 13, in chapter 5's reading list, points out. Two natural questions therefore run in opposite directions. What does our vector (−1, 2) look like to her? That needs the move that undoes A, which chapter 3 introduces; she would call it (1/3, 5/3). What does her vector (−1, 2) look like to us? Multiplying by A gives (−4, 1). Chapter 5 draws both.
 
 **Watch, read, try**
 
@@ -191,6 +183,8 @@ The same argument with ĵ in place of î finds x: the parallelogram on (x, y) an
 ![A thin parallelogram on the unknown blue arrow and the orange unit arrow becomes, after the matrix, a long parallelogram on the known output minus four, minus two and the moved orange arrow two, two](/ml/book/figures/b03-4-cramer-x.svg)
 *Figure 3.4. Cramer's rule for x. The parallelogram on (x, y) and ĵ has signed area x; after the matrix its area is −4, so x = −4 ÷ 8 = −0.5.*
 
+Seeing Cramer's rule as areas explains why it works; in Figures 3.3 and 3.4, green and orange mark the matrix's columns, the coefficients of the equations, and blue marks the vector, unknown before the move and known after it. As a way to compute, though, the rule is rarely the best choice. It takes one determinant per unknown plus one more, which becomes expensive beyond two or three equations; Gaussian elimination, which subtracts multiples of one equation from another until the unknowns come out one at a time, costs about as much as a single determinant and beats Cramer's rule on all but the smallest systems. Cramer's rule remains handy for small systems worked by hand.
+
 ### Volume in three dimensions
 
 Everything carries over to space. A 3 × 3 matrix turns the unit cube into a slanted box called a parallelepiped, whose faces are parallelograms, and its determinant is the factor by which volumes change, again negative for a mirror flip. A slanted box holds its base area times its height, the height being measured straight up from the base, not along the slanted edge. Figure 3.5 shows two boxes with the same 3 by 2 base and height 2; each holds 12.
@@ -198,19 +192,11 @@ Everything carries over to space. A 3 × 3 matrix turns the unit cube into a sla
 ![Two boxes drawn in perspective with the same base three by two: one upright and one slanted sideways, each with an orange bar marking a straight-up height of two](/ml/book/figures/b03-5-prism.svg)
 *Figure 3.5. An upright box and a slanted box with the same 3 by 2 base and the same height 2 both have volume (3 × 2) × 2 = 12.*
 
-> **From my notes.** Why do we need this visual understanding? Because it helps you understand Cramer's rule easily. Cramer's rule is not the best way to solve linear equations; Gaussian elimination is faster. The colour coding matters: red and green are the transformation (the coefficients), pink is the contents.
-
-The colour code survives in this book's palette: green and orange for the matrix's columns, the coefficients, and blue for the contents, the vector unknown before the move and known after it. The remark about speed needs one refinement. Cramer's rule takes one determinant per unknown plus one more, which becomes expensive beyond two or three equations; Gaussian elimination, which subtracts multiples of one equation from another until the unknowns come out one at a time, costs about as much as a single determinant. It remains handy for small systems worked by hand.
-
-> **From my notes.** If a transformation moves a point to a new location, the only chance of undoing it is if the transformation has not reduced the dimension of the space. You can't recover a solid from a plane, or a plane from a line, and you can't recover anything from a single point.
->
-> Duality of determinants: as a transformation, the determinant tells the factor by which area scales; as vectors, the determinant gives the area of the parallelogram (or the volume of the parallelepiped) they form.
-
-Both hold as written: a space that has lost a dimension is the zero-determinant case of Figure 3.2, and the two readings are one fact, since a matrix's columns are the edges of the shape the unit square or cube becomes.
+The chapter's two pictures of the determinant are one fact seen twice. As a move, the determinant is the factor by which areas, or volumes in space, are scaled, negative when the move flips them over; for a list of vectors, its size is the area of the parallelogram, or the volume of the box, that the vectors span. The two agree because a matrix's columns are the edges of the shape that the unit square or cube becomes. The same picture says when a move can be undone: only when it keeps every dimension. Once a solid has been squashed onto a plane, a plane onto a line or anything onto a single point, nothing can recover what was lost, and that is the zero-determinant case of Figure 3.2.
 
 **Watch, read, try**
 
-- [Cramer's rule, explained geometrically](https://youtu.be/jBsC34PxzoM?si=vF4WiZhZOXnAtsEb&t=329) — 3Blue1Brown's chapter 12, the source of the area trick in this chapter; the link the notes saved opens at 5:29.
+- [Cramer's rule, explained geometrically](https://youtu.be/jBsC34PxzoM?si=vF4WiZhZOXnAtsEb&t=329) — 3Blue1Brown's chapter 12, the source of the area trick in this chapter; the link opens at 5:29.
 
 **Check yourself.** 1. What is the determinant of the matrix with rows 4, 1 and 2, 3, and what happens to a shape of area 2 under it? 2. Why can the matrix with columns (1, 2) and (2, 4) not be undone? 3. Use Cramer's rule to solve x + y = 3 and x − y = 1.
 
@@ -227,18 +213,18 @@ Take w = (3, 4) and v = (4, 2). By numbers, v · w = 4 × 3 + 2 × 4 = 20. By ge
 ![On the left the vectors three, four and four, two with the shadow of the second on the line of the first; on the right three small panels with the second vector pointing along, across and away from the first](/ml/book/figures/b04-1-projection.svg)
 *Figure 4.1. Left: v = (4, 2) casts a shadow 4 long on w = (3, 4), which is 5 long: v · w = 20. Right: 20, 0 and −16 as v leans along, across and away from w.*
 
-This holds for every pair, either way round. The product is positive when v leans towards w, zero at a right angle, where the shadow shrinks to a point, and negative when v leans away (Figure 4.1, right). In one formula, v · w is the two lengths times the cosine of the angle between them, which is why later chapters compare words with dot products.
+This holds for every pair, either way round. The product is positive when v leans towards w, zero at a right angle, where the shadow shrinks to a point, and negative when v leans away (Figure 4.1, right). In one formula, v · w is the two lengths times the cosine of the angle between them, which is why later chapters compare words with dot products. Since a cosine is never more than 1, a dot product never exceeds the product of the two lengths, a fact called the Cauchy–Schwarz inequality. So among all vectors as long as A, A itself gives the largest dot product with A, but a longer vector can give more: with A = (1, 0) and B = (5, 0), A · B = 5 while A · A = 1.
 
 ### A row is a vector in disguise
 
-Now read the recipe the other way. The rule "three times the first coordinate plus four times the second" turns every arrow into one number: a transformation from the plane to the number line, whose matrix is one row with entries 3 and 4, a 1 × 2 matrix. Its outputs for î, ĵ and (4, 2) are 3, 4 and 20, the dot products with (3, 4). A 1 × 2 matrix and a two-dimensional vector are one object seen two ways, a relationship called duality. In Figure 4.2 every point on a dashed line receives the same number, and the number line runs along (3, 4), each number being a shadow on it times 5.
+Now read the recipe the other way. The rule "three times the first coordinate plus four times the second" turns every arrow into one number: a transformation from the plane to the number line, whose matrix is one row with entries 3 and 4, a 1 × 2 matrix. Its outputs for î, ĵ and (4, 2) are 3, 4 and 20, the dot products with (3, 4). A 1 × 2 matrix and a two-dimensional vector are one object seen two ways, a relationship called duality. In Figure 4.2 every point on a dashed line receives the same number, and the number line runs along (3, 4), each number being a shadow on it times 5. A matrix with fewer rows than columns sends vectors into fewer dimensions, as this one sends the plane onto a line. Describing data with fewer numbers than it came with is called dimensionality reduction, and principal component analysis, in [chapter 29](#29-contextual-embeddings-and-dimensionality-reduction), chooses the directions to keep.
 
 ![The plane crossed by dashed lines at right angles to a solid number line that runs along the vector three, four, with the arrows for i-hat, j-hat and four, two each dropped onto the number line at three, four and twenty](/ml/book/figures/b04-2-dual.svg)
 *Figure 4.2. The 1 × 2 matrix with entries 3 and 4 sends î, ĵ and (4, 2) to 3, 4 and 20, the dot products with (3, 4).*
 
 ### Moves that keep dot products
 
-The vectors (2, 1) and (1, 2) have dot product 4, and after the quarter turn of chapter 2, (−1, 2) and (−2, 1) still do. After a shear, which slides each row of the grid sideways in proportion to its height, they become (3, 1) and (3, 2), and the dot product jumps to 11 (Figure 4.3). The turn keeps î and ĵ perpendicular and one unit long; the shear tilts ĵ to (1, 1), about 1.41 long. A matrix whose columns are perpendicular vectors of length one is called an orthogonal matrix, and it keeps every length, angle and dot product.
+The vectors (2, 1) and (1, 2) have dot product 4, and after the quarter turn of chapter 2, (−1, 2) and (−2, 1) still do. After a shear, which slides each row of the grid sideways in proportion to its height, they become (3, 1) and (3, 2), and the dot product jumps to 11 (Figure 4.3). The turn keeps î and ĵ perpendicular and one unit long; the shear tilts ĵ to (1, 1), about 1.41 long. A matrix whose columns are perpendicular vectors of length one is called an orthogonal matrix, or sometimes orthonormal, and it keeps every length, angle and dot product. Rotations are not the only such moves: a reflection flips the plane over, yet it too keeps every dot product.
 
 ![Three panels with a blue and a black arrow: before, after a quarter turn and after a shear, each labelled with the dot product of the two arrows](/ml/book/figures/b04-3-rotation-shear.svg)
 *Figure 4.3. The dot product of (2, 1) and (1, 2) is 4 before and after the quarter turn but 11 after the shear.*
@@ -256,20 +242,6 @@ Figure 4.5 shows where p's three numbers come from.
 
 ![A three-by-three grid holding x, y, z and the two vectors, and beside it three small two-by-two grids whose determinants give minus three, minus two and six](/ml/book/figures/b04-5-components.svg)
 *Figure 4.5. Each coordinate of p is a 2 × 2 determinant from the rows of v and w: p₁ = −3, p₂ = −2, p₃ = 6.*
-
-> **From my notes.** Dot product is a geometric tool for understanding projections and testing whether vectors point in the same direction; on a deeper level it relates to the transformation represented by one of those vectors. The numeric calculations just appear to be similar.
->
-> The dot product of a vector A with itself will always be larger than the dot product of A with any other vector.
->
-> PCA / dimensionality reduction: matrix transformations that take 2D to 1D or 3D to 2D. The vector–matrix product and the dot product are the same thing. Projecting v1 on v2 means multiplying the projection of v1 by the magnitude of v2. To find out whether we moved in the direction of the vector or opposite to it, look at the sign of the dot product.
-
-The first note is this chapter's middle, sharpened once: the calculations are not merely similar but the same, which is what duality means. The second needs a condition, since length counts too: with A = (1, 0) and B = (5, 0), A · B = 5 but A · A = 1. It holds when B is as long as A, by the Cauchy–Schwarz inequality: a dot product never exceeds the product of the two lengths. The third note bridges to dimensionality reduction, describing data with fewer numbers, as Figure 4.2's matrix does; its middle sentence should say that the dot product is the shadow's length times the other length. Principal component analysis, [chapter 29](#29-contextual-embeddings-and-dimensionality-reduction), chooses the directions.
-
-> **From my notes.** Transformations which preserve the dot product are called orthonormal: rotation, no stretching or squishing. They leave the unit vectors perpendicular and of unit length.
->
-> This is the end game of the cross product: given three vectors X, V, W we are looking for a vector P such that P · X = det[X V W], the volume they contain. Important: there is ONLY ONE parallelepiped, formed by our vectors; there is no other.
-
-Both are right. The usual name is orthogonal matrix, orthonormal being accepted too, and the family includes reflections, which flip the plane yet keep every dot product. There is indeed one box, and p depends on v and w alone.
 
 **Watch, read, try**
 
@@ -291,7 +263,7 @@ The translation is a matrix you have met. Put her basis vectors in as columns an
 ![Two panels of a slanted grid laid over the square grid: on the left a green and an orange step along her basis vectors reach the point our minus four, one; on the right two fractional steps reach our minus one, two](/ml/book/figures/b05-1-two-grids.svg)
 *Figure 5.1. Left: her (−1, 2) is −1 × (2, 1) + 2 × (−1, 1) = (−4, 1) in our grid. Right: our (−1, 2) is 1/3 × (2, 1) + 5/3 × (−1, 1), so she calls it (1/3, 5/3).*
 
-One point is easy to get backwards. The matrix whose columns are her vectors turns her numbers into ours, not ours into hers. The opposite direction needs the inverse from chapter 3, A⁻¹, with rows 1/3, 1/3 and −1/3, 2/3. Our vector (−1, 2) becomes 1/3 × (−1) + 1/3 × 2 = 1/3 and −1/3 × (−1) + 2/3 × 2 = 5/3, so she calls it (1/3, 5/3). Her own recipe confirms it: 1/3 of (2, 1) plus 5/3 of (−1, 1) is (2/3 − 5/3, 1/3 + 5/3) = (−1, 2). The right half of Figure 5.1 draws this, and it answers the first question of the note in chapter 2.
+One point is easy to get backwards. The matrix whose columns are her vectors turns her numbers into ours, not ours into hers. The opposite direction needs the inverse from chapter 3, A⁻¹, with rows 1/3, 1/3 and −1/3, 2/3. Our vector (−1, 2) becomes 1/3 × (−1) + 1/3 × 2 = 1/3 and −1/3 × (−1) + 2/3 × 2 = 5/3, so she calls it (1/3, 5/3). Her own recipe confirms it: 1/3 of (2, 1) plus 5/3 of (−1, 1) is (2/3 − 5/3, 1/3 + 5/3) = (−1, 2). The right half of Figure 5.1 draws this, and it answers the first of the two questions at the end of chapter 2.
 
 ### A move described in her words
 
@@ -304,9 +276,7 @@ Because each step is a matrix, the three can be multiplied into one, written A�
 
 A well-chosen basis can make a transformation look far simpler than it does in ours. [Chapter 6](#6-eigenvectors-and-eigenvalues) looks for the basis in which a matrix does nothing but stretch along each axis, and principal component analysis, in [chapter 29](#29-contextual-embeddings-and-dimensionality-reduction), re-expresses a whole dataset in the basis where its spread is easiest to read. In both cases the arithmetic is the sandwich of this chapter.
 
-> **From my notes.** Change of basis: to see how a transformation of ours affects her vector, first convert her vector to our language, apply the transformation, then convert back: A⁻¹ M A.
-
-That is the whole recipe, and the order of the letters is its one trap: the rightmost matrix acts first, because it stands next to the vector. The note's first draft wrote the same sandwich in its own notation and named the wrong matrix for the middle step; the transformation in the middle is always ours.
+In general, to describe any move M of ours in her words, write A⁻¹MA: translate her vector into our language, apply the move, translate back. The matrix in the middle is always the move written in our coordinates, and the rightmost matrix acts first because it stands next to the vector; putting the wrong matrix in the middle is an easy slip.
 
 **Watch, read, try**
 
@@ -325,7 +295,7 @@ Every non-zero vector has a span, its own line: the line through the origin made
 ![Two grids: before, three arrows with dashed lines through them; after the matrix, the green and orange arrows have grown along their own dashed lines while the blue arrow has swung off its line](/ml/book/figures/b06-1-eigenlines.svg)
 *Figure 6.1. Under M, (1, 0) and (−1, 1) stay on their dashed lines, becoming (3, 0) and (−2, 2); the ordinary vector (1, 1) becomes (4, 2), off its line.*
 
-A non-zero vector v that a matrix sends to a multiple of itself, Mv = λv, is an eigenvector of the matrix, and the multiple λ (the Greek letter lambda) is its eigenvalue. Every vector on the same line behaves alike, (2, 0) going to (6, 0) and (−3, 3) to (−6, 6), so whole lines of eigenvectors, the dashed green and orange ones, are mapped onto themselves and stretched along their length.
+A non-zero vector v that a matrix sends to a multiple of itself, Mv = λv, is an eigenvector of the matrix, and the multiple λ (the Greek letter lambda) is its eigenvalue. Every vector on the same line behaves alike, (2, 0) going to (6, 0) and (−3, 3) to (−6, 6), so whole lines of eigenvectors, the dashed green and orange ones, are mapped onto themselves and stretched along their length. An eigenvector is therefore not left untouched: it keeps its line but is stretched by its eigenvalue, as M triples (1, 0) and doubles (−1, 1). Only an eigenvalue of 1 leaves a vector exactly where it was, and a negative eigenvalue turns it round along its own line.
 
 ### Finding them with a determinant
 
@@ -340,12 +310,12 @@ Each eigenvalue then gives its line. For λ = 3, M − 3I has rows 0, 1 and 0, �
 
 ### When there are none
 
-Not every transformation has eigenvectors among the arrows of the plane. The quarter turn R of chapter 2 turns every non-zero vector a quarter turn off its own line; in Figure 6.3 each image meets its vector at a right angle, and every dot product v · Rv is 0. The determinant agrees: R − λI has rows −λ, −1 and 1, −λ, so det(R − λI) = (−λ)(−λ) − (−1)(1) = λ² + 1, which is never smaller than 1. Its solutions are the imaginary numbers i and −i, whose squares are −1: eigenvalues that are complex numbers, not stretch factors of arrows you can draw.
+Not every transformation has eigenvectors among the arrows of the plane. The quarter turn R of chapter 2 turns every non-zero vector a quarter turn off its own line; in Figure 6.3 each image meets its vector at a right angle, and every dot product v · Rv is 0. The determinant agrees: R − λI has rows −λ, −1 and 1, −λ, so det(R − λI) = (−λ)(−λ) − (−1)(1) = λ² + 1, which is never smaller than 1. Its solutions are the imaginary numbers i and −i, whose squares are −1: eigenvalues that are complex numbers, not stretch factors of arrows you can draw. Some rotations do have them, though: a half turn sends every vector to its opposite, so every non-zero vector is an eigenvector, with eigenvalue −1.
 
 ![Left: three coloured vectors, each with a thicker image turned a quarter turn off its dashed line; right: the curve lambda squared plus one, which never comes down to zero](/ml/book/figures/b06-3-rotation.svg)
 *Figure 6.3. The quarter turn sends (2, 0), (1, 1) and (−1, 2) to (0, 2), (−1, 1) and (−2, −1), each at a right angle to its vector; det(R − λI) = λ² + 1 is never below 1.*
 
-A shear shows a milder shortage. The shear H of chapter 4, with columns (1, 0) and (1, 1), has det(H − λI) = (1 − λ)², so its only eigenvalue is 1 and its only line of eigenvectors is the x-axis: real eigenvectors, but not two independent lines of them.
+A shear shows a milder shortage. The shear H of chapter 4, with columns (1, 0) and (1, 1), has det(H − λI) = (1 − λ)², so its only eigenvalue is 1 and its only line of eigenvectors is the x-axis: real eigenvectors, but not two independent lines of them. Without a second line there is no basis of eigenvectors, so H has no description as a diagonal matrix, the simplification the next section is about.
 
 ### The eigenbasis
 
@@ -356,20 +326,10 @@ When a matrix has enough eigenvectors to make a basis, as M does with (1, 0) and
 
 That pays off when a transformation is repeated. Applying M ten times to ĵ takes ten matrix multiplications in our coordinates, but in the eigenbasis only two powers: 3¹⁰ = 59,049 and 2¹⁰ = 1,024 give (59,049, 1,024), which translates back to (58,025, 1,024), the answer the ten multiplications also give. The idea returns in [chapter 29](#29-contextual-embeddings-and-dimensionality-reduction): principal component analysis takes the eigenvectors of the covariance matrix, which records how a dataset's columns vary together, and they point along the directions in which the data spreads.
 
-> **From my notes.** Eigenvectors are the vectors that are unaffected by transformations.
-
-The note is right about direction and too strong otherwise. An eigenvector stays on its own line, but it is still stretched by its eigenvalue: M triples (1, 0) and doubles (−1, 1). Only an eigenvalue of 1 leaves a vector where it was, and a negative one turns it round along the same line.
-
-> **From my notes.** A transformation may not always have eigenvectors, like a rotation by 90°, as it rotates every vector off its own span.
->
-> Transformations written in an eigenbasis have an advantage: A⁻¹ M A is a diagonal matrix with the eigenvalues on the diagonal.
-
-Both need one condition. The quarter turn has no real eigenvectors, though its eigenvalues i and −i exist as complex numbers, and some rotations do have real ones: a half turn sends every vector to its opposite, eigenvalue −1. The eigenbasis note holds when the columns of A are eigenvectors, enough of them to form a basis; the shear, with one line of eigenvectors, cannot be made diagonal.
-
 **Watch, read, try**
 
-- [Eigenvectors and eigenvalues, at 11:19](https://youtu.be/PFDu9oVAE-g?si=CocUT8VZWaxh2lg2&t=679) — 3Blue1Brown's chapter 14; the notes saved this link right after their frames of the quarter-turn example, marked 11:10 and 11:17.
-- [Eigenvectors and eigenvalues, at 12:30](https://youtu.be/PFDu9oVAE-g?si=Yf_LCcbm2BWRPoVE&t=750) — the same video, saved beside the eigenbasis reminder; the video's own summary names the usefulness of an eigenbasis among its topics.
+- [Eigenvectors and eigenvalues, at 11:19](https://youtu.be/PFDu9oVAE-g?si=CocUT8VZWaxh2lg2&t=679) — 3Blue1Brown's chapter 14, where the quarter turn's determinant leads to λ² + 1 = 0; the rotation itself is on screen shortly before.
+- [Eigenvectors and eigenvalues, at 12:30](https://youtu.be/PFDu9oVAE-g?si=Yf_LCcbm2BWRPoVE&t=750) — the same video from 12:30; its own description lists the usefulness of an eigenbasis among its topics.
 
 **Check yourself.** 1. Is (1, 1) an eigenvector of M? Is (−2, 2)? 2. 3Blue1Brown's other example has columns (2, 1) and (2, 3). What are its eigenvalues? 3. Why can the quarter turn not be written as a diagonal matrix in any basis of real vectors?
 
@@ -394,12 +354,12 @@ A layer is several neurons reading the same inputs. Stack their weights as the r
 
 ### Why the bend is needed
 
-Suppose we leave the bend out. Figure 7.2 builds a two-layer network whose first layer computes h₁ = x₁ − x₂ and h₂ = 2x₁ + x₂ − 1, and whose second layer computes the output h₁ + 2h₂ + 0.5. Substitute the first layer into the second and the network collapses: the output is 5x₁ + x₂ − 1.5, a single layer with weights 5 and 1 and bias −1.5. For the input (1, 2) both routes give 5.5. The general reason is that a matrix times a matrix is one matrix (chapter 2), so any stack of straight layers is one straight layer, however many you pile up. In the words of James, Witten, Hastie and Tibshirani's textbook, without a non-linear activation the model "would collapse into a simple linear model".
+Suppose we leave the bend out. Figure 7.2 builds a two-layer network whose first layer computes h₁ = x₁ − x₂ and h₂ = 2x₁ + x₂ − 1, and whose second layer computes the output h₁ + 2h₂ + 0.5. Substitute the first layer into the second and the network collapses: the output is 5x₁ + x₂ − 1.5, a single layer with weights 5 and 1 and bias −1.5. For the input (1, 2) both routes give 5.5. The general reason is that a matrix times a matrix is one matrix (chapter 2), so any stack of straight layers is one straight layer, however many you pile up. James, Witten, Hastie and Tibshirani make the same point in their textbook: without a non-linear activation, the network reduces to an ordinary linear model of its inputs (section 10.1).
 
 ![Left: a network of two inputs, two hidden units and one output with no bend; right: a single layer with weights five and one; below, the check that both give five point five, and that a ReLU between the layers gives six point five](/ml/book/figures/b07-2-collapse.svg)
 *Figure 7.2. Two straight layers equal one: out = 5x₁ + x₂ − 1.5. For x = (1, 2) both give 5.5; with a ReLU between the layers the hidden values become (0, 3) and the output 6.5, which the single straight layer cannot match everywhere.*
 
-Put a ReLU between the layers and the story changes. For the same input the hidden values (−1, 3) become (0, 3), and the output is 6.5 instead of 5.5. The network now draws a bent line rather than a straight one, and bends are what let it follow curved relationships.
+Put a ReLU between the layers and the story changes. For the same input the hidden values (−1, 3) become (0, 3), and the output is 6.5 instead of 5.5. The network now draws a bent line rather than a straight one, and bends are what let it follow curved relationships. Without them, even a network that ends in a sigmoid is no more capable than logistic regression, a single weighted sum passed through a sigmoid.
 
 ### Four common activations, and what bends buy
 
@@ -413,19 +373,11 @@ Figure 7.4 shows what bends buy, on the shop's price curve, which rises steeply 
 ![The true price curve against pages drawn dashed, with an orange bent line made of three straight pieces that touches it at nought, one hundred, two hundred and fifty and four hundred pages](/ml/book/figures/b07-4-bends.svg)
 *Figure 7.4. Three ReLU units make a line that bends at 100 and 250 pages; its slopes are 5.11, 2.60 and 1.13 hundred rupees per 100 pages, and it meets the price curve at 0, 100, 250 and 400 pages.*
 
-The output layer is a different matter. When the network predicts a quantity such as a price, the last neuron is usually left linear, because a price can be any size and a squashing function would cap it. When it predicts a category, the output is squashed into probabilities: a sigmoid for yes or no, or softmax, which turns several scores into probabilities that add up to one, for many classes.
-
-> **From my notes.** Negative weights, which may be the result of the matrix multiplication, are replaced by 0.
-
-The note points at the right place, the result of the matrix multiplication, but names the wrong thing. ReLU replaces negative weighted sums by 0; the weights themselves stay negative when they need to be. In Figure 7.1 the second book's sum, −1.2, became 0, while the weight −1.2 was never touched.
-
-> **From my notes.** If we use a linear activation in the hidden layers, the hidden layers just compute another linear function of the inputs, so they learn nothing new; it is as if we had no hidden layers. Use a linear activation only in the output layer, when predicting a number.
-
-This one is right, and Figure 7.2 is its proof in numbers. The full note adds a detail worth keeping: with a sigmoid at the output and no bends inside, the whole network is no more capable than logistic regression, which is a single weighted sum passed through a sigmoid. The number meant in the last sentence is a quantity that can take any value, such as a price, and not a count or a class label.
+The output layer is a different matter. When the network predicts a quantity such as a price, the last neuron is usually left linear, because a price can be any size and a squashing function would cap it. When it predicts a category, the output is squashed into probabilities: a sigmoid for yes or no, or softmax, which turns several scores into probabilities that add up to one, for many classes. That holds even when the classes are written as numbers, such as the digits 0 to 9 of a handwriting task (James, Witten, Hastie and Tibshirani, section 10.2).
 
 **Watch, read, try**
 
-- [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — Andrew Ng's short lecture from the Deep Learning Specialization, the source of the slide in the note.
+- [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — Andrew Ng's short lecture from the Deep Learning Specialization.
 
 **Check yourself.** 1. A neuron has weights (2, −1), bias −1 and a ReLU. What does it output for the inputs (2, 1) and (1, 3)? 2. One straight layer doubles its input and the next adds 3. What single layer is this, and what does a ReLU between them change? 3. Why is the output neuron of a price predictor usually left linear?
 
@@ -437,7 +389,7 @@ This one is right, and Figure 7.2 is its proof in numbers. The full note adds a 
 
 Training a network means adjusting its weights so that its error shrinks, and for that you need to know, for each weight, which way and how strongly it pushes the error. That is a derivative: the rate at which an output changes per unit change of one input, measured for very small changes. A network can have hundreds of thousands of weights, so it needs a systematic way to get every derivative at once. The computation graph provides it.
 
-Take the small example from Andrew Ng's lectures in the note: J = 3(a + bc) with a = 5, b = 3 and c = 2. Break it into steps, each a box that does one thing. The first box computes u = b × c = 6. The second computes v = a + u = 11. The third computes J = 3 × v = 33. Figure 8.1 draws the boxes with arrows pointing the way the values flow; running them left to right is called the forward pass.
+Take the small example from Andrew Ng's lectures: J = 3(a + bc) with a = 5, b = 3 and c = 2. Break it into steps, each a box that does one thing. The first box computes u = b × c = 6. The second computes v = a + u = 11. The third computes J = 3 × v = 33. Figure 8.1 draws the boxes with arrows pointing the way the values flow; running them left to right is called the forward pass.
 
 ![Six boxes joined by arrows running left to right: a, b and c on the left feed u equals b times c, which with a feeds v equals a plus u, which feeds J equals three times v, each box showing its value](/ml/book/figures/b08-1-forward.svg)
 *Figure 8.1. The forward pass: a = 5, b = 3 and c = 2 give u = 6, v = 11 and J = 33.*
@@ -460,10 +412,6 @@ This is backpropagation: an efficient use of the chain rule that computes the gr
 
 Andrej Karpathy's micrograd shows how little machinery this needs. Its engine is about a hundred lines of Python. Every number in a calculation is wrapped in an object that stores its value, called data, and its gradient, called grad. Each operation that creates a new value also records how to pass gradients back to the values it came from. For a product such as u = b × c, b's grad receives c times u's grad and c's grad receives b times u's grad, which is the local-slope rule above. Calling backward on the final value visits the graph in reverse order and fills in every grad. One detail in the code matters: gradients are added with +=, so a value that feeds two later boxes collects a contribution from each path.
 
-> **From my notes.** Grads: Computation graphs; Derivatives with computation graphs; Andrej Karpathy, backpropagation.
-
-Those three titles are a good order in which to watch, and this chapter follows it: draw the graph, run it backwards, then see an engine that does it for any graph. The note spelled the third author's first name "Andrew"; the video is by Andrej Karpathy.
-
 **Watch, read, try**
 
 - [Computation Graph (C1W2L07)](https://www.youtube.com/watch?v=hCP1vGoCdYU) — Andrew Ng draws a calculation as boxes and runs it forwards.
@@ -476,7 +424,7 @@ Those three titles are a good order in which to watch, and this chapter follows 
 
 ## 9. Bias, variance and the sweet spot
 
-**In one breath.** A model that is too rigid misses the real pattern, which is called bias, and a model that is too flexible chases the noise in its training data and changes wildly from one dataset to the next, which is called variance. The best model sits between the two, and the only way to find it is to test on data the model has not seen.
+**In one breath.** A model that is too rigid misses the real pattern, which is called bias, and a model that is too flexible chases the noise in its training data and changes wildly from one dataset to the next, which is called variance. The best model sits between the two, and there are two common ways to find it: test each candidate on data it has not seen, or correct its training error for how many numbers it can adjust (James, Witten, Hastie and Tibshirani, section 6.1.3).
 
 Back in the shop, you would like a rule that prices a book from its page count alone. For this chapter we invent the truth, so that every model can be checked against it: a book with $x$ pages is worth $12\,(1 - e^{-x/180})$ hundred rupees, a curve that climbs steeply for thin books and levels off towards 12 for thick ones. All prices in this chapter and the next are in hundreds of rupees. Real prices wobble around such a curve for reasons no rule can see, so each of our books gets a small fixed wobble. The eight books used to fit models form the training set; eight more books with the same page counts and different wobbles form the test set, kept back to judge the models.
 
@@ -491,7 +439,7 @@ Back in the shop, you would like a rule that prices a book from its page count a
 | 320 | 9.97 | 10.47 | 9.47 |
 | 400 | 10.70 | 10.40 | 11.30 |
 
-Figure 9.1 fits two models to the training books. The first is a straight line chosen by least squares: of all straight lines, the one whose squared vertical misses add up to the smallest total. The second is a polynomial of degree 7. The degree of a polynomial is its highest power, and each extra degree allows one more bend, so a degree-7 curve can bend six times and, with eight books, pass through every one of them.
+Figure 9.1 fits two models to the training books. In this chapter's figures the true price curve is dashed grey, fitted models are orange, training books are blue and test books green. The first model is a straight line chosen by least squares: of all straight lines, the one whose squared vertical misses add up to the smallest total. The second is a polynomial of degree 7. The degree of a polynomial is its highest power, and each extra degree allows one more bend, so a degree-7 curve can bend six times and, with eight books, pass through every one of them.
 
 ![Two panels of price against pages: on the left a straight orange line through eight blue training books, on the right an orange curve that passes through every book and shoots off the top of the chart between the last two](/ml/book/figures/b09-1-train-fits.svg)
 *Figure 9.1. On the training books the straight line's squared errors add up to 4.73 and the squiggle's to 0.00; between 320 and 400 pages the squiggle climbs off the chart to 45.6.*
@@ -503,7 +451,7 @@ On the training books the squiggle is perfect: its squared errors total 0.00, ag
 
 ### Bias and variance
 
-The two failures have names. Bias is the error that comes from approximating a complicated relationship by a model too simple to follow it. The straight line cannot bend, so it overprices the thinnest book (4.51 against a true 3.40) and the thickest (11.36 against 10.70) and underprices the middle (7.33 against 8.05 at 200 pages), and more data would not cure that. Variance is how much a fitted model would change if it were fitted to a different set of training books. Fit both models again, this time to the eight test books as though they were the training set. The line barely moves: its slope goes from 2.02 to 2.20 hundred rupees per 100 pages. The squiggle changes out of recognition: at 360 pages the version fitted to the training books predicts 38.3, while the version fitted to the test books predicts −13.6, a negative price.
+The two failures have names. Bias is the error that comes from approximating a complicated relationship by a model too simple to follow it. The straight line cannot bend, so it overprices the thinnest book (4.51 against a true 3.40) and the thickest (11.36 against 10.70) and underprices the middle (7.33 against 8.05 at 200 pages), and more data would not cure that. Variance is how much a fitted model would change if it were fitted to a different set of training books. It shows only when the same method is fitted to more than one set of data, so a training error alone can never reveal it. Fit both models again, this time to the eight test books as though they were the training set. The line barely moves: its slope goes from 2.02 to 2.20 hundred rupees per 100 pages. The squiggle changes out of recognition: at 360 pages the version fitted to the training books predicts 38.3, while the version fitted to the test books predicts −13.6, a negative price.
 
 A model that scores well on its training data and badly on new data is overfitting: it has learned the wobbles as though they were the pattern. James, Witten, Hastie and Tibshirani add a useful precision in their textbook: a model is overfitting when a less flexible one would have done better on the test data.
 
@@ -514,15 +462,7 @@ Figure 9.3 fits polynomials of every degree from 0 to 7 and measures the mean sq
 ![Mean squared error against polynomial degree from nought to seven: a blue training line falling steadily to zero and a green test line falling to its lowest point at degree two and rising after it](/ml/book/figures/b09-3-complexity.svg)
 *Figure 9.3. Training error (blue) falls from 5.55 to 0.00 as the degree rises; test error (green) is lowest, 0.38, at degree 2 and rises to 1.33 at degree 7.*
 
-This shape, training error always falling and test error falling then rising, is the bias–variance trade-off. The expected test error of a method splits into three parts: the variance of its fit, the square of its bias, and noise that no model can predict. More flexibility lowers the bias and raises the variance, and the sweet spot is where their sum is smallest; the noise sets a floor that no model gets under. Three families of methods help find the spot, and a StatQuest frame saved in the note names them: regularisation, which charges a model for complexity (chapter 11 is an example); bagging, which fits many models to resampled copies of the data and averages them, cutting variance; and boosting, which fits models one after another, each to the errors the previous ones left.
-
-> **From my notes.** Blue is the true relationship, red is the predicted one.
-
-The frames the note saved use those colours. This book's figures keep the roles and change the palette: the true curve is dashed grey and the fitted models are orange.
-
-> **From my notes.** Variance is observed across different datasets. Blue is the training set, green the test set.
-
-The dots keep the note's colours, blue for training and green for test. And variance is indeed about different datasets: it only shows when the same method is fitted to more than one, as in the refit above, which is why a training error alone can never reveal it.
+This shape, training error always falling and test error falling then rising, is the bias–variance trade-off. The expected test error of a method splits into three parts: the variance of its fit, the square of its bias, and noise that no model can predict. More flexibility lowers the bias and raises the variance, and the sweet spot is where their sum is smallest; the noise sets a floor that no model gets under. Three families of methods help find the spot, and StatQuest names them: regularisation, which charges a model for complexity (chapter 11 is an example); bagging, which fits many models to resampled copies of the data and averages them, cutting variance; and boosting, which fits models one after another, each to the errors the previous ones left.
 
 **Watch, read, try**
 
@@ -552,7 +492,7 @@ The scores of one method also move from round to round, a reminder that the aver
 
 ### How many folds
 
-The number of blocks is a choice. With k folds, each round trains on all but one k-th of the data and the method is fitted k times. In practice five or ten folds are the usual choice, and a StatQuest frame saved in the note calls ten blocks very common. At the extreme, leave-one-out cross-validation holds back a single book in each round, which for our pile would mean sixteen rounds; it wastes no data but costs one fit per book, which grows expensive when there are many books or the method is slow to fit.
+The number of blocks is a choice. With k folds, each round trains on all but one k-th of the data and the method is fitted k times. In practice five or ten folds are the usual choice, and StatQuest calls ten blocks a very common choice. At the extreme, leave-one-out cross-validation holds back a single book in each round, which for our pile would mean sixteen rounds; it wastes no data but costs one fit per book, which grows expensive when there are many books or the method is slow to fit.
 
 ### Choosing settings and methods
 
@@ -600,12 +540,6 @@ The slope is also the model's sensitivity: how far the prediction moves when the
 
 Nothing in the method says which λ to use. It is a tuning parameter, and chapter 10's cross-validation chooses it: try a range of values, score each by its average test error across the folds, and keep the best. With many inputs, ridge regression charges λ times the sum of all the squared slopes. Because that charge depends on the units each input is measured in, the inputs are usually standardised first, rescaled so that each has the same spread. Its close relative, the lasso, charges λ times the sum of the slopes' sizes, ignoring their signs, instead of their squares. That small change has a large effect: the lasso can push some slopes exactly to zero, dropping those inputs from the model altogether, which ridge regression does not do.
 
-> **From my notes.** The penalty added to the error is λ × m², where m is the slope.
-
-> **From my notes.** When the slope of the line is small, predictions are much less sensitive to changes in the input.
-
-Both are right. The first is the ridge penalty for a single input; with several inputs it becomes λ times the sum of the squared slopes, still leaving the intercept alone. The second is Figure 11.4 in one sentence, and it echoes the StatQuest frame the note saved under its heading.
-
 **Watch, read, try**
 
 - [Regularization Part 1: Ridge (L2) Regression](https://www.youtube.com/watch?v=Q81RR3yKn30) — StatQuest's introduction to ridge regression and its penalty on the slope.
@@ -651,10 +585,6 @@ Often the useful question is not how likely a value is, but how likely it is to 
 
 Read backwards, the CDF gives **quantiles**: the value below which a chosen fraction of the data falls. The median is the 0.5 quantile, 240 pages for our curve, and the 25th percentile is the 0.25 quantile. The NIST/SEMATECH handbook calls this inverse of the CDF the percent point function. Quantiles return twice in this part of the book: in chapter 13 they compare a sample with a model, and in [chapter 15](#15-quantile-normalisation) they make several samples comparable.
 
-> **From my notes.** PMF is for discrete variables: it tells us the probability of each value. PDF is for continuous variables.
-
-The note draws the line between the two in the right place. In the original, the PDF heading went on to promise the probability of each continuous value, and that half needs adjusting: a density gives probability per unit, the probability of any exact value is zero, and only an area under the density is a probability.
-
 **Watch, read, try**
 - [Probability Distribution Functions (PMF, PDF, CDF)](https://www.youtube.com/watch?v=YXLVjCKVP7U) — zedstatistics on the three functions.
 
@@ -666,7 +596,7 @@ The note draws the line between the two in the right place. In the original, the
 
 **In one breath.** Many methods assume a shape for the data, so before trusting them it pays to find out which distribution a sample resembles. The routine is short: look at the histogram, test a shortlist, read the probability plots, and keep the simplest shape that fits.
 
-Here we pretend not to know that chapter 12's page counts came from a lognormal curve, and recover it with the steps of Jim Frost's article in my notes.
+Here we pretend not to know that chapter 12's page counts came from a lognormal curve, and recover it by following the steps of Jim Frost's article on identifying a distribution, listed at the end of the chapter.
 
 ### Look before you test
 
@@ -701,7 +631,7 @@ In Figure 13.2 the normal panel's dots sit above the line at both ends and below
 
 ### A threshold, and knowing when to stop
 
-Use a threshold only when the subject supplies a real floor, as it does for books on paper: UNESCO's 1964 recommendation on book statistics counts only publications of at least 49 pages, cover excluded. Figure 13.3 fixes a threshold there, but our shortest book has 71 pages and A² worsens from 0.25 to 0.79, so two parameters are enough.
+Use a threshold only when the subject supplies a real floor, as it does for books on paper: UNESCO's 1964 recommendation on book statistics defines a book as a printed publication, other than a periodical, of 49 pages or more, not counting the covers, and one of 5 to 48 pages as a pamphlet (paragraph 6). Figure 13.3 fixes a threshold there, but our shortest book has 71 pages and A² worsens from 0.25 to 0.79, so two parameters are enough.
 
 ![Two density curves over page counts, a blue two-parameter lognormal and an orange three-parameter lognormal that is zero up to a dashed line at 49 pages, with ticks for the 60 books along the axis](/ml/book/figures/b13-3-threshold.svg)
 *Figure 13.3. A threshold at 49 pages, UNESCO's floor for a book. The three-parameter curve is zero below the threshold, but the shortest book has 71 pages and A² worsens from 0.25 to 0.79, so two parameters are enough.*
@@ -711,12 +641,10 @@ The fitted median and spread, 252 and 0.48, are near the true 240 and 0.45; 60 b
 ![Six boxes joined by arrows, from drawing the histogram to keeping the simplest distribution, with the outcome for the page counts beside each box](/ml/book/figures/b13-4-decision-path.svg)
 *Figure 13.4. The decision path with the page counts' result at each step, ending with a lognormal of median 252 pages and σ = 0.48.*
 
-> **From my notes.** A comment by whuber on Cross Validated, saved in my notes: "It is impossible to have enough power to rule out a mixture." The same comment explains that, without a theory to suggest a form, we fit a parametric distribution to get a parsimonious, approximate description of the data.
-
-A **mixture** blends distributions, such as paperbacks and hardbacks with different typical lengths. A tiny share of one kind, or two nearly identical kinds, can escape any test, and mixtures need many parameters, so aim for a short, honest description, not the one true distribution.
+A **mixture** blends distributions, such as paperbacks and hardbacks with different typical lengths. No test can rule a mixture out, as whuber explains in a comment on the Cross Validated answer listed below: if the two kinds are nearly identical, or one of them makes up only a tiny share, the sample looks the same either way. Mixtures also need many parameters and can bend to fit almost anything. Unless a theory suggests a form, a named distribution is fitted to give a short, approximate description of the data, not to find the one true distribution.
 
 **Watch, read, try**
-- [How to Identify the Distribution of Your Data](https://statisticsbyjim.com/hypothesis-testing/identify-distribution-data/) — Jim Frost's article that my notes kept.
+- [How to Identify the Distribution of Your Data](https://statisticsbyjim.com/hypothesis-testing/identify-distribution-data/) — Jim Frost's article, whose steps this chapter follows.
 - [How to determine which distribution fits my data best?](https://stats.stackexchange.com/questions/132652/how-to-determine-which-distribution-fits-my-data-best/132700#132700) — COOLSerdash's answer, with whuber's comment.
 - [How to interpret a QQ plot?](https://stats.stackexchange.com/questions/101274/how-to-interpret-a-qq-plot/101290#101290) — Glen_b on reading Q–Q plots.
 
@@ -737,7 +665,7 @@ A **categorical** column holds labels that sort things into groups, a **numerica
 ![A six-row table of bookshop columns with example values, the result of adding two values, and a verdict of number or category for each](/ml/book/figures/b14-1-add-test.svg)
 *Figure 14.1. The addition test. Pages, copies in stock and price add up to meaningful totals (312 + 148 = 460 pages); condition, genre code and ISBN do not, so they are categories whatever their storage type.*
 
-Three copies and two make five, so copies in stock is a number although it takes only the values 0 to 3. Fiction (1) plus history (2) is not travel (3), so genre code is a category, and an ISBN is a label written in digits. Condition, from fine to poor, is an **ordered** category: fine beats fair, but fine plus fair means nothing. The pandas function select_dtypes picks columns by storage type but cannot know that genre code 2 is a label, so the call is yours. [Chapter 25](#25-from-one-hot-to-embeddings) shows how to encode categories, and a bar chart of the counts per category is the quickest way to look at them.
+Three copies and two make five, so copies in stock is a number although it takes only the values 0 to 3. Fiction (1) plus history (2) is not travel (3), so genre code is a category, and an ISBN is a label written in digits. Condition, from fine to poor, is an **ordered** category: fine beats fair, and a model may use that order, but fine plus fair means nothing. The pandas function select_dtypes picks columns by storage type but cannot know that genre code 2 is a label, so the call is yours. [Chapter 25](#25-from-one-hot-to-embeddings) shows how to encode categories, and a bar chart of the counts per category is the quickest way to look at them.
 
 ### Why rescale at all
 
@@ -750,7 +678,7 @@ Page counts vary by about 130 pages across our books, the ages of eight books on
 ![The raw ages on a line with an outlier at 40 and a fence at 10.125, then the scaled values under min–max, z-score and robust scaling on one shared axis](/ml/book/figures/b14-2-scalers.svg)
 *Figure 14.2. One outlier under three scalers. Min–max crowds the seven ordinary books into 0 to 0.13 and z-scores into −0.56 to −0.15; robust scaling spreads them from −0.77 to 0.77 and leaves the outlier far out at 11.23.*
 
-Min–max crowds the seven ordinary books into the bottom eighth of the range, and the z-score does little better, since the outlier drags the mean to 7.9 and the standard deviation to 12.2. Robust scaling uses the median (3.5) and IQR (3.25), which the outlier barely moves, so the ordinary books keep a spread of about 1.5 and the outlier stands out at 11.23. A comparison table in my notes said standardisation changes a distribution's shape and resists outliers; Figure 14.2 shows it does neither.
+Min–max crowds the seven ordinary books into the bottom eighth of the range, and the z-score does little better, since the outlier drags the mean to 7.9 and the standard deviation to 12.2. Robust scaling uses the median (3.5) and IQR (3.25), which the outlier barely moves, so the ordinary books keep a spread of about 1.5 and the outlier stands out at 11.23. It is sometimes said that standardisation changes a distribution's shape and resists outliers; Figure 14.2 shows that it does neither.
 
 ### Finding outliers, and squeezing large numbers
 
@@ -766,10 +694,6 @@ Columns spanning orders of magnitude, such as copies printed, call for a logarit
 
 A last trap hides in the target. If 5% of a catalogue are rare editions, a model that always answers "not rare" is right 95% of the time and useless. With such **imbalanced** classes, judge by precision and recall, not accuracy, and consider resampling.
 
-> **From my notes.** Numeric columns can be categorical. Domain knowledge tells them apart: total_coins can take few values but adding two of them makes sense; cabin_class (high, low, medium) makes no sense to add.
-
-That is Figure 14.1's addition test, with one refinement: cabin class, like a book's condition, is an ordered category, whose order a model may use.
-
 **Watch, read, try**
 - [Separate numerical and categorical variables](https://datascience.stackexchange.com/questions/98137/separate-numerical-and-categorical-variables) — an answer using select_dtypes.
 - [pandas.DataFrame.select_dtypes](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html) — the pandas reference.
@@ -784,7 +708,7 @@ That is Figure 14.1's addition test, with one refinement: cabin class, like a bo
 - [LocalOutlierFactor](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html) — the scikit-learn reference.
 - [Tips for Handling Imbalanced Data in Machine Learning](https://machinelearningmastery.com/tips-handling-imbalanced-data-machine-learning/) — metrics and resampling for rare classes.
 - [Normalizing Inputs (C2W1L09)](https://www.youtube.com/watch?v=FDCfw-YqWTE) — Andrew Ng's lecture behind Figure 14.4.
-- [Practical Deep Learning for Coders 2022, Lesson 3](https://youtu.be/hBBOjCiFcuo?si=g0fMtBeedTEjoUWY&t=4173) — Jeremy Howard's fast.ai lesson, at my saved point.
+- [Practical Deep Learning for Coders 2022, Lesson 3](https://youtu.be/hBBOjCiFcuo?si=g0fMtBeedTEjoUWY&t=4173) — Jeremy Howard's fast.ai lesson, from 1:09:33.
 
 **Check yourself.** 1. A column holds shelf numbers from 1 to 12. Is it numerical or categorical? 2. Which of min–max scaling, standardisation and robust scaling changes the shape of a column's distribution? 3. Why does the three-standard-deviation rule miss the 40-year-old book when the IQR rule catches it?
 
@@ -825,11 +749,9 @@ The repair is to normalise each group separately. Zhao, Wong and Goh (2020) call
 
 Within each group the harsher marker is evened out, the two critics now share one set of values and the two fans another, and the real gap between the groups survives untouched. Zhao and colleagues compare five variants: **All** (the plain method on everything), **Class-specific**, **Discrete** (split by class and by batch), **Ratio**, and **qsmooth**, which weighs the differences between groups against the variation within them. Their advice is that if quantile normalisation must be used, the class-specific variant is the one to choose. Hicks and Irizarry (2014) proposed a statistical test, called quantro, for checking whether the assumption of equal distributions is safe before normalising at all.
 
-My notes placed a different technique under the same heading, so it is worth separating the two. scikit-learn's QuantileTransformer works on one feature at a time: it maps a column's values onto a uniform or a normal distribution through their ranks. That spreads out the most common values, tames outliers, and can distort the correlations between columns. Quantile normalisation in the sense of this chapter works across samples and makes them share one distribution built from their own values. Both use ranks, but they answer different questions.
+A different technique with a similar name is easy to confuse with this one, so it is worth separating the two. scikit-learn's QuantileTransformer works on one feature at a time: it maps a column's values onto a uniform or a normal distribution through their ranks. That spreads out the most common values, tames outliers, and can distort the correlations between columns. Quantile normalisation in the sense of this chapter works across samples and makes them share one distribution built from their own values. Both use ranks, but they answer different questions.
 
-> **From my notes.** The best article on quantile normalisation is Zhao, Wong and Goh (2020). I copied its warning that after normalisation the profiles "look deceptively similar, even if the underlying classes are in fact, very different" (Zhao, Wong and Goh), and that the method can wipe out true signals and create false ones.
-
-Figure 15.2 is that warning in miniature. After normalisation every sample looks tidy by construction, and a perfect-looking result is a reason to ask what was removed, not a reason to relax.
+For quantile normalisation itself, Zhao, Wong and Goh give a warning worth remembering: its tidy results mislead easily, because normalised samples look alike even when the classes behind them are very different, and the method can erase real differences and create false ones. Figure 15.2 shows both. Every sample looks tidy after normalisation by construction, so a perfect-looking result is a reason to ask what was removed, not a reason to relax.
 
 **Watch, read, try**
 - [How to do quantile normalization correctly for gene expression data analyses](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7511327/) — Zhao, Wong and Goh (2020), the open-access article behind this chapter.
@@ -942,9 +864,7 @@ pixels, where the brackets round down. Figure 17.5 works it for eight settings o
 
 These operations became famous in 2012, when a convolutional network later known as AlexNet won the ImageNet challenge. Its top-5 error, the share of test images whose correct label was missing from the model's five best guesses, was 15.3%, against 26.2% for the second-best entry. It had 60 million parameters, 650,000 neurons and five convolutional layers (Krizhevsky, Sutskever and Hinton, 2012).
 
-> **From my notes.** My CNN note opens with a sentence I copied in bold from an Analytics Vidhya introduction to convolutional networks. In my own words: the convolutional layers reduce an image to something a classifier can use, without dropping the features that decide the answer.
-
-That is a fair summary of the whole of Part IV, which shows how the reduction is done: kernels pick out features (chapter 18), shared weights keep the cost low (chapter 19), and pooling and strides shrink the grid (chapter 20).
+Analytics Vidhya's introduction to convolutional networks sums up what these operations are for: the convolutional layers turn an image into something simpler to work with, while keeping the features that a good prediction depends on. The rest of Part IV shows how: kernels pick out features (chapter 18), shared weights keep the cost low (chapter 19), and pooling and strides shrink the grid (chapter 20).
 
 **Watch, read, try**
 - [A guide to convolution arithmetic for deep learning](https://arxiv.org/abs/1603.07285) — Dumoulin and Visin's guide, the source of the formula and of the padding and stride cases above.
@@ -978,7 +898,7 @@ Figure 18.1 works it on a small four-by-four corner of a cover, with small numbe
 ![Three rows, one per colour plane, each showing the 4 by 4 plane, its 3 by 3 kernel and its 2 by 2 map, with arrows joining the three maps into their sum](/ml/book/figures/b18-1-kernels-sum.svg)
 *Figure 18.1. One filter, three kernels. Each colour plane is convolved with its own kernel, and the three 2 × 2 maps add up to −1, 1, 7 and 5.*
 
-Because each channel has its own kernel, a filter can weigh the channels differently. A filter whose red kernel has large weights and whose other kernels are nearly zero responds mostly to patterns in red. Adding the channels together is also what lets a filter respond to a colour rather than to one plane. The orange square of chapter 17 is strong in red and weak in blue, so a filter with a positive red kernel and a negative blue kernel responds to orange areas far more than to cream ones, where red and blue are nearly equal. No single channel could tell those two apart by itself.
+Because each channel has its own kernel, a filter can weigh the channels differently. A filter whose red kernel has large weights and whose other kernels are nearly zero responds mostly to patterns in red. Adding the channels together is also what lets a filter respond to a colour rather than to one plane. The orange square of chapter 17 is strong in red and weak in blue, so a filter with a positive red kernel and a negative blue kernel responds to orange areas far more than to cream ones, where red and blue are nearly equal. Red alone barely tells the two apart (235 against 252). Blue alone does (52 against 251), but it measures only how much blue there is, and a dark grey of 52, 52, 52 has exactly the same blue as the orange. Red minus blue, pixel by pixel, is 183 for orange, 1 for cream and 0 for that grey: the filter responds to a relation between two planes, which no single plane can measure.
 
 ### One bias per filter
 
@@ -1005,13 +925,9 @@ The words that caused the confusion can now be pinned down.
 | feature detector | an informal name for a filter, after what it does | the whole filter |
 | receptive field | the region of the original image that can change one output number | here 3 × 3 pixels in each channel; larger in deeper layers |
 
-> **From my notes.** Kernel, feature detector, filter (collection of kernels), receptive field: all are the same.
+Four of these words, kernel, filter, feature detector and receptive field, are often used as if they meant one thing. For a grey image the first three nearly do, since one kernel with its bias is then the whole filter; with several channels they part company. The receptive field was never the same kind of thing: it is an area of the image, not a set of weights, and it matches the kernel's size only in the first layer. [Chapter 21](#21-receptive-fields-and-the-visual-hierarchy) shows how it grows after that.
 
-The note has the right instinct for a grey image, where one kernel is the whole filter and "feature detector" is only a nickname for it. With several channels the words part company: a filter is the collection of kernels, one per channel, as the note's own brackets say. The receptive field is a different kind of thing, an area of the image rather than a set of weights. It equals the kernel's size only in the first layer, and [chapter 21](#21-receptive-fields-and-the-visual-hierarchy) shows how it grows after that.
-
-> **From my notes.** From the CS231n notes: with a 5 × 5 filter on a colour image, each unit of the layer has weights to a 5 × 5 × 3 block of the input.
-
-That example is exact: the kernels always run the full depth of their input, so a 5 × 5 filter on a three-channel image holds 5 × 5 × 3 = 75 weights, plus one bias. The notes call the 5 × 5 size the receptive field, which is right for this first layer only.
+The CS231n course notes give a smaller example as well: a 5 × 5 filter on a colour image has weights to a 5 × 5 × 3 block of its input, 75 weights plus one bias, because a filter's kernels always run the full depth of the input. Its receptive field is that 5 × 5 patch only because it sits in the first layer.
 
 **Watch, read, try**
 - [Convolutional Neural Networks (CS231n)](https://cs231n.github.io/convolutional-networks/) — the Stanford course notes behind the 75-weight and 34,944-parameter examples.
@@ -1045,7 +961,7 @@ Before networks learned their own kernels, people designed them. The **Sobel ker
 ![The 8 by 8 image with a bright block, the Sobel kernel, and the 6 by 6 output with negative numbers along the left edge, positive along the right, and zeros elsewhere](/ml/book/figures/b19-2-sobel.svg)
 *Figure 19.2. A hand-made edge detector. The Sobel output is 0 on flat regions, −8 to −32 along the block's left edge and +8 to +32 along its right edge.*
 
-Because this kernel measures change in the horizontal direction, it lights up edges that run vertically. That is why the article in my notes calls it a vertical edge detector in its text and labels it a horizontal Sobel kernel in its figure: both names describe the same kernel, one by what it finds and one by what it measures. Figure 19.3 makes the locality visible: each output number comes from one small patch of the image.
+Because this kernel measures change in the horizontal direction, it lights up edges that run vertically. That is why the same kernel may be called a vertical edge detector or a horizontal Sobel kernel: both names describe it, one by what it finds and one by what it measures. Figure 19.3 makes the locality visible: each output number comes from one small patch of the image.
 
 ![Left, the 8 by 8 image with two outlined 3 by 3 patches and the matching output cells; right, two bars on a log scale comparing the weights of a dense layer and a convolution](/ml/book/figures/b19-3-locality.svg)
 *Figure 19.3. Each output sees one patch, which is why so few weights suffice. For a 224 × 224 colour photo, a dense layer to 1,000 units needs 150,528,000 weights; 64 convolution filters need 1,792 parameters.*
@@ -1056,18 +972,16 @@ Deep learning keeps the sliding and lets gradient descent choose the weights. Th
 
 Kernels learned on one large collection of photos are useful on others. François Chollet's Keras post of 2016, built on 1,000 photos each of cats and dogs, reached about 80% accuracy with a small network trained from scratch, about 90% by reusing the convolutional layers of a network trained on ImageNet, and 94% by also fine-tuning the top layers of that network.
 
-> **From my notes.** Convolution layers do what they do best, extracting features from data with two spatial dimensions; the extracted features are then passed to linear layers, which are great at finding relationships between feature vectors and targets.
-
-That is the classic design. AlexNet ends its five convolutional layers with three fully connected layers and a softmax, the function that turns the last layer's scores into probabilities that add up to one. GoogLeNet ends with one linear layer after averaging each channel down to a single number.
+The classic design divides the work between two kinds of layer: convolutional layers pick out features from data laid out on a grid, and fully connected layers then relate those features to the answer. AlexNet ends its five convolutional layers with three fully connected layers and a softmax, the function that turns the last layer's scores into probabilities that add up to one. GoogLeNet ends with one linear layer after averaging each channel down to a single number.
 
 **Watch, read, try**
 - [How Blurs & Filters Work - Computerphile](https://www.youtube.com/watch?v=C_zFhWdM4ic) — Computerphile on blurring and filtering images with kernels.
 - [How convolutional neural networks work, in depth](https://www.youtube.com/watch?v=JB8T_zN7ZC0) — Brandon Rohrer's long walk-through.
-- [MIT 6.S191 (2023): Convolutional Neural Networks](https://www.youtube.com/watch?v=NmLK_WQBxB4) — Alexander Amini's lecture, saved next to the note above.
+- [MIT 6.S191 (2023): Convolutional Neural Networks](https://www.youtube.com/watch?v=NmLK_WQBxB4) — Alexander Amini's lecture on convolutional networks.
 - [Feature Visualization](https://distill.pub/2017/feature-visualization/) — Olah, Mordvintsev and Schubert on seeing what units respond to.
 - [Lucid](https://github.com/tensorflow/lucid) — the open-source library behind those pictures.
 - [DeepVis Toolbox](https://github.com/yosinski/deep-visualization-toolbox) — Jason Yosinski's toolbox for visualising a trained network.
-- [Deep Learning for Computer Vision (Andrej Karpathy)](https://www.youtube.com/watch?v=u6aEYuemt0M) — the lecture through which my notes found the toolbox.
+- [Deep Learning for Computer Vision (Andrej Karpathy)](https://www.youtube.com/watch?v=u6aEYuemt0M) — Andrej Karpathy's lecture on deep learning for computer vision.
 - [Why use softmax as opposed to standard normalization?](https://stackoverflow.com/questions/17187507/why-use-softmax-as-opposed-to-standard-normalization) — a Stack Overflow discussion of the last step of a classifier.
 - [Building powerful image classification models using very little data](https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html) — Chollet's post on reusing trained convolutional layers.
 
@@ -1100,10 +1014,6 @@ Two words describe how a layer reacts when its input shifts. A layer is **equiva
 ### Strided convolutions instead of pooling
 
 A convolution with stride 2 also halves the size of a map, and unlike pooling it learns how to summarise. In 2015 Springenberg and colleagues showed that max pooling can be replaced by a convolution with a larger stride without losing accuracy. ResNet, the network of chapter 23, shrinks its maps inside the network with stride-2 convolutions; it keeps one max-pooling layer right after its first convolution and a global average pool at the end (He and colleagues, Table 1). The CS231n notes add that dropping pooling has also mattered for networks that generate images, and that future designs may use very little pooling at all.
-
-> **From my notes.** Copied from Irhum Shafkat's article: newer networks such as ResNet do without pooling inside the network and shrink their feature maps with strided convolutions instead.
-
-The note is right about the inside of ResNet. The two exceptions are worth knowing: the single max pool after the first layer and the global average pool before the classifier.
 
 **Watch, read, try**
 - [Translation Invariance & Equivariance in Convolutional Neural Networks](https://blog.paperspace.com/pooling-and-translation-invariance-in-convolutional-neural-networks/) — a Paperspace article on what pooling does to shifts.
@@ -1139,7 +1049,7 @@ $$
 
 For the stride-1 stack, r = 1 + 2 + 2 + 2 = 7; with stride 2 first, r = 1 + 2 + 4 + 4 = 11.
 
-My notes kept a different formula from a Kaggle post, RF = (K − 1) × stride + 1, presented as the receptive field of a layer. It is one step of the rule above: the width covered by K taps whose inputs lie "stride" pixels apart. A three-wide kernel reading a layer whose units are two pixels apart covers (3 − 1) × 2 + 1 = 5 pixels, which is also the width of a three-tap kernel dilated by 2 (chapter 22). A single layer applied directly to an image always sees K pixels, whatever its own stride; its stride only widens the fields of the layers that come after it.
+A Kaggle post, listed below, gives a different formula, RF = (K − 1) × stride + 1, as the receptive field of a layer. It is one step of the rule above, with the stride standing in for the jump: the width covered by K taps whose inputs lie that many pixels apart. A three-wide kernel reading a layer whose units are two pixels apart covers (3 − 1) × 2 + 1 = 5 pixels, which is also the width of a three-tap kernel dilated by 2 (chapter 22). A single layer applied directly to an image always sees K pixels, whatever its own stride; its stride only widens the fields of the layers that come after it.
 
 ### The centre counts most
 
@@ -1148,9 +1058,7 @@ Not every pixel in a receptive field matters equally. With all weights equal, th
 ![A 7 by 7 grid of path counts rising from 1 at the corners to 49 at the centre, and a bar chart of the middle row](/ml/book/figures/b21-2-effective-rf.svg)
 *Figure 21.2. Paths from each pixel to one unit after three 3 × 3 layers. The corners have 1 path, the centre 49, and the middle 3 × 3 holds 361 of the 729 paths.*
 
-> **From my notes.** A passage I saved in quotation marks next to a link to AI Summer's article on receptive fields, an idea that article credits to Luo and colleagues: in the forward pass, pixels near the centre of a receptive field can pass their information to the output along many different paths, while pixels near its edge have very few; in the backward pass the gradient flows back along the same paths, so the centre pixels receive a much larger share of it.
-
-Figure 21.2 is that passage in numbers. The same path counts that carry a centre pixel's influence forward carry the error signal back to it during training.
+The same paths explain why training favours the centre. In the forward pass a pixel near the centre reaches the unit along many paths and a pixel near the edge along few; in the backward pass the error signal travels back along the same paths, so the pixels near the centre also receive a much larger share of it. The counts of Figure 21.2 therefore measure both a pixel's influence on the unit and its share of what training sends back.
 
 ### From edges to objects
 
@@ -1159,7 +1067,7 @@ As fields grow, units can respond to larger and more complicated patterns. Goodf
 ![A 64 by 64 cover drawn to scale with nested squares for fields of 5, 14, 32 and 68 pixels, and a ladder from edges to objects](/ml/book/figures/b21-3-hierarchy.svg)
 *Figure 21.3. The visual hierarchy with its field sizes. After layers 2, 5, 8 and 11 of a small network, units see 5 × 5, 14 × 14, 32 × 32 and 68 × 68 pixels of a 64 × 64 cover.*
 
-Real networks follow the same pattern at a larger scale. GoogLeNet takes 224 × 224 images, shrinks its grid to 7 × 7 by its last block while its channels grow from 64 after the first layer to 1,024, and then averages each 7 × 7 channel into one number, so every channel describes the whole image (Szegedy and colleagues, Table 1). At the 7 × 7 stage neighbouring units are 32 pixels apart, since 224 ÷ 7 = 32. The article in my notes read this as each unit representing a 32 × 32 patch, but 32 is the jump, not the field. Araujo and colleagues compute receptive fields from 195 pixels (for a version of AlexNet) to 3,039 (for Inception-ResNet v2), all with that same jump of 32.
+Real networks follow the same pattern at a larger scale. GoogLeNet takes 224 × 224 images, shrinks its grid to 7 × 7 by its last block while its channels grow from 64 after the first layer to 1,024, and then averages each 7 × 7 channel into one number, so every channel describes the whole image (Szegedy and colleagues, Table 1). At the 7 × 7 stage neighbouring units are 32 pixels apart, since 224 ÷ 7 = 32. It is tempting to read this as each unit representing a 32 × 32 patch, but 32 is the jump, not the field. Araujo and colleagues compute receptive fields from 195 pixels (for a version of AlexNet) to 3,039 (for Inception-ResNet v2), all with that same jump of 32.
 
 ### Small kernels, stacked
 
@@ -1171,8 +1079,8 @@ Stacking small kernels is also cheaper than using one large kernel. Simonyan and
 **Watch, read, try**
 - [Receptive field](http://www.scholarpedia.org/article/Receptive_field) — Alonso and Chen's Scholarpedia article on receptive fields in the brain.
 - [Receptive fields](https://www.youtube.com/watch?v=JETSP09Snq4) — a physiology lecture on receptive fields.
-- [Understanding the receptive field of deep convolutional networks](https://theaisummer.com/receptive-field/) — Nikolas Adaloglou's AI Summer article, saved beside the passage above.
-- [Unveiling the Impact of Kernel Size on Convolutional Neural Network Architectures](https://www.kaggle.com/discussions/general/461216) — the Kaggle post my notes pasted, with the one-step formula.
+- [Understanding the receptive field of deep convolutional networks](https://theaisummer.com/receptive-field/) — Nikolas Adaloglou's AI Summer article on receptive fields.
+- [Unveiling the Impact of Kernel Size on Convolutional Neural Network Architectures](https://www.kaggle.com/discussions/general/461216) — a Kaggle discussion post that gives the one-step formula discussed above.
 
 **Check yourself.** 1. What is the receptive field of two stacked 3 × 3 layers with stride 1? 2. A 3-wide layer follows two layers that each have kernel 2 and stride 2. How many input pixels does it see? 3. Why does the centre of a receptive field influence a unit more than its edge?
 
@@ -1236,9 +1144,7 @@ Figure 23.1 runs the steps on three small channels. Their averages are 4, 2 and 
 
 The cost is small: with a reduction ratio of 16, SE-ResNet-50 needs 3.87 billion floating-point operations against 3.86 billion for ResNet-50. The gain was large: SE networks won the 2017 ImageNet classification challenge with a top-5 error of 2.251%, about a quarter lower in relative terms than the previous year's winner. The authors chose a sigmoid so that several channels can be emphasised at once instead of a single one winning; the gates do not have to add up to one.
 
-> **From my notes.** Question: is squeeze-and-excitation an attention mechanism? Answer: it uses an attention-like gate; it is not self-attention.
-
-That answer holds up. Hu and colleagues describe the excitation as a simple self-gating mechanism and the whole block as a lightweight gate, and it does resemble attention in that it decides what to emphasise. But it never compares positions with each other. [Self-attention](#31-self-attention-in-plain-words) scores every position against every other position and mixes their contents; an SE block summarises each channel into one number and rescales whole channels.
+Is squeeze-and-excitation a kind of attention? It has no queries, keys and values, yet it does something similar: it looks at the whole image and decides what to emphasise. The paper presents the excitation as a gate that the block sets for itself from its own input, and the paper's 2019 version, by Hu, Shen, Albanie, Sun and Wu, says in section 3.2 that an SE block can be read as self-attention over channels. What it does not do is what the [self-attention](#31-self-attention-in-plain-words) of chapter 31 does, scoring every position against every other position and mixing their contents. An SE block never compares positions: it summarises each channel into one number and rescales whole channels, with weights that come from two small layers and a sigmoid rather than from dot products between queries and keys.
 
 ### Skip connections
 
@@ -1249,9 +1155,7 @@ In 2015 Kaiming He and colleagues observed that stacking more and more layers ma
 
 With these blocks He and colleagues trained networks 152 layers deep, eight times deeper than VGG, and an ensemble of them, several networks whose predictions are combined, reached a top-5 error of 3.57% on the ImageNet test set, winning the 2015 challenge.
 
-> **From my notes.** ResNet: for the deeper layers it is easier to learn the zero function than the identity function.
-
-This is the heart of the ResNet paper, in one line. The authors put it as a hypothesis: if an identity mapping were the best choice, it would be easier to push the residual to zero than to fit the identity with a stack of nonlinear layers.
+The heart of the ResNet paper fits in one line: layers find it easier to output zero than to reproduce their input exactly. Its authors offer this as a hypothesis, not a proven fact, in the paper's introduction: when leaving the input unchanged is the best a block can do, they expect training to reach that more easily by driving the change F(x) to zero than by making several nonlinear layers reproduce the input.
 
 ### What CNNs get wrong
 
@@ -1260,11 +1164,11 @@ Ian Goodfellow, Jonathon Shlens and Christian Szegedy (2015) took a photo that G
 ![Bars on a log axis for four image sizes showing how far a linear score can move when every pixel changes by 0.007: from about 0.003 for 36 pixels to about 10.5 for 150,528](/ml/book/figures/b23-3-adversarial.svg)
 *Figure 23.3. Many tiny changes add up. With ε = 0.007 per pixel and an average weight of 0.01, a linear score can move 0.003 for 36 pixels, 3.512 for 50,176 and 10.537 for 150,528.*
 
-The article in my notes adds a broader warning: a network can recognise the objects in a photo without grasping the scene, and it cites a case in which Facebook removed a post showing the Venus of Willendorf, a small stone figure about 29,500 years old, as nudity. Vienna's Natural History Museum protested, and Facebook apologised on 1 March 2018, according to an AFP report; that report does not say whether a person or a program made the decision, so the story is a caution about automated judgement in general rather than evidence about convolutional networks in particular.
+Analytics Vidhya's introduction to convolutional networks, named in chapter 17, adds a broader warning: a network can recognise the objects in a photo without grasping the scene, and it cites a case in which Facebook removed a post showing the Venus of Willendorf, a small stone figure about 29,500 years old, as nudity. Vienna's Natural History Museum protested, and Facebook apologised on 1 March 2018, according to an AFP report; that report does not say whether a person or a program made the decision, so the story is a caution about automated judgement in general rather than evidence about convolutional networks in particular.
 
 **Watch, read, try**
 - [ResNet (actually) explained in under 10 minutes](https://www.youtube.com/watch?v=o_3mboe1jYI) — a short explanation of ResNet.
-- [Deep Residual Learning for Image Recognition (Paper Explained)](https://youtu.be/GWt6Fu05voI?si=jrKagLYLeYKQV99M&t=446) — Yannic Kilcher reads the ResNet paper in his series on classic papers; from 7:26, the point my notes saved.
+- [Deep Residual Learning for Image Recognition (Paper Explained)](https://youtu.be/GWt6Fu05voI?si=jrKagLYLeYKQV99M&t=446) — Yannic Kilcher reads the ResNet paper in his series on classic papers; from 7:26.
 - [Attacking Machine Learning with Adversarial Examples](https://blog.openai.com/adversarial-example-research/) — OpenAI's 2017 post by Goodfellow and colleagues; the old address now redirects to OpenAI's news page.
 - [How to train an ensemble of convolutional neural networks for image classification](https://medium.com/@alexppppp/how-to-train-an-ensemble-of-convolutional-neural-networks-for-image-classification-8fc69b087d3) — a tutorial on combining several networks, as the ImageNet winners did.
 
@@ -1295,14 +1199,14 @@ and this operation on the two lists of probabilities is called **convolution**. 
 
 ### Flip and slide
 
-Look at the pairs again: as A's count x goes up, B's count t − x goes down. To line the pairs up, write A's probabilities left to right and B's right to left, the **flip**, and shift B's reversed list along A's until the pairs you want sit on top of each other, the **slide**. Multiply the pairs that overlap and add (Figure 24.2). Each step to a larger total slides B's list further to the right. 3Blue1Brown's video on sums of random quantities, which my notes screenshotted, draws the same flip-and-slide picture.
+Look at the pairs again: as A's count x goes up, B's count t − x goes down. To line the pairs up, write A's probabilities left to right and B's right to left, the **flip**, and shift B's reversed list along A's until the pairs you want sit on top of each other, the **slide**. Multiply the pairs that overlap and add (Figure 24.2). Each step to a larger total slides B's list further to the right. 3Blue1Brown's video on sums of random quantities, listed below, draws the same flip-and-slide picture.
 
 ![Three frames for totals 3, 5 and 7, each with customer A's probabilities in a row, customer B's reversed and shifted underneath, the products of aligned pairs and their sum](/ml/book/figures/b24-2-flip-and-slide.svg)
 *Figure 24.2. Flip and slide. Reversing B's probabilities and sliding them under A's gives 0.1925 for a total of 3, 0.16625 for 5 and 0.0975 for 7.*
 
 The same arithmetic turns up in algebra. The coefficients of the product of two polynomials are the convolution of their coefficient lists, a rule known as the Cauchy product. Write the basket probabilities as 0.35z + 0.275z² + 0.175z³ + 0.1z⁴ + 0.05z⁵ + 0.05z⁶, multiply the polynomial by itself, and the coefficient of z⁵ is 0.16625, the chance of a total of five.
 
-For quantities that vary continuously, such as the time two customers spend browsing, the sum becomes an integral of one density times the other, reversed and shifted. 3Blue1Brown's rule of thumb, saved as a screenshot in my notes, is that sums in the whole-number case become integrals in the continuous case.
+For quantities that vary continuously, such as the time two customers spend browsing, the sum becomes an integral of one density times the other, reversed and shifted. 3Blue1Brown's rule of thumb, from the same video, is that sums in the whole-number case become integrals in the continuous case.
 
 ### Back to images, and to time
 
@@ -1312,7 +1216,7 @@ The image convolution of chapter 17 is the same operation in two dimensions: a s
 
 **Watch, read, try**
 - [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown's introduction to convolution.
-- [Convolutions, Why X+Y in probability is a beautiful mess](https://www.youtube.com/watch?v=IaSGqQa5O-M&t=133s) — 3Blue1Brown on sums of random variables, from 2:13, the point my notes saved.
+- [Convolutions, Why X+Y in probability is a beautiful mess](https://www.youtube.com/watch?v=IaSGqQa5O-M&t=133s) — 3Blue1Brown on sums of random variables, from 2:13.
 
 **Check yourself.** 1. With the basket probabilities, what is the chance that the two customers buy two books between them? 2. Why is B's list reversed in Figure 24.2? 3. What replaces the sum when the two quantities are continuous?
 
@@ -1349,7 +1253,7 @@ One-hot codes are honest but blind. Two different words never have their 1 in th
 
 Now describe the same words by their qualities instead. The right half of Figure 25.1 gives each word four numbers between 0 and 1, one for each of four made-up features: how much the word has to do with crime, with a place, with food and with tools. I chose these values by hand so that you can read them; nothing learned them. "Mystery" becomes (0.9, 0, 0, 0) and "detective" (0.9, 0.2, 0, 0.1), close to each other and far from "recipes" at (0, 0, 1.0, 0.3).
 
-A list like this is **dense**: short, with most entries non-zero. An **embedding** is a dense list of numbers that stands for an object, arranged so that similar objects get similar lists. In a 2019 answer on Data Science Stack Exchange, the user sdaylor calls it "a low-dimensional, learned continuous vector representation of discrete variables". Each word of that definition carries weight. Low-dimensional means few numbers. Learned means a training process sets them; setting them by hand, as here, is the one liberty this chapter takes. Continuous means any value, not only 0 or 1.
+A list like this is **dense**: short, with most entries non-zero. An **embedding** is a dense list of numbers that stands for an object, arranged so that similar objects get similar lists. A 2019 answer by sdaylor on Data Science Stack Exchange describes an embedding as low-dimensional, learned and continuous, a way of representing something discrete, such as a word. Each of the three carries weight. Low-dimensional means few numbers. Learned means a training process sets them; setting them by hand, as here, is the one liberty this chapter takes. Continuous means any value, not only 0 or 1.
 
 To measure how alike two such lists are, the usual tool is **cosine similarity**, the cosine of the angle between the two vectors: 1 when they point the same way, 0 when they meet at a right angle. [Chapter 27](#27-word2vec-cbow-and-skip-gram) looks at it closely. With the four features, mystery and detective score 0.97, town and village 0.94, and mystery and recipes exactly 0, because they share no feature at all. With one-hot codes every one of those pairs scores 0.
 
@@ -1377,10 +1281,10 @@ The same idea works for any object whose likeness you care about: a blurb, a who
 **Watch, read, try**
 
 - [Google Machine Learning Crash Course: Embeddings](https://developers.google.com/machine-learning/crash-course/embeddings) — a 45-minute module on why one-hot vectors fall short and how embeddings fix them.
-- [An Introduction to Graph Neural Networks, Microsoft Research](https://www.youtube.com/watch?v=zCEYiCxrL_0&t=2963s) — the saved moment (49:23) contrasts a one-hot "local" code with a dense, distributed one written as a matrix times a one-hot vector.
+- [An Introduction to Graph Neural Networks, Microsoft Research](https://www.youtube.com/watch?v=zCEYiCxrL_0&t=206s) — from 3:26, the slide that contrasts a one-hot code with a dense, distributed one, written as a matrix times a one-hot vector.
 - [AWS: What are embeddings in machine learning?](https://aws.amazon.com/what-is/embeddings-in-machine-learning/#seo-faq-pairs#how-are-embeddings-created) — a plain overview with a one-hot table of fruit prices and a made-up example of television programmes.
-- [What does embedding mean in machine learning? (Data Science Stack Exchange)](https://datascience.stackexchange.com/questions/53995/what-does-embedding-mean-in-machine-learning/54045#54045) — sdaylor's short accepted answer, quoted in this chapter.
-- [A guide on word embeddings in NLP (Turing)](https://www.turing.com/kb/guide-on-word-embeddings-in-nlp) — the guide my notes pasted in full: TF-IDF, bag of words, Word2Vec, GloVe and BERT in one long page, with code.
+- [What does embedding mean in machine learning? (Data Science Stack Exchange)](https://datascience.stackexchange.com/questions/53995/what-does-embedding-mean-in-machine-learning/54045#54045) — sdaylor's short accepted answer, whose three-part description this chapter uses.
+- [A guide on word embeddings in NLP (Turing)](https://www.turing.com/kb/guide-on-word-embeddings-in-nlp) — Turing's guide: TF-IDF, bag of words, Word2Vec, GloVe and BERT in one long page, with code.
 
 **Check yourself.** 1. What is the cosine similarity between the one-hot codes of "town" and "village", and why? 2. Judging by the four features of Figure 25.1, is "village" closer to "town" or to "kitchen"? 3. In Figure 25.3, what would you get by multiplying the one-hot code of "repair" by the table?
 
@@ -1411,7 +1315,7 @@ $$
 
 The **tf-idf** weight of a word in a text is its count multiplied by its idf. The same textbook points out that the base of the logarithm does not change which texts rank above which.
 
-Figure 26.2 works this out for B1. The word "a" occurs twice in B1, but four of the five blurbs contain it, so its idf is ln(5 ÷ 4) = 0.223 and its weight only 0.446. "Quiet", "mystery", "small" and "town" each appear in two blurbs and weigh 0.916. The heaviest is "in": it occurs in B1 alone, so it gets the full ln 5 = 1.609. That last result is a warning, not a triumph. In five short blurbs the little word "in" happens to be rare, and tf-idf cannot tell rarity from importance. This is why most systems first remove **stop words**, common words such as "and", "the" and "in"; scikit-learn's documentation describes them as words "presumed to be uninformative in representing the content of a text".
+Figure 26.2 works this out for B1. The word "a" occurs twice in B1, but four of the five blurbs contain it, so its idf is ln(5 ÷ 4) = 0.223 and its weight only 0.446. "Quiet", "mystery", "small" and "town" each appear in two blurbs and weigh 0.916. The heaviest is "in": it occurs in B1 alone, so it gets the full ln 5 = 1.609. That last result is a warning, not a triumph. In five short blurbs the little word "in" happens to be rare, and tf-idf cannot tell rarity from importance. This is why most systems first remove **stop words**, common words such as "and", "the" and "in"; scikit-learn's documentation explains that such words are assumed to say little about a text's content.
 
 ![A table for the six words of blurb B1 with their counts, document frequencies, idf values and tf-idf bars.](/ml/book/figures/b26-2-idf.svg)
 *Figure 26.2. tf-idf for blurb B1: "a" occurs twice but is in four of the five blurbs, so it weighs only 0.446; "in" occurs once but in B1 alone, so it weighs 1.609.*
@@ -1567,7 +1471,7 @@ Contextual models are usually **pre-trained** once, on a large amount of text wi
 
 ### Representation or embedding?
 
-The two words overlap. In a 2022 answer on AI Stack Exchange, Edoardo Guerriero calls vector representation "a generic term" for any way of encoding data as numbers, and treats embeddings as a special case: continuous vectors of a fixed size, produced by a neural network or by factorising a matrix. In this book an embedding is always such a learned, fixed-size vector.
+The two words overlap. In a 2022 answer on AI Stack Exchange, Edoardo Guerriero treats vector representation as the general name for any way of encoding data as numbers, and embeddings as a special case: continuous vectors of a fixed size, produced by a neural network or by factorising a matrix. In this book an embedding is always such a learned, fixed-size vector.
 
 ### Squeezing along straight lines: PCA
 
@@ -1587,9 +1491,7 @@ An **autoencoder** is a neural network trained to copy its input to its output t
 ![An hourglass: eighteen word counts of blurb B2 narrow through an encoder to a two-number code and widen again through a decoder.](/ml/book/figures/b29-3-autoencoder.svg)
 *Figure 29.3. An autoencoder squeezes the 18 word counts of B2 into a code of 2 numbers and rebuilds them. The code and the rebuilt values are left blank: no network was trained for this picture.*
 
-> **From my notes.** Two popular methods for dimensionality reduction are PCA and autoencoders: PCA is linear, autoencoders use neural networks for non-linear compression.
-
-That is right, with one refinement from the paragraph above: an autoencoder whose layers are all straight lines can do no more than PCA, so the gain comes from the bends in its layers, not from being a neural network as such.
+An autoencoder whose layers are all straight lines can do no more than PCA, so its extra reach comes from its non-linear layers, not from being a neural network as such.
 
 **Watch, read, try**
 
@@ -1618,7 +1520,7 @@ The trouble is the fixed size. Picture a clerk who reads a blurb aloud to a coll
 
 ### Attention: a weighted look back
 
-Keep every encoder state, not only the last. Bahdanau's encoder read the sentence in both directions, so the state for each word summarised the whole sentence with the focus on that word's surroundings; there is one such state per English word. At each decoder step, score how well each encoder state matches what the decoder needs at that moment, turn the scores into weights with softmax, and give the decoder the **weighted sum** of all the encoder states as its context for that step. Bahdanau and his colleagues computed the scores with a small learned network, and they described the effect in these words: "this implements a mechanism of attention in the decoder". The decoder decides, step by step, which parts of the source to look at.
+Keep every encoder state, not only the last. Bahdanau's encoder read the sentence in both directions, so the state for each word summarised the whole sentence with the focus on that word's surroundings; there is one such state per English word. At each decoder step, score how well each encoder state matches what the decoder needs at that moment, turn the scores into weights with softmax, and give the decoder the **weighted sum** of all the encoder states as its context for that step. Bahdanau and his colleagues computed the scores with a small learned network and named the effect attention: step by step, the decoder decides which parts of the source to look at.
 
 Figure 30.2 shows one step, the one that writes "tranquille". The weight on "quiet" is 0.925, and the other six words share the remaining 0.075. Each of the seven states is multiplied by its weight and the results are added, so the context for this step is almost exactly the encoder's state for "quiet", which is what a translator needs at that moment. At the next step the weights are worked out afresh, and they move to "in".
 
@@ -1663,7 +1565,7 @@ This version has no parameters at all, nothing that training could adjust. Who a
 
 ### Queries, keys and values
 
-Real layers learn three matrices, which give each word three new descriptions: a **query** (what this word is looking for), a **key** (what this word offers to the queries of others) and a **value** (what this word hands on when it is chosen). Scores become query-against-key dot products, and the mix uses the values. Vaswani and his colleagues also divide every score by the square root of d, the number of entries in each query and key, because with many entries the dot products grow large and push softmax into regions where, in their words, "it has extremely small gradients", which slows learning:
+Real layers learn three matrices, which give each word three new descriptions: a **query** (what this word is looking for), a **key** (what this word offers to the queries of others) and a **value** (what this word hands on when it is chosen). Scores become query-against-key dot products, and the mix uses the values. Vaswani and his colleagues also divide every score by the square root of d, the number of entries in each query and key, because with many entries the dot products grow large and push softmax into regions where its gradients are tiny, which slows learning:
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\left( \frac{Q K^{\top}}{\sqrt{d}} \right) V
@@ -1676,10 +1578,10 @@ Figure 31.2 picks the three matrices by hand to show what they can do: queries a
 
 ### Several heads
 
-One set of weights captures one kind of relationship at a time. **Multi-head attention** runs several attention layers side by side, each with its own three matrices, and places their outputs next to each other before a final matrix mixes them. Figure 31.3 runs two heads on our three words. Head 1, with keys as they are, keeps each word mostly on itself; head 2, with swapped keys, pairs quiet with town. Joined, each word carries four numbers that describe two different views of the sentence. The original transformer used 8 heads of 64 numbers each, and because each head is small the total cost is about the same as one head of full width.
+One set of weights captures one kind of relationship at a time. **Multi-head attention** runs several attention layers side by side, each with its own three matrices, and places their outputs next to each other before a final matrix mixes them. Figure 31.3 runs two heads on our three words. Head 1, with keys as they are, keeps quiet and town mostly on themselves; head 2, with swapped keys, pairs quiet with town. In both heads mystery scores the same against all three words and spreads its weight evenly. Joined, each word carries four numbers that describe two different views of the sentence. The original transformer used 8 heads of 64 numbers each, and because each head is small the total cost is about the same as one head of full width.
 
 ![Two weight tables, one per head, whose outputs are joined into four numbers per word.](/ml/book/figures/b31-3-heads.svg)
-*Figure 31.3. Two heads: head 1 (keys as they are) keeps each word mostly on itself, head 2 (keys swapped) pairs quiet with town. The joined outputs give each word four numbers.*
+*Figure 31.3. Two heads: head 1 (keys as they are) keeps quiet and town mostly on themselves, head 2 (keys swapped) pairs quiet with town, and in both mystery spreads its weight evenly. The joined outputs give each word four numbers.*
 
 ### Where am I? Position codes
 
@@ -1690,13 +1592,11 @@ Figure 31.4 draws a four-number code for the seven positions of B1. The first pa
 ![Four small line charts of the position code values at positions 0 to 6 and a table of the codes of the two copies of a.](/ml/book/figures/b31-4-positions.svg)
 *Figure 31.4. A four-number sinusoidal position code for the seven positions of B1. The two copies of "a" get (0, 1, 0, 1) at position 0 and (−0.757, −0.654, 0.040, 0.999) at position 4.*
 
-> **From my notes.** Tip before watching the video: (1) think of the dot product as 3Blue1Brown's projection of one vector onto another, so the dot product of a vector with itself is always larger than with any other vector; (2) input vectors are always converted into embeddings first, and it is the embedding that is fed into the model.
-
-The note has the right instinct, and its second half is exactly right. The precise statement of the first half is this: among all vectors of the same length as A, the dot product with A is largest for A itself. Without the "same length" condition it fails. In Figure 31.1, mystery scores 2 with itself and also 2 with quiet, because quiet is longer; and a vector pointing the same way as mystery but twice as long, (2, 2), would score 4 with it, twice mystery's own score. The reason is the rule behind the projection picture of [chapter 4](#4-dot-products-duality-and-the-cross-product): a dot product equals the two lengths multiplied by the cosine of the angle between them, so a long vector can outscore a perfect match in direction. It is also why Bloem's slide says a word's weight on itself is usually the largest, not always.
+Two facts help when you watch the videos listed below. First, a word does not always attend most to itself. [Chapter 4](#4-dot-products-duality-and-the-cross-product) showed that among vectors of the same length, a vector's dot product with itself is the largest, and that a longer vector can give more, because a dot product is the two lengths multiplied by the cosine of the angle between them. In Figure 31.1, mystery scores 2 with itself and also 2 with quiet, because quiet is longer; and a vector pointing the same way as mystery but twice as long, (2, 2), would score 4 with it, twice mystery's own score. That is why a slide in Bloem's lecture says a word's weight on itself is usually the largest, not always. Second, the words that enter a language model are first turned into embeddings, and attention works on those embeddings; the step is needed because words are not numbers, whereas the pixel grids of Part IV went into their convolutions as numbers already.
 
 **Watch, read, try**
 
-- [Lecture 12.1 Self-attention (Peter Bloem, DLVU)](https://www.youtube.com/watch?v=KmAISyVvE1Y) — simple self-attention first, then queries, keys, values and heads; the slide in my notes comes from this lecture.
+- [Lecture 12.1 Self-attention (Peter Bloem, DLVU)](https://www.youtube.com/watch?v=KmAISyVvE1Y) — simple self-attention first, then queries, keys, values and heads.
 - [Intuition Behind Self-Attention Mechanism in Transformer Networks (Ark)](https://www.youtube.com/watch?v=g2BRIuln4uc) — the score, normalise and weigh steps of this chapter, drawn for vectors of 50 numbers.
 - [Transformers from scratch (Peter Bloem)](https://peterbloem.nl/blog/transformers) — the written companion to the lecture.
 
@@ -2067,13 +1967,13 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **Word2Vec** — a family of shallow networks, CBOW and skip-gram, that learn word vectors by predicting words from their neighbours or the reverse (chapter 27).
 - **word piece** — a unit of BERT's vocabulary: a frequent word whole or a fragment of a rarer one (chapter 32).
 
-## C. How this book was made and checked
+## C. How this book was made
 
-The source of this book is a folder of eleven study documents collected while learning machine learning: about twenty-one thousand words, most of them pasted from articles and courses, and one hundred and seventy images, nearly all of them screenshots of lectures and animations. None of that material appears here as it was. Every chapter was written afresh in plain English from the ideas the notes pointed at, checked against the original papers and textbooks named in each chapter's reading list, and every figure was redrawn.
+The source of this book is a folder of eleven study documents collected while learning machine learning: about twenty-one thousand words, most of them pasted from articles and courses, and one hundred and seventy images, from screenshots of lectures, animations and web pages to figures, tables and program output taken from articles. Every chapter was written afresh in plain English from the ideas those documents pointed at, and every figure was drawn afresh.
 
-The figures are 112 SVG files written by a Rust program that lives beside this post in the site's repository. The program computes every number it draws from the same small inputs the text describes: the sample of page counts, the two training points of the ridge example, the six-by-six cover image, the five blurbs. Running it twice writes the same bytes, so a figure can always be regenerated and compared with the one you are looking at.
+The figures are 112 SVG files written by a Rust program that lives beside this post in the site's repository. The program works out the values it draws from the same small inputs the text describes, such as the sample of page counts, the two training points of the ridge example, the six-by-six cover image and the five blurbs. Apart from those inputs, only three kinds of thing are typed in: some numbers in labels, such as sizes and simple counts; the shading of Figure 29.1, which only illustrates the idea; and the few published values that figures quote, such as GloVe's probability ratios and SBERT's timings, whose source the figure, its caption or the text beside it names. Running it twice writes the same bytes, so a figure can always be regenerated and compared with the one you are looking at.
 
-The printed edition is produced by the same print program that builds the site's other long documents: the post is turned into HTML, printed to double-sided A4 by a headless browser, and read back to place the page numbers in the contents and to open each part on a right-hand page. Before this edition was released, a checker confirmed that no run of twelve words is shared with the original notes outside an attributed quotation, that every link in the reading lists answers a request (a few sites turn away automated checks but open in a browser), that every figure referenced in the text exists and is referred to in the prose, and that the printed pages carry no clipped text. An independent reviewer read the whole book against the sources and the figures, re-deriving the computed numbers on its own, and its findings were applied before this edition was released. Where the notes disagreed with a source, the chapter says so and follows the source.
+The printed edition is produced by the same print program that builds the site's other long documents: the post is turned into HTML, printed to double-sided A4 by a headless browser, and read back to place the page numbers in the contents and to open each part on a right-hand page.
 
 ## D. List of figures
 
