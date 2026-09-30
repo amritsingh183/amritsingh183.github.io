@@ -8,8 +8,11 @@
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
   {%- endif -%}
-  <!-- ?print=theme prints the screen theme; see section (C) of the @media print block in assets/main.css -->
+  <!-- ?print=theme prints the screen theme, ?print=theme-white the same theme on white paper; see sections (C) and (D) of the @media print block in assets/main.css -->
   <script>
-    if (new URLSearchParams(location.search).get("print") === "theme") document.documentElement.dataset.print = "theme";
+    {
+      const mode = new URLSearchParams(location.search).get("print");
+      if (mode === "theme" || mode === "theme-white") document.documentElement.dataset.print = mode;
+    }
   </script>
 </head>

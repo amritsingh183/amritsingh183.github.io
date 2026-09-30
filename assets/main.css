@@ -942,21 +942,24 @@ dd {
 @media print {
 
     /* ================================================================================
-       Two print modes share this block.
+       Three print modes share this block.
        (A) LAYOUT: page geometry, chrome, sizes, breaks, wrapping. Always applies.
        (B) CLEAN LOOK (default): white paper, serif body, light Rouge palette. Scoped to
-           html:not([data-print="theme"]).
+           html:not([data-print]), i.e. no print mode set.
        (C) THEME LOOK: the screen theme on paper. Scoped to html[data-print="theme"], set by
            _includes/head.html when the URL carries ?print=theme. Screen rules supply the
            colours; (C) adds only what paper needs.
+       (D) THEME LOOK ON WHITE: the same theme on paper white, its colours deepened to read
+           there. Scoped to html[data-print="theme-white"], set for ?print=theme-white.
        Every colour, background, border colour, font family and text decoration lives in
-       (B) or (C). The prefix adds (0,1,1) to every (B)/(C) rule; (A) never sets a property
-       that (B) or (C) sets on the same element, so the extra specificity cannot flip (A).
+       (B), (C) or (D). The prefix adds (0,1,1) to every (B)/(C)/(D) rule; (A) never sets a
+       property that (B), (C) or (D) sets on the same element, so the extra specificity
+       cannot flip (A).
        ================================================================================ */
 
     /* ---- (A) Page geometry: A4, margins 15/18/18/18 mm, page number in the bottom margin.
-       The margin box cannot see the html attribute; it sits on the white canvas in both
-       modes, so #666 (5.7:1 on white) stays. Full-bleed dark canvas would need #777. ---- */
+       The margin box cannot see the html attribute; it sits on the white canvas in every
+       mode, so #666 (5.7:1 on white) stays. Full-bleed dark canvas would need #777. ---- */
     @page {
         size: A4;
         margin: 15mm 18mm 18mm 18mm;
@@ -975,7 +978,7 @@ dd {
         size: A4 landscape;
     }
 
-    /* ---- (A) Screen-only effects off in BOTH modes. Blurred shadows cannot be expressed in
+    /* ---- (A) Screen-only effects off in EVERY mode. Blurred shadows cannot be expressed in
        PDF vectors: Skia rasterises each shadowed run (1,674 of them in one post). ---- */
     *,
     *::before,
@@ -986,8 +989,8 @@ dd {
         transition: none !important;
     }
 
-    /* ---- (A) Canvas and body box. The canvas stays white in both modes so page margins and
-       the page number print on paper white; in theme mode the body box carries the dark. ---- */
+    /* ---- (A) Canvas and body box. The canvas stays white in every mode so page margins and
+       the page number print on paper white; in mode (C) the body box carries the dark. ---- */
     html {
         font-size: 11pt;
         background: #fff;
@@ -1042,7 +1045,7 @@ dd {
         margin: 0;
     }
 
-    /* ---- (A) Headings: sizes, rhythm, breaks (faces and colours in B/C) ---- */
+    /* ---- (A) Headings: sizes, rhythm, breaks (faces and colours in B/C/D) ---- */
     h1,
     h2,
     h3,
@@ -1175,8 +1178,8 @@ dd {
 
     /* ---- (A) Code blocks: div.highlighter-rouge > div.highlight > pre.highlight > code ----
        The outer group repeats the screen selector `.highlighter-rouge .highlight` (0,2,0); it also
-       matches the inner pre.highlight, whose frame the next rule removes again at (0,2,1). (B)/(C)
-       set only the frame COLOUR, never its width, so the inner reset holds in both modes. */
+       matches the inner pre.highlight, whose frame the next rule removes again at (0,2,1). (B)/(C)/(D)
+       set only the frame COLOUR, never its width, so the inner reset holds in every mode. */
     .highlighter-rouge .highlight,
     .highlight,
     pre {
@@ -1279,6 +1282,13 @@ dd {
         break-inside: avoid;
     }
 
+    /* A figure paragraph (an image line and its italic caption line, laid out by the screen
+       rules `.post-content p > img` and `p > img + em`) stays on one page, so a caption
+       never lands on the next page away from its image */
+    .post-content p:has(> img) {
+        break-inside: avoid;
+    }
+
     figcaption {
         font-size: 9pt;
         line-height: 1.3;
@@ -1295,7 +1305,7 @@ dd {
        `.cafe-diagram svg { max-width: none }` and `.cafe-diagram { overflow-x: auto; padding: 1rem }`;
        Mermaid writes width/height attributes (useMaxWidth: false). Higher specificity and
        !important are therefore required here, and they cannot reach screen media. The frame
-       colour #a8a29e is the post's own and identical in both modes. ---- */
+       colour #a8a29e is the post's own and identical in every mode. ---- */
     .post-content :has(> .mermaid) {
         overflow: visible;
     }
@@ -1325,45 +1335,48 @@ dd {
     /* ================================================================================
        (B) CLEAN LOOK: white paper, dark ink, serif body, sans headings, Menlo code.
        ================================================================================ */
-    html:not([data-print="theme"]) body {
+    /* The 0.5 pt right inset keeps full-width rules and frames inside the page area; see
+       (D)'s body rule for why the 658 px column overshoots it */
+    html:not([data-print]) body {
         background: #fff none;
         color: #000;
         font-family: Charter, "Iowan Old Style", Georgia, "Times New Roman", Times, serif;
+        padding: 0 0.5pt 0 0;
     }
 
-    html:not([data-print="theme"]) .post-meta {
+    html:not([data-print]) .post-meta {
         font-family: var(--font-sans);
         color: #555;
     }
 
-    html:not([data-print="theme"]) h1,
-    html:not([data-print="theme"]) h2,
-    html:not([data-print="theme"]) h3,
-    html:not([data-print="theme"]) h4,
-    html:not([data-print="theme"]) h5,
-    html:not([data-print="theme"]) h6 {
+    html:not([data-print]) h1,
+    html:not([data-print]) h2,
+    html:not([data-print]) h3,
+    html:not([data-print]) h4,
+    html:not([data-print]) h5,
+    html:not([data-print]) h6 {
         font-family: var(--font-sans);
         font-weight: 700;
         color: #000;
         letter-spacing: 0;
     }
 
-    html:not([data-print="theme"]) h2 {
+    html:not([data-print]) h2 {
         border-bottom-color: #999;
     }
 
-    html:not([data-print="theme"]) dt {
+    html:not([data-print]) dt {
         color: #000;
     }
 
-    html:not([data-print="theme"]) hr {
+    html:not([data-print]) hr {
         border-top-color: #bbb;
     }
 
     /* Internal links plain; `.post-link` listed for the home page (its screen rule is (0,1,0)) */
-    html:not([data-print="theme"]) a,
-    html:not([data-print="theme"]) a:visited,
-    html:not([data-print="theme"]) .post-link {
+    html:not([data-print]) a,
+    html:not([data-print]) a:visited,
+    html:not([data-print]) .post-link {
         color: inherit;
         font-weight: inherit;
         text-decoration: underline;
@@ -1372,13 +1385,13 @@ dd {
         text-underline-offset: 1.5pt;
     }
 
-    html:not([data-print="theme"]) .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
-    html:not([data-print="theme"]) .post > a.u-url[hidden] {
+    html:not([data-print]) .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
+    html:not([data-print]) .post > a.u-url[hidden] {
         font-family: var(--font-sans);
         color: #555;
     }
 
-    html:not([data-print="theme"]) code {
+    html:not([data-print]) code {
         font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
         font-weight: inherit;
         color: #000;
@@ -1388,124 +1401,124 @@ dd {
         padding: 0;
     }
 
-    html:not([data-print="theme"]) .highlighter-rouge .highlight,
-    html:not([data-print="theme"]) .highlight,
-    html:not([data-print="theme"]) pre {
+    html:not([data-print]) .highlighter-rouge .highlight,
+    html:not([data-print]) .highlight,
+    html:not([data-print]) pre {
         background: none;
         color: #000;
         border-color: #b3b3b3;
         border-radius: 0;
     }
 
-    html:not([data-print="theme"]) pre {
+    html:not([data-print]) pre {
         font-family: Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
     }
 
-    html:not([data-print="theme"]) pre > code {
+    html:not([data-print]) pre > code {
         color: inherit;
     }
 
     /* Rouge palette for white paper (every colour >= 5:1 against #fff).
        `.highlight :is(...)` keeps the (0,3,1) specificity of the expanded selectors. */
-    html:not([data-print="theme"]) .highlight span {
+    html:not([data-print]) .highlight span {
         color: #000;
         background: none;
         font-weight: normal;
         font-style: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.k, .kd, .kr, .kn, .kp, .nt) {
+    html:not([data-print]) .highlight :is(.k, .kd, .kr, .kn, .kp, .nt) {
         color: #00008b;
         font-weight: bold;
     }
 
-    html:not([data-print="theme"]) .highlight .kc {
+    html:not([data-print]) .highlight .kc {
         color: #8b0000;
         font-weight: bold;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.kt, .nc, .nb, .bp) {
+    html:not([data-print]) .highlight :is(.kt, .nc, .nb, .bp) {
         color: #006b6b;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.nf, .fm) {
+    html:not([data-print]) .highlight :is(.nf, .fm) {
         color: #005f87;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.nd, .na) {
+    html:not([data-print]) .highlight :is(.nd, .na) {
         color: #6f2da8;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.s, .s1, .s2, .sh, .sc, .se, .si, .sr, .ss) {
+    html:not([data-print]) .highlight :is(.s, .s1, .s2, .sh, .sc, .se, .si, .sr, .ss) {
         color: #006400;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.m, .mi, .mf, .mh, .mo, .no, .ni) {
+    html:not([data-print]) .highlight :is(.m, .mi, .mf, .mh, .mo, .no, .ni) {
         color: #8a3d00;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.c, .c1, .cm, .cs, .cd, .cp) {
+    html:not([data-print]) .highlight :is(.c, .c1, .cm, .cs, .cd, .cp) {
         color: #555;
         font-style: italic;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.o, .ow, .p, .nn, .py) {
+    html:not([data-print]) .highlight :is(.o, .ow, .p, .nn, .py) {
         color: #333;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight :is(.n, .h, .nv, .nl) {
+    html:not([data-print]) .highlight :is(.n, .h, .nv, .nl) {
         color: #000;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) .highlight .err {
+    html:not([data-print]) .highlight .err {
         color: #b00020;
         background: none;
         font-weight: normal;
     }
 
-    html:not([data-print="theme"]) table {
+    html:not([data-print]) table {
         border-color: #999;
         color: #000;
     }
 
-    html:not([data-print="theme"]) table tr:nth-child(even) {
+    html:not([data-print]) table tr:nth-child(even) {
         background: none;
     }
 
-    html:not([data-print="theme"]) table th,
-    html:not([data-print="theme"]) table td {
+    html:not([data-print]) table th,
+    html:not([data-print]) table td {
         border-color: #999;
     }
 
-    html:not([data-print="theme"]) table th {
+    html:not([data-print]) table th {
         background: #eee;
         color: #000;
         font-family: var(--font-sans);
         font-weight: 700;
     }
 
-    html:not([data-print="theme"]) blockquote {
+    html:not([data-print]) blockquote {
         border-left-color: #999;
         background: none;
         color: #222;
     }
 
-    html:not([data-print="theme"]) img {
+    html:not([data-print]) img {
         border: 0;
     }
 
-    html:not([data-print="theme"]) figcaption {
+    html:not([data-print]) figcaption {
         font-family: var(--font-sans);
         color: #333;
     }
 
-    html:not([data-print="theme"]) .post-content .cafe-diagram {
+    html:not([data-print]) .post-content .cafe-diagram {
         border-radius: 0;
         background: none;
     }
@@ -1548,5 +1561,148 @@ dd {
     html[data-print="theme"] .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
     html[data-print="theme"] .post > a.u-url[hidden] {
         color: var(--text-secondary);
+    }
+
+    /* ================================================================================
+       (D) THEME LOOK ON WHITE (?print=theme-white): the theme of (C) on paper white.
+       Each hued colour keeps its OKLCH hue and becomes the lightest shade of it that
+       reaches 4.5:1 on #fff (#FFD700 -> #8C7502, #00CED1 -> #038486, #39FF14 -> #178902,
+       #00F0FF -> #04838C, #FFFF99 -> #7D7A02, #FF4444 -> #E5252E). White and grey text
+       becomes dark ink with the contrast it had on #0a0a0a (#FFFFFF -> #0A0A0A,
+       #E8E8E8 -> #212121, #A0A0A0 -> #545454). #CC0000 and #666 pass as they are.
+       Nothing is filled: code panels and the screen's 5-15 % tints print as paper, so all
+       text sits on #fff. Lines keep the order of (C): h2 rule, quote bar, table heads and
+       image frames #8C7502; hr, code frames and table cells #AF9302 (gold at 3:1, the
+       non-text minimum); the inline-code chip keeps only its outline, #1FAC00 (green at
+       3:1, about the contrast its border has against the chip on screen). The custom
+       properties recolour every screen rule that reads them; the rules below replace the
+       hexes the screen hard-codes. Faces, weights and sizes stay the screen's, as in (C).
+       ================================================================================ */
+    html[data-print="theme-white"] {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        --primary: #8C7502;
+        --accent: #0A0A0A;
+        --success: #178902;
+        --bg-primary: #fff;
+        --bg-secondary: #fff;
+        --text-primary: #212121;
+        --text-secondary: #545454;
+        --border-color: #AF9302;
+    }
+
+    /* Flat paper white; the shorthand also drops the six radial-gradient stars. The inset
+       keeps every mark inside the page area. Top and bottom, cloned onto every page: an
+       inline-code chip's outline reaches up to 2.3 pt past its line box (in an h3: 1.5 pt
+       above, 2.3 pt below), and on a page's first line Chrome paints that overhang at the
+       foot of the previous page. Right: (A) lays the column out at 658 px, 0.27 pt wider
+       than A4's 174 mm (0.41 pt on the landscape page), which trims full-width frames at
+       the right edge; the left edge already starts on the page area. */
+    html[data-print="theme-white"] body {
+        background: var(--bg-primary);
+        padding: 3pt 0.5pt 3pt 0;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+    html[data-print="theme-white"] h3,
+    html[data-print="theme-white"] .post-meta {
+        color: #038486;
+    }
+
+    html[data-print="theme-white"] hr {
+        border-top-color: #AF9302;
+    }
+
+    html[data-print="theme-white"] .post-content a[href^="http"]:not([href*="amritsingh183.github.io"])::after,
+    html[data-print="theme-white"] .post > a.u-url[hidden] {
+        color: var(--text-secondary);
+    }
+
+    /* Hover and focus turquoise (#00CED1, 1.95:1 on white) prints if the pointer or the
+       focus rests on the element when printing */
+    html[data-print="theme-white"] a:hover,
+    html[data-print="theme-white"] a:focus,
+    html[data-print="theme-white"] .post-link:hover,
+    html[data-print="theme-white"] table tr:hover {
+        color: #038486;
+    }
+
+    /* Inline code: the chip keeps its outline, not its fill; code in blocks takes the
+       block text colour again */
+    html[data-print="theme-white"] code {
+        color: #178902;
+        background: none;
+        border-color: #1FAC00;
+    }
+
+    html[data-print="theme-white"] pre > code {
+        color: var(--text-primary);
+    }
+
+    html[data-print="theme-white"] .highlighter-rouge .highlight,
+    html[data-print="theme-white"] .highlight,
+    html[data-print="theme-white"] pre {
+        background: none;
+        border-color: #AF9302;
+    }
+
+    /* Rouge palette on white, colour only (weights and italics stay the screen's).
+       .kc #CC0000 and the #666666 comments keep their screen rules; classes without a
+       screen rule (.nn .nd .py .cd .no .sc .se .pi) take the block text colour. */
+    html[data-print="theme-white"] .highlight :is(.h, .n) {
+        color: #272727;
+    }
+
+    html[data-print="theme-white"] .highlight .p {
+        color: #484848;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.k, .kd) {
+        color: #E5252E;
+    }
+
+    html[data-print="theme-white"] .highlight .kr {
+        color: #D34247;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.s, .s1, .s2, .sh) {
+        color: #04838C;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.m, .mi, .mf, .na, .ni) {
+        color: #8C7502;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.nb, .bp, .nt) {
+        color: #038484;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.kt, .nc) {
+        color: #7D7A02;
+    }
+
+    html[data-print="theme-white"] .highlight :is(.nf, .fm) {
+        color: #178902;
+    }
+
+    html[data-print="theme-white"] .highlight .o {
+        color: #DE333A;
+    }
+
+    html[data-print="theme-white"] .highlight .err {
+        color: #EB1220;
+        background: none;
+    }
+
+    html[data-print="theme-white"] .highlight .nv {
+        color: #377F9A;
+    }
+
+    /* No tints: row stripes, the head band and the quote fill print as paper */
+    html[data-print="theme-white"] table tr,
+    html[data-print="theme-white"] table th,
+    html[data-print="theme-white"] blockquote {
+        background: none;
     }
 }
