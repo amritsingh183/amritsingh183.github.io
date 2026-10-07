@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-labelledby="title desc">
+<title id="title">A relation between two words can be a direction: when man to woman is the same step as king to queen, king minus man plus woman lands on queen</title>
+<desc id="desc">Left: six words at made-up positions set by hand and printed beside them, man (−2.5, −1.5), woman (−2, 0.5), uncle (−0.5, −1), aunt (0, 1), king (2, −1.5), queen (2.5, 0.5); three grey arrows, from man to woman, uncle to aunt and king to queen, are the same step (0.5, 2), and king − man + woman = (2.5, 0.5), where queen sits; ranked by cosine with it, leaving out the question words man, king and woman: queen 1.00, aunt 0.20, uncle −0.61. Right: the tiny trained table of Figure 27.3 asked which word is to small as mystery is to quiet: its nearest word to mystery − quiet + small is and (0.990), and town comes fourth.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="360" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="24" y="30" font-weight="600">made-up positions: one step for three pairs</text>
+<line x1="187.2" y1="222.8" x2="187.2" y2="48" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="40" y1="121.6" x2="334.4" y2="121.6" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="72.2" y1="185.6" x2="95.2" y2="103.6" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="164.2" y1="162.6" x2="187.2" y2="80.6" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="279.2" y1="185.6" x2="302.2" y2="103.6" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<circle cx="72.2" cy="190.6" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="72.2" y="211.6" fill="#2a78d6" text-anchor="middle">man (−2.5, −1.5)</text>
+<circle cx="95.2" cy="98.6" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="95.2" y="88.6" fill="#eb6834" text-anchor="middle">woman (−2, 0.5)</text>
+<circle cx="164.2" cy="167.6" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="179.2" y="188.6" fill="#2a78d6" text-anchor="end">uncle (−0.5, −1)</text>
+<circle cx="187.2" cy="75.6" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="179.2" y="65.6" fill="#eb6834" text-anchor="end">aunt (0, 1)</text>
+<circle cx="279.2" cy="190.6" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="279.2" y="211.6" fill="#2a78d6" text-anchor="middle">king (2, −1.5)</text>
+<circle cx="302.2" cy="98.6" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="1.5"/>
+<text x="302.2" y="88.6" fill="#eb6834" text-anchor="middle">queen (2.5, 0.5)</text>
+<text x="24" y="250">each grey arrow is the same step, (0.5, 2)</text>
+<text x="24" y="268">king − man + woman = (2.5, 0.5): queen&apos;s own place</text>
+<text x="24" y="286">nearest by cosine: queen 1.00, aunt 0.20, uncle −0.61</text>
+<text x="24" y="304" fill="#898781">(the question words man, king and woman are left out)</text>
+<text x="24" y="328" fill="#898781">the positions are made up, set by hand to show the idea;</text>
+<text x="24" y="344" fill="#898781">vectors learned from text show such steps only roughly</text>
+<text x="412" y="30" font-weight="600">the tiny table of Figure 27.3</text>
+<text x="412" y="52">quiet is to mystery as small is to ?</text>
+<text x="412" y="70" fill="#52514e">nearest words to mystery − quiet + small:</text>
+<rect x="412" y="82" width="90" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="99" text-anchor="middle">rank</text>
+<rect x="502" y="82" width="90" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="99" text-anchor="middle">word</text>
+<rect x="592" y="82" width="90" height="26" rx="2" fill="#f0efec" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="99" text-anchor="middle">cosine</text>
+<rect x="412" y="108" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="125" text-anchor="middle">1</text>
+<rect x="502" y="108" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="125" text-anchor="middle">and</text>
+<rect x="592" y="108" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="125" text-anchor="middle">0.990</text>
+<rect x="412" y="134" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="151" text-anchor="middle">2</text>
+<rect x="502" y="134" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="151" text-anchor="middle">recipes</text>
+<rect x="592" y="134" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="151" text-anchor="middle">0.947</text>
+<rect x="412" y="160" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="177" text-anchor="middle">3</text>
+<rect x="502" y="160" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="177" text-anchor="middle">from</text>
+<rect x="592" y="160" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="177" text-anchor="middle">0.863</text>
+<rect x="412" y="186" width="90" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="203" text-anchor="middle">4</text>
+<rect x="502" y="186" width="90" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="203" text-anchor="middle">town</text>
+<rect x="592" y="186" width="90" height="26" rx="2" fill="#cde2fb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="203" text-anchor="middle">0.861</text>
+<rect x="412" y="212" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="457" y="229" text-anchor="middle">5</text>
+<rect x="502" y="212" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="547" y="229" text-anchor="middle">in</text>
+<rect x="592" y="212" width="90" height="26" rx="2" fill="#fcfcfb" stroke="#e1e0d9" stroke-width="1"/>
+<text x="637" y="229" text-anchor="middle">0.759</text>
+<text x="412" y="260">the right word, town, comes fourth;</text>
+<text x="412" y="278">five blurbs are far too little text</text>
+<text x="412" y="296" fill="#898781">(the three question words are left out)</text>
+</g>
+</svg>

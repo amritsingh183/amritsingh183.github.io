@@ -52,6 +52,10 @@ last_updated: 2026-09-30
   - [32. Transformers and pretrained models](#32-transformers-and-pretrained-models)
   - [33. Sentence embeddings and sentence transformers](#33-sentence-embeddings-and-sentence-transformers)
 - **Appendix**
+  - [A. Where each note went](#a-where-each-note-went)
+  - [B. Glossary](#b-glossary)
+  - [C. How this book was made](#c-how-this-book-was-made)
+  - [D. List of figures](#d-list-of-figures)
 
 ## 0. How to read this book
 
@@ -303,7 +307,7 @@ Write λv as λIv, where I is the identity matrix, the do-nothing transformation
 
 For our M, M − λI has rows 3 − λ, 1 and 0, 2 − λ, so its determinant is (3 − λ)(2 − λ) − 1 × 0 = (3 − λ)(2 − λ), or λ² − 5λ + 6 multiplied out. Figure 6.2 plots it for λ from 0 to 4, with the parallelogram of the columns of M − λI drawn at five values: its area is 2 at λ = 1, collapses to 0 at λ = 2, comes back flipped with area −0.25 at λ = 2.5, collapses again at λ = 3 and is 2 at λ = 4. The two collapses are the eigenvalues, 2 and 3.
 
-![A U-shaped curve of the determinant against lambda from nought to four touching zero at two and three, and below it five small panels showing the parallelogram of the columns, which collapses to a segment at two and at three](/ml/book/figures/b06-2-det-curve.svg)
+![A U-shaped curve of the determinant against lambda from nought to four, crossing zero at two and three and dipping to minus nought point two five between them, and below it five small panels showing the parallelogram of the columns, which collapses to a segment at two and at three](/ml/book/figures/b06-2-det-curve.svg)
 *Figure 6.2. det(M − λI) = (3 − λ)(2 − λ) is zero at the eigenvalues 2 and 3 and lowest, −0.25, at 2.5. Below, the parallelogram's area at λ = 1, 2, 2.5, 3 and 4 is 2, 0, −0.25, 0 and 2.*
 
 Each eigenvalue then gives its line. For λ = 3, M − 3I has rows 0, 1 and 0, −1 and sends (x, y) to (y, −y), which is zero only when y = 0: the x-axis. For λ = 2, M − 2I has rows 1, 1 and 0, 0 and sends (x, y) to (x + y, 0), which is zero when x + y = 0: the line through (−1, 1). These are the dashed lines of Figure 6.1.
@@ -368,7 +372,7 @@ Figure 7.3 draws the four activation functions you will meet most. ReLU is 0 for
 ![Four small plots side by side: ReLU flat then rising, sigmoid an S from nought to one, tanh an S from minus one to one, and a straight diagonal line for the linear activation](/ml/book/figures/b07-3-activations.svg)
 *Figure 7.3. ReLU, sigmoid, tanh and linear on inputs from −4 to 4. At z = 2 they give 2, 0.88, 0.96 and 2; at z = −2 they give 0, 0.12, −0.96 and −2.*
 
-Figure 7.4 shows what bends buy, on the shop's price curve, which rises steeply for thin books and levels off for thick ones. Three ReLU units that switch on at 0, 100 and 250 pages add up to a bent line that meets the curve at 0, 100, 250 and 400 pages. More units give more bends and a closer fit; with a non-linear activation, a network with one hidden layer can in principle approximate any reasonable curve.
+Figure 7.4 shows what bends buy, on the shop's price curve, which rises steeply for thin books and levels off for thick ones. Three ReLU units that switch on at 0, 100 and 250 pages add up to a bent line that meets the curve at 0, 100, 250 and 400 pages. More units give more bends and a closer fit. In theory, one hidden layer with enough units, and an activation such as ReLU or the sigmoid, can approximate most curves; in practice, training finds a good fit much more easily with several layers of modest size (James, Witten, Hastie and Tibshirani, sections 10.1 and 10.2). The theoretical result is known as the universal approximation theorem (Goodfellow, Bengio and Courville, section 6.4.1).
 
 ![The true price curve against pages drawn dashed, with an orange bent line made of three straight pieces that touches it at nought, one hundred, two hundred and fifty and four hundred pages](/ml/book/figures/b07-4-bends.svg)
 *Figure 7.4. Three ReLU units make a line that bends at 100 and 250 pages; its slopes are 5.11, 2.60 and 1.13 hundred rupees per 100 pages, and it meets the price curve at 0, 100, 250 and 400 pages.*
@@ -426,7 +430,13 @@ Andrej Karpathy's micrograd shows how little machinery this needs. Its engine is
 
 **In one breath.** A model that is too rigid misses the real pattern, which is called bias, and a model that is too flexible chases the noise in its training data and changes wildly from one dataset to the next, which is called variance. The best model sits between the two, and there are two common ways to find it: test each candidate on data it has not seen, or correct its training error for how many numbers it can adjust (James, Witten, Hastie and Tibshirani, section 6.1.3).
 
-Back in the shop, you would like a rule that prices a book from its page count alone. For this chapter we invent the truth, so that every model can be checked against it: a book with $x$ pages is worth $12\,(1 - e^{-x/180})$ hundred rupees, a curve that climbs steeply for thin books and levels off towards 12 for thick ones. All prices in this chapter and the next are in hundreds of rupees. Real prices wobble around such a curve for reasons no rule can see, so each of our books gets a small fixed wobble. The eight books used to fit models form the training set; eight more books with the same page counts and different wobbles form the test set, kept back to judge the models.
+Back in the shop, you would like a rule that prices a book from its page count alone. For this chapter we invent the truth, so that every model can be checked against it: a book with x pages is worth
+
+$$
+12\,(1 - e^{-x/180})
+$$
+
+hundred rupees, a curve that climbs steeply for thin books and levels off towards 12 for thick ones. All prices in this chapter and the next are in hundreds of rupees. Real prices wobble around such a curve for reasons no rule can see, so each of our books gets a small fixed wobble. The eight books used to fit models form the training set; eight more books with the same page counts and different wobbles form the test set, kept back to judge the models.
 
 | pages | true price | training book | test book |
 |---|---|---|---|
@@ -609,7 +619,7 @@ The normal curve with the sample's mean and standard deviation misses the peak a
 
 ### Test, and read the p-value backwards
 
-A **goodness-of-fit test** asks whether the sample could have come from a stated distribution. Its null hypothesis is that it did, so a small p-value rejects the candidate; unusually, the hoped-for result is a high one. The **Anderson–Darling** test compares the sample's staircase CDF with the fitted one, weighting the tails more than the Kolmogorov–Smirnov test, another common fit test, does, and its statistic A² grows as the fit worsens.
+A **goodness-of-fit test** asks whether the sample could have come from a stated distribution. It starts from the assumption that it did, called the **null hypothesis**, and asks how surprising the sample would be if that were true: the **p-value** is the chance of drawing a sample at least as far from the distribution as this one when the distribution is right. So a small p-value rejects the candidate; unusually, the hoped-for result is a high one. The **Anderson–Darling** test compares the sample's staircase CDF with the fitted one and weights the tails heavily; the Kolmogorov–Smirnov test, another common fit test, looks only at the largest gap between the two and so weights the tails less. The Anderson–Darling statistic A² grows as the fit worsens.
 
 | candidate | A² | p-value |
 |---|---|---|
@@ -618,7 +628,7 @@ A **goodness-of-fit test** asks whether the sample could have come from a stated
 | gamma | 0.23 | needs its own table |
 | Weibull | 0.59 | needs its own table |
 
-The normal is rejected: 0.006 is far below 0.05, and its adjusted A² of 1.12 exceeds 0.752, the 5% critical value in the NIST/SEMATECH handbook. The lognormal, tested through the logarithms of the page counts, gives 0.74 and stays. The **gamma** and **Weibull**, two more right-skewed families, need p-value tables of their own, so their A² values and plots decide. Each family here has two **parameters**, numbers that pin the curve down. Some families add a third, a **threshold** or smallest possible value, and Frost's tables then show LRT P, a likelihood-ratio test of whether it earns its place. Counts and categories take a chi-square test instead.
+The normal is rejected: 0.006 is far below 0.05, and its adjusted A² of 1.12 exceeds 0.752, the 5% critical value in the NIST/SEMATECH handbook. The lognormal, tested through the logarithms of the page counts, gives 0.74 and stays. The **gamma** and **Weibull**, two more right-skewed families, need p-value tables of their own, so their A² values and plots decide. Each family here has two **parameters**, numbers that pin the curve down. Some families add a third, a **threshold** or smallest possible value, and Frost's tables then show LRT P, the p-value of a likelihood-ratio test, which compares how well the curve fits the sample with the threshold and without it, so that the third parameter is kept only if it earns its place. Counts and categories take a chi-square test instead.
 
 ### Plot: the fat-pencil test
 
@@ -692,7 +702,7 @@ Columns spanning orders of magnitude, such as copies printed, call for a logarit
 ![Left, a long thin ellipse of contours with a zigzag orange descent path; right, round contours with a single orange step to the centre](/ml/book/figures/b14-4-bowls.svg)
 *Figure 14.4. Why rescaling speeds up learning. In a stylised two-weight bowl whose curvatures are the two columns' variances, raw pages and ages make it curve 112 times more sharply one way than the other and gradient descent needs 257 steps; after standardising both columns it needs 1.*
 
-A last trap hides in the target. If 5% of a catalogue are rare editions, a model that always answers "not rare" is right 95% of the time and useless. With such **imbalanced** classes, judge by precision and recall, not accuracy, and consider resampling.
+A last trap hides in the target. If 5% of a catalogue are rare editions, a model that always answers "not rare" is right 95% of the time and useless. With such **imbalanced** classes, judge a model by **precision**, the share of the books it flags as rare that really are rare, and by **recall**, the share of the rare books that it flags, not by accuracy; and consider **resampling**, training on a copy of the data in which the rare books are drawn more often or the common ones less often.
 
 **Watch, read, try**
 - [Separate numerical and categorical variables](https://datascience.stackexchange.com/questions/98137/separate-numerical-and-categorical-variables) — an answer using select_dtypes.
@@ -970,9 +980,14 @@ Because this kernel measures change in the horizontal direction, it lights up ed
 
 Deep learning keeps the sliding and lets gradient descent choose the weights. The first layers of trained networks end up with kernels much like the hand-made ones. AlexNet's first layer learned 96 kernels of 11 × 11 × 3 that the authors describe as frequency- and orientation-selective, plus coloured blobs (Krizhevsky and colleagues, Figure 3). Chris Olah, Alexander Mordvintsev and Ludwig Schubert show what deeper units respond to with **feature visualisation**: start from random noise and adjust the picture, step by step, until one chosen unit responds as strongly as possible. The output of a convolution is itself a grid, still shaped like an image, so another convolution can run on top of it, and chapter 21 follows what that stacking achieves.
 
-Kernels learned on one large collection of photos are useful on others. François Chollet's Keras post of 2016, built on 1,000 photos each of cats and dogs, reached about 80% accuracy with a small network trained from scratch, about 90% by reusing the convolutional layers of a network trained on ImageNet, and 94% by also fine-tuning the top layers of that network.
+Kernels learned on one large collection of photos are useful on others. François Chollet's Keras post of 2016, built on 1,000 photos each of cats and dogs, reached about 80% accuracy with a small network trained from scratch, about 90% by reusing the convolutional layers of a network trained on ImageNet, and 94% by also fine-tuning the top layers of that network, that is, training them a little further on the new photos.
 
 The classic design divides the work between two kinds of layer: convolutional layers pick out features from data laid out on a grid, and fully connected layers then relate those features to the answer. AlexNet ends its five convolutional layers with three fully connected layers and a softmax, the function that turns the last layer's scores into probabilities that add up to one. GoogLeNet ends with one linear layer after averaging each channel down to a single number.
+
+Figure 19.4 draws such a design whole, for a small network that sorts 64 × 64 colour photos of covers into mysteries, cookbooks and repair manuals. Two stages of convolution each end with pooling, which chapter 20 explains and which halves the width and height of every map; each convolution keeps the size, because it first adds one ring of zeros around its input, the padding of chapter 17. The 16 maps that remain are laid out as one list of 4,096 numbers, and two fully connected layers and a softmax turn that list into three probabilities. Counted as in chapter 18, the two convolutions need 1,392 parameters between them, while the first fully connected layer, which links every one of the 4,096 numbers to each of its 64 units, needs 4,096 × 64 weights plus 64 biases, 262,208 in all.
+
+![Top, a 64 by 64 colour photo shrinking through two stages of convolution and pooling, drawn as stacks of maps; bottom, the 16 maps laid out as one list of 4,096 numbers feeding two fully connected layers and a softmax that gives three probabilities](/ml/book/figures/b19-4-whole-network.svg)
+*Figure 19.4. The classic design for a 64 × 64 colour photo of a cover: two stages of convolution and pooling turn it into 16 maps of 16 × 16, and two fully connected layers and a softmax turn those 4,096 numbers into three probabilities. The first fully connected layer holds 262,208 of the network's 263,795 parameters.*
 
 **Watch, read, try**
 - [How Blurs & Filters Work - Computerphile](https://www.youtube.com/watch?v=C_zFhWdM4ic) — Computerphile on blurring and filtering images with kernels.
@@ -1244,7 +1259,7 @@ You can tell at a glance that B1, B2 and B4 describe the same kind of book. A pr
 
 The plainest method is **one-hot encoding**. List every word you might meet (this list is the **vocabulary**), give each word its own column, and write a word as a row of zeros with a single 1 in its own column. The left half of Figure 25.1 does this for the eleven content words of the blurbs.
 
-![Two grids side by side: eleven words written as one-hot rows on the left and as four hand-set feature values on the right.](/ml/book/figures/b25-1-one-hot.svg)
+![Two grids side by side: eleven words written as one-hot rows on the left and as four hand-set feature values on the right](/ml/book/figures/b25-1-one-hot.svg)
 *Figure 25.1. The eleven content words of the blurbs, once as one-hot rows (110 of 121 cells are 0, and no two rows share a 1) and once as four made-up features (17 of 44 cells are 0). The feature values were set by hand for this book.*
 
 One-hot codes are honest but blind. Two different words never have their 1 in the same column, so multiplying their rows entry by entry and adding up, the dot product of [chapter 4](#4-dot-products-duality-and-the-cross-product), always gives 0, and the straight-line distance between them is always the square root of 2. "Mystery" is exactly as far from "detective" as it is from "bicycle". The rows are also long. The scikit-learn documentation gives a feel for real sizes: ten thousand short texts such as e-mails can use about 100,000 different words between them, so each word would be a row of 100,000 numbers holding a single 1. A row like that is **sparse**, meaning almost all of its entries are zero.
@@ -1259,14 +1274,14 @@ To measure how alike two such lists are, the usual tool is **cosine similarity**
 
 Four numbers per word cannot be drawn on a page, so Figure 25.2 uses the two directions along which the eleven words spread out most, found by principal component analysis, the subject of [chapter 29](#29-contextual-embeddings-and-dimensionality-reduction). Together those two directions keep 73% of the spread. The crime words, the place words, the food words and the tool words gather in four separate corners, with vaguer words such as "quiet" and "returns" nearer the middle.
 
-![A scatter plot of the eleven words in which crime words, place words, food words and tool words form four separate groups.](/ml/book/figures/b25-2-word-map.svg)
+![A scatter plot of the eleven words in which crime words, place words, food words and tool words form four separate groups](/ml/book/figures/b25-2-word-map.svg)
 *Figure 25.2. The feature vectors of Figure 25.1 flattened onto their two main directions, which keep 40% and 33% of the spread. Cosine similarity in all four features: mystery and detective 0.97, town and village 0.94, mystery and recipes 0.00.*
 
 ### An embedding layer is a lookup table
 
 A network uses such a table in the simplest possible way. Multiply a one-hot row by the table, and the single 1 keeps one row of the table while every 0 wipes out its row. Figure 25.3 shows this for "detective": the product is detective's own row, (0.9, 0.2, 0, 0.1). An **embedding layer**, the first layer of every language model in this book, is therefore a table with one row per vocabulary word, and "embedding a word" means reading its row. A program can read the row directly and skip the multiplication, and the answer is the same.
 
-![A one-hot column with a single 1 at detective beside the feature table, whose detective row is outlined and repeated as the result.](/ml/book/figures/b25-3-lookup.svg)
+![A one-hot column with a single 1 at detective beside the feature table, whose detective row is outlined and repeated as the result](/ml/book/figures/b25-3-lookup.svg)
 *Figure 25.3. Multiplying the one-hot code of detective by the feature table returns detective's own row, (0.9, 0.2, 0, 0.1). The one-hot row is drawn standing on end so that each entry sits beside the row it multiplies.*
 
 In a real model nobody fills the table in. It starts as small random numbers and is adjusted during training, a little at a time, so that the whole network gets better at its task, such as guessing a missing word. The columns that emerge usually have no names like "crime" or "food"; they are whatever directions happened to help. Chapters 27 and 28 show two ways of learning such a table from plain text.
@@ -1275,16 +1290,16 @@ In a real model nobody fills the table in. It starts as small random numbers and
 
 The same idea works for any object whose likeness you care about: a blurb, a whole review, a photograph of a cover. An **embedding model** takes the object, whatever its size, and returns a vector of one fixed length (Figure 25.4). The sentence-transformers model all-MiniLM-L6-v2, for instance, turns an English text into 384 numbers, and the same library lists models such as CLIP that place photographs and captions in one shared space. Comparing two objects then becomes comparing two vectors, which is cheap. The library's documentation names semantic search, finding texts by meaning rather than by shared words, and paraphrase mining, finding texts that say the same thing, among the uses.
 
-![Three texts of different lengths pass through an embedding model and come out as rows of equal length, two of which feed a cosine box.](/ml/book/figures/b25-4-pipeline.svg)
+![Three texts of different lengths pass through an embedding model and come out as rows of equal length, two of which feed a cosine box](/ml/book/figures/b25-4-pipeline.svg)
 *Figure 25.4. An embedding model returns a vector of the same length for every input, 384 numbers in the case of all-MiniLM-L6-v2; comparing two texts then means comparing two vectors.*
 
 **Watch, read, try**
 
 - [Google Machine Learning Crash Course: Embeddings](https://developers.google.com/machine-learning/crash-course/embeddings) — a 45-minute module on why one-hot vectors fall short and how embeddings fix them.
 - [An Introduction to Graph Neural Networks, Microsoft Research](https://www.youtube.com/watch?v=zCEYiCxrL_0&t=206s) — from 3:26, the slide that contrasts a one-hot code with a dense, distributed one, written as a matrix times a one-hot vector.
-- [AWS: What are embeddings in machine learning?](https://aws.amazon.com/what-is/embeddings-in-machine-learning/#seo-faq-pairs#how-are-embeddings-created) — a plain overview with a one-hot table of fruit prices and a made-up example of television programmes.
+- [AWS: What are embeddings in machine learning?](https://aws.amazon.com/what-is/embeddings-in-machine-learning/#seo-faq-pairs#how-are-embeddings-created) — a plain overview with a one-hot table of fruit prices and a made-up example of television programmes; a model's own embeddings are not set by hand like that example or this chapter's feature table, but learned in training, as the section on embedding layers above explains.
 - [What does embedding mean in machine learning? (Data Science Stack Exchange)](https://datascience.stackexchange.com/questions/53995/what-does-embedding-mean-in-machine-learning/54045#54045) — sdaylor's short accepted answer, whose three-part description this chapter uses.
-- [A guide on word embeddings in NLP (Turing)](https://www.turing.com/kb/guide-on-word-embeddings-in-nlp) — Turing's guide: TF-IDF, bag of words, Word2Vec, GloVe and BERT in one long page, with code.
+- [A guide on word embeddings in NLP (Turing)](https://www.turing.com/kb/guide-on-word-embeddings-in-nlp) — Turing's guide: TF-IDF, bag of words, Word2Vec, GloVe and BERT in one long page, with code. It files all five under word embeddings; in this book, counts and tf-idf weights are sparse vectors rather than embeddings (chapter 26), similarity scores are cosines rather than probabilities (chapter 27), and BERT is an encoder trained to fill in hidden words, not a translator (chapter 32).
 
 **Check yourself.** 1. What is the cosine similarity between the one-hot codes of "town" and "village", and why? 2. Judging by the four features of Figure 25.1, is "village" closer to "town" or to "kitchen"? 3. In Figure 25.3, what would you get by multiplying the one-hot code of "repair" by the table?
 
@@ -1300,7 +1315,7 @@ Before counting, a text is split into **tokens**, the pieces a program treats as
 
 Figure 26.1 shows the bags of the five blurbs. Their vocabulary has 18 words, so each blurb becomes a column of 18 counts. B1 and B2 each contain "a" twice and B4 contains "the" twice; every other count is 0 or 1. Of the 90 cells, 62 are zero, which is 69%. Real collections are far emptier. The scikit-learn documentation describes 10,000 short texts that use about 100,000 different words between them while each text uses somewhere between 100 and 1,000, so that more than 99% of such a table is typically zero.
 
-![Two grids of word counts, eighteen words down the side and the five blurbs across, with most cells zero.](/ml/book/figures/b26-1-counts.svg)
+![Two grids of word counts, eighteen words down the side and the five blurbs across, with most cells zero](/ml/book/figures/b26-1-counts.svg)
 *Figure 26.1. The bag of words of each blurb, one column per blurb. Only "a" (in B1 and B2) and "the" (in B4) occur twice; 62 of the 90 cells are 0.*
 
 Counts already say something. The cosine similarity between the count columns of B1 and B2 is 0.84, because the two blurbs share quiet, mystery, small, town and two copies of "a". The left half of Figure 26.3 shows the trouble, though. B1 scores 0.30 with the recipe blurb B3 and exactly the same 0.30 with the bicycle blurb B5, and in both cases the whole resemblance comes from the little word "a".
@@ -1317,22 +1332,22 @@ The **tf-idf** weight of a word in a text is its count multiplied by its idf. Th
 
 Figure 26.2 works this out for B1. The word "a" occurs twice in B1, but four of the five blurbs contain it, so its idf is ln(5 ÷ 4) = 0.223 and its weight only 0.446. "Quiet", "mystery", "small" and "town" each appear in two blurbs and weigh 0.916. The heaviest is "in": it occurs in B1 alone, so it gets the full ln 5 = 1.609. That last result is a warning, not a triumph. In five short blurbs the little word "in" happens to be rare, and tf-idf cannot tell rarity from importance. This is why most systems first remove **stop words**, common words such as "and", "the" and "in"; scikit-learn's documentation explains that such words are assumed to say little about a text's content.
 
-![A table for the six words of blurb B1 with their counts, document frequencies, idf values and tf-idf bars.](/ml/book/figures/b26-2-idf.svg)
+![A table for the six words of blurb B1 with their counts, document frequencies, idf values and tf-idf bars](/ml/book/figures/b26-2-idf.svg)
 *Figure 26.2. tf-idf for blurb B1: "a" occurs twice but is in four of the five blurbs, so it weighs only 0.446; "in" occurs once but in B1 alone, so it weighs 1.609.*
 
 With tf-idf weights in place of raw counts, the false likeness through "a" almost disappears. In the right half of Figure 26.3, B1 and B5 fall from 0.30 to 0.01, and B1 and B3 do the same. B1 and B2 drop as well, from 0.84 to 0.54, because the words they share are not rare, but they stay by far the closest pair.
 
-![Two five-by-five heat maps of blurb similarity, from raw counts on the left and from tf-idf weights on the right.](/ml/book/figures/b26-3-cosine.svg)
+![Two five-by-five heat maps of blurb similarity, from raw counts on the left and from tf-idf weights on the right](/ml/book/figures/b26-3-cosine.svg)
 *Figure 26.3. Cosine similarity between the blurbs. B1 and B5 share only "a": 0.30 by counts, 0.01 by tf-idf. B1 and B2 share four content words: 0.84 by counts, 0.54 by tf-idf. B1 and B4 share nothing: 0 either way.*
 
-Libraries use small variations on these formulas. The TfidfTransformer of scikit-learn, for instance, by default adds 1 to both counts inside the logarithm and 1 to the result, and then scales each text's vector to length 1, so its numbers differ from Figure 26.2 while the idea is unchanged. The Turing guide in the list below uses another common variant, dividing each count by the length of its text.
+Libraries use small variations on these formulas. The TfidfTransformer of scikit-learn, for instance, by default adds 1 to both counts inside the logarithm and 1 to the result, and then scales each text's vector to length 1, so its numbers differ from Figure 26.2 while the idea is unchanged. The Turing guide listed in chapter 25 uses another common variant, dividing each count by the length of its text.
 
 ### What counting cannot see
 
-Counts ignore order. Figure 26.4 turns B4 back to front: "the village returns to the detective" tells a different story, yet its bag is identical, count for count. Counts also know nothing of meaning. B1 and B4 are both small-town crime stories, but they share no word, so every count-based similarity between them is 0. And the vectors grow with the vocabulary, one entry for every word ever seen. Embeddings, built in the next three chapters, deal with the last two problems; order has to wait for position codes in [chapter 31](#31-self-attention-in-plain-words).
+Counts ignore order. Figure 26.4 swaps two words of B4: "the village returns to the detective" tells a different story, yet its bag is identical, count for count. Counts also know nothing of meaning. B1 and B4 are both small-town crime stories, but they share no word, so every count-based similarity between them is 0. And the vectors grow with the vocabulary, one entry for every word ever seen. Embeddings, built in the next three chapters, deal with the last two problems; order has to wait for position codes in [chapter 31](#31-self-attention-in-plain-words).
 
-![Blurb B4 and its reversal, the village returns to the detective, feed identical rows of counts.](/ml/book/figures/b26-4-order.svg)
-*Figure 26.4. Reversing blurb B4 changes the story but not a single count: a bag of words cannot see order.*
+![Blurb B4 and the same words with detective and village swapped, the village returns to the detective, feed identical rows of counts](/ml/book/figures/b26-4-order.svg)
+*Figure 26.4. Swapping two words of blurb B4 changes the story but not a single count: a bag of words cannot see order.*
 
 **Watch, read, try**
 
@@ -1352,7 +1367,7 @@ In 2013 Tomas Mikolov and his colleagues at Google published two papers describi
 
 A **context window** is a few words on each side of a centre word. Figure 27.1 slides a window of two words on each side along B2. With "detective" in the centre, the four neighbours are "small", "town", "and" and "a". Near the end, with "quiet" in the centre, the window is cut short and holds only "and", "a" and "mystery". Every (centre, neighbour) pair is one training example, and sliding the window over all five blurbs gives 94 of them.
 
-![Blurb B2 drawn twice as word boxes, with a dashed window of two words on each side around detective and then around quiet.](/ml/book/figures/b27-1-window.svg)
+![Blurb B2 drawn twice as word boxes, with a dashed window of two words on each side around detective and then around quiet](/ml/book/figures/b27-1-window.svg)
 *Figure 27.1. A window of two words on each side turns B2 into training pairs; near the end of the blurb the window is cut short. All five blurbs together give 94 pairs.*
 
 ### Two guessing games
@@ -1365,7 +1380,7 @@ $$
 \text{softmax}(s)_i = \frac{e^{s_i}}{\sum_j e^{s_j}}
 $$
 
-![Two flow diagrams: CBOW averages four neighbours to guess detective, and skip-gram uses detective to guess each neighbour.](/ml/book/figures/b27-2-two-nets.svg)
+![Two flow diagrams: CBOW averages four neighbours to guess detective, and skip-gram uses detective to guess each neighbour](/ml/book/figures/b27-2-two-nets.svg)
 *Figure 27.2. The two Word2Vec games on one window of B2. Both look words up in the same table of 18 rows; both score all 18 words and apply softmax.*
 
 Scoring every word is costly when the vocabulary holds a million words, the size used in the first paper, so the papers took shortcuts. The first arranged the vocabulary in a tree, a so-called hierarchical softmax; the second offered a simpler alternative, **negative sampling**: for each true pair, draw a few random "noise" words and train the model only to tell the true neighbour from them. The authors found 5 to 20 noise words useful for small data sets and as few as 2 to 5 for large ones.
@@ -1374,7 +1389,7 @@ Scoring every word is costly when the vocabulary holds a million words, the size
 
 The table the model looks words up in is the embedding. To make that concrete I trained a tiny skip-gram on the five blurbs, with only two numbers per word so that the whole table fits in Figure 27.3. It is the full-softmax version described above, with a window of two, 3,000 passes over the 94 pairs and small random starting values. The one-hot code of "mystery" picks out its row, (−0.42, −3.25). On its own that pair of numbers means nothing; only its relation to the other rows does.
 
-![A one-hot column with a 1 at mystery beside an eighteen-by-two table of trained numbers, whose mystery row is outlined.](/ml/book/figures/b27-3-rows.svg)
+![A one-hot column with a 1 at mystery beside an eighteen-by-two table of trained numbers, whose mystery row is outlined](/ml/book/figures/b27-3-rows.svg)
 *Figure 27.3. The embedding table of a tiny skip-gram trained on the five blurbs (two numbers per word, window 2, 3,000 passes over 94 pairs). The one-hot code of mystery picks out its row, (−0.42, −3.25).*
 
 ### Reading angles: cosine similarity
@@ -1387,12 +1402,17 @@ $$
 
 It is 1 when the vectors point the same way, 0 when they meet at a right angle and −1 when they point in opposite directions (Figure 27.4, left). Because it divides by the lengths, only direction counts.
 
-On the right of Figure 27.4 are six rows of the trained table. Mystery and town point almost exactly the same way, with a cosine of 0.999: in the blurbs both always follow "a quiet" or "a small", so to skip-gram they are the same kind of word. Quiet and small, which both sit between "a" and a noun, score 0.819. Recipes and kitchen, which only ever appear together in B3, score 0.855, while mystery and kitchen, which never share a blurb, score 0.196.
+On the right of Figure 27.4 are six rows of the trained table. Mystery and town point almost exactly the same way, with a cosine of 0.999. Quiet and small, which both sit between "a" and a noun, score 0.819. Recipes and kitchen, which only ever appear together in B3, score 0.855, while mystery and kitchen, which never share a blurb, score 0.196.
 
-![Left, three pairs of arrows at 0, 90 and 180 degrees; right, six trained word vectors drawn as directions from one point.](/ml/book/figures/b27-4-cosines.svg)
+![Left, three pairs of arrows at 0, 90 and 180 degrees; right, six trained word vectors drawn as directions from one point](/ml/book/figures/b27-4-cosines.svg)
 *Figure 27.4. Cosine similarity reads angles. In the trained table mystery and town point almost the same way (0.999), quiet and small score 0.819, recipes and kitchen 0.855, and mystery and kitchen 0.196.*
 
-The mystery and town result shows the method's power and its limit together. Skip-gram learns from company alone, and in five blurbs "mystery" and "town" keep identical company, so it cannot tell them apart. I trained the same model from five other random starting points; the rest of the table sometimes changed, but mystery and town ended up pointing the same way (cosine 0.99 or more) every time. With billions of words such accidents average out. The first paper trained vectors of up to 1,000 numbers on up to 6 billion words of Google News, and it recalls the famous result that vector("King") − vector("Man") + vector("Woman") lands closest to vector("Queen").
+The mystery and town result says more about the tiny setup than about the two words. Skip-gram learns from company alone, and in the window of two words on each side, "mystery" and "town" share just one neighbour, "a"; the rest of their company, "quiet" and "in" for mystery, "small", "detective" and "and" for town, differs. With only two numbers per word, all eighteen words must share one circle of directions, so many of them end up side by side: bicycle and detective, which never share a blurb, score above 0.99 as well. With billions of words and far more numbers per word, such accidents average out. The first paper trained vectors of up to 1,000 numbers on up to 6 billion words of Google News, and it recalls the famous result that vector("King") − vector("Man") + vector("Woman") lands closest to vector("Queen").
+
+That result rests on a property that well-trained vectors often have: a relation between two words becomes a direction. If the step from "man" to "woman" is close to the step from "king" to "queen", then starting at king and taking the man-to-woman step lands near queen, and that is what king − man + woman computes. The first paper tests exactly this: it computes such a vector, finds the word whose vector has the largest cosine with it, leaving out the three words of the question, and counts the answer right only if that word is the expected one. Figure 27.5 draws the idea with made-up positions, then puts the same kind of question to our tiny table. Asked which word is to small as mystery is to quiet, it answers "and", and the right word, town, comes fourth: five blurbs are far too little text for such steps to form.
+
+![Left, six words at made-up positions, each printed with its coordinates, and three identical grey arrows from man, uncle and king to woman, aunt and queen; right, the words of the trained table ranked by cosine with mystery minus quiet plus small, town fourth](/ml/book/figures/b27-5-analogy.svg)
+*Figure 27.5. Left: a sketch with made-up positions, set by hand and printed beside each word: man → woman, uncle → aunt and king → queen share one step, (0.5, 2), so king − man + woman = (2.5, 0.5) lands on queen, the nearest word by cosine. Right: asked which word is to small as mystery is to quiet, the tiny table of Figure 27.3 answers "and"; the right word, town, comes fourth.*
 
 **Watch, read, try**
 
@@ -1414,7 +1434,7 @@ Word2Vec reads text window by window. GloVe, from Jeffrey Pennington, Richard So
 
 A **co-occurrence matrix** has one row and one column per vocabulary word; the entry in row i and column j counts how often word j appears within the window around word i. Figure 28.1 builds it for B1 and B2 with a window of one word on each side. "Quiet" stands next to "a" twice and next to "mystery" twice, so its row holds two 2s. Every neighbouring pair is seen from both ends, which makes the table symmetric; B1 and B2 contain 13 neighbouring pairs between them. The total of a row says how many neighbours that word had altogether.
 
-![An eight-by-eight heat map of how often each word of B1 and B2 sits next to each other word, with row totals.](/ml/book/figures/b28-1-cooccurrence.svg)
+![An eight-by-eight heat map of how often each word of B1 and B2 sits next to each other word, with row totals](/ml/book/figures/b28-1-cooccurrence.svg)
 *Figure 28.1. Co-occurrence counts for B1 and B2 with a window of one word on each side. The table is symmetric; quiet had 4 neighbours in all, two of them a and two mystery.*
 
 Dividing a row by its total gives probabilities. Write P(k given i) for the probability that a neighbour of word i is word k. "Quiet" had four neighbours, two of them "a", so P(a given quiet) = 2 ÷ 4 = 0.5.
@@ -1423,12 +1443,12 @@ Dividing a row by its total gives probabilities. Write P(k given i) for the prob
 
 Figure 28.2 compares quiet with small. Half of each word's company is "a", so the ratio P(a given quiet) ÷ P(a given small) is exactly 1: "a" does nothing to tell the two apart. "Mystery" appears beside quiet but never beside small, so its ratio is infinite, and "town" gives the opposite, 0. The other five words never appear beside either, and 0 ÷ 0 carries no evidence at all. In a real corpus of billions of words such empty cells matter less, and GloVe trains only on the table's non-zero entries.
 
-![A table of the probability of each word appearing beside quiet and beside small, with the ratio of the two.](/ml/book/figures/b28-2-ratios.svg)
+![A table of the probability of each word appearing beside quiet and beside small, with the ratio of the two](/ml/book/figures/b28-2-ratios.svg)
 *Figure 28.2. Neighbour probabilities of quiet and small from Figure 28.1. Their shared neighbour a gives a ratio of 1; mystery, seen only beside quiet, gives infinity; town, seen only beside small, gives 0.*
 
 The GloVe paper makes the same point with real numbers from a corpus of 6 billion tokens, reproduced in Figure 28.3. Take the target words ice and steam and a few probe words. "Solid" goes with ice far more than with steam, and the ratio of its two probabilities is 8.9. "Gas" goes with steam, and its ratio is 0.085. "Water" goes with both and "fashion" with neither, and their ratios sit near 1, at 1.36 and 0.96. The raw probabilities are tiny numbers that are hard to compare; the ratios sort the probe words cleanly into "about ice", "about steam" and "about both or neither".
 
-![Bars on a logarithmic scale showing probability ratios of 8.9 for solid, 0.085 for gas, 1.36 for water and 0.96 for fashion.](/ml/book/figures/b28-3-ice-steam.svg)
+![Bars on a logarithmic scale showing probability ratios of 8.9 for solid, 0.085 for gas, 1.36 for water and 0.96 for fashion](/ml/book/figures/b28-3-ice-steam.svg)
 *Figure 28.3. Table 1 of the GloVe paper, from a corpus of 6 billion tokens. The ratio of the two probabilities is 8.9 for solid and 0.085 for gas, and near 1 for water (1.36) and fashion (0.96). The printed ratios come from unrounded probabilities, so dividing the rounded ones does not reproduce them exactly.*
 
 ### From counts to vectors
@@ -1443,7 +1463,7 @@ $$
 
 Each error is multiplied by a weight f that depends on the pair's count (Figure 28.4). Rare pairs, whose counts are noisy, get small weights. The weight grows as the count to the power 3/4 and stops growing at a count of 100, so that the commonest pairs cannot drown out the rest; the paper used exactly these values. The largest count in our tiny table, 2, would get a weight of only 0.05. The authors report that the vectors reached 75% accuracy on a test of word analogies.
 
-![A curve rising from 0 to 1 as the co-occurrence count goes from 0 to 100, then flat.](/ml/book/figures/b28-4-weighting.svg)
+![A curve rising from 0 to 1 as the co-occurrence count goes from 0 to 100, then flat](/ml/book/figures/b28-4-weighting.svg)
 *Figure 28.4. GloVe's weight is (count ÷ 100) to the power 3/4, capped at 1: 0.18 for a count of 10, 0.59 for 50 and 1 from 100 on. The largest count in Figure 28.1, 2, would weigh 0.05.*
 
 Word2Vec and GloVe both produce **static** embeddings: one fixed vector per word, whatever sentence the word is in. The next chapter shows why that is not always enough.
@@ -1464,7 +1484,7 @@ Word2Vec and GloVe both produce **static** embeddings: one fixed vector per word
 
 "Please book a table" and "the detective reads a book" use the same four letters for an action and for an object. A static table such as Word2Vec or GloVe looks up "book" by itself and returns the same row in both sentences (Figure 29.1, top). A **contextual embedding** is computed from the whole sentence, so the same word gets a different vector each time it is used (Figure 29.1, bottom). BERT, which [chapter 32](#32-transformers-and-pretrained-models) describes, is the best-known model of this kind: it reads the whole input in both directions at once, and its output at each position depends on every word around it.
 
-![Top, the word book alone goes through a lookup table to one vector; bottom, two sentences using book go through a contextual model to two different vectors.](/ml/book/figures/b29-1-static-contextual.svg)
+![Top, the word book alone goes through a lookup table to one vector; bottom, two sentences using book go through a contextual model to two different vectors](/ml/book/figures/b29-1-static-contextual.svg)
 *Figure 29.1. Static against contextual embeddings for "book" as a noun and as a verb. The shaded rows illustrate the idea; they are drawn, not computed.*
 
 Contextual models are usually **pre-trained** once, on a large amount of text with no labels, and then **fine-tuned**: training continues briefly on a smaller labelled data set for one task. BERT's pre-training text came to about 3.3 billion words from books and from English Wikipedia.
@@ -1479,7 +1499,7 @@ Embeddings are often long, and long vectors are costly to store and hard to pict
 
 Figure 29.2 uses the eight books of [chapter 9](#9-bias-variance-and-the-sweet-spot), each a point with two numbers, pages and price. The two columns are measured in different units, so each is first **standardised**: its average is subtracted and the result divided by its standard deviation, which puts both on the same scale ([chapter 14](#14-features-telling-categories-from-numbers-and-scaling) explains why this matters). Pages and price rise together, with a correlation of 0.945, so the points lie close to one line. Projecting each book onto that line gives one number per book instead of two and keeps 97.3% of the total spread; the 2.7% lost is the grey drops. For two standardised columns the line always runs at 45 degrees, and its share of the spread is (1 + r) ÷ 2, where r is the correlation.
 
-![Eight standardised books plotted by pages and price close to a 45-degree line, with their projections onto the line shown on a number line.](/ml/book/figures/b29-2-pca.svg)
+![Eight standardised books plotted by pages and price close to a 45-degree line, with their projections onto the line shown on a number line](/ml/book/figures/b29-2-pca.svg)
 *Figure 29.2. PCA on the eight books of chapter 9 after standardising both columns. Pages and price have correlation 0.945; the first direction keeps 97.3% of the spread, leaving 2.7% in the drops.*
 
 The same squeezing is often done with the **singular value decomposition** (SVD), which writes any table of numbers as a product of three simpler tables; its leading parts give the same directions as PCA, and PCA is often computed that way.
@@ -1488,7 +1508,7 @@ The same squeezing is often done with the **singular value decomposition** (SVD)
 
 An **autoencoder** is a neural network trained to copy its input to its output through a narrow middle layer called the **code** (Figure 29.3). The half before the code is the **encoder** and the half after it the **decoder**. Because the code holds fewer numbers than the input, the network cannot copy everything and must learn to keep what matters most. In their textbook, Goodfellow, Bengio and Courville show that with a straight-line decoder and squared error an autoencoder learns the same subspace as PCA, while a bent, non-linear encoder and decoder can follow curved structure that PCA would miss. They also warn that a network given too much freedom can learn to copy without learning anything useful.
 
-![An hourglass: eighteen word counts of blurb B2 narrow through an encoder to a two-number code and widen again through a decoder.](/ml/book/figures/b29-3-autoencoder.svg)
+![An hourglass: eighteen word counts of blurb B2 narrow through an encoder to a two-number code and widen again through a decoder](/ml/book/figures/b29-3-autoencoder.svg)
 *Figure 29.3. An autoencoder squeezes the 18 word counts of B2 into a code of 2 numbers and rebuilds them. The code and the rebuilt values are left blank: no network was trained for this picture.*
 
 An autoencoder whose layers are all straight lines can do no more than PCA, so its extra reach comes from its non-linear layers, not from being a neural network as such.
@@ -1513,10 +1533,10 @@ Suppose a French customer asks what B1 says. "A quiet mystery in a small town" b
 
 In 2014 Ilya Sutskever, Oriol Vinyals and Quoc Le showed that a neural network could translate by reading the source sentence into a vector of fixed size and then writing the translation from that vector. The reader is the **encoder** and the writer the **decoder**. Both were **recurrent networks**, which take one word per step and carry a running summary forward from step to step (Figure 30.1). The summary handed from the encoder to the decoder is the **context vector**.
 
-![An encoder row reading the English blurb feeds one context vector box, which starts a decoder row writing the French words.](/ml/book/figures/b30-1-bottleneck.svg)
+![An encoder row reading the English blurb feeds one context vector box, which starts a decoder row writing the French words](/ml/book/figures/b30-1-bottleneck.svg)
 *Figure 30.1. The encoder–decoder: B1 in English is read into one fixed-size context vector, from which the decoder writes "un mystère tranquille dans une petite ville".*
 
-The trouble is the fixed size. Picture a clerk who reads a blurb aloud to a colleague who may write the translation only from notes kept on a single index card. A seven-word blurb fits on the card; a sixty-word review does not, and some of its detail has to go. Sutskever and his colleagues noticed a symptom of this: their system translated markedly better when it read each source sentence backwards, because the first source words then sat close to the first words the decoder had to write. In a paper first posted in 2014 and presented at ICLR in 2015, Dzmitry Bahdanau, Kyunghyun Cho and Yoshua Bengio suggested that this fixed-length vector was a bottleneck, and proposed a way round it.
+The trouble is the fixed size. Picture a clerk who reads a blurb aloud to a colleague who may write the translation only from notes kept on a single index card. A seven-word blurb fits on the card; a sixty-word review does not, and some of its detail has to go. Sutskever and his colleagues found that their system translated markedly better when it read each source sentence backwards; without claiming a full explanation, they put it down to the many short links this creates, since the first source words then sit close to the first words the decoder has to write. In a paper first posted in 2014 and presented at ICLR in 2015, Dzmitry Bahdanau, Kyunghyun Cho and Yoshua Bengio suggested that the fixed-length vector itself was a bottleneck, and proposed a way round it.
 
 ### Attention: a weighted look back
 
@@ -1524,14 +1544,14 @@ Keep every encoder state, not only the last. Bahdanau's encoder read the sentenc
 
 Figure 30.2 shows one step, the one that writes "tranquille". The weight on "quiet" is 0.925, and the other six words share the remaining 0.075. Each of the seven states is multiplied by its weight and the results are added, so the context for this step is almost exactly the encoder's state for "quiet", which is what a translator needs at that moment. At the next step the weights are worked out afresh, and they move to "in".
 
-![Lines from seven encoder states converge on a summing node feeding the decoder step that writes tranquille, the line from quiet by far the thickest.](/ml/book/figures/b30-2-route.svg)
+![Lines from seven encoder states converge on a summing node feeding the decoder step that writes tranquille, the line from quiet by far the thickest](/ml/book/figures/b30-2-route.svg)
 *Figure 30.2. Attention for the decoder step that writes "tranquille": weight 0.925 on quiet and 0.075 shared by the other six words. The weights come from the scoring rule of Figure 30.3.*
 
 ### The alignment map
 
 Collect the weights of every decoder step into one table and you get an **alignment map** (Figure 30.3), with one row per French word and one column per English word. Most of the bright cells run down the diagonal, because the two languages keep most of their order; at "mystère" and "tranquille" the brightness crosses over. The weights here come from a made-up scoring rule, not from a trained model: 4 points when a French word translates an English word, minus half a point for each step of distance between their positions, then softmax along each row. The distance term matters for the two copies of "a": "un" prefers the first (0.86 against 0.12) and "une" the second (0.85 against 0.12). The Bahdanau paper shows maps of this kind from its trained model, including a crossing where a French phrase reverses the order of the English adjectives. The map is also a gift to anyone who wants to check a model's work: it shows, for every output word, which input words it drew on.
 
-![A seven-by-seven heat map of weights between French and English words, bright along the diagonal except where mystère and tranquille cross.](/ml/book/figures/b30-3-alignment.svg)
+![A seven-by-seven heat map of weights between French and English words, bright along the diagonal except where mystère and tranquille cross](/ml/book/figures/b30-3-alignment.svg)
 *Figure 30.3. An alignment map from a made-up scoring rule (4 for a translation, minus 0.5 per step of distance, softmax per row). The swap at mystère and tranquille is the French adjective order; "un" and "une" each prefer the nearer "a" (0.86 and 0.85).*
 
 Looking back worked so well that in 2017 a team at Google asked whether the recurrent network was needed at all. [Chapter 31](#31-self-attention-in-plain-words) explains their answer, self-attention, and [chapter 32](#32-transformers-and-pretrained-models) the model they built from it.
@@ -1558,7 +1578,7 @@ First, score every pair of words by its dot product. Quiet against itself scores
 
 Mystery's scores are (2, 2, 2), so its weights are a third each and its output is (1, 1), mystery itself. The outputs are the hollow dots of Figure 31.1: quiet and town each lean a little towards the others, and mystery, already between them, stays where it was.
 
-![The vectors of quiet, mystery and town on a small grid beside their three-by-three dot-product scores, softmax weights and outputs.](/ml/book/figures/b31-1-three-steps.svg)
+![The vectors of quiet, mystery and town on a small grid beside their three-by-three dot-product scores, softmax weights and outputs](/ml/book/figures/b31-1-three-steps.svg)
 *Figure 31.1. Simple self-attention on quiet (2, 0), mystery (1, 1) and town (0, 2). Quiet's scores (4, 2, 0) become weights 0.867, 0.117 and 0.016, and its output is (1.851, 0.149). Mystery scores 2 with itself and 2 with quiet.*
 
 This version has no parameters at all, nothing that training could adjust. Who attends to whom is decided entirely by the word vectors, which is why Bloem stresses that whatever produces those vectors, typically an embedding layer, drives the attention.
@@ -1573,14 +1593,14 @@ $$
 
 Figure 31.2 picks the three matrices by hand to show what they can do: queries and values unchanged, keys with their two numbers swapped. Quiet's query (2, 0) now matches town's key best, so quiet puts 0.768 of its weight on town and only 0.045 on itself.
 
-![The three word vectors projected into queries, swapped keys and values, then scaled scores, weights and outputs.](/ml/book/figures/b31-2-qkv.svg)
+![The three word vectors projected into queries, swapped keys and values, then scaled scores, weights and outputs](/ml/book/figures/b31-2-qkv.svg)
 *Figure 31.2. Queries against keys, scaled by the square root of 2. With the keys' two numbers swapped, quiet puts 0.768 of its weight on town and 0.045 on itself.*
 
 ### Several heads
 
 One set of weights captures one kind of relationship at a time. **Multi-head attention** runs several attention layers side by side, each with its own three matrices, and places their outputs next to each other before a final matrix mixes them. Figure 31.3 runs two heads on our three words. Head 1, with keys as they are, keeps quiet and town mostly on themselves; head 2, with swapped keys, pairs quiet with town. In both heads mystery scores the same against all three words and spreads its weight evenly. Joined, each word carries four numbers that describe two different views of the sentence. The original transformer used 8 heads of 64 numbers each, and because each head is small the total cost is about the same as one head of full width.
 
-![Two weight tables, one per head, whose outputs are joined into four numbers per word.](/ml/book/figures/b31-3-heads.svg)
+![Two weight tables, one per head, whose outputs are joined into four numbers per word](/ml/book/figures/b31-3-heads.svg)
 *Figure 31.3. Two heads: head 1 (keys as they are) keeps quiet and town mostly on themselves, head 2 (keys swapped) pairs quiet with town, and in both mystery spreads its weight evenly. The joined outputs give each word four numbers.*
 
 ### Where am I? Position codes
@@ -1589,7 +1609,7 @@ Self-attention sees its input as a set, not a sequence. Reorder the three words 
 
 Figure 31.4 draws a four-number code for the seven positions of B1. The first pair of entries turns quickly, the second pair slowly. The two copies of "a", at positions 0 and 4, get different codes, (0, 1, 0, 1) and (−0.757, −0.654, 0.040, 0.999), so after the codes are added the two are no longer the same vector. The paper also tried position codes learned during training and found the results nearly identical.
 
-![Four small line charts of the position code values at positions 0 to 6 and a table of the codes of the two copies of a.](/ml/book/figures/b31-4-positions.svg)
+![Four small line charts of the position code values at positions 0 to 6 and a table of the codes of the two copies of a](/ml/book/figures/b31-4-positions.svg)
 *Figure 31.4. A four-number sinusoidal position code for the seven positions of B1. The two copies of "a" get (0, 1, 0, 1) at position 0 and (−0.757, −0.654, 0.040, 0.999) at position 4.*
 
 Two facts help when you watch the videos listed below. First, a word does not always attend most to itself. [Chapter 4](#4-dot-products-duality-and-the-cross-product) showed that among vectors of the same length, a vector's dot product with itself is the largest, and that a longer vector can give more, because a dot product is the two lengths multiplied by the cosine of the angle between them. In Figure 31.1, mystery scores 2 with itself and also 2 with quiet, because quiet is longer; and a vector pointing the same way as mystery but twice as long, (2, 2), would score 4 with it, twice mystery's own score. That is why a slide in Bloem's lecture says a word's weight on itself is usually the largest, not always. Second, the words that enter a language model are first turned into embeddings, and attention works on those embeddings; the step is needed because words are not numbers, whereas the pixel grids of Part IV went into their convolutions as numbers already.
@@ -1612,7 +1632,7 @@ Two facts help when you watch the videos listed below. First, a word does not al
 
 Ashish Vaswani and seven colleagues at Google posted "Attention Is All You Need" in June 2017 and presented it at NIPS that year. Their encoder is a stack of identical **blocks** (Figure 32.1). Each block has two parts: multi-head self-attention from [chapter 31](#31-self-attention-in-plain-words), and a **feed-forward network**, two small layers applied to each word's vector separately. Around each part runs a **skip connection**, which adds the part's input back to its output, as in the residual networks of [chapter 23](#23-squeeze-and-excitation-skip-connections-and-what-cnns-get-wrong), and after it comes **layer normalisation**, which shifts and rescales the numbers of each word's vector to a standard average and spread before a learned adjustment. The original model stacked 6 blocks in the encoder and 6 in the decoder, with 512 numbers per word, 8 heads and a feed-forward layer 2,048 wide.
 
-![A vertical flow of one encoder block with two skip connections, beside a table of block counts and sizes for three published models.](/ml/book/figures/b32-1-block.svg)
+![A vertical flow of one encoder block with two skip connections, beside a table of block counts and sizes for three published models](/ml/book/figures/b32-1-block.svg)
 *Figure 32.1. One transformer encoder block: self-attention and a feed-forward network, each followed by adding the input back and normalising. As published: 6 + 6 blocks and 512 numbers per word for the 2017 model; 12 and 24 blocks, 110 and 340 million parameters for BERT-Base and BERT-Large.*
 
 No step of a block waits for the previous word, so a transformer processes all the words of a sentence at once, which suits parallel hardware. The base model trained in 12 hours on 8 GPUs, and the larger version set a new best score on a standard English-to-German translation test.
@@ -1630,7 +1650,7 @@ BERT splits text into **word pieces**, frequent words whole and rare ones in fra
 
 **Fine-tuning** (Figure 32.2, bottom) starts from the pre-trained weights, adds a small new part for the task, called a head, and trains everything briefly on labelled examples. The head here has two outputs and answers "is this blurb a mystery?" from the vector at [CLS]. The paper stresses that apart from the output layers the same network serves both stages, and that fine-tuning adjusts every parameter.
 
-![Top, blurb B1 with one word hidden passes through BERT, which guesses mystery; bottom, the same BERT with a small new head answers whether B4 is a mystery.](/ml/book/figures/b32-2-pretrain.svg)
+![Top, blurb B1 with one word hidden passes through BERT, which guesses mystery; bottom, the same BERT with a small new head answers whether B4 is a mystery](/ml/book/figures/b32-2-pretrain.svg)
 *Figure 32.2. Pre-training fills in hidden words (15% of positions are chosen); fine-tuning adds a small head, here reading the output at the special first token.*
 
 Pre-training pays off most when labelled examples are scarce, which is the usual position of a small shop. In its study of model size, the BERT paper reports that the larger models were more accurate on all four tasks it tried, even one with only 3,600 labelled training examples.
@@ -1658,10 +1678,10 @@ BERT can judge how alike two sentences are if you feed it both at once, joined b
 
 A **bi-encoder** (Figure 33.1, right) runs each sentence through the network once, keeps the resulting vector and compares vectors by cosine similarity. For the same 10,000 sentences that costs about 5 seconds of encoding and about 0.01 seconds of cosines (Figure 33.2).
 
-![Left, both blurbs enter one BERT and a small head gives a score; right, each blurb passes through BERT and pooling to vectors u and v compared by cosine.](/ml/book/figures/b33-1-cross-bi.svg)
+![Left, both blurbs enter one BERT and a small head gives a score; right, each blurb passes through BERT and pooling to vectors u and v compared by cosine](/ml/book/figures/b33-1-cross-bi.svg)
 *Figure 33.1. A cross-encoder reads each pair together; a bi-encoder (SBERT) turns each blurb into a vector once and compares vectors.*
 
-![Bars on a logarithmic time axis: about 65 hours for the cross-encoder, about 5 seconds for SBERT embeddings and 0.01 seconds for the cosines.](/ml/book/figures/b33-2-cost.svg)
+![Bars on a logarithmic time axis: about 65 hours for the cross-encoder, about 5 seconds for SBERT embeddings and 0.01 seconds for the cosines](/ml/book/figures/b33-2-cost.svg)
 *Figure 33.2. The SBERT paper's costs for 10,000 sentences: 49,995,000 pairs through a cross-encoder take about 65 hours (234,000 seconds, about 46,800 times the 5 seconds SBERT needs to embed them). Times as measured by the authors on a V100 GPU.*
 
 ### Pooling and Sentence-BERT
@@ -1672,8 +1692,10 @@ BERT's output holds one vector per word piece, so a sentence vector needs **pool
 
 In Figure 33.3 the encoder is the made-up feature table of [chapter 25](#25-from-one-hot-to-embeddings), so every number can be checked: u = (0.20, 0.24, 0.03, 0.01) for B1, v = (0.20, 0.18, 0.05, 0.05) for B4, and their difference is (0.00, 0.06, 0.02, 0.04). After training the classifier is thrown away; only the encoder is kept, and sentences are compared by cosine.
 
-![Blurbs B1 and B4 pass through one shared encoder to vectors u and v, whose difference is computed and joined into twelve numbers for a classifier.](/ml/book/figures/b33-3-siamese.svg)
+![Blurbs B1 and B4 pass through one shared encoder to vectors u and v, whose difference is computed and joined into twelve numbers for a classifier](/ml/book/figures/b33-3-siamese.svg)
 *Figure 33.3. SBERT's training path with the made-up table of chapter 25 as the encoder: u = (0.20, 0.24, 0.03, 0.01), v = (0.20, 0.18, 0.05, 0.05), and their element-wise difference (0.00, 0.06, 0.02, 0.04).*
+
+Why should a classifier trained on these three labels leave behind an encoder whose cosines follow meaning? One way to picture it: the classifier sees \|u − v\|, so the labels are easiest to tell apart if the encoder puts a sentence and one that follows from it close together, and a sentence and one that contradicts it far apart. The loss never measures a cosine, though, so this picture is an intuition, not a proof; the SBERT paper points to earlier work that found NLI data good for training sentence vectors, and its own results show that it works.
 
 The paper's ablation study, which changes one ingredient at a time, shows which choices matter. After NLI training, mean pooling, the paper's default, scored 80.78, the CLS vector 79.80 and max pooling 79.07. The join mattered much more: u and v alone scored 66.04, while u, v and \|u − v\| together scored 80.78, and the authors single out the element-wise difference as the most important part. On the seven similarity tests, SBERT built on BERT-Base averaged 74.89, against 54.81 for averaged plain BERT.
 
@@ -1681,7 +1703,7 @@ The paper's ablation study, which changes one ingredient at a time, shows which 
 
 Figure 33.4 compares the five blurbs in two ways. Counted words say that B1 and B4 have nothing in common, a cosine of 0. Averaged word vectors, even the crude made-up ones of chapter 25, put them at 0.98, because both are about crime in a small place, while the bicycle blurb stays apart at 0.09. With only four made-up features the three crime blurbs look almost identical; real models with hundreds of learned numbers separate finer shades. That is the promise of sentence embeddings: search by meaning rather than by shared words.
 
-![Two five-by-five heat maps of blurb similarity, from word counts and from averaged word vectors, with the B1 and B4 cells outlined.](/ml/book/figures/b33-4-cosine.svg)
+![Two five-by-five heat maps of blurb similarity, from word counts and from averaged word vectors, with the B1 and B4 cells outlined](/ml/book/figures/b33-4-cosine.svg)
 *Figure 33.4. B1 and B4 share no word: cosine 0 by counts, 0.98 by averaged made-up word vectors. The bicycle blurb B5 stays at 0.09 from B1.*
 
 ### Newer sentence transformers
@@ -1700,12 +1722,12 @@ The documentation names all-mpnet-base-v2 as the best in quality, and says all-M
 **Watch, read, try**
 
 - [Reimers and Gurevych, Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://arxiv.org/abs/1908.10084) — the paper; the numbers in this chapter come from its sections 1, 3, 4, 6 and 7.
-- [Sentence Transformers: Meanings in Disguise (Pinecone)](https://www.pinecone.io/learn/series/nlp/sentence-embeddings/) — James Briggs's walk-through from attention to SBERT and its successors.
+- [Sentence Transformers: Meanings in Disguise (Pinecone)](https://www.pinecone.io/learn/series/nlp/sentence-embeddings/) — James Briggs's walk-through from attention to SBERT and its successors. Check any count of sentence pairs in it against this chapter's n × (n − 1) ÷ 2, just under 5 billion for 100,000 sentences, and take model scores from the sbert.net table listed below.
 - [Intro to Sentence Embeddings with Transformers (James Briggs)](https://www.youtube.com/watch?v=WS1uVMGhlWQ) — the video version of the same walk-through.
 - [Pretrained models (sbert.net)](https://www.sbert.net/docs/pretrained_models.html) — the current table of models; the link now forwards to the documentation's new address.
 - [Natural Language Inference, current page (sbert.net)](https://www.sbert.net/examples/sentence_transformer/training/nli/README.html) — where those training notes now live, with the softmax and multiple negatives ranking losses.
 - [MPNet (Hugging Face documentation)](https://huggingface.co/transformers/model_doc/mpnet.html) — the model behind all-mpnet-base-v2; the link forwards to the current documentation.
-- [Sentence Embeddings (Hugging Face Space by flax-sentence-embeddings)](https://huggingface.co/spaces/flax-sentence-embeddings/sentence-embeddings) — an interactive app for trying sentence-embedding models in the browser.
+- [Sentence Embeddings (Hugging Face Space by flax-sentence-embeddings)](https://huggingface.co/spaces/flax-sentence-embeddings/sentence-embeddings) — an interactive app for trying sentence-embedding models in the browser; in September 2026 it showed a runtime error instead of starting.
 - [Introduction to Matryoshka embedding models (Hugging Face)](https://huggingface.co/blog/matryoshka) — vectors you can cut short.
 - [ColBERT: a complete guide (Medium)](https://medium.com/@varun030403/colbert-a-complete-guide-1552468335ae) — one vector per word piece and late interaction.
 - [Customizing reusable frozen ML-embeddings with Vespa](https://blog.vespa.ai/tailoring-frozen-embeddings-with-vespa/) — keep one set of document vectors and adapt only the query side for each task.
@@ -1728,10 +1750,10 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 | backPropGrads.docx | three video links and a computation-graph slide | chapter 8 |
 | biasAndVariance.docx | forty StatQuest frames on bias, variance, cross-validation and ridge regression | chapters 9 to 11 |
 | Untitled document.docx | a pasted article on identifying the distribution of a sample | chapter 13 |
-| feraturesAndEngineering.docx | links and fragments on categorical columns, scaling, quantile normalisation, batch normalisation and PMF, PDF and CDF | chapters 12, 14, 15, 16 |
-| cnn.docx | reminders, a long link list, three pasted articles on convolutional networks, and self-attention frames | chapters 17 to 24 and 31 |
+| feraturesAndEngineering.docx | links and fragments on categorical columns, scaling, quantile normalisation, batch normalisation and PMF, PDF and CDF | chapters 12 to 16 |
+| cnn.docx | reminders, a long link list, three pasted articles on convolutional networks, and self-attention frames | chapters 4, 17 to 24, 30 and 31 |
 | filtersAndKernels.docx | an excerpt on filters as collections of kernels | chapter 18 |
-| embedding.docx | two pasted guides on word embeddings and a page on embedding models | chapters 25 to 29 |
+| embedding.docx | two pasted guides on word embeddings and a page on embedding models | chapters 25 to 29 and 33 |
 | embedding_sentence.docx | a pasted article on sentence transformers | chapters 30, 32, 33 |
 
 ## B. Glossary
@@ -1756,6 +1778,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **bias (of a neuron)** — the number a neuron adds to its weighted sum whatever the inputs are; not the same as a model's bias (chapter 7).
 - **bias–variance trade-off** — more flexibility lowers bias and raises variance, so test error is lowest somewhere in between (chapter 9).
 - **bi-encoder** — a model that turns each sentence into its own vector once, so that sentences are compared by a cheap similarity such as the cosine (chapter 33).
+- **block (transformer)** — one of the identical units a transformer stacks: multi-head self-attention and a feed-forward network, each with a skip connection and layer normalisation (chapter 32).
 - **boosting** — fitting models one after another, each to the errors the earlier ones left (chapter 9).
 - **bottleneck** — in an encoder–decoder, the single fixed-size context vector through which all information about the input must pass (chapter 30).
 - **bottleneck block** — a residual block that narrows the channels with a 1 × 1 convolution before its 3 × 3 and widens them after (chapter 22).
@@ -1777,13 +1800,14 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **context vector** — the vector an encoder hands to a decoder; one fixed vector in the plain encoder–decoder, a fresh weighted sum at every step with attention (chapter 30).
 - **context window** — the few words on each side of a centre word that count as its neighbours (chapter 27).
 - **continuous** — a quantity that can take any value in a range, such as a length (chapter 12).
+- **contradiction** — in natural language inference, the label for a pair where the second sentence contradicts the first (chapter 33).
 - **convolution (in deep learning)** — sliding a kernel over a grid, multiplying cell by cell and adding at each position; strictly a cross-correlation (chapter 17).
 - **convolution of distributions** — the distribution of a sum of two independent quantities, found by multiplying and adding matching pairs of probabilities (chapter 24).
 - **co-occurrence matrix** — a table counting how often each word appears within a window of each other word across a whole corpus (chapter 28).
 - **coordinate** — one of the numbers in a vector, saying how far it goes along one axis (chapter 1).
 - **cosine similarity** — the dot product of two vectors divided by the product of their lengths: 1 for the same direction, 0 at a right angle, −1 for opposite (chapters 25 and 27).
 - **Cramer's rule** — a way to solve a small system of linear equations by replacing one column of the matrix with the output and dividing determinants (chapter 3).
-- **cross-correlation** — convolution without flipping the kernel, which is what deep-learning libraries compute (chapter 17).
+- **cross-correlation** — convolution without flipping the kernel, which is what deep-learning libraries compute (chapter 24).
 - **cross-encoder** — a model that reads two sentences together and returns one score for the pair, accurate but needing a pass for every pair (chapter 33).
 - **cross-entropy loss** — the training penalty for a classifier: minus the logarithm of the probability it gave to the correct answer, small when it was confident and right and large when it was confident and wrong (chapter 33).
 - **cross product** — for two vectors in three dimensions, the vector perpendicular to both whose length is the area of their parallelogram (chapter 4).
@@ -1824,7 +1848,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **feature visualisation** — adjusting an image, starting from noise, until a chosen unit responds strongly, to see what the unit looks for (chapter 19).
 - **feed-forward network** — in a transformer block, two small layers applied to each word's vector separately (chapter 32).
 - **filter** — with several input channels, the stack of kernels (one per input channel) whose results are summed with one bias to give one output channel (chapter 18).
-- **fine-tuning** — continuing to train a pre-trained model briefly on a smaller labelled data set for one task (chapters 29 and 32).
+- **fine-tuning** — continuing to train a pre-trained model briefly on a smaller labelled data set for one task (chapters 19, 29 and 32).
 - **flip and slide** — reading one list backwards and shifting it along the other to line up the pairs a convolution multiplies (chapter 24).
 - **fold** — one of the blocks the data are split into for cross-validation (chapter 10).
 - **forward pass** — running a computation graph from its inputs to its output (chapter 8).
@@ -1850,7 +1874,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **inverse matrix** — the matrix that undoes a transformation, which exists exactly when the determinant is not zero (chapter 3).
 - **IQR rule** — flagging values more than 1.5 interquartile ranges beyond the quartiles (chapter 14).
 - **jump** — the distance in input pixels between neighbouring units of a layer, the product of the strides before it (chapter 21).
-- **kernel** — a small grid of weights that slides over an image, multiplying and adding at each position (chapters 17 and 18).
+- **kernel** — a small grid of weights that slides over one channel of an input, multiplying and adding at each position; with several input channels, a filter holds one kernel for each (chapters 17 and 18).
 - **key** — the description of a word that is matched against the queries of other words in attention (chapter 31).
 - **lasso** — a relative of ridge regression whose penalty uses the slopes' sizes instead of their squares, and which can set some slopes exactly to zero (chapter 11).
 - **layer** — a set of neurons that read the same inputs, computing a matrix times a vector plus a vector and then an activation (chapter 7).
@@ -1879,7 +1903,10 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **natural language inference** — deciding whether one sentence follows from another, contradicts it, or neither (chapter 33).
 - **negative sampling** — training Word2Vec to tell a true neighbour from a few randomly drawn noise words instead of scoring the whole vocabulary (chapter 27).
 - **neuron** — a unit that multiplies each input by a weight, adds a bias and passes the total through an activation function (chapter 7).
+- **neutral** — in natural language inference, the label for a pair where the second sentence neither follows from the first nor contradicts it (chapter 33).
 - **next sentence prediction** — BERT's second pre-training task: saying whether one passage really followed another (chapter 32).
+- **null hypothesis** — the assumption a test starts from, such as that a sample came from a stated distribution; a small p-value rejects it (chapter 13).
+- **numerical column** — a column of quantities, for which adding two values means something, such as page counts or prices (chapter 14).
 - **one-hot encoding** — writing a word as a row of zeros with a single 1 in the word's own column (chapter 25).
 - **ordered category** — a categorical column whose labels have a natural order, such as book condition (chapter 14).
 - **origin** — the point (0, 0) where the axes cross and every vector-arrow starts (chapter 1).
@@ -1898,6 +1925,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **pooling (in images)** — summarising each small window of a feature map by its maximum or average (chapter 20).
 - **pooling (of word vectors)** — combining the vectors of a sentence's word pieces into one sentence vector: mean, max or CLS (chapter 33).
 - **position code** — a vector added to each word's embedding that tells attention where in the sentence the word stands (chapter 31).
+- **precision** — the share of the items a model flags that really belong to the class it looks for (chapter 14).
 - **pre-training** — training a model once on a large amount of unlabelled text before adapting it to tasks (chapters 29 and 32).
 - **principal component analysis (PCA)** — finding the directions along which data spread most, the eigenvectors of the covariance matrix, and keeping only the first few (chapter 29).
 - **probability density function (PDF)** — a curve for a continuous quantity whose area between two values is the probability of landing between them (chapter 12).
@@ -1905,17 +1933,20 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **probability plot (Q–Q plot)** — a plot of a sample's sorted values against a fitted model's quantiles; a straight line means a good fit (chapter 13).
 - **probability ratio** — in GloVe, P(k given i) divided by P(k given j), large or small for words tied to one target and near 1 for words tied to both or neither (chapter 28).
 - **projection** — the point reached by dropping straight onto a line, and its distance from the origin along that line; the book calls it a shadow (chapter 1).
+- **p-value** — the chance, if the null hypothesis is true, of a result at least as far from it as the one observed (chapter 13).
 - **qsmooth** — a variant of quantile normalisation that weighs differences between groups against variation within them (chapter 15).
 - **quantile** — the value below which a chosen fraction of a distribution or sample falls; the median is the 0.5 quantile (chapter 12).
 - **quantile normalisation** — making several samples share one distribution by giving equal ranks equal values (chapter 15).
 - **query** — the description of what a word is looking for, matched against the keys of all words in attention (chapter 31).
 - **rank mean** — the average, across samples, of the values at one rank; the shared value quantile normalisation assigns to that rank (chapter 15).
+- **recall** — the share of the items that really belong to a class that a model flags (chapter 14).
 - **receptive field** — the region of the original input that can change one unit's value (chapter 21).
 - **recurrent network** — a network that takes one input per step and carries a running summary from step to step (chapter 30).
 - **regularisation** — charging a model for complexity so that it prefers simpler fits (chapters 9 and 11).
 - **ReLU** — the rectified linear unit, which returns its input when positive and 0 otherwise (chapter 7).
+- **resampling** — making a training set in which a rare class is drawn more often, or a common one less often (chapter 14).
 - **residual block** — a block that outputs F(x) + x, so its layers learn the change to make (chapter 23).
-- **ridge regression** — least squares with a penalty on the squared size of the coefficients, which trades a little bias for less variance (chapter 11).
+- **ridge regression** — least squares with a penalty on the squared size of the slopes, the intercept left unpenalised, which trades a little bias for less variance (chapter 11).
 - **right-hand rule** — curl the right hand's fingers from the first vector to the second and the thumb gives the cross product's direction (chapter 4).
 - **robust scaling** — subtracting the median and dividing by the interquartile range, which outliers barely move (chapter 14).
 - **scaled dot-product attention** — attention whose scores are query–key dot products divided by the square root of the vector length before softmax (chapter 31).
@@ -1954,6 +1985,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **training set** — the data a model is fitted to (chapter 9).
 - **transformer** — a network built from blocks of multi-head self-attention and feed-forward layers with skip connections and layer normalisation, and no recurrence (chapter 32).
 - **tuning parameter** — a setting chosen before fitting rather than learned from the data, such as a polynomial's degree or ridge regression's λ (chapters 10 and 11).
+- **unit** — one neuron of a layer, which computes a weighted sum of its inputs before its activation (chapter 16).
 - **unit vector** — a vector of length one, such as î = (1, 0) and ĵ = (0, 1) along the two axes (chapter 1).
 - **validation-set approach** — splitting the data once into a part for fitting and a part for testing (chapter 10).
 - **value** — the part of a word's description that is handed on, weighted, when attention chooses it (chapter 31).
@@ -1964,6 +1996,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 - **Weibull distribution** — a flexible two-parameter family for positive measurements, common for lifetimes (chapter 13).
 - **weight** — the number a neuron multiplies one input by, set during training (chapter 7).
 - **weighted sum** — a neuron's total before the activation, the weights times the inputs plus the bias (chapter 7).
+- **window** — the patch of an input that a kernel or a pooling step covers at one position, such as three by three pixels (chapters 17 and 20).
 - **Word2Vec** — a family of shallow networks, CBOW and skip-gram, that learn word vectors by predicting words from their neighbours or the reverse (chapter 27).
 - **word piece** — a unit of BERT's vocabulary: a frequent word whole or a fragment of a rarer one (chapter 32).
 
@@ -1971,7 +2004,7 @@ Each of the eleven note files became one or more chapters. Nothing was carried o
 
 The source of this book is a folder of eleven study documents collected while learning machine learning: about twenty-one thousand words, most of them pasted from articles and courses, and one hundred and seventy images, from screenshots of lectures, animations and web pages to figures, tables and program output taken from articles. Every chapter was written afresh in plain English from the ideas those documents pointed at, and every figure was drawn afresh.
 
-The figures are 112 SVG files written by a Rust program that lives beside this post in the site's repository. The program works out the values it draws from the same small inputs the text describes, such as the sample of page counts, the two training points of the ridge example, the six-by-six cover image and the five blurbs. Apart from those inputs, only three kinds of thing are typed in: some numbers in labels, such as sizes and simple counts; the shading of Figure 29.1, which only illustrates the idea; and the few published values that figures quote, such as GloVe's probability ratios and SBERT's timings, whose source the figure, its caption or the text beside it names. Running it twice writes the same bytes, so a figure can always be regenerated and compared with the one you are looking at.
+The figures are 114 SVG files written by a Rust program that lives beside this post in the site's repository. The program works out the values it draws from the same small inputs the text describes, such as the sample of page counts, the two training points of the ridge example, the six-by-six cover image and the five blurbs. Apart from those inputs, only three kinds of thing are typed in: some numbers in labels, such as sizes and simple counts; the shading of Figure 29.1, which only illustrates the idea; and the few published values that figures quote, such as GloVe's probability ratios and SBERT's timings, whose source the figure, its caption or the text beside it names. Running it twice writes the same bytes, so a figure can always be regenerated and compared with the one you are looking at.
 
 The printed edition is produced by the same print program that builds the site's other long documents: the post is turned into HTML, printed to double-sided A4 by a headless browser, and read back to place the page numbers in the contents and to open each part on a right-hand page.
 
@@ -1996,7 +2029,7 @@ The printed edition is produced by the same print program that builds the site's
 - **5.1** Two panels of a slanted grid laid over the square grid: on the left a green and an orange step along her basis vectors reach the point our minus four, one; on the right two fractional steps reach our minus one, two
 - **5.2** A row of four boxes joined by arrows labelled A, R and A inverse, carrying her vector minus one, two to our minus four, one, then to our turned minus one, minus four, then back to her minus five thirds, minus seven thirds, with the combined matrix below
 - **6.1** Two grids: before, three arrows with dashed lines through them; after the matrix, the green and orange arrows have grown along their own dashed lines while the blue arrow has swung off its line
-- **6.2** A U-shaped curve of the determinant against lambda from nought to four touching zero at two and three, and below it five small panels showing the parallelogram of the columns, which collapses to a segment at two and at three
+- **6.2** A U-shaped curve of the determinant against lambda from nought to four, crossing zero at two and three and dipping to minus nought point two five between them, and below it five small panels showing the parallelogram of the columns, which collapses to a segment at two and at three
 - **6.3** Left: three coloured vectors, each with a thicker image turned a quarter turn off its dashed line; right: the curve lambda squared plus one, which never comes down to zero
 - **6.4** Left: a slanted grid along the two eigenvectors with three green steps and two orange steps reaching the image of j-hat; right: the product of P inverse, M and P equal to a diagonal matrix, and the result of applying M ten times
 - **7.1** A diagram of one neuron: two input circles with weights nought point nine and minus one point two feed a weighted-sum circle with a bias of nought point three, then a ReLU box, then an output circle, with a table below for two books
@@ -2042,6 +2075,7 @@ The printed edition is produced by the same print program that builds the site's
 - **19.1** Two 4 by 16 matrices: a dense one with 64 different weights, and the convolution's matrix in which the nine kernel weights a to i repeat, shifted, in every row, with zeros elsewhere
 - **19.2** The 8 by 8 image with a bright block, the Sobel kernel, and the 6 by 6 output with negative numbers along the left edge, positive along the right, and zeros elsewhere
 - **19.3** Left, the 8 by 8 image with two outlined 3 by 3 patches and the matching output cells; right, two bars on a log scale comparing the weights of a dense layer and a convolution
+- **19.4** Top, a 64 by 64 colour photo shrinking through two stages of convolution and pooling, drawn as stacks of maps; bottom, the 16 maps laid out as one list of 4,096 numbers feeding two fully connected layers and a softmax that gives three probabilities
 - **20.1** A 4 by 4 grid split into four coloured 2 by 2 windows with each window's largest value marked, and the resulting max-pooled and average-pooled 2 by 2 grids
 - **20.2** Two columns, before and after shifting a bright bar one cell right: the input strips, the detector outputs, which move with the bar, and the maximum over each half, where the peak 27 stays in the same cell
 - **21.1** Two panels of units in rows from the input up to layer 3, with lines from one top unit to every unit it depends on; with stride 1 it reaches 7 input pixels, with stride 2 in the first layer 11
@@ -2057,37 +2091,38 @@ The printed edition is produced by the same print program that builds the site's
 - **23.3** Bars on a log axis for four image sizes showing how far a linear score can move when every pixel changes by 0.007: from about 0.003 for 36 pixels to about 10.5 for 150,528
 - **24.1** Two small bar charts of the books bought by customers A and B, and a larger bar chart of their total from 2 to 12 with the bar for 5 in orange
 - **24.2** Three frames for totals 3, 5 and 7, each with customer A's probabilities in a row, customer B's reversed and shifted underneath, the products of aligned pairs and their sum
-- **25.1** Two grids side by side: eleven words written as one-hot rows on the left and as four hand-set feature values on the right.
-- **25.2** A scatter plot of the eleven words in which crime words, place words, food words and tool words form four separate groups.
-- **25.3** A one-hot column with a single 1 at detective beside the feature table, whose detective row is outlined and repeated as the result.
-- **25.4** Three texts of different lengths pass through an embedding model and come out as rows of equal length, two of which feed a cosine box.
-- **26.1** Two grids of word counts, eighteen words down the side and the five blurbs across, with most cells zero.
-- **26.2** A table for the six words of blurb B1 with their counts, document frequencies, idf values and tf-idf bars.
-- **26.3** Two five-by-five heat maps of blurb similarity, from raw counts on the left and from tf-idf weights on the right.
-- **26.4** Blurb B4 and its reversal, the village returns to the detective, feed identical rows of counts.
-- **27.1** Blurb B2 drawn twice as word boxes, with a dashed window of two words on each side around detective and then around quiet.
-- **27.2** Two flow diagrams: CBOW averages four neighbours to guess detective, and skip-gram uses detective to guess each neighbour.
-- **27.3** A one-hot column with a 1 at mystery beside an eighteen-by-two table of trained numbers, whose mystery row is outlined.
-- **27.4** Left, three pairs of arrows at 0, 90 and 180 degrees; right, six trained word vectors drawn as directions from one point.
-- **28.1** An eight-by-eight heat map of how often each word of B1 and B2 sits next to each other word, with row totals.
-- **28.2** A table of the probability of each word appearing beside quiet and beside small, with the ratio of the two.
-- **28.3** Bars on a logarithmic scale showing probability ratios of 8.9 for solid, 0.085 for gas, 1.36 for water and 0.96 for fashion.
-- **28.4** A curve rising from 0 to 1 as the co-occurrence count goes from 0 to 100, then flat.
-- **29.1** Top, the word book alone goes through a lookup table to one vector; bottom, two sentences using book go through a contextual model to two different vectors.
-- **29.2** Eight standardised books plotted by pages and price close to a 45-degree line, with their projections onto the line shown on a number line.
-- **29.3** An hourglass: eighteen word counts of blurb B2 narrow through an encoder to a two-number code and widen again through a decoder.
-- **30.1** An encoder row reading the English blurb feeds one context vector box, which starts a decoder row writing the French words.
-- **30.2** Lines from seven encoder states converge on a summing node feeding the decoder step that writes tranquille, the line from quiet by far the thickest.
-- **30.3** A seven-by-seven heat map of weights between French and English words, bright along the diagonal except where mystère and tranquille cross.
-- **31.1** The vectors of quiet, mystery and town on a small grid beside their three-by-three dot-product scores, softmax weights and outputs.
-- **31.2** The three word vectors projected into queries, swapped keys and values, then scaled scores, weights and outputs.
-- **31.3** Two weight tables, one per head, whose outputs are joined into four numbers per word.
-- **31.4** Four small line charts of the position code values at positions 0 to 6 and a table of the codes of the two copies of a.
-- **32.1** A vertical flow of one encoder block with two skip connections, beside a table of block counts and sizes for three published models.
-- **32.2** Top, blurb B1 with one word hidden passes through BERT, which guesses mystery; bottom, the same BERT with a small new head answers whether B4 is a mystery.
-- **33.1** Left, both blurbs enter one BERT and a small head gives a score; right, each blurb passes through BERT and pooling to vectors u and v compared by cosine.
-- **33.2** Bars on a logarithmic time axis: about 65 hours for the cross-encoder, about 5 seconds for SBERT embeddings and 0.01 seconds for the cosines.
-- **33.3** Blurbs B1 and B4 pass through one shared encoder to vectors u and v, whose difference is computed and joined into twelve numbers for a classifier.
-- **33.4** Two five-by-five heat maps of blurb similarity, from word counts and from averaged word vectors, with the B1 and B4 cells outlined.
+- **25.1** Two grids side by side: eleven words written as one-hot rows on the left and as four hand-set feature values on the right
+- **25.2** A scatter plot of the eleven words in which crime words, place words, food words and tool words form four separate groups
+- **25.3** A one-hot column with a single 1 at detective beside the feature table, whose detective row is outlined and repeated as the result
+- **25.4** Three texts of different lengths pass through an embedding model and come out as rows of equal length, two of which feed a cosine box
+- **26.1** Two grids of word counts, eighteen words down the side and the five blurbs across, with most cells zero
+- **26.2** A table for the six words of blurb B1 with their counts, document frequencies, idf values and tf-idf bars
+- **26.3** Two five-by-five heat maps of blurb similarity, from raw counts on the left and from tf-idf weights on the right
+- **26.4** Blurb B4 and the same words with detective and village swapped, the village returns to the detective, feed identical rows of counts
+- **27.1** Blurb B2 drawn twice as word boxes, with a dashed window of two words on each side around detective and then around quiet
+- **27.2** Two flow diagrams: CBOW averages four neighbours to guess detective, and skip-gram uses detective to guess each neighbour
+- **27.3** A one-hot column with a 1 at mystery beside an eighteen-by-two table of trained numbers, whose mystery row is outlined
+- **27.4** Left, three pairs of arrows at 0, 90 and 180 degrees; right, six trained word vectors drawn as directions from one point
+- **27.5** Left, six words at made-up positions, each printed with its coordinates, and three identical grey arrows from man, uncle and king to woman, aunt and queen; right, the words of the trained table ranked by cosine with mystery minus quiet plus small, town fourth
+- **28.1** An eight-by-eight heat map of how often each word of B1 and B2 sits next to each other word, with row totals
+- **28.2** A table of the probability of each word appearing beside quiet and beside small, with the ratio of the two
+- **28.3** Bars on a logarithmic scale showing probability ratios of 8.9 for solid, 0.085 for gas, 1.36 for water and 0.96 for fashion
+- **28.4** A curve rising from 0 to 1 as the co-occurrence count goes from 0 to 100, then flat
+- **29.1** Top, the word book alone goes through a lookup table to one vector; bottom, two sentences using book go through a contextual model to two different vectors
+- **29.2** Eight standardised books plotted by pages and price close to a 45-degree line, with their projections onto the line shown on a number line
+- **29.3** An hourglass: eighteen word counts of blurb B2 narrow through an encoder to a two-number code and widen again through a decoder
+- **30.1** An encoder row reading the English blurb feeds one context vector box, which starts a decoder row writing the French words
+- **30.2** Lines from seven encoder states converge on a summing node feeding the decoder step that writes tranquille, the line from quiet by far the thickest
+- **30.3** A seven-by-seven heat map of weights between French and English words, bright along the diagonal except where mystère and tranquille cross
+- **31.1** The vectors of quiet, mystery and town on a small grid beside their three-by-three dot-product scores, softmax weights and outputs
+- **31.2** The three word vectors projected into queries, swapped keys and values, then scaled scores, weights and outputs
+- **31.3** Two weight tables, one per head, whose outputs are joined into four numbers per word
+- **31.4** Four small line charts of the position code values at positions 0 to 6 and a table of the codes of the two copies of a
+- **32.1** A vertical flow of one encoder block with two skip connections, beside a table of block counts and sizes for three published models
+- **32.2** Top, blurb B1 with one word hidden passes through BERT, which guesses mystery; bottom, the same BERT with a small new head answers whether B4 is a mystery
+- **33.1** Left, both blurbs enter one BERT and a small head gives a score; right, each blurb passes through BERT and pooling to vectors u and v compared by cosine
+- **33.2** Bars on a logarithmic time axis: about 65 hours for the cross-encoder, about 5 seconds for SBERT embeddings and 0.01 seconds for the cosines
+- **33.3** Blurbs B1 and B4 pass through one shared encoder to vectors u and v, whose difference is computed and joined into twelve numbers for a classifier
+- **33.4** Two five-by-five heat maps of blurb similarity, from word counts and from averaged word vectors, with the B1 and B4 cells outlined
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="title desc">
-<title id="title">A blurb and its back-to-front twin, which says something quite different, produce exactly the same bag of words</title>
-<desc id="desc">Two sentences drawn as rows of word boxes, one the reverse story of the other, each feeding an arrow into its count row over five words; the two count rows are identical.</desc>
+<title id="title">A blurb and the same words with detective and village swapped, which says something quite different, produce exactly the same bag of words</title>
+<desc id="desc">Two sentences drawn as rows of word boxes, the second the first with detective and village swapped, each feeding an arrow into its count row over five words; the two count rows are identical.</desc>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
 <rect width="720" height="250" fill="#fcfcfb"/>
 <g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
@@ -56,6 +56,6 @@
 <text x="614" y="157" text-anchor="middle">1</text>
 <rect x="644" y="140" width="60" height="26" rx="2" fill="#6da7ec" stroke="#e1e0d9" stroke-width="1"/>
 <text x="674" y="157" text-anchor="middle">1</text>
-<text x="360" y="214" text-anchor="middle">identical rows: the bag cannot tell the blurb from its back-to-front twin</text>
+<text x="360" y="214" text-anchor="middle">identical rows: the bag cannot tell the blurb from the same words with two swapped</text>
 </g>
 </svg>

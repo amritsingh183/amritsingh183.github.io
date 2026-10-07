@@ -575,6 +575,24 @@ table tr:hover {
     color: #00CED1;
 }
 
+/* On a phone a table or a displayed formula wider than the screen scrolls sideways inside its own box instead of
+   widening the page. The cells keep their borders, so the table box needs none. Screen only: the print block keeps
+   its own rules. */
+@media screen and (max-width: 600px) {
+    .post-content table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        border: 0;
+    }
+
+    .post-content mjx-container[display="true"] {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
 /* ===== Site Header ===== */
 .site-header {
     border-bottom: 2px solid var(--primary);
@@ -1335,12 +1353,36 @@ dd {
     /* ================================================================================
        (B) CLEAN LOOK: white paper, dark ink, serif body, sans headings, Menlo code.
        ================================================================================ */
+    /* Charter has no ĵ (U+0135). Chrome then builds it from j and a combining circumflex, which
+       Charter does not place over the j, so the hat prints to the left of it. "Charter J" lends
+       that one letter from Iowan Old Style, the next serif in the stack, and nothing else
+       (unicode-range); where Iowan Old Style is missing, the face is skipped. */
+    @font-face {
+        font-family: "Charter J";
+        src: local("IowanOldStyle-Roman"), local("Iowan Old Style Roman");
+        unicode-range: U+0135;
+    }
+
+    @font-face {
+        font-family: "Charter J";
+        font-style: italic;
+        src: local("IowanOldStyle-Italic"), local("Iowan Old Style Italic");
+        unicode-range: U+0135;
+    }
+
+    @font-face {
+        font-family: "Charter J";
+        font-weight: bold;
+        src: local("IowanOldStyle-Bold"), local("Iowan Old Style Bold");
+        unicode-range: U+0135;
+    }
+
     /* The 0.5 pt right inset keeps full-width rules and frames inside the page area; see
        (D)'s body rule for why the 658 px column overshoots it */
     html:not([data-print]) body {
         background: #fff none;
         color: #000;
-        font-family: Charter, "Iowan Old Style", Georgia, "Times New Roman", Times, serif;
+        font-family: "Charter J", Charter, "Iowan Old Style", Georgia, "Times New Roman", Times, serif;
         padding: 0 0.5pt 0 0;
     }
 

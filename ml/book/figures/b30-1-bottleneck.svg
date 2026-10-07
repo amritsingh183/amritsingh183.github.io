@@ -30,7 +30,7 @@
 <rect x="514" y="50" width="116" height="44" rx="2" fill="#86b6ef" stroke="#eb6834" stroke-width="1.5"/>
 <text x="572" y="69" text-anchor="middle">context vector</text>
 <text x="572" y="85" fill="#52514e" text-anchor="middle">one fixed size</text>
-<text x="572" y="112" fill="#eb6834" text-anchor="middle">the bottleneck</text>
+<text x="580" y="116" fill="#eb6834">the bottleneck</text>
 <path d="M572 94 L572 150 L52 150 L52 170" fill="none" stroke="#52514e" stroke-width="1.5"/>
 <line x1="52" y1="168" x2="52" y2="184" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
 <rect x="30" y="186" width="44" height="30" rx="2" fill="#f0efec" stroke="#eb6834" stroke-width="1"/>

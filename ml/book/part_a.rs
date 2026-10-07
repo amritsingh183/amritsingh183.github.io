@@ -589,16 +589,75 @@ fn grid(s: &mut Svg, fr: &Frame, numbers: bool) {
         s.line(fr.px(fr.x0), fr.py(y), fr.px(fr.x1), fr.py(y), if k == 0 { tok::AXIS } else { tok::GRID }, 1.0);
     }
     if numbers {
-        let y_lab = if fr.y0 <= 0.0 && fr.y1 >= 0.0 { fr.py(0.0) + 13.0 } else { fr.bottom() + 13.0 };
-        for k in xa..=xb {
-            if k != 0 {
-                s.text(fr.px(k as f64), y_lab, &f(k as f64), 11, tok::MUTED, Anchor::Middle);
-            }
+        for n in tick_numbers(fr) {
+            let (x, y, anchor) = n.at;
+            s.text(x, y, &n.text, 11, tok::MUTED, anchor);
         }
-        let x_lab = if fr.x0 <= 0.0 && fr.x1 >= 0.0 { fr.px(0.0) - 5.0 } else { fr.left - 5.0 };
-        for k in ya..=yb {
-            if k != 0 {
-                s.text(x_lab, fr.py(k as f64) + 4.0, &f(k as f64), 11, tok::MUTED, Anchor::End);
+    }
+}
+
+/// A tick number of `grid`: its text, where `grid` writes it, and the mirror place across its axis (x numbers above
+/// the x-axis, y numbers to the right of the y-axis), which exists only while that axis is in view.
+struct TickNumber {
+    text: String,
+    at: (f64, f64, Anchor),
+    mirror: Option<(f64, f64, Anchor)>,
+}
+
+/// Where `grid` writes its tick numbers: beside the axes when they are in view, else along the frame's bottom and
+/// left edges; x numbers first, then y numbers.
+fn tick_numbers(fr: &Frame) -> Vec<TickNumber> {
+    let (xa, xb) = (fr.x0.ceil() as i64, fr.x1.floor() as i64);
+    let (ya, yb) = (fr.y0.ceil() as i64, fr.y1.floor() as i64);
+    let x_axis = fr.y0 <= 0.0 && fr.y1 >= 0.0;
+    let y_axis = fr.x0 <= 0.0 && fr.x1 >= 0.0;
+    let mut out = Vec::new();
+    let y_lab = if x_axis { fr.py(0.0) + 13.0 } else { fr.bottom() + 13.0 };
+    for k in (xa..=xb).filter(|k| *k != 0) {
+        let x = fr.px(k as f64);
+        let mirror = x_axis.then(|| (x, fr.py(0.0) - 6.0, Anchor::Middle));
+        out.push(TickNumber { text: f(k as f64), at: (x, y_lab, Anchor::Middle), mirror });
+    }
+    let x_lab = if y_axis { fr.px(0.0) - 5.0 } else { fr.left - 5.0 };
+    for k in (ya..=yb).filter(|k| *k != 0) {
+        let y = fr.py(k as f64) + 4.0;
+        let mirror = y_axis.then(|| (fr.px(0.0) + 5.0, y, Anchor::Start));
+        out.push(TickNumber { text: f(k as f64), at: (x_lab, y, Anchor::End), mirror });
+    }
+    out
+}
+
+/// The canvas segments a hatched figure must keep clear: the polygon's edges and an arrow from the origin to each tip.
+fn outline_and_arrows(fr: &Frame, corners: &[V2], tips: &[V2]) -> Vec<(V2, V2)> {
+    let mut out: Vec<(V2, V2)> = (0..corners.len()).map(|i| (fr.pt(corners[i]), fr.pt(corners[(i + 1) % corners.len()]))).collect();
+    out.extend(tips.iter().map(|t| (fr.pt((0.0, 0.0)), fr.pt(*t))));
+    out
+}
+
+/// The tick numbers of `grid`, each on a patch of the surface colour (see `tag`), for a grid whose numbers sit on a
+/// hatched area: drawn after the hatching, the patch hides the hatch and grid lines under the number. A number whose
+/// patch would touch one of the canvas segments in `keep_clear` (the edges and arrows drawn in the figure) moves to
+/// its mirror place across the axis, and is left out if that place is not clear either, so that no patch cuts an
+/// edge or an arrow and no edge or arrow crosses a number.
+fn grid_numbers(s: &mut Svg, fr: &Frame, keep_clear: &[(V2, V2)]) {
+    // the patch `tag` lays under a 12-unit label, as a window in canvas coordinates so that `clip` can test a segment
+    let clear = |x: f64, y: f64, t: &str, anchor: &Anchor| {
+        let w = text_w(t, 12) + 6.0;
+        let x0 = match anchor {
+            Anchor::Start => x - 3.0,
+            Anchor::Middle => x - w / 2.0,
+            Anchor::End => x - w + 3.0,
+        };
+        let patch = Frame { left: 0.0, top: 0.0, sx: 1.0, sy: 1.0, x0, x1: x0 + w, y0: y - 12.0, y1: y + 5.0 };
+        keep_clear.iter().all(|(a, b)| clip(&patch, *a, *b).is_none())
+    };
+    for n in tick_numbers(fr) {
+        let (x, y, anchor) = n.at;
+        if clear(x, y, &n.text, &anchor) {
+            tag(s, x, y, &n.text, 12, tok::MUTED, anchor);
+        } else if let Some((mx, my, manchor)) = n.mirror {
+            if clear(mx, my, &n.text, &manchor) {
+                tag(s, mx, my, &n.text, 12, tok::MUTED, manchor);
             }
         }
     }
@@ -1030,9 +1089,11 @@ fn fig_2_4() -> Figure {
     let l = Frame::square(44.0, 44.0, 42.0, (-3.6, 1.6), (-1.6, 2.6));
     let r = Frame::square(404.0, 44.0, 42.0, (-3.6, 1.6), (-1.6, 2.6));
     for (fr, m, head) in [(&l, ra, "first A, then R: R·A"), (&r, ar, "first R, then A: A·R")] {
-        grid(&mut s, fr, true);
+        grid(&mut s, fr, false);
         let (c1, c2) = (col(m, 0), col(m, 1));
-        hatch_d(&mut s, fr, &[(0.0, 0.0), c1, add2(c1, c2), c2], tok::RAMP[2], tok::S1);
+        let corners = [(0.0, 0.0), c1, add2(c1, c2), c2];
+        hatch_d(&mut s, fr, &corners, tok::RAMP[2], tok::S1);
+        grid_numbers(&mut s, fr, &outline_and_arrows(fr, &corners, &[c1, c2]));
         arrow_d(&mut s, fr, (0.0, 0.0), c1, tok::S3, 2.5);
         arrow_d(&mut s, fr, (0.0, 0.0), c2, tok::S2, 2.5);
         s.text_bold(fr.cx(), 26.0, head, 13, tok::INK, Anchor::Middle);
@@ -1181,15 +1242,19 @@ fn cramer_fig(which: usize) -> Figure {
     } else {
         Frame::square(350.0, 40.0, 44.0, (-4.6, 3.0), (-2.5, 2.5))
     };
-    grid(&mut s, &l, true);
-    hatch_d(&mut s, &l, &[(0.0, 0.0), e1, add2(e1, e2), e2], tok::RAMP[2], tok::S1);
+    grid(&mut s, &l, false);
+    let before = [(0.0, 0.0), e1, add2(e1, e2), e2];
+    hatch_d(&mut s, &l, &before, tok::RAMP[2], tok::S1);
+    grid_numbers(&mut s, &l, &outline_and_arrows(&l, &before, &[base, v]));
     arrow_d(&mut s, &l, (0.0, 0.0), base, base_c, 2.5);
     arrow_d(&mut s, &l, (0.0, 0.0), v, tok::S1, 2.5);
     tag(&mut s, l.px(v.0) - 4.0, l.py(v.1) + 18.0, "(x, y): unknown", 12, tok::S1, Anchor::Middle);
     s.text_bold(l.cx(), 26.0, "before", 13, tok::INK, Anchor::Middle);
-    grid(&mut s, &r, true);
+    grid(&mut s, &r, false);
     tgrid(&mut s, &r, CR_A);
-    hatch_d(&mut s, &r, &[(0.0, 0.0), f1, add2(f1, f2), f2], tok::RAMP[2], tok::S1);
+    let after = [(0.0, 0.0), f1, add2(f1, f2), f2];
+    hatch_d(&mut s, &r, &after, tok::RAMP[2], tok::S1);
+    grid_numbers(&mut s, &r, &outline_and_arrows(&r, &after, &[base_img, CR_B]));
     arrow_d(&mut s, &r, (0.0, 0.0), base_img, base_c, 2.5);
     arrow_d(&mut s, &r, (0.0, 0.0), CR_B, tok::S1, 2.5);
     tag(&mut s, r.px(CR_B.0) + 4.0, r.py(CR_B.1) + 20.0, &format!("output {}: known", v2s(CR_B)), 12, tok::S1, Anchor::Start);
@@ -1350,18 +1415,28 @@ fn fig_4_2() -> Figure {
     seg(&mut s, &fr, sc2(-12.0, u), sc2(12.0, u), tok::INK2, 1.5);
     for k in -2..=5 {
         let val = step * k as f64;
-        let q = sc2(val / wl, u);
-        let p = fr.pt(q);
+        let p = fr.pt(sc2(val / wl, u));
         s.line(p.0 - 4.0 * u.0, p.1 + 4.0 * u.1, p.0 + 4.0 * u.0, p.1 - 4.0 * u.1, tok::INK2, 1.5);
-        if (fr.x0..=fr.x1).contains(&q.0) && (fr.y0..=fr.y1).contains(&q.1) {
-            tag(&mut s, p.0 + 8.0, p.1 + 12.0, &f(val), 12, tok::INK2, Anchor::Start);
-        }
     }
     for (p, c) in [((1.0, 0.0), tok::S3), ((0.0, 1.0), tok::S2), (PV, tok::S1)] {
         let land = sc2(fv(p) / wl, u);
         dash_d(&mut s, &fr, p, land, c, 1.2);
         arrow_d(&mut s, &fr, (0.0, 0.0), p, c, 2.5);
         s.dot(fr.px(land.0), fr.py(land.1), 4.0, c, None);
+    }
+    // Tick numbers last, each above its tick, between the number line and the dashed line through the tick (the
+    // projections arrive from below); 0, where î and ĵ start, sits below the origin instead.
+    for k in -2..=5 {
+        let val = step * k as f64;
+        let q = sc2(val / wl, u);
+        let p = fr.pt(q);
+        if (fr.x0..=fr.x1).contains(&q.0) && (fr.y0..=fr.y1).contains(&q.1) {
+            if k == 0 {
+                tag(&mut s, p.0 + 3.0, p.1 + 24.0, &f(val), 12, tok::INK2, Anchor::Middle);
+            } else {
+                tag(&mut s, p.0 - 3.0, p.1 - 18.0, &f(val), 12, tok::INK2, Anchor::Middle);
+            }
+        }
     }
     tag(&mut s, fr.px(PV.0) + 6.0, fr.py(PV.1) + 16.0, &v2s(PV), 12, tok::S1, Anchor::Start);
     let x = 360.0;
@@ -1763,8 +1838,10 @@ fn fig_6_1() -> Figure {
         arrow_d(&mut s, fr, (0.0, 0.0), a, tok::S3, 2.5);
         arrow_d(&mut s, fr, (0.0, 0.0), b, tok::S2, 2.5);
         arrow_d(&mut s, fr, (0.0, 0.0), c, tok::S1, 2.5);
-        tip_label(&mut s, fr, a, &v2s(a), 12, tok::S3);
-        tip_label(&mut s, fr, b, &v2s(b), 12, tok::S2);
+        // a and b lie on their own dashed lines, which run on past the tips, so their labels sit beside the tip rather
+        // than beyond it: a's below its line, b's to the right of its line
+        tag(&mut s, fr.px(a.0) + 6.0, fr.py(a.1) + 18.0, &v2s(a), 12, tok::S3, Anchor::Start);
+        tag(&mut s, fr.px(b.0) + 12.0, fr.py(b.1) - 4.0, &v2s(b), 12, tok::S2, Anchor::Start);
         tip_label(&mut s, fr, c, &v2s(c), 12, tok::S1);
     }
     s.text_bold(l.cx(), 26.0, "before", 13, tok::INK, Anchor::Middle);
@@ -2526,8 +2603,14 @@ fn fig_9_3() -> Figure {
         for p in pts.iter().filter(|p| p.1 <= fr.y1) {
             s.dot(fr.px(p.0), fr.py(p.1), 4.0, colour, None);
         }
-        let last = pts[pts.len() - 1];
-        s.text(fr.px(last.0) - 10.0, fr.py(last.1) + if series == 0 { -8.0 } else { 4.0 }, name, 12, colour, Anchor::End);
+        if series == 0 {
+            // the training line drops to 0 at the last degree, so its name sits under the segment before that drop
+            let (p, q) = (pts[pts.len() - 3], pts[pts.len() - 2]);
+            s.text(fr.px((p.0 + q.0) / 2.0), fr.py(p.1.max(q.1)) + 18.0, name, 12, colour, Anchor::Middle);
+        } else {
+            let last = pts[pts.len() - 1];
+            s.text(fr.px(last.0) - 10.0, fr.py(last.1) + 4.0, name, 12, colour, Anchor::End);
+        }
     }
     for (d, _) in off.iter() {
         s.arrow(fr.px(*d as f64), fr.top + 26.0, fr.px(*d as f64), fr.top + 4.0, None);

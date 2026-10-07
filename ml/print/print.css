@@ -1,4 +1,5 @@
-/* A4 print stylesheet for the two ML posts (_posts/2026-09-28-rust-candle-ml-guide.md, _posts/2026-09-28-rust-ml-handbook.md).
+/* A4 print stylesheet for the three ML posts (_posts/2026-09-28-rust-candle-ml-guide.md,
+   _posts/2026-09-28-rust-ml-handbook.md, _posts/2026-09-29-ml-drawn-out.md).
    make_print.rs inlines this file into the page it prints with headless Chrome and appends the
    generated @page rules that carry the running-head strings. Values follow the site's print block
    (assets/main.css, 2026-09-21) unless a comment gives the reason for a difference.
@@ -67,6 +68,29 @@
 }
 
 /* ---- Body. No canvas fill: paper is white, and a fill would paint every blank page ---- */
+/* Charter has no ĵ (U+0135). Chrome then builds it from j and a combining circumflex, which Charter does not place
+   over the j, so the hat prints to the left of it. "Charter J" lends that one letter from Iowan Old Style, the next
+   serif in the stack, and nothing else (unicode-range); where Iowan Old Style is missing, the face is skipped. */
+@font-face {
+    font-family: "Charter J";
+    src: local("IowanOldStyle-Roman"), local("Iowan Old Style Roman");
+    unicode-range: U+0135;
+}
+
+@font-face {
+    font-family: "Charter J";
+    font-style: italic;
+    src: local("IowanOldStyle-Italic"), local("Iowan Old Style Italic");
+    unicode-range: U+0135;
+}
+
+@font-face {
+    font-family: "Charter J";
+    font-weight: bold;
+    src: local("IowanOldStyle-Bold"), local("Iowan Old Style Bold");
+    unicode-range: U+0135;
+}
+
 html {
     font-size: 11pt;
 }
@@ -74,7 +98,7 @@ html {
 body {
     margin: 0;
     color: #000;
-    font: 11pt/1.4 Charter, "Iowan Old Style", Georgia, "Times New Roman", serif;
+    font: 11pt/1.4 "Charter J", Charter, "Iowan Old Style", Georgia, "Times New Roman", serif;
 }
 
 .blank {
@@ -243,6 +267,13 @@ blockquote code {
    build marks "tall" cannot share a page with one, so it is not asked to. ---- */
 p:not(:has(> img)):has(+ div.sourceCode:not(.tall)),
 p:not(:has(> img)):has(+ pre:not(.tall)) {
+    break-after: avoid;
+}
+
+/* ---- A label that is a paragraph of one bold run, such as "Watch, read, try", stays on the page where its list
+   begins, and a lead-in paragraph stays on the page where its display formula begins ---- */
+p:has(> strong:only-child):has(+ ul, + ol),
+p:has(+ p > math[display="block"]) {
     break-after: avoid;
 }
 
@@ -448,7 +479,8 @@ p:has(> math[display="block"]) {
 }
 
 /* ---- Contents: entries with dotted leaders and the page number on the right. The 0.3 em gaps (0.5 em until
-   2026-09-29) let a 41-line contents such as the third post's fit on one page ---- */
+   2026-09-29) keep a contents compact; a longer one, such as the third post's with its appendix entries, continues on
+   the next page ---- */
 ul.toc {
     list-style: none;
     padding: 0;
@@ -461,8 +493,11 @@ ul.toc ul {
     margin: 0.1em 0 0.3em;
 }
 
+/* A top-level entry stays on one page with the entries under it where they fit, so that a part's line, or the
+   appendix's, never ends a page apart from its chapters */
 ul.toc > li {
     margin-top: 0.3em;
+    break-inside: avoid;
 }
 
 ul.toc ul li {

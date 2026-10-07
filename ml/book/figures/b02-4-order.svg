@@ -13,13 +13,6 @@
 <line x1="44" y1="153.2" x2="262.4" y2="153.2" stroke="#c3c2b7" stroke-width="1"/>
 <line x1="44" y1="111.2" x2="262.4" y2="111.2" stroke="#e1e0d9" stroke-width="1"/>
 <line x1="44" y1="69.2" x2="262.4" y2="69.2" stroke="#e1e0d9" stroke-width="1"/>
-<text x="69.2" y="166.2" fill="#898781" text-anchor="middle">−3</text>
-<text x="111.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
-<text x="153.2" y="166.2" fill="#898781" text-anchor="middle">−1</text>
-<text x="237.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
-<text x="190.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
-<text x="190.2" y="115.2" fill="#898781" text-anchor="end">1</text>
-<text x="190.2" y="73.2" fill="#898781" text-anchor="end">2</text>
 <line x1="112.5" y1="113.8" x2="154.5" y2="71.8" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="114.4" y1="117.6" x2="156.4" y2="75.6" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="116.3" y1="121.3" x2="158.3" y2="79.3" stroke="#9ec5f4" stroke-width="1"/>
@@ -43,6 +36,20 @@
 <line x1="150.2" y1="189.2" x2="192.2" y2="147.2" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="152.1" y1="193.0" x2="194.1" y2="151.0" stroke="#9ec5f4" stroke-width="1"/>
 <path d="M195.2 153.2 L153.2 69.2 L111.2 111.2 L153.2 195.2 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<rect x="59.5" y="154.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="69.2" y="166.2" fill="#898781" text-anchor="middle">−3</text>
+<rect x="101.5" y="154.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="111.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
+<rect x="143.5" y="154.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="153.2" y="166.2" fill="#898781" text-anchor="middle">−1</text>
+<rect x="230.8" y="154.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="237.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
+<rect x="173.8" y="187.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="190.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
+<rect x="180.5" y="103.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="190.2" y="115.2" fill="#898781" text-anchor="end">1</text>
+<rect x="180.5" y="61.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="190.2" y="73.2" fill="#898781" text-anchor="end">2</text>
 <line x1="195.2" y1="153.2" x2="153.6" y2="70.1" stroke="#1baf7a" stroke-width="2.5"/>
 <path d="M153.6 78.2 L153.2 69.2 L160.2 74.9" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
 <line x1="195.2" y1="153.2" x2="153.9" y2="194.5" stroke="#eb6834" stroke-width="2.5"/>
@@ -67,13 +74,6 @@
 <line x1="404" y1="153.2" x2="622.4" y2="153.2" stroke="#c3c2b7" stroke-width="1"/>
 <line x1="404" y1="111.2" x2="622.4" y2="111.2" stroke="#e1e0d9" stroke-width="1"/>
 <line x1="404" y1="69.2" x2="622.4" y2="69.2" stroke="#e1e0d9" stroke-width="1"/>
-<text x="429.2" y="166.2" fill="#898781" text-anchor="middle">−3</text>
-<text x="471.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
-<text x="513.2" y="166.2" fill="#898781" text-anchor="middle">−1</text>
-<text x="597.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
-<text x="550.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
-<text x="550.2" y="115.2" fill="#898781" text-anchor="end">1</text>
-<text x="550.2" y="73.2" fill="#898781" text-anchor="end">2</text>
 <line x1="429.3" y1="153.3" x2="429.7" y2="152.9" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="432.2" y1="156.2" x2="441.0" y2="147.3" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="435.0" y1="159.0" x2="452.3" y2="141.6" stroke="#9ec5f4" stroke-width="1"/>
@@ -98,6 +98,18 @@
 <line x1="541.3" y1="160.2" x2="551.7" y2="149.7" stroke="#9ec5f4" stroke-width="1"/>
 <line x1="552.6" y1="154.5" x2="554.6" y2="152.6" stroke="#9ec5f4" stroke-width="1"/>
 <path d="M555.2 153.2 L513.2 111.2 L429.2 153.2 L471.2 195.2 Z" fill="none" stroke="#2a78d6" stroke-width="1.2"/>
+<rect x="461.5" y="154.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="471.2" y="166.2" fill="#898781" text-anchor="middle">−2</text>
+<rect x="503.5" y="135.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="513.2" y="147.2" fill="#898781" text-anchor="middle">−1</text>
+<rect x="590.8" y="154.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="597.2" y="166.2" fill="#898781" text-anchor="middle">1</text>
+<rect x="533.8" y="187.2" width="19.4" height="17" rx="2" fill="#fcfcfb"/>
+<text x="550.2" y="199.2" fill="#898781" text-anchor="end">−1</text>
+<rect x="540.5" y="103.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="550.2" y="115.2" fill="#898781" text-anchor="end">1</text>
+<rect x="540.5" y="61.2" width="12.7" height="17" rx="2" fill="#fcfcfb"/>
+<text x="550.2" y="73.2" fill="#898781" text-anchor="end">2</text>
 <line x1="555.2" y1="153.2" x2="513.9" y2="111.9" stroke="#1baf7a" stroke-width="2.5"/>
 <path d="M516.4 119.6 L513.2 111.2 L521.6 114.4" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
 <line x1="555.2" y1="153.2" x2="472.1" y2="194.8" stroke="#eb6834" stroke-width="2.5"/>

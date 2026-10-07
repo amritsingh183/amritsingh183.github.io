@@ -102,10 +102,10 @@
 <path d="M90 124.6 L86.8 116.2 L95.2 119.4" fill="none" stroke="#eb6834" stroke-width="2.5"/>
 <line x1="124.8" y1="154.2" x2="162.1" y2="116.9" stroke="#2a78d6" stroke-width="2.5"/>
 <path d="M154.4 119.4 L162.8 116.2 L159.6 124.6" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
-<rect x="171.8" y="146.2" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
-<text x="174.8" y="158.2" fill="#1baf7a">(1, 0)</text>
-<rect x="28.3" y="99.7" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
-<text x="78.3" y="111.7" fill="#eb6834" text-anchor="end">(−1, 1)</text>
+<rect x="165.8" y="160.2" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="168.8" y="172.2" fill="#1baf7a">(1, 0)</text>
+<rect x="95.8" y="100.2" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="98.8" y="112.2" fill="#eb6834">(−1, 1)</text>
 <rect x="168.3" y="99.7" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
 <text x="171.3" y="111.7" fill="#2a78d6">(1, 1)</text>
 <line x1="414.8" y1="192.2" x2="414.8" y2="44" stroke="#e1e0d9" stroke-width="1"/>
@@ -211,10 +211,10 @@
 <path d="M418 86.6 L414.8 78.2 L423.2 81.4" fill="none" stroke="#eb6834" stroke-width="2.5"/>
 <line x1="490.8" y1="154.2" x2="641.9" y2="78.6" stroke="#2a78d6" stroke-width="2.5"/>
 <path d="M633.8 78.6 L642.8 78.2 L637.1 85.2" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
-<rect x="613.8" y="146.2" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
-<text x="616.8" y="158.2" fill="#1baf7a">(3, 0)</text>
-<rect x="388.3" y="56.2" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
-<text x="414.8" y="68.2" fill="#eb6834" text-anchor="middle">(−2, 2)</text>
+<rect x="607.8" y="160.2" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
+<text x="610.8" y="172.2" fill="#1baf7a">(3, 0)</text>
+<rect x="423.8" y="62.2" width="53.0" height="17" rx="2" fill="#fcfcfb"/>
+<text x="426.8" y="74.2" fill="#eb6834">(−2, 2)</text>
 <rect x="619.6" y="84.2" width="46.3" height="17" rx="2" fill="#fcfcfb"/>
 <text x="642.8" y="96.2" fill="#2a78d6" text-anchor="middle">(4, 2)</text>
 <text x="162.8" y="26" font-size="13" text-anchor="middle" font-weight="600">before</text>

@@ -44,7 +44,7 @@
 <circle cx="360.8" cy="220.1" r="4" fill="#2a78d6"/>
 <circle cx="414.6" cy="220.3" r="4" fill="#2a78d6"/>
 <circle cx="468.5" cy="260" r="4" fill="#2a78d6"/>
-<text x="458.5" y="252" fill="#2a78d6" text-anchor="end">training</text>
+<text x="387.7" y="238.1" fill="#2a78d6" text-anchor="middle">training</text>
 <line x1="137.0" y1="40" x2="145.4" y2="175.0" stroke="#1baf7a" stroke-width="2"/>
 <line x1="145.4" y1="175.0" x2="199.2" y2="203.9" stroke="#1baf7a" stroke-width="2"/>
 <line x1="199.2" y1="203.9" x2="253.1" y2="198.2" stroke="#1baf7a" stroke-width="2"/>

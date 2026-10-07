@@ -2097,6 +2097,117 @@ fn b19_locality() -> Figure {
     ("b19-3-locality".to_string(), s.finish())
 }
 
+/// Figure 19.4's small classic network for 64 × 64 colour photos of covers, chosen for that figure: the photo's side
+/// and channels; two convolution stages, each with this many filters whose kernels are 3 × 3 (a filter spans every
+/// input channel; padding 1, stride 1), each stage followed by 2 × 2 max pooling with stride 2; the width of the hidden
+/// fully connected layer; and the classes it sorts covers into. Every size and parameter count the figure draws is
+/// computed from these.
+const NET_SIDE: usize = 64;
+const NET_CHANNELS: usize = 3;
+const NET_FILTERS: [usize; 2] = [8, 16];
+const NET_KERNEL: usize = 3;
+const NET_POOL: usize = 2;
+const NET_HIDDEN: usize = 64;
+const NET_CLASSES: [&str; 3] = ["mystery", "cookbook", "repair manual"];
+
+fn b19_whole() -> Figure {
+    // the feature extractor: (side, channels, how the stage was made, its parameters)
+    let mut stages: Vec<(usize, usize, String, usize)> = vec![(NET_SIDE, NET_CHANNELS, "colour photo".to_string(), 0)];
+    let (mut side, mut ch) = (NET_SIDE, NET_CHANNELS);
+    for f in NET_FILTERS {
+        let params = f * (NET_KERNEL * NET_KERNEL * ch + 1);
+        side = calc::out_size(side, NET_KERNEL, 1, 1);
+        stages.push((side, f, format!("{f} filters, {NET_KERNEL} × {NET_KERNEL} × {ch}"), params));
+        ch = f;
+        side = calc::out_size(side, NET_POOL, 0, NET_POOL);
+        stages.push((side, ch, format!("max pool {NET_POOL} × {NET_POOL}"), 0));
+    }
+    let flat = side * side * ch;
+    let dense = [flat * NET_HIDDEN + NET_HIDDEN, NET_HIDDEN * NET_CLASSES.len() + NET_CLASSES.len()];
+    let conv_params: usize = stages.iter().map(|st| st.3).sum();
+    let total = conv_params + dense[0] + dense[1];
+    let mut s = Svg::new(
+        720,
+        396,
+        "The classic design: convolution and pooling turn a photo into small maps; fully connected layers and a softmax turn those into probabilities",
+        &format!(
+            "Top row, left to right: a {NET_SIDE} by {NET_SIDE} colour photo with {NET_CHANNELS} channels, {} maps after the first convolution, {} after pooling, {} after the second convolution and {} after pooling. Bottom row: those maps laid out as one list of {} numbers, a fully connected layer of {NET_HIDDEN} units, {} scores and a softmax giving {} probabilities. The convolutions have {} parameters, the fully connected layers {} and {}; {} in all.",
+            stages[1].1,
+            stages[2].1,
+            stages[3].1,
+            stages[4].1,
+            thousands(flat as u64),
+            NET_CLASSES.len(),
+            NET_CLASSES.len(),
+            thousands(conv_params as u64),
+            thousands(dense[0] as u64),
+            thousands(dense[1] as u64),
+            thousands(total as u64)
+        ),
+    ).min_text(12);
+    // top row: the maps drawn to scale (one unit per pixel), channels as a stack of outlines
+    s.text_bold(24.0, 30.0, &format!("convolution and pooling: from a photo to {ch} small maps"), 12, tok::INK, Anchor::Start);
+    let slot = 136.0;
+    let base = 150.0;
+    for (n, (width, maps, how, params)) in stages.iter().enumerate() {
+        let x = 24.0 + n as f64 * slot;
+        let size = *width as f64;
+        // every channel is drawn as one outline, the photo's three planes further apart than the maps
+        let offset = if *maps <= 3 { 6.0 } else if *maps <= 8 { 3.0 } else { 2.0 };
+        let strokes: [&str; 3] = if n == 0 { [tok::S2, tok::S3, tok::S1] } else { [tok::S1, tok::S1, tok::S1] };
+        let fill = if n == 0 { tok::SURFACE } else { tok::FILL1 };
+        stack(&mut s, x, base - size, size, *maps, offset, &strokes, fill);
+        s.text(x, base + 22.0, &format!("{width} × {width} × {maps}"), 12, tok::INK, Anchor::Start);
+        s.text(x, base + 38.0, how, 11, tok::INK2, Anchor::Start);
+        // the photo is the input, so it has no parameter line
+        let p = match (n, params) {
+            (0, _) => None,
+            (_, 0) => Some("no parameters".to_string()),
+            _ => Some(format!("{} parameters", thousands(*params as u64))),
+        };
+        if let Some(p) = p {
+            s.text(x, base + 54.0, &p, 11, tok::INK2, Anchor::Start);
+        }
+        if n + 1 < stages.len() {
+            s.arrow(x + slot - 30.0, base - 20.0, x + slot - 8.0, base - 20.0, None);
+        }
+    }
+    // the connector from the last maps down to the list
+    let last_x = 24.0 + (stages.len() - 1) as f64 * slot + 16.0;
+    s.path(&format!("M{} {} L{} 232 L40 232 L40 244", f1(last_x), f1(base + 62.0), f1(last_x)), tok::INK2, 1.5);
+    s.arrow(40.0, 242.0, 40.0, 258.0, None);
+    s.text(48.0, 222.0, &format!("the {ch} maps laid out as one list, then fully connected layers and a softmax"), 11, tok::INK2, Anchor::Start);
+    // bottom row: the classifier
+    let (bw, gap, by) = (148.0, 30.0, 260.0);
+    let boxes = [
+        (format!("{} numbers", thousands(flat as u64)), "no parameters".to_string(), tok::FILL1, tok::S1),
+        (format!("{NET_HIDDEN} units"), format!("{} parameters", thousands(dense[0] as u64)), tok::NEUTRAL, tok::AXIS),
+        (format!("{} scores", NET_CLASSES.len()), format!("{} parameters", thousands(dense[1] as u64)), tok::NEUTRAL, tok::AXIS),
+        (format!("{} probabilities", NET_CLASSES.len()), "softmax, no parameters".to_string(), tok::NEUTRAL, tok::S3),
+    ];
+    for (n, (l1, l2, fill, stroke)) in boxes.iter().enumerate() {
+        let x = 24.0 + n as f64 * (bw + gap);
+        s.labelled_box2(x, by, bw, 44.0, l1, l2, fill, stroke);
+        if n + 1 < boxes.len() {
+            s.arrow(x + bw + 2.0, by + 22.0, x + bw + gap - 2.0, by + 22.0, None);
+        }
+    }
+    s.text(24.0 + 1.0 * (bw + gap), by + 60.0, "fully connected", 11, tok::INK2, Anchor::Start);
+    s.text(24.0 + 2.0 * (bw + gap), by + 60.0, "fully connected", 11, tok::INK2, Anchor::Start);
+    for (i, c) in NET_CLASSES.iter().enumerate() {
+        s.text(24.0 + 3.0 * (bw + gap), by + 60.0 + i as f64 * 16.0, c, 11, tok::INK2, Anchor::Start);
+    }
+    s.text(
+        24.0,
+        384.0,
+        &format!("{} parameters in all: {} in the two convolutions, {} in the first fully connected layer", thousands(total as u64), thousands(conv_params as u64), thousands(dense[0] as u64)),
+        12,
+        tok::INK,
+        Anchor::Start,
+    );
+    ("b19-4-whole-network".to_string(), s.finish())
+}
+
 // ====================================================================================================
 // Chapter 20. Pooling and strides
 // ====================================================================================================
@@ -2797,6 +2908,7 @@ pub fn figures() -> Vec<Figure> {
         b19_matrices(),
         b19_sobel(),
         b19_locality(),
+        b19_whole(),
         b20_pooling(),
         b20_shift(),
         b21_growth(),

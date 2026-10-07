@@ -1,15 +1,18 @@
-//! Prints the two ML posts (`_posts/2026-09-28-rust-candle-ml-guide.md` and `_posts/2026-09-28-rust-ml-handbook.md`) as
-//! double-sided A4 PDFs. Standard library only.
+//! Prints the three ML posts (`_posts/2026-09-28-rust-candle-ml-guide.md`, `_posts/2026-09-28-rust-ml-handbook.md` and
+//! `_posts/2026-09-29-ml-drawn-out.md`) as double-sided A4 PDFs. Standard library only.
 //!
 //! Compile:  rustc --edition 2024 -O -o /tmp/make_print ml/print/make_print.rs
 //! Run:      /tmp/make_print ml/print _posts/2026-09-28-rust-candle-ml-guide.md _posts/2026-09-28-rust-ml-handbook.md
-//!           (the first argument is the output folder, which holds print.css; each source becomes <stem>.pdf there)
+//!               _posts/2026-09-29-ml-drawn-out.md
+//!           (one command line; the first argument is the output folder, which holds print.css; each source becomes
+//!           <stem>.pdf there, and any subset of the posts may be given)
 //!
 //! Each source is a Jekyll post directly under the site's `_posts/` folder; the site root is the folder holding `_config.yml`.
 //! The build skips the front matter itself, resolves the posts' root-absolute image paths (`/ml/figures/…`) against the site
-//! root, removes the handbook's web-only MathJax line so that Chrome never touches the network, and prints the post's published
-//! address under Jekyll's default permalink (`/:categories/:year/:month/:day/:title.html`, in UTC as GitHub Pages builds) as the
-//! cover's Source line. It stops on any front matter, file name or `_config.yml` setting it cannot map to that address.
+//! root, removes the web-only MathJax line that the handbook and the book carry, so that Chrome never touches the network,
+//! and prints the post's published address under Jekyll's default permalink (`/:categories/:year/:month/:day/:title.html`,
+//! in UTC as GitHub Pages builds) as the cover's Source line. It stops on any front matter, file name or `_config.yml`
+//! setting it cannot map to that address.
 //!
 //! pandoc turns the remaining Markdown into HTML (maths as MathML, code highlighted); headless Google Chrome prints that HTML,
 //! styled by print.css, to PDF. PRINT_PANDOC and PRINT_CHROME override the tool paths; PRINT_KEEP_TMP=1 keeps the
@@ -21,8 +24,8 @@
 //! page before each part that would otherwise open on a left-hand page. It stops when a pass prints exactly what
 //! that pass assumed, and fails with a message naming the entry otherwise.
 //!
-//! A part is a unit with its own running head: the `#` sections when a document has more than one H1 (the guide,
-//! together with the `##` sections before its first part), otherwise the `##` sections (the handbook). The first
+//! A part is a unit with its own running head: the `#` sections when a document has more than one H1 (the guide and the
+//! book, together with the `##` sections before their first part), otherwise the `##` sections (the handbook). The first
 //! part after the cover, parts whose titles begin with "Part " or with a number and a dot, and the first part
 //! whose title begins with "Appendix" open on a right-hand page.
 #![forbid(unsafe_code)]
@@ -37,8 +40,8 @@ fn fail<T>(message: impl Into<String>) -> Result<T, Fail> {
     Err(Fail(message.into()))
 }
 
-/// The one web-only line a post may carry (MathJax for the handbook's maths on the site). It is removed byte for byte
-/// before pandoc so that the print needs no network; any other <script> stops the build.
+/// The one web-only line a post may carry (MathJax for the maths of the handbook and the book on the site). It is
+/// removed byte for byte before pandoc so that the print needs no network; any other <script> stops the build.
 const WEB_SCRIPT: &str =
     r#"<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>"#;
 
@@ -290,8 +293,8 @@ mod doc {
             ),
         );
 
-        // Contents: every entry that links to a heading gets a number slot; the guide's bold Part lines are linked
-        // to their H1 so that they get one too.
+        // Contents: every entry that links to a heading gets a number slot; the bold Part lines of the guide and the
+        // book are linked to their H1 so that they get one too.
         let contents_line = heads.iter().find(|h| h.2 == "Contents").map(|h| h.3);
         let ci = contents_line.ok_or_else(|| Fail(format!("{name}: no heading named Contents")))?;
         let ul = (ci + 1..lines.len())

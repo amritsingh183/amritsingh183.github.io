@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 396" width="720" height="396" role="img" aria-labelledby="title desc">
+<title id="title">The classic design: convolution and pooling turn a photo into small maps; fully connected layers and a softmax turn those into probabilities</title>
+<desc id="desc">Top row, left to right: a 64 by 64 colour photo with 3 channels, 8 maps after the first convolution, 8 after pooling, 16 after the second convolution and 16 after pooling. Bottom row: those maps laid out as one list of 4,096 numbers, a fully connected layer of 64 units, 3 scores and a softmax giving 3 probabilities. The convolutions have 1,392 parameters, the fully connected layers 262,208 and 195; 263,795 in all.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker></defs>
+<rect width="720" height="396" fill="#fcfcfb"/>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#0b0b0b">
+<text x="24" y="30" font-weight="600">convolution and pooling: from a photo to 16 small maps</text>
+<rect x="36" y="74" width="64" height="64" rx="2" fill="#fcfcfb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="30" y="80" width="64" height="64" rx="2" fill="#fcfcfb" stroke="#1baf7a" stroke-width="1"/>
+<rect x="24" y="86" width="64" height="64" rx="2" fill="#fcfcfb" stroke="#eb6834" stroke-width="1"/>
+<text x="24" y="172">64 × 64 × 3</text>
+<text x="24" y="188" fill="#52514e">colour photo</text>
+<line x1="130" y1="130" x2="152" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="181" y="65" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="178" y="68" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="175" y="71" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="172" y="74" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="169" y="77" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="166" y="80" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="163" y="83" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="160" y="86" width="64" height="64" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="160" y="172">64 × 64 × 8</text>
+<text x="160" y="188" fill="#52514e">8 filters, 3 × 3 × 3</text>
+<text x="160" y="204" fill="#52514e">224 parameters</text>
+<line x1="266" y1="130" x2="288" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="317" y="97" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="314" y="100" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="311" y="103" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="308" y="106" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="305" y="109" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="302" y="112" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="299" y="115" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="296" y="118" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="296" y="172">32 × 32 × 8</text>
+<text x="296" y="188" fill="#52514e">max pool 2 × 2</text>
+<text x="296" y="204" fill="#52514e">no parameters</text>
+<line x1="402" y1="130" x2="424" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="462" y="88" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="460" y="90" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="458" y="92" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="456" y="94" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="454" y="96" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="452" y="98" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="450" y="100" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="448" y="102" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="446" y="104" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="444" y="106" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="442" y="108" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="440" y="110" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="438" y="112" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="436" y="114" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="434" y="116" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="432" y="118" width="32" height="32" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="432" y="172">32 × 32 × 16</text>
+<text x="432" y="188" fill="#52514e">16 filters, 3 × 3 × 8</text>
+<text x="432" y="204" fill="#52514e">1,168 parameters</text>
+<line x1="538" y1="130" x2="560" y2="130" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="598" y="104" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="596" y="106" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="594" y="108" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="592" y="110" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="590" y="112" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="588" y="114" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="586" y="116" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="584" y="118" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="582" y="120" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="580" y="122" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="578" y="124" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="576" y="126" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="574" y="128" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="572" y="130" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="570" y="132" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<rect x="568" y="134" width="16" height="16" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="568" y="172">16 × 16 × 16</text>
+<text x="568" y="188" fill="#52514e">max pool 2 × 2</text>
+<text x="568" y="204" fill="#52514e">no parameters</text>
+<path d="M584 212 L584 232 L40 232 L40 244" fill="none" stroke="#52514e" stroke-width="1.5"/>
+<line x1="40" y1="242" x2="40" y2="258" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="48" y="222" fill="#52514e">the 16 maps laid out as one list, then fully connected layers and a softmax</text>
+<rect x="24" y="260" width="148" height="44" rx="2" fill="#cde2fb" stroke="#2a78d6" stroke-width="1"/>
+<text x="98" y="279" text-anchor="middle">4,096 numbers</text>
+<text x="98" y="294" fill="#52514e" text-anchor="middle">no parameters</text>
+<line x1="174" y1="282" x2="200" y2="282" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="202" y="260" width="148" height="44" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="276" y="279" text-anchor="middle">64 units</text>
+<text x="276" y="294" fill="#52514e" text-anchor="middle">262,208 parameters</text>
+<line x1="352" y1="282" x2="378" y2="282" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="380" y="260" width="148" height="44" rx="2" fill="#f0efec" stroke="#c3c2b7" stroke-width="1"/>
+<text x="454" y="279" text-anchor="middle">3 scores</text>
+<text x="454" y="294" fill="#52514e" text-anchor="middle">195 parameters</text>
+<line x1="530" y1="282" x2="556" y2="282" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="558" y="260" width="148" height="44" rx="2" fill="#f0efec" stroke="#1baf7a" stroke-width="1"/>
+<text x="632" y="279" text-anchor="middle">3 probabilities</text>
+<text x="632" y="294" fill="#52514e" text-anchor="middle">softmax, no parameters</text>
+<text x="202" y="320" fill="#52514e">fully connected</text>
+<text x="380" y="320" fill="#52514e">fully connected</text>
+<text x="558" y="320" fill="#52514e">mystery</text>
+<text x="558" y="336" fill="#52514e">cookbook</text>
+<text x="558" y="352" fill="#52514e">repair manual</text>
+<text x="24" y="384">263,795 parameters in all: 1,392 in the two convolutions, 262,208 in the first fully connected layer</text>
+</g>
+</svg>

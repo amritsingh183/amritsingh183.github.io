@@ -22,6 +22,7 @@ pub fn figures() -> Vec<Figure> {
         fig_27_2_two_nets(),
         fig_27_3_rows(),
         fig_27_4_cosines(),
+        fig_27_5_analogy(),
         fig_28_1_cooccurrence(),
         fig_28_2_ratios(),
         fig_28_3_ice_steam(),
@@ -602,8 +603,8 @@ fn fig_26_4_order() -> Figure {
     let mut s = Svg::new(
         720,
         250,
-        "A blurb and its back-to-front twin, which says something quite different, produce exactly the same bag of words",
-        "Two sentences drawn as rows of word boxes, one the reverse story of the other, each feeding an arrow into its count row over five words; the two count rows are identical.",
+        "A blurb and the same words with detective and village swapped, which says something quite different, produce exactly the same bag of words",
+        "Two sentences drawn as rows of word boxes, the second the first with detective and village swapped, each feeding an arrow into its count row over five words; the two count rows are identical.",
     ).min_text(12);
     let a: &'static str = BLURBS[3];
     let b: &'static str = "the village returns to the detective";
@@ -629,7 +630,7 @@ fn fig_26_4_order() -> Figure {
     s.text(
         360.0,
         214.0,
-        if same { "identical rows: the bag cannot tell the blurb from its back-to-front twin" } else { "the rows differ" },
+        if same { "identical rows: the bag cannot tell the blurb from the same words with two swapped" } else { "the rows differ" },
         12,
         tok::INK,
         Anchor::Middle,
@@ -915,6 +916,122 @@ fn fig_27_4_cosines() -> Figure {
     }
     s.text_bold(544.0, 62.0, "cosines", 12, tok::INK, Anchor::Start);
     ("b27-4-cosines".to_string(), s.finish())
+}
+
+/// Figure 27.5, left: made-up positions, set by hand to show the idea and not learned from anything, for three pairs of
+/// words that differ by one shared step. The figure prints each position beside its word and, like the text, says that
+/// they are made up.
+const ANALOGY_WORDS: [(&str, [f64; 2]); 6] = [
+    ("man", [-2.5, -1.5]),
+    ("woman", [-2.0, 0.5]),
+    ("uncle", [-0.5, -1.0]),
+    ("aunt", [0.0, 1.0]),
+    ("king", [2.0, -1.5]),
+    ("queen", [2.5, 0.5]),
+];
+
+/// Figure 27.5, right: the question put to the tiny trained table of Figure 27.3, "quiet is to mystery as small is to
+/// what?", and its expected answer (the blurbs say "a quiet mystery" and "a small town").
+const TOY_QUESTION: [&str; 4] = ["quiet", "mystery", "small", "town"];
+
+/// The words of `vocab` other than the three question words, ranked by cosine with b − a + c (the Word2Vec papers' own
+/// test): (word, cosine), best first.
+fn analogy_ranking(vocab: &[&str], rows: &[Vec<f64>], a: &str, b: &str, c: &str) -> Vec<(String, f64)> {
+    let at = |x: &str| rows[vocab.iter().position(|v| *v == x).unwrap_or(0)].clone();
+    let target: Vec<f64> = (0..rows[0].len()).map(|k| at(b)[k] - at(a)[k] + at(c)[k]).collect();
+    let mut ranked: Vec<(String, f64)> = vocab
+        .iter()
+        .filter(|v| **v != a && **v != b && **v != c)
+        .map(|v| (v.to_string(), cosine(&target, &at(v))))
+        .collect();
+    ranked.sort_by(|p, q| q.1.partial_cmp(&p.1).unwrap_or(std::cmp::Ordering::Equal));
+    ranked
+}
+
+/// An ordinal in words for the small ranks a figure names (first to tenth), in digits beyond.
+fn ordinal(n: usize) -> String {
+    const WORDS: [&str; 10] = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
+    if (1..=10).contains(&n) { WORDS[n - 1].to_string() } else { format!("{n}th") }
+}
+
+fn fig_27_5_analogy() -> Figure {
+    let words: Vec<&str> = ANALOGY_WORDS.iter().map(|w| w.0).collect();
+    let rows: Vec<Vec<f64>> = ANALOGY_WORDS.iter().map(|w| w.1.to_vec()).collect();
+    let at = |x: &str| rows[words.iter().position(|v| *v == x).unwrap_or(0)].clone();
+    let step = [at("woman")[0] - at("man")[0], at("woman")[1] - at("man")[1]];
+    let target: Vec<f64> = (0..2).map(|k| at("king")[k] - at("man")[k] + at("woman")[k]).collect();
+    let [ma, mb, mc] = ["man", "king", "woman"];
+    let made_up = analogy_ranking(&words, &rows, ma, mb, mc);
+    let vocab = vocabulary(&BLURBS);
+    let trained = skipgram(&vocab);
+    let [qa, qb, qc, want] = TOY_QUESTION;
+    let toy = analogy_ranking(&vocab, &trained, qa, qb, qc);
+    let want_rank = toy.iter().position(|r| r.0 == want).map_or(0, |i| i + 1);
+    let pair = |v: &[f64]| format!("({}, {})", numt(v[0], 2), numt(v[1], 2));
+    let rank_words = ordinal(want_rank);
+    let labels: Vec<String> = ANALOGY_WORDS.iter().map(|(w, p)| format!("{w} {}", pair(p))).collect();
+    let others: Vec<String> = made_up.iter().map(|r| format!("{} {}", r.0, num(r.1, 2))).collect();
+    let mut s = Svg::new(
+        720,
+        360,
+        "A relation between two words can be a direction: when man to woman is the same step as king to queen, king minus man plus woman lands on queen",
+        &format!(
+            "Left: six words at made-up positions set by hand and printed beside them, {}; three grey arrows, from man to woman, uncle to aunt and king to queen, are the same step {}, and king − man + woman = {}, where queen sits; ranked by cosine with it, leaving out the question words {ma}, {mb} and {mc}: {}. Right: the tiny trained table of Figure 27.3 asked which word is to {qc} as {qb} is to {qa}: its nearest word to {qb} − {qa} + {qc} is {} ({}), and {want} comes {rank_words}.",
+            labels.join(", "),
+            pair(&step),
+            pair(&target),
+            others.join(", "),
+            toy[0].0,
+            num(toy[0].1, 3)
+        ),
+    ).min_text(12);
+    // left: the made-up positions
+    s.text_bold(24.0, 30.0, "made-up positions: one step for three pairs", 12, tok::INK, Anchor::Start);
+    let (x0, x1, y0, y1) = (-3.2, 3.2, -2.2, 1.6);
+    let (left, top, k) = (40.0, 48.0, 46.0);
+    let px = |x: f64| left + (x - x0) * k;
+    let py = |y: f64| top + (y1 - y) * k;
+    // the two axes only: the positions are made up, so only their differences matter
+    s.line(px(0.0), py(y0), px(0.0), py(y1), tok::AXIS, 1.0);
+    s.line(px(x0), py(0.0), px(x1), py(0.0), tok::AXIS, 1.0);
+    for pairs in ANALOGY_WORDS.chunks(2) {
+        let (m, w) = (pairs[0].1, pairs[1].1);
+        s.arrow(px(m[0]), py(m[1]) - 5.0, px(w[0]), py(w[1]) + 5.0, None);
+    }
+    // each word with its made-up position, so that every value below can be worked out by hand: the blue words under
+    // their dots and the orange words over theirs, away from the arrows between them; a label that would cross the
+    // vertical axis ends just left of it instead
+    for (i, ((_, p), label)) in ANALOGY_WORDS.iter().zip(&labels).enumerate() {
+        let colour = if i % 2 == 0 { tok::S1 } else { tok::S2 };
+        s.dot(px(p[0]), py(p[1]), 5.0, colour, Some(tok::SURFACE));
+        let y = if i % 2 == 0 { py(p[1]) + 21.0 } else { py(p[1]) - 10.0 };
+        let half = text_w(label, 12) / 2.0;
+        let crosses_axis = (px(p[0]) - half..=px(p[0]) + half).contains(&px(0.0));
+        let (x, anchor) = if crosses_axis { (px(0.0) - 8.0, Anchor::End) } else { (px(p[0]), Anchor::Middle) };
+        s.text(x, y, label, 12, colour, anchor);
+    }
+    s.text(24.0, 250.0, &format!("each grey arrow is the same step, {}", pair(&step)), 12, tok::INK, Anchor::Start);
+    s.text(24.0, 268.0, &format!("king − man + woman = {}: queen's own place", pair(&target)), 12, tok::INK, Anchor::Start);
+    s.text(24.0, 286.0, &format!("nearest by cosine: {}", others.join(", ")), 12, tok::INK, Anchor::Start);
+    s.text(24.0, 304.0, &format!("(the question words {ma}, {mb} and {mc} are left out)"), 11, tok::MUTED, Anchor::Start);
+    s.text(24.0, 328.0, "the positions are made up, set by hand to show the idea;", 11, tok::MUTED, Anchor::Start);
+    s.text(24.0, 344.0, "vectors learned from text show such steps only roughly", 11, tok::MUTED, Anchor::Start);
+    // right: the same question put to the tiny trained table
+    let xr = 412.0;
+    s.text_bold(xr, 30.0, "the tiny table of Figure 27.3", 12, tok::INK, Anchor::Start);
+    s.text(xr, 52.0, &format!("{qa} is to {qb} as {qc} is to ?"), 12, tok::INK, Anchor::Start);
+    s.text(xr, 70.0, &format!("nearest words to {qb} − {qa} + {qc}:"), 12, tok::INK2, Anchor::Start);
+    let mut cells: Vec<Vec<Cell>> = vec![vec![cell("rank").fill(tok::NEUTRAL), cell("word").fill(tok::NEUTRAL), cell("cosine").fill(tok::NEUTRAL)]];
+    for (i, (w, c)) in toy.iter().take(want_rank.max(5)).enumerate() {
+        let hi = if *w == want { tok::FILL1 } else { tok::SURFACE };
+        cells.push(vec![cell((i + 1).to_string()).fill(hi), cell(w.clone()).fill(hi), cell(num(*c, 3)).fill(hi)]);
+    }
+    s.cells_wh(xr, 82.0, 90.0, 26.0, &cells);
+    let ty = 82.0 + 26.0 * cells.len() as f64 + 22.0;
+    s.text(xr, ty, &format!("the right word, {want}, comes {rank_words};"), 12, tok::INK, Anchor::Start);
+    s.text(xr, ty + 18.0, "five blurbs are far too little text", 12, tok::INK, Anchor::Start);
+    s.text(xr, ty + 36.0, "(the three question words are left out)", 11, tok::MUTED, Anchor::Start);
+    ("b27-5-analogy".to_string(), s.finish())
 }
 
 // =================================================================================================
@@ -1343,7 +1460,7 @@ fn fig_30_1_bottleneck() -> Figure {
     s.rect_bold(514.0, 50.0, 116.0, 44.0, tok::FILL3, tok::S2);
     s.text(572.0, 69.0, "context vector", 12, tok::INK, Anchor::Middle);
     s.text(572.0, 85.0, "one fixed size", 11, tok::INK2, Anchor::Middle);
-    s.text(572.0, 112.0, "the bottleneck", 11, tok::S2, Anchor::Middle);
+    s.text(580.0, 116.0, "the bottleneck", 11, tok::S2, Anchor::Start);
     s.path("M572 94 L572 150 L52 150 L52 170", tok::INK2, 1.5);
     s.arrow(52.0, 168.0, 52.0, 184.0, None);
     for (i, w) in FRENCH.iter().enumerate() {
